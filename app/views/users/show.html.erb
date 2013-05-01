@@ -1,0 +1,15 @@
+<% provide(:title, @user.email) %>
+
+<h2>Welcome, <%= @user.first_name %></h2>
+<div class="span8">
+	<% if @user.properties.any? %>
+		<h3>Properties (<%= @user.properties.count %>)</h3>
+		<ol class="properties">
+			<%= render partial: 'shared/property_listing', collection: @property_listings %>
+				<li><%= link_to "Register another property", create_property_path %></li>
+		</ol>
+	<% else %>
+			<h3>You haven't registered any properties yet</h3>
+			<%= link_to "Register Property", create_property_path %>
+	<% end %>
+</div>

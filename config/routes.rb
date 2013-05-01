@@ -1,4 +1,31 @@
 HumbleCasa::Application.routes.draw do
+  resources :user_sessions
+  resources :users
+  resources :properties
+
+  match '/login', to: 'user_sessions#new', :as => :login
+  match '/logout', to: 'user_sessions#destroy', :as => :logout
+  match '/create_property', to: 'properties#new', :as => :create_property
+  match '/edit_property', to: 'properties#edit', :as => :edit_property
+
+  root to: 'static_pages#home'
+
+  get "static_pages/home"
+
+  get "static_pages/help"
+
+  get "static_pages/about"
+
+  get "static_pages/pricing_plans"
+
+  get "static_pages/feature_tour"
+
+  get "static_pages/contact_us"
+
+  get "static_pages/careers"
+
+  
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
