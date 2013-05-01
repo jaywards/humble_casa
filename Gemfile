@@ -14,7 +14,7 @@ gem 'dynamic_form'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.5'
-	gem 'rspec-rails', '~> 2.9.0'
+	gem 'rspec-rails', '~> 2.12.2'
 	gem 'guard-rspec', '0.5.5'
 	gem 'annotate', '~> 2.4.1.beta'
 	gem 'nifty-generators', '~> 0.4.2'
@@ -32,7 +32,7 @@ end
 gem 'jquery-rails', '~> 2.0.0'
 
 group :test do
-	gem 'rspec-rails', '~> 2.9.0'
+	gem 'rspec-rails', '~> 2.12.2'
 	gem 'capybara', '1.1.2'
 	gem 'rb-fsevent', '~>0.9', :require => false
 	gem 'growl', '1.0.3'
@@ -42,6 +42,7 @@ group :test do
 	gem 'cucumber-rails', '1.2.1', require: false
 	gem 'database_cleaner', '0.7.0'
 	gem 'test-unit'
+	gem 'mocha'
 end
 
 group :production do
@@ -65,5 +66,3 @@ end
 
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
-
-gem "mocha", :group => :test
