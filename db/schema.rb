@@ -11,7 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130424201945) do
+ActiveRecord::Schema.define(:version => 20130502210834) do
+
+  create_table "assignments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "role_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "properties", :force => true do |t|
     t.string   "name"
@@ -28,6 +35,12 @@ ActiveRecord::Schema.define(:version => 20130424201945) do
   end
 
   add_index "properties", ["user_id"], :name => "index_properties_on_user_id"
+
+  create_table "roles", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "user_sessions", :force => true do |t|
     t.string   "email"
@@ -46,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20130424201945) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "primary_phone"
+    t.string   "role"
   end
 
 end

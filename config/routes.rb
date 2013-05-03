@@ -7,6 +7,8 @@ HumbleCasa::Application.routes.draw do
   match '/logout', to: 'user_sessions#destroy', :as => :logout
   match '/create_property', to: 'properties#new', :as => :create_property
   match '/edit_property', to: 'properties#edit', :as => :edit_property
+  match '/new_user', to: 'users#new', :as => :new_user
+
 
   root to: 'static_pages#home'
 

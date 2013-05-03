@@ -1,4 +1,5 @@
 class UserSessionsController < ApplicationController
+  filter_resource_access
   def new
     @user_session = UserSession.new
   end
@@ -7,7 +8,8 @@ class UserSessionsController < ApplicationController
     @user_session = UserSession.new(params[:user_session])
     if @user_session.save
       flash[:success] = "Successfully logged in"
-      redirect_to current_user
+      #redirect_to current_user
+      redirect_to root_url
     else
       flash[:error] = "Couldn't log in."
       render :action => 'new'

@@ -5,7 +5,4 @@ module UserSessionsHelper
 		self.current_user = user
 	end
 
-
-
-
 end

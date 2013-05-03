@@ -1,3 +1,22 @@
 <%= provide(:title, '') %>
-<h1>StaticPages#home</h1>
-<p>HumbleCasa</p>
+
+<% if current_user.nil? %>
+	<h1>Welcome to HumbleCasa!</h1>
+	<%= link_to "Create property owner account", new_user_path(role: "propertyowner") %><br>
+	<%= link_to "Create service owner account", new_user_path(role: "serviceowner") %><br>
+	<%= link_to "Login to existing homeowner account", login_path %><br> 
+<% else %>
+	<h2>Welcome, <%= @user.first_name %></h2>
+	<div class="span8">
+		<% if @user.properties.count > 0 %>
+			<h3>Your properties:</h3>
+			<ol class="properties">
+				<%= render partial: 'shared/property_listing', collection: @property_listings %>
+					<li><%= link_to "Register another property", create_property_path %></li>
+			</ol>
+		<% else %>
+				<h4>Let's get started! Register your property first and then we'll find your favorite service providers:</h4><br>
+				<%= link_to "Register a property", create_property_path %>
+		<% end %>
+	</div>
+<% end %>

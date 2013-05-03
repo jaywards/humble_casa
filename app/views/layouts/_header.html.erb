@@ -5,7 +5,7 @@
 				<nav>
 					<ul class="nav pull-right">
 						<% if current_user %>
-							<%= link_to "Profile", edit_user_path(:current) %> | 
+							<%= link_to "Profile", edit_user_path(current_user) %> | 
 							<%= link_to "Logout", logout_path %>
 						<% else %>
 							<%= link_to "Register", new_user_path %> | 

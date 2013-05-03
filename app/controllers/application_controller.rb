@@ -1,11 +1,20 @@
 class ApplicationController < ActionController::Base
 	helper :all
+	helper_method :current_user, :current_user_session
+
 	protect_from_forgery
 
-	helper_method :current_user
+	#before_filter { |c| Authorization.current_user = c.current_user }
+
+
+	before_filter :set_current_user
+	protected
+	def set_current_user
+		Authorization.current_user = current_user
+	end
+
 
 	private
-
 	def current_user_session
 	  return @current_user_session if defined?(@current_user_session)
 	  @current_user_session = UserSession.find
@@ -16,5 +25,4 @@ class ApplicationController < ActionController::Base
 	  @current_user = current_user_session && current_user_session.record
 	end
 
-  
 end

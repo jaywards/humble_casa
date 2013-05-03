@@ -12,7 +12,7 @@
 		<span class="instructions"><%= property_listing.instructions %></span><br>
 	<% end %>
 	<ul class="nav pull-left">
-		<%= link_to "edit", edit_property_path %> | 
+		<%= link_to "edit", edit_property_path(:id => property_listing.id) %> |
 		<%= link_to "delete", property_listing, method: :delete, confirm: "Are you sure?", title: property_listing.name %>
 	</ul>
 </li>

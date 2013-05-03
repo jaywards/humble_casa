@@ -1,5 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
+    @user = current_user
+    @property = @user.properties.build if !current_user.nil?
+    @property_listings = @user.user_properties if !current_user.nil?
   end
 
   def help

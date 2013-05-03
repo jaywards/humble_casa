@@ -8,6 +8,7 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.6'
 gem 'authlogic'
 gem 'dynamic_form'
+gem 'declarative_authorization'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -18,6 +19,7 @@ group :development, :test do
 	gem 'guard-rspec', '0.5.5'
 	gem 'annotate', '~> 2.4.1.beta'
 	gem 'nifty-generators', '~> 0.4.2'
+	gem 'debugger'
 end
 
 
