@@ -22,8 +22,8 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    @property = @user.properties.build if !current_user.nil?
-    @property_listings = @user.user_properties
+    #@property = @user.properties.build if !current_user.nil?
+    #@property_listings = @user.user_properties
   end
 
 

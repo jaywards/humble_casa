@@ -1,10 +1,11 @@
 authorization do
   role :admin do
-    has_permission_on [:users, :properties, :user_sessions], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on [:users, :properties, :user_sessions, :static_pages, :services], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   end
   
   role :guest do
     has_permission_on [:users, :user_sessions], :to => [:new, :create, :destroy]
+    has_permission_on [:static_pages], :to => :show
   end
   
   role :propertyowner do
@@ -21,7 +22,7 @@ authorization do
     includes :guest
     has_permission_on :users, :to => [:show, :edit, :update]
     has_permission_on :user_sessions, :to => [:destroy, :new, :create]
-    has_permission_on :properties, :to => [:new, :create, :show, :edit, :update, :destroy]
+    has_permission_on :services, :to => [:new, :create, :show, :edit, :update, :destroy]
   end
 
   role :employee do
