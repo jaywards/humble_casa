@@ -1,16 +1,18 @@
 HumbleCasa::Application.routes.draw do
   resources :user_sessions
-  resources :users
+  resources :users do
+    resources :properties, :services, :service_zips
+  end
   resources :properties
   resources :services
+  #resources :service_zips
 
   match '/login', to: 'user_sessions#new', :as => :login
   match '/logout', to: 'user_sessions#destroy', :as => :logout
-  match '/create_property', to: 'properties#new', :as => :create_property
-  match '/edit_property', to: 'properties#edit', :as => :edit_property
   match '/new_user', to: 'users#new', :as => :new_user
-  match '/create_service', to: 'services#new', :as => :create_service
-  match '/edit_service', to: 'services#edit', :as => :edit_service
+
+  #match '/create_service_zips', to: 'service_zips#new', :as => :create_service_zips
+  #match '/edit_service_zips', to: 'service_zips#edit', :as => :edit_service_zips
 
 
   root to: 'static_pages#home'

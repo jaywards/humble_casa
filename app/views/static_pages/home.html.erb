@@ -17,11 +17,11 @@
 				<h3>Your properties:</h3>
 				<ol class="properties">
 					<%= render partial: 'shared/property_listing', collection: @property_listings %>
-						<li><%= link_to "Register another property", create_property_path %></li>
+						<li><%= link_to "Register another property", new_user_property_path(@user) %></li>
 				</ol>
 			<% else %>
 					<h4>Let's get started!<br><br>Register your property first and then we'll find your favorite service providers:</h4><br>
-					<%= link_to "Register a property", create_property_path %>
+					<%= link_to "Register a property", new_user_property_path(@user) %>
 			<% end %>
 		</div>
 
@@ -35,7 +35,7 @@
 				</ol>
 			<% else %>
 					<h4>Let's get started!<br><br>Register your service business first so that you'll appear when you customers sign up: </h4>
-					<%= link_to "Register a service", create_service_path %>
+					<%= link_to "Register a service", new_user_service_path(@user) %>
 			<% end %>
 		</div>
 	<% else %>

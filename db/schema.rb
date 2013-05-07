@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130503205605) do
+ActiveRecord::Schema.define(:version => 20130506152149) do
 
   create_table "assignments", :force => true do |t|
     t.integer  "user_id"
@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(:version => 20130503205605) do
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
+
+  create_table "service_zips", :force => true do |t|
+    t.string   "zip"
+    t.integer  "service_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "service_zips", ["service_id"], :name => "index_service_zips_on_service_id"
 
   create_table "services", :force => true do |t|
     t.string   "name"

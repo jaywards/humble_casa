@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :password, :password_confirmation, :last_name, :first_name, :primary_phone, :role
+  attr_accessible :email, :password, :password_confirmation, :last_name, :first_name, :primary_phone, :role, 
   acts_as_authentic
   has_many :properties, dependent: :destroy
   has_many :services, dependent: :destroy

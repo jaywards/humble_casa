@@ -1,6 +1,5 @@
 class PropertiesController < ApplicationController
 	filter_resource_access
-	#before_filter :signed_in_user
 	before_filter :correct_user, only: [:destroy, :edit, :update]
 
 	def create
