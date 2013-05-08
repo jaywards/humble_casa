@@ -1,49 +1,19 @@
-<%= form_for @service do |f| %>
-	<p>
-	    <%= f.label :service_business_name %>
-	    <%= f.text_field :name %>
-	</p>
-	<p>
-	    <%= f.label :address1 %>
-	    <%= f.text_field :address1 %>
-	</p>
-	<p>
-	    <%= f.label :address2 %>
-	   	<%= f.text_field :address2 %>
-	</p>
-	<p>
-	    <%= f.label :city %>
-	    <%= f.text_field :city %>
-	</p>
-	<p> 
-	    <%= f.label :state %>
-	    <%= f.text_field :state %>
-	</p>
-	<p>
-	    <%= f.label :zip %>
-	    <%= f.text_field :zip %>
-	</p>
-	<p> 
-	    <%= f.label :phone %>
-	    <%= f.text_field :phone %>
-	</p>
-	<p> 
-	    <%= f.label :email %>
-	    <%= f.text_field :email %>
-	</p>
-	<p>
-		<%= f.label :service_category %>
-		<%= f.collection_select :category, Service::CATEGORIES, :to_s, :titleize %>
-	</p>
-	<p>
-		Stop1
-		<%= f.fields_for :service_zips do |builder| %>
-			Stop2
-				Hello
-				<%= builder.label :zip, "Service area zip codes" %>
-				<%= builder.text_field :zip %>
-		<% end %>
-	</p>
-
-	<p><%= f.submit %></p>
+<%= simple_form_for @service do |f| %>
+	    <%= f.input :name, label: "Service business name" %>
+	    <%= f.input :address1 %>
+	    <%= f.input :address2 %>
+	    <%= f.input :city %>
+	    <%= f.input :state %>
+	    <%= f.input :zip,label: "Zip code" %>
+	    <%= f.input :phone %>
+	    <%= f.input :email %>
+		<%= f.input :category, collection: Service::CATEGORIES %>
+		<b>Service area zip codes</b><br>
+			<%= f.simple_fields_for :service_zips do |zip| %>
+					<%= render 'service_zip_fields', :f => zip %>
+			<% end %>
+			<div class="links">
+				<%= link_to_add_association('add another service area zip code', f, :service_zips) %>
+			</div>
+		<%= f.button :submit %>
 <% end %>

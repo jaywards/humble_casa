@@ -1,35 +1,11 @@
-<%= form_for([@user, @property]) do |f| %>
-	<p>
-	    <%= f.label :property_name %>
-	    <%= f.text_field :name %>
-	</p>
-	<p>
-	    <%= f.label :address1 %>
-	    <%= f.text_field :address1 %>
-	</p>
-	<p>
-	    <%= f.label :address2 %>
-	    <%= f.text_field :address2 %>
-	</p>
-	<p>
-	    <%= f.label :city %>
-	    <%= f.text_field :city %>
-	</p>
-	<p> 
-	    <%= f.label :state %>
-	    <%= f.text_field :state %>
-	</p>
-	<p>
-	    <%= f.label :zip %>
-	    <%= f.text_field :zip %>
-	</p>
-	<p> 
-	    <%= f.label :phone %>
-	    <%= f.text_field :phone %>
-	</p>
-	<p> 
-	    <%= f.label :instructions %>
-	    <%= f.text_area :instructions %>
-	</p>
-	<p><%= f.submit %></p>
+<%= simple_form_for([@user, @property]) do |f| %>
+	    <%= f.input :name, label: 'Property name', hint: "A simple nickname for this property" %>
+	    <%= f.input :address1 %>
+	    <%= f.input :address2 %>
+	    <%= f.input :city %>
+	    <%= f.input :state %>
+	    <%= f.input :zip %>
+		<%= f.input :phone %>
+	    <%= f.input :instructions, label: 'Instructions for the property', placeholder: 'Lock box code, security disarm code, preferred entry door, etc.', hint: 'These instructions are only seen by the service providers you select.' %>
+		<%= f.button :submit %>
 <% end %>

@@ -15,6 +15,7 @@ def create
 
 	def new
 		@service = Service.new
+		@service.service_zips.build
 	end
 
 	def destroy

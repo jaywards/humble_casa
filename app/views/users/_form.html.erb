@@ -1,33 +1,17 @@
-<%= form_for @user do |f| %>
-  <p>
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
-  </p>
-  
-  <p>
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </p>
- 
-  <p>
-    <%= f.label :email %>
-    <%= f.text_field :email %>
-  </p>
- 
-  <p>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </p>
- 
-  <p>
-    <%= f.label :password_confirmation %>
-    <%= f.password_field :password_confirmation %>
-  </p>
+<%= simple_form_for @user do |f| %>
 
-  <p>
+    <%= f.input :first_name %>
+
+    <%= f.input :last_name %>
+
+    <%= f.input :email, hint: "This will also your be your signin name" %>
+
+    <%= f.input :password, hint: "Must be at least 6 characters" %>
+
+    <%= f.input :password_confirmation %>
+
     <%= f.hidden_field :role, value: params[:role] %>
-  </p>
 
-  <p><%= f.submit %></p>
+    <%= f.button :submit %>
 
 <% end %>

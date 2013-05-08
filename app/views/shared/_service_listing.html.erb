@@ -8,8 +8,13 @@
 	<span class="state"><%= service_listing.state %></span> 
 	<span class="zip"><%= service_listing.zip %></span><br>
 	<span class="phone"><%= service_listing.phone %></span><br>
+	<b>Service zip codes:</b>
+		<ol class="service-zips">
+			<%= render partial: 'service_zips/service_zip_listing', collection: service_listing.service_zips %>
+		</ol>
 	<ul class="nav pull-left">
 		<%= link_to "edit", edit_service_path(:id => service_listing.id) %> |
 		<%= link_to "delete", service_listing, method: :delete, confirm: "Are you sure?", title: service_listing.name %>
 	</ul>
+
 </li>
