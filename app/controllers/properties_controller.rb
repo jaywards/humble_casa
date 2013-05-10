@@ -4,6 +4,10 @@ class PropertiesController < ApplicationController
 
 	def create
 		@property = current_user.properties.build(params[:property])
+		Service::CATEGORIES.count.times do 
+			@property.assignments.build
+		end
+
 		if @property.save
 			flash[:success] = "Property created!"
 			redirect_to root_path
@@ -34,6 +38,8 @@ class PropertiesController < ApplicationController
       flash[:error] = "Couldn't update property."
       render :action => 'edit'
     end
+
+
   end
 
 	private 

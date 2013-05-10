@@ -15,6 +15,7 @@
 		<div class="span8">
 			<% if @user.properties.count > 0 %>
 				<h3>Your properties:</h3>
+
 				<ol class="properties">
 					<%= render partial: 'shared/property_listing', collection: @property_listings %>
 						<li><%= link_to "Register another property", new_user_property_path(@user) %></li>
@@ -24,6 +25,9 @@
 					<%= link_to "Register a property", new_user_property_path(@user) %>
 			<% end %>
 		</div>
+
+
+
 
 	<% elsif @user.role.to_s == "serviceowner" %>
 

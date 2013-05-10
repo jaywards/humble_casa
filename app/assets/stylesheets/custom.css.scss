@@ -1,5 +1,6 @@
 @import "bootstrap";
-
+body { padding-top: 60px; }
+@import "bootstrap-responsive";
 
 /* mixins, variables, etc. */
 
@@ -174,7 +175,7 @@ footer {
 	 width: 100%;
 	 padding: 5px;
 	 height: auto;
-	 margin-bottom: 15px;
+	 margin-bottom: 5px;
 	 @include box_sizing;
 }
 

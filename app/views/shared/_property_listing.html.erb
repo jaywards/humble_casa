@@ -11,8 +11,22 @@
 	<% if !property_listing.instructions.empty? %>
 		<span class="instructions"><%= property_listing.instructions %></span><br>
 	<% end %>
+	<br>
+	<b>Service providers for this property:</b><br>
+	<% Service::CATEGORIES.each do |category| %>		
+    	<% @service = property_listing.services.find_by_category(category) %>
+		<% if @service.nil? %>
+			<% @name = "none selected" %>
+		<% else %> 
+			<% @name = @service.name %>
+		<% end %>
+    	<%= category.titleize %>: <%= @name %><br>
+	<% end %>
+
+
+
 	<ul class="nav pull-left">
 		<%= link_to "edit", edit_property_path(:id => property_listing.id) %> |
 		<%= link_to "delete", property_listing, method: :delete, confirm: "Are you sure?", title: property_listing.name %>
 	</ul>
-</li>
+</li> 

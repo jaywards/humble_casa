@@ -1,11 +1,40 @@
-<%= simple_form_for([@user, @property]) do |f| %>
-	    <%= f.input :name, label: 'Property name', hint: "A simple nickname for this property" %>
+<%= simple_form_for @property do |f| %>
+	    <%= f.input :name, label: 'Property name', placeholder: "A nickname for this property" %>
 	    <%= f.input :address1 %>
 	    <%= f.input :address2 %>
 	    <%= f.input :city %>
 	    <%= f.input :state %>
 	    <%= f.input :zip %>
 		<%= f.input :phone %>
-	    <%= f.input :instructions, label: 'Instructions for the property', placeholder: 'Lock box code, security disarm code, preferred entry door, etc.', hint: 'These instructions are only seen by the service providers you select.' %>
+	    <%= f.input :instructions, label: 'Instructions for the property', placeholder: 'These instructions are only seen by the service providers you select.  Examples: lock box code, security disarm code, preferred entry door, etc.'%>
+	    <br>
+	    <% if !@property.zip.nil? %>
+		    
+		    <b>Available service providers for your zip code:</b><br>
+			
+			<% @services_in_area = Service.find(ServiceZip.where(:zip => @property.zip).map(&:service_id).uniq) %>
+			<% @property_assignments = Assignment.where(:property_id => @property.id) %>
+			<% @i = 0 %>
+			<% Service::CATEGORIES.each do |category| %>
+	    		<%= category.titleize %>: 
+	    		
+	    		<% @category_services_in_area = Service.where(:category => category, :id => @services_in_area)%>
+
+	   	    	<% if !@category_services_in_area.empty? %>
+
+	    			<%= f.simple_fields_for :assignments, @property_assignments[@i] do |assignment| %>
+	    			 	<%= render 'assignment_fields', :f => assignment %>
+	    			<% end %>	
+	    			    		
+	    		<% else %>
+					
+					No service providers in this category for your area<br>
+				
+				<% end %>
+				<% @i += 1 %>
+	   		<% end %>
+	   	<% end %>
+	   	<br>
 		<%= f.button :submit %>
+
 <% end %>
