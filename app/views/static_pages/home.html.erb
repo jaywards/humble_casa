@@ -4,6 +4,7 @@
 	<h1>Welcome to HumbleCasa!</h1>
 	<%= link_to "Create property owner account", new_user_path(role: "propertyowner") %><br>
 	<%= link_to "Create service owner account", new_user_path(role: "serviceowner") %><br>
+	<%= link_to "Create employee account", new_user_path(role: "employee") %><br>
 	<%= link_to "Login to existing homeowner account", login_path %><br> 
 
 <% else %>
@@ -13,6 +14,7 @@
 	<% if @user.role.to_s == "propertyowner" %>
 
 		<div class="span8">
+
 			<% if @user.properties.count > 0 %>
 				<h3>Your properties:</h3>
 
@@ -32,16 +34,34 @@
 	<% elsif @user.role.to_s == "serviceowner" %>
 
 		<div class="span8">
-			<% if @user.services.count > 0 %>
-				<h3>Your service business:</h3>
-				<ol class="services">
-					<%= render partial: 'shared/service_listing', collection: @service_listings %>
-				</ol>
+
+			<% if !@service.first.nil? %>
+
+			<%= render 'shared/service_listing' %>
+				
 			<% else %>
-					<h4>Let's get started!<br><br>Register your service business first so that you'll appear when you customers sign up: </h4>
+					<h4>Let's get started!<br><br>Register your service business first so that you'll appear when your customers sign up: </h4>
 					<%= link_to "Register a service", new_user_service_path(@user) %>
 			<% end %>
 		</div>
+
+
+
+	<% elsif @user.role.to_s == "employee" %>
+
+		<div class="span8">
+
+		<% if !@employer.nil? %>
+
+				<h3>Your employer:</h3><br>	
+				<%= render @employer %>
+
+		<% else %>
+			You don't yet have an employer
+		<% end %>
+		</div>
+	
+
 	<% else %>
 		No recognized user role
 	<% end %>

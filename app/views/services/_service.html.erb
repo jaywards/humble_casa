@@ -1,0 +1,9 @@
+	<span class="name"><b><%= service.name %></b></span><br>
+	<span class="address1"><%= service.address1 %></span><br>
+	<% if !service.address2.empty? %>
+		<span class="address2"><%= service.address2 %></span><br>
+	<% end %>
+	<span class="city"><%= service.city %></span>, 
+	<span class="state"><%= service.state %></span> 
+	<span class="zip"><%= service.zip %></span><br>
+	<span class="phone"><%= service.phone %></span>

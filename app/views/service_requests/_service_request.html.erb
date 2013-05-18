@@ -1,0 +1,10 @@
+<li>
+	<span class="service request">
+		<% if !service_request.completed? %>
+			Pending -- <%= service_request.property.name %>
+		<% else %>
+			Completed -- <%= service_request.property.name %>
+		<% end %>
+	</span>
+	<br>
+</li>

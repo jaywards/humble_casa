@@ -1,0 +1,33 @@
+<%= simple_form_for @service_request do |f| %>
+	    <h3>New service request</h3><br>
+	    <b>
+	    Property: <%= @property.name %><br>
+	    Service: <%= @service.name %><br>
+		</b><br>
+
+	    <%= f.hidden_field :assigned %>
+	    <%= f.hidden_field :completed %>
+	    <%= f.hidden_field :property_id, value: @property.id %>
+	    <%= f.hidden_field :service_id, value: @service.id %>
+	    <%= f.input :service_start_date, label: "Service should completed on this date or later:", as: :date %>
+	    <%= f.input :service_end_date, label: "Service must be completed by this date:", as: :date %>
+	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text %>
+	
+	    <% if current_user.role == "serviceowner" %>
+	    	<% @employees = @service.service_employees %>
+	    	<%#= debug @employees %>
+	    	<%# @names = Array.new %>
+	    	<%# @employees.each do |e| %>
+	    		<%# @name =  e.last_name + ", " + e.first_name%>
+	    		<%# @names << @name %>
+	    	<%# end %>
+	    	<%#= @name %>
+	    	<%# @names = @service.service_employees_names %>
+	    	<%= debug @employees %>
+	   		<%= f.simple_fields_for :work_assignments, @service_request.work_assignments do |work_assignment| %>
+	    		<%= render 'work_assignment_fields', :f => work_assignment %>
+	    	<% end %>
+		<% end %>
+
+		<%= f.button :submit %>
+<% end %>

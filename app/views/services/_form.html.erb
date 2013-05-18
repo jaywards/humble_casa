@@ -9,11 +9,11 @@
 	    <%= f.input :email %>
 		<%= f.input :category, collection: Service::CATEGORIES %>
 		<b>Service area zip codes</b><br>
-			<%= f.simple_fields_for :service_zips do |zip| %>
-					<%= render 'service_zip_fields', :f => zip %>
-			<% end %>
-			<div class="links">
-				<%= link_to_add_association('add another service area zip code', f, :service_zips) %>
-			</div>
+		<%= f.simple_fields_for :service_zips do |zip| %>
+			<%= render 'service_zip_fields', :f => zip %>
+		<% end %>
+		<div class="links">
+			<%= link_to_add_association('add another service area zip code', f, :service_zips) %>
+		</div>
 		<%= f.button :submit %>
 <% end %>

@@ -1,0 +1,3 @@
+<div class="nested-fields">
+	<%= f.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request", include_blank: true %>
+</div>

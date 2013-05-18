@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130510023835) do
+ActiveRecord::Schema.define(:version => 20130517190910) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(:version => 20130510023835) do
 
   add_index "assignments", ["property_id"], :name => "index_associations_on_property_id"
   add_index "assignments", ["service_id"], :name => "index_associations_on_service_id"
+
+  create_table "employments", :force => true do |t|
+    t.integer  "service_id"
+    t.integer  "user_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "properties", :force => true do |t|
     t.string   "name"
@@ -39,6 +46,18 @@ ActiveRecord::Schema.define(:version => 20130510023835) do
   end
 
   add_index "properties", ["user_id"], :name => "index_properties_on_user_id"
+
+  create_table "service_requests", :force => true do |t|
+    t.boolean  "assigned"
+    t.boolean  "completed"
+    t.integer  "property_id"
+    t.integer  "service_id"
+    t.datetime "service_start_date"
+    t.datetime "service_end_date"
+    t.text     "instructions"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
 
   create_table "service_zips", :force => true do |t|
     t.string   "zip"
@@ -84,6 +103,14 @@ ActiveRecord::Schema.define(:version => 20130510023835) do
     t.string   "last_name"
     t.string   "primary_phone"
     t.string   "role"
+    t.integer  "employer_id"
+  end
+
+  create_table "work_assignments", :force => true do |t|
+    t.integer  "user_id"
+    t.integer  "service_request_id"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
 end

@@ -39,7 +39,7 @@ def create
 
 	private 
 		def correct_user
-			@service = current_user.services.find_by_id(params[:id])
+			@service = current_user.user_service.find_by_id(params[:id])
 			redirect_to root_path if @service.nil?
 		end
 

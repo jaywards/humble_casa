@@ -8,7 +8,15 @@ authorization do
     has_permission_on [:static_pages], :to => :show
   end
   
+  role :standard_user do
+    has_permission_on :users, :to => [:show, :edit, :update] #do   
+      #if_attribute :user =>  is { user }
+    #end
+  end  
+
+
   role :propertyowner do
+    includes :guest
     has_permission_on :users, :to => [:show, :edit, :update] #do
 #      if_attribute :user =>  is { user }
 #    end
@@ -27,6 +35,8 @@ authorization do
 
   role :employee do
     includes :guest
+    includes :standard_user
+
   end
 
 end

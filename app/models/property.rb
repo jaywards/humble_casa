@@ -6,6 +6,8 @@ class Property < ActiveRecord::Base
   has_many :services, through: :assignments
   accepts_nested_attributes_for :assignments
 
+  has_many :service_requests
+
   validates :user_id, presence: true
   validates :name, presence: true, length: {maximum: 150}
   validates :phone, presence: true, length: {maximum: 15}

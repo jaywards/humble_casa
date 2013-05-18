@@ -10,7 +10,23 @@
 
     <%= f.input :password_confirmation %>
 
-    <%= f.hidden_field :role, value: params[:role] %>
+    <% if @user.role.nil? %>
+        <%= f.hidden_field :role, value: params[:role] %>
+    <% else %>
+        <%= f.hidden_field :role, value: @user.role %>
+    <% end %>
+
+    <% if @user.role == "employee" %>
+    	<% @services = Service.all %>
+    	<% @sorted_services = @services.sort_by {|a| a.name } %>
+        <% @employer = Employment.where(:user_id => @user.id) %>
+
+        <b>Select your employer</b><br>
+        <%= f.simple_fields_for :employments, @employer do |employment| %>
+            <%= render 'employment_fields', :f => employment %>
+        <% end %>  
+    <% end %> 
+
 
     <%= f.button :submit %>
 

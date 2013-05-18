@@ -3,16 +3,18 @@ class UsersController < ApplicationController
 
   def new
     @user = User.new
+
   end
 
   def create
     @user = User.new(params[:user])
+    @user.employments.build
     if @user.save
       flash[:success] = "Successfully created user."
       redirect_to root_path
     else
       flash[:error] = "Couldn't create user."
-      render :action => 'new'
+      render :action => 'new' #NEED TO MAINTAIN ROLE PARAMS HERE
     end
   end
 
@@ -22,8 +24,6 @@ class UsersController < ApplicationController
 
   def show
     @user = current_user
-    #@property = @user.properties.build if !current_user.nil?
-    #@property_listings = @user.user_properties
   end
 
 
