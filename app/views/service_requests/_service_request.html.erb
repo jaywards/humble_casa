@@ -1,10 +1,26 @@
-<li>
-	<span class="service request">
+
+	<span8 class="service request">
 		<% if !service_request.completed? %>
-			Pending -- <%= service_request.property.name %>
+			Pending request for <%= service_request.property.name %>. Created on: <%= service_request.created_at.strftime("%m/%d/%Y") %>
+			
+			<% if current_user.role == "serviceowner" && service_request.assigned %>			
+				<% #@assignee = User.find_by_id(service_request.work_assignments.first.user_id) %>
+			 	-- assigned to: <%= service_request.users.first.to_label %> 
+			<% end %>
+			
+			<% if current_user.role == "propertyowner" %>
+				<%= link_to "edit this request", edit_service_request_path(id: service_request.id) %> |  
+				<%= link_to "delete this request", service_request, method: :delete, confirm: "Are you sure?" %><br> 
+			<% end %>
+
+			<% if current_user.role == "employee" %>
+				<%= link_to "complete this request", edit_service_request_path(id: service_request.id) %> 
+			<% end %>
+		
 		<% else %>
-			Completed -- <%= service_request.property.name %>
+			Completed request for <%= service_request.property.name %>. Created on: <%= service_request.created_at.strftime("%m/%d/%Y") %>
+			<%= link_to "see request report", service_request_path(id: service_request.id) %><br>
 		<% end %>
+	
 	</span>
-	<br>
-</li>
+

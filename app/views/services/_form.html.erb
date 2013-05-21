@@ -8,6 +8,8 @@
 	    <%= f.input :phone %>
 	    <%= f.input :email %>
 		<%= f.input :category, collection: Service::CATEGORIES %>
+		<%= f.hidden_field :user_id, value: current_user.id %>
+
 		<b>Service area zip codes</b><br>
 		<%= f.simple_fields_for :service_zips do |zip| %>
 			<%= render 'service_zip_fields', :f => zip %>

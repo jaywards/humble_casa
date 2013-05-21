@@ -12,17 +12,12 @@
 		    
 		    <b>Available service providers for your zip code:</b><br>
 			
-			<% @services_in_area = Service.find(ServiceZip.where(:zip => @property.zip).map(&:service_id).uniq) %>
-			<% @property_assignments = Assignment.where(:property_id => @property.id) %>
 			<% @i = 0 %>
-			<% Service::CATEGORIES.each do |category| %>
-	    		<%= category.titleize %>: 
-	    		
-	    		<% @category_services_in_area = Service.where(:category => category, :id => @services_in_area)%>
+			<% Service::CATEGORIES.each do |category| %>	
+	    		<%= category.titleize %>: 	
+	    		<% if !(@category_services_in_area = area_category_services(@property.zip, category)).empty? %>
 
-	   	    	<% if !@category_services_in_area.empty? %>
-
-	    			<%= f.simple_fields_for :assignments, @property_assignments[@i] do |assignment| %>
+	    			<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
 	    			 	<%= render 'assignment_fields', :f => assignment %>
 	    			<% end %>	
 	    			    		
@@ -31,10 +26,13 @@
 					No service providers in this category for your area<br>
 				
 				<% end %>
+				
 				<% @i += 1 %>
+	   		
 	   		<% end %>
 	   	<% end %>
 	   	<br>
+		
 		<%= f.button :submit %>
 
 <% end %>

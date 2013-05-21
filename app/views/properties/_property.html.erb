@@ -1,0 +1,12 @@
+	<span class="name"><b><%= property.name %></b></span><br>
+	<span class="address1"><%= property.address1 %></span><br>
+	<% if !property.address2.empty? %>
+		<span class="address2"><%= property.address2 %></span><br>
+	<% end %>
+	<span class="city"><%= property.city %></span>, 
+	<span class="state"><%= property.state %></span> 
+	<span class="zip"><%= property.zip %></span><br>
+	<span class="phone"><%= property.phone %></span><br>
+	<% if !property.instructions.empty? %>
+		<span class="instructions"><%= property.instructions %></span><br>
+	<% end %>

@@ -1,6 +1,6 @@
 class ServiceRequest < ActiveRecord::Base
   attr_accessible :assigned, :completed, :instructions, :property_id, :service_end_date, :service_id, :service_start_date, 
-  	:work_assignments_attributes
+  :request_id, :completed_date, :work_assignments_attributes
 
   belongs_to :property
   belongs_to :service
@@ -8,5 +8,11 @@ class ServiceRequest < ActiveRecord::Base
   has_many :work_assignments
   has_many :users, through: :work_assignments
   accepts_nested_attributes_for :work_assignments
+
+  	def service_request_id
+  		@request_id = "00R" + id.to_s + "S" + service_id.to_s + "P" + property_id.to_s
+	end
+
+
 
 end

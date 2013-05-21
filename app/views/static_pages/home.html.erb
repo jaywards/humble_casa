@@ -37,28 +37,39 @@
 
 			<% if !@service.first.nil? %>
 
-			<%= render 'shared/service_listing' %>
+				<%= render 'shared/service_listing' %>
 				
 			<% else %>
-					<h4>Let's get started!<br><br>Register your service business first so that you'll appear when your customers sign up: </h4>
-					<%= link_to "Register a service", new_user_service_path(@user) %>
+				
+				<h4>Let's get started!<br><br>Register your service business first so that you'll appear when your customers sign up: </h4>
+				<%= link_to "Register a service", new_user_service_path(@user) %>
+			
 			<% end %>
 		</div>
 
 
 
 	<% elsif @user.role.to_s == "employee" %>
-
+		
 		<div class="span8">
 
-		<% if !@employer.nil? %>
+			<% if !@employer.nil? %>
 
-				<h3>Your employer:</h3><br>	
-				<%= render @employer %>
-
-		<% else %>
-			You don't yet have an employer
-		<% end %>
+				<h4>Your employer:</h4><br>	
+				<%= render @employer %><br><br>
+				
+				<h4>Your service requests:</h4><br>
+				<ol class="service request listing">
+					<% if !@sorted_service_requests.nil? %>
+						<% @sorted_service_requests.each do |request| %>
+							<li><%= render request %></li><br>						
+						<% end %>
+					<% end %>
+				</ol>
+			<% else %>
+				You don't yet have an employer.<br>
+				<%= link_to "Select your employer", edit_user_path(current_user) %>
+			<% end %>
 		</div>
 	
 

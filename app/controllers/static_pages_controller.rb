@@ -10,21 +10,27 @@ class StaticPagesController < ApplicationController
         @property = @user.properties.build
         @property_listings = @user.user_properties
     
-      elsif @user.role = "serviceowner"
+      elsif @user.role == "serviceowner"
 
         @service = @user.user_service
         if !@service.first.nil?
           @zips_list = @service.first.service_servicezips
           @employees = User.find(Employment.where(:service_id => @service.first.id).map(&:user_id).uniq) 
-          @service_request_listings = @service.first.service_requests
-          if !@service_request_listings.empty?
-            @sorted_service_requests = @service_request_listings.sort_by {|a| a.completed }
+          #@service_request_listings = @service.first.service_requests
+          if !(@service_request_listings = @service.first.service_requests).empty?
+            @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
           end
         end
+      
+
       elsif @user.role == "employee"
         
         if !@user.employments.nil?
-          #@employer = Service.find_by_id(@user.employments.first.service_id)
+          @employer = Service.find_by_id(@user.employments.first.service_id)
+          #@service_request_listings = @user.service_requests
+          if !(@service_request_listings = @user.service_requests).empty?
+            @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
+          end
         end
       end
     

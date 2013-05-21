@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130517190910) do
+ActiveRecord::Schema.define(:version => 20130521161940) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -57,6 +57,8 @@ ActiveRecord::Schema.define(:version => 20130517190910) do
     t.text     "instructions"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
+    t.datetime "completed_date"
+    t.string   "request_id"
   end
 
   create_table "service_zips", :force => true do |t|

@@ -1,5 +1,5 @@
 class Service < ActiveRecord::Base
-  attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, 
+  attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, :user_id,
   	:service_zips_attributes, :assignments_attributes, :employments_attributes
   belongs_to :user
 

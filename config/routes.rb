@@ -1,5 +1,6 @@
 HumbleCasa::Application.routes.draw do
   resources :user_sessions
+  #resources :services
   resources :users do
     resources :properties, :services, :service_zips
   end
@@ -10,7 +11,6 @@ HumbleCasa::Application.routes.draw do
   match '/login', to: 'user_sessions#new', :as => :login
   match '/logout', to: 'user_sessions#destroy', :as => :logout
   match '/new_user', to: 'users#new', :as => :new_user
-
 
   root to: 'static_pages#home'
 

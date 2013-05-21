@@ -12,7 +12,7 @@
 		<% end %>
 
 		<ul class="nav pull-left">
-			<%= link_to "edit business details", edit_user_service_path(:id => @service.first.id) %> |
+			<%= link_to "edit business details", edit_service_path(:id => @service.first.id) %> |
 			<%= link_to "delete this business", @service.first, method: :delete, confirm: "Are you sure?", title: @service.first.name %>
 		</ul>
 
@@ -22,11 +22,13 @@
 		<br>
 		<h3>Your service requests:</h3><br>
 		<ol class="service request listing">
-
-			<% @sorted_service_requests.each do |request| %>
-				<%= render request %> 
-				<%= link_to "edit or assign request", edit_service_request_path(:id => request.id) %>
-					
+			<% if !@sorted_service_requests.nil? %>
+				<% @sorted_service_requests.each do |request| %>
+					<li>
+						<%= render request %> 
+						<%= link_to "edit or assign request", edit_service_request_path(:id => request.id) %><br>				
+					</li>
+				<% end %>
 			<% end %>
 		</ol>
 

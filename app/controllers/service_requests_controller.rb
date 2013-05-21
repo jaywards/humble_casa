@@ -2,8 +2,10 @@ class ServiceRequestsController < ApplicationController
 
 	def create
 		@service_request = ServiceRequest.new(params[:service_request])
+		@service_request.assigned = false
+		@service_request.completed = false
 		@service_request.work_assignments.build
-		
+
 		if @service_request.save
 			flash[:success] = "Service request created!"
 			redirect_to root_path
@@ -11,6 +13,8 @@ class ServiceRequestsController < ApplicationController
 			flash[:error] = "Service request couldn't be created."
 			render :action => 'new'
 		end
+
+
 
 	end
 
@@ -24,14 +28,15 @@ class ServiceRequestsController < ApplicationController
 	def show
 		@service_request = ServiceRequest.find_by_id(params[:id])
 		@service = Service.find_by_id(@service_request.service_id)
-		@property = Property.find_by_id(@service_request.service_id)
+		@property = Property.find_by_id(@service_request.property_id)
+		render 'completed_request'
 
 	end
 
 	def edit
 		@service_request = ServiceRequest.find_by_id(params[:id])
 		@service = Service.find_by_id(@service_request.service_id)
-		@property = Property.find_by_id(@service_request.service_id)
+		@property = Property.find_by_id(@service_request.property_id)
 	end
 
 	

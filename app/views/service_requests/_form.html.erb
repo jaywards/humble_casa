@@ -9,24 +9,28 @@
 	    <%= f.hidden_field :completed %>
 	    <%= f.hidden_field :property_id, value: @property.id %>
 	    <%= f.hidden_field :service_id, value: @service.id %>
+
 	    <%= f.input :service_start_date, label: "Service should completed on this date or later:", as: :date %>
 	    <%= f.input :service_end_date, label: "Service must be completed by this date:", as: :date %>
 	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text %>
+
 	
 	    <% if current_user.role == "serviceowner" %>
 	    	<% @employees = @service.service_employees %>
-	    	<%#= debug @employees %>
-	    	<%# @names = Array.new %>
-	    	<%# @employees.each do |e| %>
-	    		<%# @name =  e.last_name + ", " + e.first_name%>
-	    		<%# @names << @name %>
-	    	<%# end %>
-	    	<%#= @name %>
-	    	<%# @names = @service.service_employees_names %>
-	    	<%= debug @employees %>
 	   		<%= f.simple_fields_for :work_assignments, @service_request.work_assignments do |work_assignment| %>
 	    		<%= render 'work_assignment_fields', :f => work_assignment %>
+	    		<% if !work_assignment.nil? %>
+		    		<%= f.hidden_field :assigned, value: true %>
+		    	<% end %>
 	    	<% end %>
+		<% end %>
+
+		<% if current_user.role == "employee" %>
+	    	<%= f.input :completed, as: :radio_buttons %>
+	    	<% if :completed? %>
+	    		<!-- Not working (completed_date is always set, regardless of value of :completed). Not sure that it matters.-->
+	    		<%= f.hidden_field :completed_date, value: Time.now %>
+			<% end %>
 		<% end %>
 
 		<%= f.button :submit %>
