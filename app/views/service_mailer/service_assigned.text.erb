@@ -1,0 +1,27 @@
+Hi,
+
+A new service request has been assigned to you:
+
+Service request details:
+	Request #: <%= @service_request.service_request_id %>
+	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %>
+	Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+	Special instructions for this request: <%= @service_request.instructions %>
+
+Property details: 
+	<%= @property.name %>
+	<%= @property.user.first_name %> <%= @property.user.last_name %>
+	<%= @property.address1 %>
+	<% if !@property.address2.empty? %>
+	<%= @property.address2 %>
+	<% end %>
+	<%= @property.city %>, <%= @property.state %> <%= @property.zip %>
+	<%= @property.phone %>
+	<% if !@property.instructions.empty? %>
+	Special instructions for this property: <%= @property.instructions %>
+	<% end %>
+
+Please log on to HumbleCasa to complete this request.
+
+Thank you,
+The HumbleCasa Team

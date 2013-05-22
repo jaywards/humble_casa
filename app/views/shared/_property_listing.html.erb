@@ -10,27 +10,28 @@
 			<b>Service providers for this property:</b><br>			
 			<ol>
 				<% Service::CATEGORIES.each do |category| %>		
-					<b><%= category.titleize %>: </b>
-					<ol>
-						<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
-							<% if check_availability(area_services(property_listing.zip), category) %>						
-								You haven't selected a service provider but there is at least one in this category that services your area!
-							<% else %>
-								No services providers in this category for your area.
-							<% end %>
-							<br>
-						<% else %> 
+					<b><%= category.titleize %>:  </b>
+					<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
+						<% if check_availability(area_services(property_listing.zip), category) %>						
+							You haven't selected a service provider but there is at least one in this category that services your area!
+						<% else %>
+							No services providers in this category for your area.
+						<% end %>							
+						<br>
+					<% else %> 
+						<%= @selected_service.name %><br>
+						<ol>
 							<% if !(@open_service_requests = open_requests(@selected_service, property_listing)).nil? %>	
 								<% @open_service_requests.each do |request| %>
-									<%= @selected_service.name %> -- 
 									<%= render request %>
 								<% end %>
 							<% end %>
 							<%= link_to "create a new service request", new_service_request_path(service_id: @selected_service.id, property_id: property_listing.id) %><br>
-						<% end %>
-					</ol>
+						</ol>
+					<% end %>
 		  		<% end %>
 		  	</ol>
+		  	<br>
 			<ul class="nav pull-left">
 				<%= link_to "edit", edit_property_path(:id => property_listing.id) %> |
 				<%= link_to "delete", property_listing, method: :delete, confirm: "Are you sure?", title: property_listing.name %>

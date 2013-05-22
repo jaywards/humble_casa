@@ -8,14 +8,13 @@ class ServiceRequestsController < ApplicationController
 
 		if @service_request.save
 			flash[:success] = "Service request created!"
+			ServiceMailer.service_created(@service_request).deliver
+			@service_request.update_attribute(:mailed_created, true)
 			redirect_to root_path
 		else
 			flash[:error] = "Service request couldn't be created."
 			render :action => 'new'
 		end
-
-
-
 	end
 
 	def new
@@ -42,9 +41,20 @@ class ServiceRequestsController < ApplicationController
 	
 	def update
 	    @service_request = ServiceRequest.find_by_id(params[:id])
+
 	    if @service_request.update_attributes(params[:service_request])
-	      flash[:success] = "Successfully updated service request."
+	      flash[:success] = "Successfully updated service request."	      
+	      if @service_request.assigned && !@mailed_assigned 
+	      	ServiceMailer.service_assigned(@service_request).deliver
+	      	@service_request.update_attribute(:mailed_assigned, true)
+	      end
+	      if @service_request.completed && !@mailed_completed
+	      	@service_request.update_attribute(:completed_date, Time.now) 
+	      	ServiceMailer.service_completed(@service_request).deliver
+	      	@service_request.update_attribute(:mailed_completed, true)
+	      end       
 	      redirect_to root_path
+	    
 	    else
 	      flash[:error] = "Couldn't update service request."
 	      render :action => 'edit'

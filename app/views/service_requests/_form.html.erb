@@ -27,10 +27,6 @@
 
 		<% if current_user.role == "employee" %>
 	    	<%= f.input :completed, as: :radio_buttons %>
-	    	<% if :completed? %>
-	    		<!-- Not working (completed_date is always set, regardless of value of :completed). Not sure that it matters.-->
-	    		<%= f.hidden_field :completed_date, value: Time.now %>
-			<% end %>
 		<% end %>
 
 		<%= f.button :submit %>
