@@ -5,9 +5,9 @@
 	    <%= f.input :city %>
 	    <%= f.input :state %>
 	    <%= f.input :zip,label: "Zip code" %>
-	    <%= f.input :phone %>
+	   	<%= f.input :phone, as: :tel, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999" } %>
 	    <%= f.input :email %>
-		<%= f.input :category, collection: Service::CATEGORIES %>
+		<%= f.input :category, collection: [['landscaping', 'Landscaping'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['housecleaning', 'Housecleaning'], ['snow_removal', 'Snow removal'], ['handyman/general_maintenance', 'Handyman/General maintenance']], label_method: :last, value_method: :first %>
 		<%= f.hidden_field :user_id, value: current_user.id %>
 
 		<b>Service area zip codes</b><br>

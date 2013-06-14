@@ -12,6 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require jquery.ui.datepicker
 //= require bootstrap
+//= require bootstrap-inputmask
 //= require_tree .
 //= require cocoon
