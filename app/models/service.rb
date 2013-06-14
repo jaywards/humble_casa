@@ -18,7 +18,7 @@ class Service < ActiveRecord::Base
 
 
   CATEGORIES = %w[landscaping pool/spa_cleaning housecleaning snow_removal handyman/general_maintenance]
-
+    #also need to update Services form if changing categories
 
 
   def service_servicezips

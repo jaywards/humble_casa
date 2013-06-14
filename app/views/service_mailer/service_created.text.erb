@@ -5,8 +5,25 @@ A new service request has been created by one of your clients:
 Service request details:
 	Request #: <%= @service_request.service_request_id %>
 	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %>
-	Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
 	Special instructions for this request: <%= @service_request.instructions %>
+	
+<% if @service_request.onetime? %>
+	One time request
+	Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+
+<% else %>
+	Repeating request
+	Frequency: <%= @service_request.frequency.titleize %>
+	<% if @service_request.frequency == "weekly" %> 
+	When: <%= @service_request.service_week_day.titleize %> of each week
+	<% elsif @service_request.frequency == "every_other_week" %>
+	When: <%= @service_request.service_week_day.titleize %> every other week
+	<% elsif @service_request.frequency == "monthly" %> 
+	When: <%= @service_request.service_month_day.ordinalize %> of each month
+	<% elsif @service_request.frequency == "every_other_month" %> 
+	When: <%= @service_request.service_month_day.ordinalize %> of every other month
+	<% end %>
+<% end %>
 
 Property details: 
 	<%= @property.name %>

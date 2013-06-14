@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130522200222) do
+ActiveRecord::Schema.define(:version => 20130611015452) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -38,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20130522200222) do
     t.string   "city"
     t.string   "state"
     t.integer  "zip"
-    t.integer  "phone"
+    t.string   "phone"
     t.string   "instructions"
     t.integer  "user_id"
     t.datetime "created_at",   :null => false
@@ -55,13 +55,19 @@ ActiveRecord::Schema.define(:version => 20130522200222) do
     t.datetime "service_start_date"
     t.datetime "service_end_date"
     t.text     "instructions"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                           :null => false
+    t.datetime "updated_at",                                           :null => false
     t.datetime "completed_date"
     t.string   "request_id"
-    t.boolean  "mailed_created",     :default => false
-    t.boolean  "mailed_assigned",    :default => false
-    t.boolean  "mailed_completed",   :default => false
+    t.boolean  "mailed_created",                    :default => false
+    t.boolean  "mailed_assigned",                   :default => false
+    t.boolean  "mailed_completed",                  :default => false
+    t.boolean  "onetime"
+    t.string   "frequency"
+    t.string   "service_week_day"
+    t.integer  "service_month_day",  :limit => 255
+    t.boolean  "asap"
+    t.datetime "first_scheduled"
   end
 
   create_table "service_zips", :force => true do |t|
