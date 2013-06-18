@@ -16,7 +16,6 @@ class StaticPagesController < ApplicationController
         if !@service.first.nil?
           @zips_list = @service.first.service_servicezips
           @employees = User.find(Employment.where(:service_id => @service.first.id).map(&:user_id).uniq) 
-          #@service_request_listings = @service.first.service_requests
           if !(@service_request_listings = @service.first.service_requests).empty?
             @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
           end
@@ -27,7 +26,6 @@ class StaticPagesController < ApplicationController
         
         if !@user.employments.nil?
           @employer = Service.find_by_id(@user.employments.first.service_id)
-          #@service_request_listings = @user.service_requests
           if !(@service_request_listings = @user.service_requests).empty?
             @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
           end

@@ -1,5 +1,5 @@
-<%= simple_form_for @property do |f| %>
-	    <%= f.input :name, label: 'Property name', placeholder: "A nickname for this property" %>
+<%= simple_form_for(@property, remote: true) do |f| %>
+	    <%= f.input :name, label: 'Property name', placeholder: "A nickname for this property"%>
 	    <%= f.input :address1 %>
 	    <%= f.input :address2 %>
 	    <%= f.input :city %>

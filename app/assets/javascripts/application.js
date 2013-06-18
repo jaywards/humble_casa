@@ -11,9 +11,12 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require jquery_ujs
+//= require jquery.ui.core
 //= require jquery.ui.datepicker
+//= require jquery.ui.dialog
+//= require jquery_ujs
 //= require bootstrap
 //= require bootstrap-inputmask
+//= require bootstrap-tab
 //= require_tree .
 //= require cocoon

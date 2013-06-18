@@ -7,6 +7,7 @@ require "action_mailer/railtie"
 require "active_resource/railtie"
 require "sprockets/railtie"
 require "test/unit"
+
 #require "mocha/setup"
 # require "rails/test_unit/railtie"
 
@@ -63,5 +64,7 @@ module HumbleCasa
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    config.autoload_paths += %W(#{config.root}/lib/extras)
   end
 end

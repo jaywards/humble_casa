@@ -69,13 +69,13 @@ p {
 	float: left;
 	margin-right: 10px;
 	font-size: 1.7em;
-	color: $grayMediumLight;
+	color: black;
 	letter-spacing: -1px;
 	padding-top: 9px;
 	font-weight: bold;
 	line-height: 1;
 	&:hover {
-		color: white;
+		color: $grayLight;
 		text-decoration: none;
 	}
 }
@@ -103,68 +103,6 @@ footer {
 			float: left;
 			margin-left: 10px;
 		}
-	}
-}
-
-/* misc */
-.debug_dump {
-	clear: both;
-	float: left;
-	width: 100%;
-	margin-top: 45px;
-	@include box_sizing;
-}
-
-/* sidebar */
- aside {
- 	section {
- 		padding: 10px 0;
- 		border-top: 1px solid $grayLighter;
- 		&:first-child {
- 			border: 0;
- 			padding-top: 0;
- 		}
- 		span {
- 			margin-bottom: 3px;
- 			line-height: 1;
- 		}
- 	}
- 	h1 {
- 		font-size: 1.6em;
- 		text-align: left;
- 		letter-spacing: -1px;
- 		margin-bottom: 3px;
- 	}
- }
-
- .gravatar {
- 	float: left;
- 	margin-right: 10px;
- }
-
-.stats {
-	overflow: auto;
-	a {
-		float: left;
-		padding: 0 10px;
-		border-left: 1px solid $grayLighter;
-		color: gray;
-		&:first-child {
-			padding-left: 0;
-			border: 0;
-		}
-
-	}
-	strong {
-		display: block;
-	}
-}
-
-.user_avatars {
-	overflow: auto;
-	margin-top: 10px;
-	.gravatar {
-		margin: 1px 1px;
 	}
 }
 
@@ -206,40 +144,49 @@ footer {
 	}
 }
 
-/* microposts */
 
-.properties {
-	list-style: none;
-	margin: 20px 0 0 0;
-	li {
-		overflow: auto;
-		padding: 10px 0;
-		border-top: 1px solid #e8e8e8;
-		&:last-child {
-			border-bottom: 1px solid $grayLighter;
-		}
-	}
+/* tabs */
+
+.tabs {
+	margin: 0;
+	padding: 0;	
+	zoom: 1;
 }
-
-.content {
-	display: block;
-}
-
-.timestamp {
-	color: $grayLight;
-}
-
-.gravatar {
+#tabs li {
 	float: left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#tabs a {
+	display: block;
+	text-decoration: none;
+	padding: 3px 5px;
+	background-color: $grayLight;
 	margin-right: 10px;
+	border: 1px solid rgb(153,153,153);
+	margin-bottom: -1px;
+	color: black;
+}
+#tabs li.active a {
+	border-bottom: 1px solid white;
+	background-color: white;
+	color: black;
+	position: relative;
 }
 
-aside {
-	textarea {
-		height: 100px;
-		margin-bottom: 5px
-	}
+.tab-pane.active {
+	clear: both;
+	margin-bottom: 25px;	
+	#border: 1px solid rgb(153,153,153);	
+	background-color: white;
+	padding: 10px;
 }
+
+.tab-pane {
+	color: black;	
+}
+
 
 .onetime-fields {
   display: none;

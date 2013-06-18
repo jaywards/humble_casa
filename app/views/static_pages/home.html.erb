@@ -13,23 +13,7 @@
 	
 	<% if @user.role.to_s == "propertyowner" %>
 
-		<div class="span8">
-
-			<% if @user.properties.count > 0 %>
-				<h3>Your properties:</h3>
-
-				<ol class="properties">
-					<%= render partial: 'shared/property_listing', collection: @property_listings %>
-					<%= link_to "Register another property", new_user_property_path(@user) %>
-				</ol>
-			<% else %>
-					<h4>Let's get started!<br><br>Register your property first and then we'll find your favorite service providers:</h4><br>
-					<%= link_to "Register a property", new_user_property_path(@user) %>
-			<% end %>
-		</div>
-
-
-
+		<%= render 'home_propertyowner' %>
 
 	<% elsif @user.role.to_s == "serviceowner" %>
 
