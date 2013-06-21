@@ -4,22 +4,23 @@
 			Pending request for <%= service_request.property.name %>. Created on: <%= service_request.created_at.strftime("%m/%d/%Y") %>
 			
 			<% if current_user.role == "serviceowner" && service_request.assigned %>			
-				<% #@assignee = User.find_by_id(service_request.work_assignments.first.user_id) %>
-			 	-- assigned to: <%= service_request.users.first.to_label %> 
+				-- assigned to: <%= service_request.users.first.to_label %> 
 			<% end %>
 			
 			<% if current_user.role == "propertyowner" %>
-				<%= link_to "edit this request", edit_service_request_path(id: service_request.id) %> |  
-				<%= link_to "delete this request", service_request, method: :delete, confirm: "Are you sure?" %><br> 
+				<p class="launch-service-request">
+					<%= link_to "view/edit this request", edit_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %> 
+				</p>  
+				<%= link_to "delete this request", service_request, method: :delete, class: "btn btn-mini", confirm: "Are you sure?" %><br> 
 			<% end %>
 
 			<% if current_user.role == "employee" %>
-				<%= link_to "complete this request", edit_service_request_path(id: service_request.id) %> 
+				<%= link_to "complete this request", edit_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %> 
 			<% end %>
 		
 		<% else %>
 			Completed request for <%= service_request.property.name %>. Created on: <%= service_request.created_at.strftime("%m/%d/%Y") %>
-			<%= link_to "see request report", service_request_path(id: service_request.id) %><br>
+			<%= link_to "see request report", service_request_path(id: service_request.id), class: "btn btn-mini" %><br>
 		<% end %>
 	
 	</span>

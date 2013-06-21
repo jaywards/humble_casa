@@ -31,12 +31,10 @@ group :assets do
   gem 'sass-rails',   '3.2.4'
   gem 'coffee-rails', '3.2.2'
   gem 'uglifier', '1.2.3'
-  gem 'jquery-ui-rails'
-  gem 'jquery-modal-rails'
-  gem 'bootstrap-datepicker-rails'
 end
 
 gem 'jquery-rails'
+gem 'jquery-ui-rails'
 
 group :test do
 	gem 'rspec-rails', '~> 2.12.2'

@@ -13,7 +13,6 @@ $grayMediumLight: #eaeaea;
 }
 
 
-
 /* universal */
 html {
 	overflow-y: scroll;
@@ -130,21 +129,6 @@ footer {
 	@extend .error;
 }
 
-/* users index */
-.users {
-	list-style: none;
-	margin: 0;
-	li {
-		overflow: auto;
-		padding: 10px 0;
-		border-top: 1px solid $grayLighter;
-		&:last-child {
-			border-bottom: 1px solid $grayLighter;
-		}
-	}
-}
-
-
 /* tabs */
 
 .tabs {
@@ -206,4 +190,35 @@ footer {
 
 #first-scheduled-fields {
   display: none;
+}
+
+#modal-container {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0,0,0,0.4);
+}
+ 
+#modal {
+  display: none;
+  position: absolute;
+  width: 600px;
+  left: 50%;
+  margin-left: (-600px - 40px) / 2;
+  padding: 20px;
+  background: #fff;
+  border: 5px solid #eee;
+ 
+  & > .close {
+    position: absolute;
+    right: 3px;
+    top: -1px;
+    color: #666;
+    &:hover, &:active {
+      color: #000;
+    }
+  }
 }

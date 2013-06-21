@@ -8,24 +8,25 @@ class PropertiesController < ApplicationController
 			@property.assignments.build
 		end
 
-		
+		#respond_to do |format|
+	    #  	if @property.save
+	    #    	format.html { flash[:succes] = 'Property created.' 
+	    #    					redirect_to root_path }
+	    #    	format.json { render json: @property, status: :created, location: @property }
+	    #  	else
+	    #    	format.html { render action: "new" }
+	    #    	format.json { render json: @property.errors, status: :unprocessable_entity }
+	    #    	format.js {render 'new_modal_error'}
+	    #  	end
+	    # end
+		if @property.save
+			flash[:success] = "Property created."
+			redirect_to root_path
+		else
+			flash[:error] = "Couldn't create property at this time. Please try again later."
+			render action: 'new'
+		end
 
-		# if @property.save
-		#	flash[:success] = "Property created!"
-		#	redirect_to root_path
-		#else
-		#	flash[:error] = "Property couldn't be created."
-		#	render :action => 'new'
-		#end
-		respond_to do |format|
-	      	if @property.save
-	        	format.html { redirect_to root_path, notice: 'Property created.' }
-	        	format.json { render json: @property, status: :created, location: @property }
-	      	else
-	        	format.html { render action: "new" }
-	        	format.json { render json: @property.errors, status: :unprocessable_entity }
-	      	end
-	     end
     end
 
 	def new
@@ -47,21 +48,29 @@ class PropertiesController < ApplicationController
 
 	def edit
 		@property = Property.find_by_id(params[:id])
+
 	end
 
 	def update
     
-	    respond_to do |format|
-	    	if @property.update_attributes(params[:property])
-	 	     	format.html { redirect_to root_path, notice: "Successfully updated property." }
-	 	     		#flash[:success] = "Successfully updated property." }
-	 	     	format.json { head :no_content }
-	    	else
-	      		format.html { render action: "edit", notice: "Couldn't update property." }
-	      			#flash[:error] = "Couldn't update property." }
-	      		format.json { render json: @property.errors, status: :unprocessable_entity }
-	    	end
+	    #respond_to do |format|
+	    #	if @property.update_attributes(params[:property])
+	 	#     	format.html { redirect_to root_path, notice: "Successfully updated property."}
+	 	#     	format.json { head :no_content }
+	    #	else
+	    #  		format.html { render action: "edit", notice: "Couldn't update property." }
+	    #  		format.json { render json: @property.errors, status: :unprocessable_entity }
+	    #	end
+	    #end
+	    if @property.update_attributes(params[:property])
+	      flash[:success] = "Successfully updated property."	      
+	      redirect_to root_path	    
+	    else
+	      flash[:error] = "Couldn't update property at this time. Please try again later."
+	      render :action => 'edit'
 	    end
+
+
 	end
 
 	def index

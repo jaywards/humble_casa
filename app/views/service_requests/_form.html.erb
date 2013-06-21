@@ -1,4 +1,5 @@
 <%= simple_form_for @service_request do |f| %>
+	<div class="service_request">    
 	    <h3>New service request</h3><br>
 	    <b>
 	    Property: <%= @property.name %><br>
@@ -38,7 +39,7 @@
 		    	</div>
 
 		    	<div class="monthly-fields">
-		    		<%= f.input :service_month_day, label: "Which day of the month:", collection: 1...30 %>
+		    		<%= f.input :service_month_day, input_html: {value: @service_request.service_month_day, id: "monthpicker" }, label: "Which day of the month:", collection: 1...30 %>
 		    	</div>
 
 		    	<div id="first-scheduled-fields">
@@ -66,5 +67,8 @@
 	    	<%= f.input :completed, as: :radio_buttons %>
 		<% end %>
 
-		<%= f.button :submit %>
+  		<button class="btn btn-primary" type="submit" data-disable-with="Saving">
+  			<i class="icon-ok icon-white"></i> Save
+		</button>
+	</div>
 <% end %>

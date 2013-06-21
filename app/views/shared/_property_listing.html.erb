@@ -1,7 +1,12 @@
 <!-- Property details -->
 <%= render property_listing %><br>
-<%= link_to "edit", edit_property_path(:id => property_listing.id) %> |
-<%= link_to "delete", property_listing, method: :delete, confirm: "Are you sure?", title: property_listing.name %>
+<%= link_to edit_property_path(id: property_listing.id), remote: true, class: "btn btn-mini" do%>
+	<i class="icon-edit"></i> Edit property
+<% end %>
+&nbsp
+<%= link_to property_listing, class: "btn btn-mini", method: :delete, confirm: "Are you sure?", title: property_listing.name do%>
+	<i class="icon-trash"></i> Delete property
+<% end %>
 <hr>
 <!-- Service provider details -->
 <b>Service providers for this property:</b><br>			
@@ -23,7 +28,11 @@
 						<%= render request %>
 					<% end %>
 				<% end %>
-				<%= link_to "create a new service request", new_service_request_path(service_id: @selected_service.id, property_id: property_listing.id) %><br>
+				<br>
+				<div class="launch-service-request">
+					<%= link_to "create a new service request", new_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-primary", remote: true %>
+				</div>	
+			<br>
 			</ol>
 		<% end %>
 	<% end %>
