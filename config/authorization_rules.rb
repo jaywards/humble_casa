@@ -20,7 +20,7 @@ authorization do
     has_permission_on :users, :to => [:show, :edit, :update] #do
 #      if_attribute :user =>  is { user }
 #    end
-    has_permission_on :properties, :to => [:new, :create, :show, :edit, :update, :destroy] #do
+    has_permission_on :properties, :to => [:new, :create, :show, :edit, :update, :destroy, :assign_services] #do
     #  if_attribute :user => is { user }
     #end
     has_permission_on :user_sessions, :to => [:destroy, :new, :create]

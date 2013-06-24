@@ -82,6 +82,10 @@ class PropertiesController < ApplicationController
 		end
 	end
 
+	def assign_services
+		render action: "assign_services"
+	end
+
 	private 
 		def correct_user
 			@property = current_user.properties.find_by_id(params[:id])

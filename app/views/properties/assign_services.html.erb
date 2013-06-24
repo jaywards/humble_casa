@@ -1,0 +1,42 @@
+<%= simple_form_for(@property) do |f| %>
+	<%= render @property %>
+	<br>  
+	<table class="table table-condensed table-striped">			
+		<thead>
+			<tr>
+				<th>Category</th>
+				<th>Select a Provider</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @i = 0 %>
+			<% Service::CATEGORIES.each do |category| %>	
+		    	<tr>
+		    		<td>
+		    			<%= category.titleize %>
+		    		</td> 	
+		    		<td>
+		    			<% if !(@category_services_in_area = area_category_services(@property.zip, category)).empty? %>
+		    				<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
+		    			 		<%= render 'assignment_fields', f: assignment %>
+		    				<% end %>	
+		    			<% else %>
+							None available yet for your area. Check this box if you'd be interested in signing up for this service when it becomes available!<br>
+						<% end %>
+					</td>
+					<% @i += 1 %>
+				</tr>	   		
+		   	<% end %>
+		</tbody>
+	</table>
+
+	<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
+		<i class="icon-ok icon-white"></i> Save
+	</button>
+	&nbsp		
+	<button class="btn" type="button" id="close">
+		<i class="icon-off"></i> Close
+	</button>
+
+
+<% end %>

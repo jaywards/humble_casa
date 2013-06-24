@@ -24,6 +24,7 @@
         			<div class="tab-pane" id=<%= "property-" + listing.id.to_s %>>
 	            <% end %>
 	            	<%= render 'shared/property_listing', property_listing: listing %> 
+					<%= render 'shared/property_service_providers', property_listing: listing %>
     	    	</div>
         	<% end %>
         	<% if @first %>

@@ -1,0 +1,45 @@
+<b>Service providers for this property:</b><br><br>
+<table class="table table-condensed table-striped">			
+	<thead>
+		<tr>
+			<th>Category</th>
+			<th>Selected Provider</th>
+			<th>Service Requests</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		<% Service::CATEGORIES.each do |category| %>		
+			<tr>
+				<td>
+					<%= category.titleize %>
+				</td>
+				<td>	
+					<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
+						<% if check_availability(area_services(property_listing.zip), category) %>						
+							None selected - click "Register for Services" below
+						<% else %>
+							No service providers for your area.
+						<% end %>
+						</td><td></td>							
+					<% else %> 
+						<%= @selected_service.name %>
+						<div class="launch-service-request">
+							<%= link_to "create a new service request", new_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success", remote: true %>
+						</div>
+				</td>
+				<td>			
+						<% if !(@open_service_requests = open_requests(@selected_service, property_listing)).nil? %>	
+							<% @open_service_requests.each do |request| %>
+								<%= render request %>
+							<% end %>
+						<% end %>	
+					<% end %>
+				</td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= link_to assign_services_property_path(property_listing), remote: true, class: "btn btn-primary" do%>
+	<i class="icon-check"></i> Register or change services for this property
+<% end %>

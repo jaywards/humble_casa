@@ -17,7 +17,7 @@ $ ->
     $modal.hide()
     false
 
-  $(document).on 'click', '#modal #cancel', ->
+  $(document).on 'click', '#modal #close', ->
     $modal_container.hide()
     $modal.hide()
     false

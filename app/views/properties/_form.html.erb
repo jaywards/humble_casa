@@ -1,28 +1,12 @@
 <%= simple_form_for(@property) do |f| %>
 	    <%= render 'property_fields', field: f %>
 	    
-	    <% if !@property.zip.nil? %>		    
-		   	<br>
-		    <b>Available service providers for your zip code:</b><br>
-			<% @i = 0 %>
-			<% Service::CATEGORIES.each do |category| %>	
-	    		<%= category.titleize %>: 	
-	    		<% if !(@category_services_in_area = area_category_services(@property.zip, category)).empty? %>
-	    			<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
-	    			 	<%= render 'assignment_fields', f: assignment %>
-	    			<% end %>	
-	    		<% else %>
-					No service providers in this category for your area<br>
-				<% end %>
-				<% @i += 1 %>	   		
-	   		<% end %>
-	   	<% end %>
-  		<button class="btn btn-primary" type="submit" data-disable-with="Saving">
+  		<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
   			<i class="icon-ok icon-white"></i> Save
 		</button>
 		&nbsp		
-		<button class="btn" type="button" id="cancel">
-  			<i class="icon-trash"></i> Cancel
+		<button class="btn" type="button" id="close">
+  			<i class="icon-off"></i> Close
 		</button>
 
 

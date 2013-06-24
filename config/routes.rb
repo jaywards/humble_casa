@@ -4,9 +4,14 @@ HumbleCasa::Application.routes.draw do
   resources :users do
     resources :properties, :services, :service_zips
   end
-  resources :properties
+  resources :properties do
+    member do
+      get 'assign_services'
+    end
+  end
   resources :services
   resources :service_requests
+
 
   match '/login', to: 'user_sessions#new', :as => :login
   match '/logout', to: 'user_sessions#destroy', :as => :logout
@@ -27,7 +32,6 @@ HumbleCasa::Application.routes.draw do
   get "static_pages/contact_us"
 
   get "static_pages/careers"
-
   
 
   # The priority is based upon order of creation:
