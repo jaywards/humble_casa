@@ -1,19 +1,20 @@
 <%= provide(:title, '') %>
 
-<% if current_user.nil? %>
-	<h1>Welcome to HumbleCasa!</h1>
-	<%= link_to "Create property owner account", new_user_path(role: "propertyowner") %><br>
-	<%= link_to "Create service owner account", new_user_path(role: "serviceowner") %><br>
-	<%= link_to "Create employee account", new_user_path(role: "employee") %><br>
-	<%= link_to "Login to existing homeowner account", login_path %><br> 
-
+<% if params[:content] == "services" %>
+	<%= render 'home_info_serviceowner' %>
+<% elsif params[:content] == "homeowner" || current_user.nil? %>
+	<%= render 'home_info_propertyowner' %>
 <% else %>
 
 	<h2>Welcome, <%= @user.first_name %></h2>
 	
 	<% if @user.role.to_s == "propertyowner" %>
 
-		<%= render 'home_propertyowner' %>
+		<% if @user.properties.count() == 0 %>
+			<%= render 'home_noprop_propertyowner' %>			
+		<% else %>
+			<%= render 'home_prop_propertyowner' %>
+		<% end %>
 
 	<% elsif @user.role.to_s == "serviceowner" %>
 

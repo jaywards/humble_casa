@@ -2,8 +2,16 @@ class UsersController < ApplicationController
   filter_resource_access
 
   def new
-    @user = User.new
-
+    if !current_user.nil?
+      flash[:error] = "Can't create a new user. You must logout first before creating a new account."
+      if current_user.role.to_s == "propertyowner"
+        redirect_to root_path(content: "services")
+      else
+        redirect_to root_path(content: "homeowner")
+      end
+    else
+      @user = User.new
+    end
   end
 
   def create

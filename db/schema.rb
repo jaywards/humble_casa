@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130611015452) do
+ActiveRecord::Schema.define(:version => 20130627215925) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20130611015452) do
     t.integer  "service_id"
     t.datetime "created_at",  :null => false
     t.datetime "updated_at",  :null => false
+    t.boolean  "interested"
   end
 
   add_index "assignments", ["property_id"], :name => "index_associations_on_property_id"
@@ -37,7 +38,7 @@ ActiveRecord::Schema.define(:version => 20130611015452) do
     t.string   "address2"
     t.string   "city"
     t.string   "state"
-    t.integer  "zip"
+    t.string   "zip"
     t.string   "phone"
     t.string   "instructions"
     t.integer  "user_id"

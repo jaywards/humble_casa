@@ -1,10 +1,7 @@
-<%#= provide(:title, 'Register Property') %>
-<!--<div id="content">
-	<%#= render 'form' %>
-	<%#= link_to 'Back', root_path, :rel => "modal:close" %>
-</div>
-
--->
-<div id="property_form">
-	<%= render partial: 'form' %>
-</div>
+<%= provide(:title, 'Register Property') %>
+<h2>Register a property</h2>
+<% if params[:creation] == "modal" %>
+	<%= render 'form' %>
+<% else %>
+	<%= render 'non_modal_form' %>
+<% end %>

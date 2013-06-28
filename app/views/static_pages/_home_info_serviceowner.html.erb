@@ -1,0 +1,44 @@
+<br>
+<center><%= image_tag("HClogo.jpg", alt: "HumbleCasa.com logo", size: "120x45") %></center>
+<p id="main-title">
+	<h1>Welcome to HumbleCasa!</h1>
+	<h2>...CRM tools for home service providers</h2>
+</p>
+<p>
+	HumbleCasa is designed for small and medium businesses in the home upkeep and maintainence industry. Our customer relationship management (CRM) tools make it easy to <b>improve customer satisfaction</b>, <b>manage your work requests and your workforce</b>, and <b>simplify invoicing and payroll</b>. 
+
+<p>
+	Here's how it works:
+	<ol>
+		<li>You <b>create a profile for your business</b> on HumbleCasa. Also, have your employees create accounts so that you can use our workforce management tools.</li>
+		<li>Your <b>customers create their accounts</b> on HumbleCasa (or some of our existing users become your new customers!) and they use our site tools to <b>schedule service appointments</b> at their property.</li>
+		<li>You get <b>notified via email</b> and on the site that you have new service requests and can <b>assign each request to one of your employees</b>.</li>
+		<li>Your employee goes to the property, completes the service, and marks that it is done. <b>Your customer gets notified via email that their property has been serviced!</b></li>
+		<li>At any time you can pull a report for your data from the site, which feeds into <b>customer invoices and payroll</b>.</li>
+	</ol>
+</p>
+<p>
+	HumbleCasa is completely free to your customers. We charge you a minimal amount (less than $1/month for each of your active customers). So if you're a seasonal business and your customers are only going to be using HumbleCasa for 1/2 of the year, you only pay for the months that they're active.
+</p>
+<p>
+	<b>Our promise:</b> if you're not completely happy you can cancel at anytime and we'll refund your last 2 months charges. In addition, we offer the first month for free, so try us for 3 months at no risk.
+</p>
+<br>
+<p>
+	Not convinced? Take a <%= link_to "Feature Tour", static_pages_feature_tour_path%> and view our 
+	<%= link_to "Pricing Plans", static_pages_pricing_plans_path%>.
+</p>
+<br>
+<p>
+	Ready to sign-up? Create below to create your account as either a Service Owner or Employee
+</p>
+<br>
+<center>
+	<%= link_to new_user_path(role: "serviceowner"), class: "btn btn-primary" do%>
+		<i class="icon-user"></i> Create Service Owner Account
+	<% end %>
+	<br><br>
+	<%= link_to new_user_path(role: "employee"), class: "btn" do%>
+		<i class="icon-user"></i> Create Employee Account
+	<% end %>
+</center>

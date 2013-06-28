@@ -1,10 +1,14 @@
 <!-- Property details -->
 <%= render property_listing %><br>
+<%= link_to assign_services_property_path(property_listing), remote: true, class: "btn btn-mini btn-primary" do %>
+	<i class="icon-check"></i> Register For or Change Services
+<% end %>
+&nbsp
 <%= link_to edit_property_path(id: property_listing.id), remote: true, class: "btn btn-mini" do%>
-	<i class="icon-edit"></i> Edit property
+	<i class="icon-edit"></i> Edit Property
 <% end %>
 &nbsp
 <%= link_to property_listing, class: "btn btn-mini", method: :delete, confirm: "Are you sure?", title: property_listing.name do%>
-	<i class="icon-trash"></i> Delete property
+	<i class="icon-trash"></i> Delete Property
 <% end %>
 <hr>

@@ -10,7 +10,7 @@ class Property < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :name, presence: true, length: {maximum: 150}
-  validates :phone, presence: true, length: {maximum: 15}
+  validates :phone, length: {maximum: 15}
   validates :address1, presence: true, length: {maximum: 150}
   validates :address2, length: {maximum: 150}
   validates :city, presence: true, length: {maximum: 150}

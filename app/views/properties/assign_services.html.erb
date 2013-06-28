@@ -18,10 +18,13 @@
 		    		<td>
 		    			<% if !(@category_services_in_area = area_category_services(@property.zip, category)).empty? %>
 		    				<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
-		    			 		<%= render 'assignment_fields', f: assignment %>
+		    			 		<%= render 'assignment_fields', f: assignment, thisCategory: category %>
 		    				<% end %>	
 		    			<% else %>
-							None available yet for your area. Check this box if you'd be interested in signing up for this service when it becomes available!<br>
+							None available yet for your area.<br>
+								<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
+			    			 		<%= render 'interest_fields', f: assignment, thisCategory: category %>
+			    				<% end %>
 						<% end %>
 					</td>
 					<% @i += 1 %>

@@ -1,0 +1,19 @@
+<footer class="footer">
+	<% if !current_user.nil? %>
+	 	<% if !@user.nil? && @user.role.to_s != "propertyowner" %>
+			<%= render 'shared/homeowner_footer_tag' %>
+		<% else %>
+			<%= render 'shared/default_footer_tag' %>
+		<% end %>
+	<% else %>
+		<%= render 'shared/default_footer_tag' %>
+	<% end %>
+	<br>
+	<center>
+		<ul>
+			<li><%= link_to "About", static_pages_about_path %></li>
+			<li><%= link_to "Contact", static_pages_contact_us_path %></li>
+			<li><%= link_to "Careers", static_pages_careers_path %></li>
+		</ul>
+	</center>
+</footer>

@@ -8,7 +8,7 @@ $ ->
       setTimeout (->
 
         $("#start-date-picker").datepicker(
-          altField: '.service_start_date',
+          altField: '.service_start_date, .first_scheduled'
           altFormat: 'yy-mm-dd'
           )
         $('#end-date-picker').datepicker(

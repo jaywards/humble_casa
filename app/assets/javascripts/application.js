@@ -15,5 +15,6 @@
 //= modals
 //= require jquery.ui.all
 //= require bootstrap
+//= require bootstrap-inputmask
 //= require_tree .
 //= require cocoon

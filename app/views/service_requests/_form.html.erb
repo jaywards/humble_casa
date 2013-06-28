@@ -1,6 +1,5 @@
 <%= simple_form_for @service_request do |f| %>
 	<div class="service_request">    
-	    <h3>Service request</h3><br>
 	    <b>
 	    Property: <%= @property.name %><br>
 	    Service: <%= @service.name %><br>
@@ -67,7 +66,7 @@
 	    	<%= f.input :completed, as: :radio_buttons %>
 		<% end %>
 
-  		<button class="btn btn-primary" type="submit" data-disable-with="Saving">
+  		<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
   			<i class="icon-ok icon-white"></i> Save
 		</button>
 		&nbsp		

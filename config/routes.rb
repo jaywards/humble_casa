@@ -1,6 +1,5 @@
 HumbleCasa::Application.routes.draw do
   resources :user_sessions
-  #resources :services
   resources :users do
     resources :properties, :services, :service_zips
   end
@@ -33,7 +32,6 @@ HumbleCasa::Application.routes.draw do
 
   get "static_pages/careers"
   
-
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

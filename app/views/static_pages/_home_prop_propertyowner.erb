@@ -1,0 +1,51 @@
+<% if params[:message] == "welcome" %>
+	<p>
+		Ok, you've registered a new property! The next step is to click on "Register or changes services for this property" below. This will launch a window to register with service providers that work in your area.
+	</p>
+	<p>
+		We're a young but growing site, so you might not see any service providers available yet in your area. If you wish we had a service available in any particular category, please check the box! This will help us to convince service providers that there is pent up demand waiting for them to join the site.  Thanks!
+	</p>
+	<hr>
+<% else %>
+	<p>
+		Welcome back to your HumbleCasa dashboard. Below are your properties and any service request details.
+	</p>
+	<hr>
+<% end %>
+<div class="tabcontainer"> 
+	<div id="content">
+    	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">	
+	    	<% @first = true %>
+	    	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>
+	    		<% if @first %>
+	    			<li class="active">
+	    			<% @first = false %>
+	    		<% else %>
+	    			<li>
+	    		<% end %>
+	    			<a href=<%= "#property-" + listing.id.to_s %> data-toggle="tab"><%= listing.name %></a></li>
+	        <% end %>
+	    	<li><a href=<%= new_user_property_path(@user)%> data-toggle="nav">+ Add another property</a></li>
+	    </ul>
+ 
+    	<div id="my-tab-content" class="tab-content">
+        	<% @first = true %>
+        	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>			    
+        		<% if @first %>
+        			<div class="tab-pane active" id=<%= "property-" + listing.id.to_s %>>
+	            	<% @first = false %>
+	            <% else %>
+        			<div class="tab-pane" id=<%= "property-" + listing.id.to_s %>>
+	            <% end %>
+	            	<%= render 'shared/property_listing', property_listing: listing %> 
+					<%= render 'shared/property_service_providers', property_listing: listing %>
+    	    	</div>
+        	<% end %>
+        	<% if @first %>
+        		<div class="tab-pane active" id=<%= new_user_property_path(@user)%>>
+        	<% else %>
+        		<div class="tab-pane" id=<%= new_user_property_path(@user)%>>
+        	<% end %>
+    	</div>
+	</div>
+</div>

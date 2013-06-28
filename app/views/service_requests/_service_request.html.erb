@@ -1,27 +1,47 @@
-
-	<span8 class="service request">
-		<% if !service_request.completed? %>
-			Pending request for <%= service_request.property.name %>. Created on: <%= service_request.created_at.strftime("%m/%d/%Y") %>
-			
-			<% if current_user.role == "serviceowner" && service_request.assigned %>			
-				-- assigned to: <%= service_request.users.first.to_label %> 
-			<% end %>
-			
-			<% if current_user.role == "propertyowner" %>
-				<p class="launch-service-request">
-					<%= link_to "view/edit this request", edit_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %> 
-				</p>  
-				<%= link_to "delete this request", service_request, method: :delete, class: "btn btn-mini", confirm: "Are you sure?" %><br> 
-			<% end %>
-
-			<% if current_user.role == "employee" %>
-				<%= link_to "complete this request", edit_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %> 
-			<% end %>
-		
-		<% else %>
-			Completed request for <%= service_request.property.name %>. Created on: <%= service_request.created_at.strftime("%m/%d/%Y") %>
-			<%= link_to "see request report", service_request_path(id: service_request.id), class: "btn btn-mini" %><br>
-		<% end %>
-	
-	</span>
+<div id="service-request-table">
+	<table class="table table-condensed">			
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Type</th>
+				<% if service_request.onetime? %>
+					<th>Start Date</th>
+					<th>End Date</th>
+				<% else %>
+					<th>Frequency</th>
+					<th>Next Scheduled</th>
+				<% end %>
+				<th>Specific Request Instructions</th>
+				<th>Available Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td><% if service_request.completed? %>Completed<% else %>Pending<% end %></td>
+				<% if service_request.onetime? %>
+					<td>One-time request</td>
+					<td><%= service_request.service_start_date.strftime("%a %b %d, %Y") if !service_request.service_start_date.nil? %></td>
+					<td><%= service_request.service_end_date.strftime("%a %b %d, %Y") if !service_request.service_end_date.nil? %></td>
+				<% else %>
+					<td>Repeating request</td>
+					<td><% if !service_request.frequency.nil? %><%= service_request.frequency.titleize %><% end %></td>
+					<td><%= service_request.first_scheduled.strftime("%a %b %d, %Y") if !service_request.first_scheduled.nil? %></td>
+				<% end %>
+				<td><%= service_request.instructions %></td>
+				<% if current_user.role == "propertyowner" %>
+					<td>
+						<% if service_request.completed? %>
+							<%= link_to "view report", service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %><br>
+						<% else %>		
+							<p class="launch-service-request">
+								<%= link_to "view/edit", edit_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %> 
+							</p>  
+							<%= link_to "delete", service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %><br> 
+						<% end %>
+					</td>
+				<% end %>
+			</tr>
+		</tbody>
+	</table>
+</div>					
 

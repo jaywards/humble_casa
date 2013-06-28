@@ -1,13 +1,10 @@
 <%= simple_form_for(@property) do |f| %>
-    <%= render 'property_fields', field: f %>
-    
+	<%= render 'property_fields', field: f %>
+	    
 	<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
 		<i class="icon-ok icon-white"></i> Save
 	</button>
 	&nbsp		
-	<button class="btn" type="button" id="close">
-		<i class="icon-off"></i> Close
-	</button>
-
+	<%= link_to "Cancel", root_path, class: "btn" %>
 
 <% end %>
