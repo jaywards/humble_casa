@@ -6,7 +6,7 @@ def create
 		@service = current_user.services.build(params[:service])
 		if @service.save
 			flash[:success] = "Service created!"
-			redirect_to root_path
+			redirect_to root_path(message: "welcome")
 		else
 			flash[:error] = "Service couldn't be created."
 			render :action => 'new'

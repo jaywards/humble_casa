@@ -15,18 +15,22 @@ $ ->
           altField: '.service_end_date',
           altFormat: 'yy-mm-dd'
           )
+        $('#completed-date-picker').datepicker(
+          altField: '.service_completed_date',
+          altFormat: 'yy-mm-dd'
+          )
 
-        if $("#service_request_onetime_true").attr("checked")
+        if $("#master_service_request_onetime_true").attr("checked")
           $('.onetime-fields').show()
-        if $("#service_request_onetime_false").attr("checked")
+        if $("#master_service_request_onetime_false").attr("checked")
           $('.repeating-fields').show()
-          e = document.getElementById("service_request_frequency")
+          e = document.getElementById("master_service_request_frequency")
           selectedFrequency = e.options[e.selectedIndex].value
           if selectedFrequency == "weekly" || selectedFrequency == "every_other_week"
             $('.weekly-fields').show()
           else
             $('.monthly-fields').show()
-          stringDate = new Date(document.getElementById("service_request_first_scheduled").value.substring(0, 19).replace(/-/g, "/")).toDateString()
+          stringDate = new Date(document.getElementById("master_service_request_first_scheduled").value.substring(0, 19).replace(/-/g, "/")).toDateString()
           $('#date-string').text stringDate
           $('#first-scheduled-fields').show()
       

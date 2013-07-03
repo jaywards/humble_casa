@@ -1,0 +1,55 @@
+<div id="service-request-table">
+	<table class="table table-condensed">			
+		<thead>
+			<tr>
+				<th>Status</th>
+				<th>Type</th>
+				<% if @service_request.onetime? %>
+					<th>Start Date</th>
+					<th>End Date</th>
+				<% else %>
+					<th>Frequency</th>
+					<th>Next Scheduled</th>
+				<% end %>
+				<th>Specific Request Instructions</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td>
+					<% if @service_request.completed %>
+						Completed
+					<% elsif @service_request.assigned? %>
+						<% @assignee = assigned_employee(@service_request) %>
+						Assigned to: <%= @assignee.last_name %>, <%= @assignee.first_name[0] %> 
+					<% else %>
+						Pending
+					<% end %>	
+				</td>
+
+				<% if @service_request.onetime? %>
+					<td>One-time request</td>
+					<td><%= @service_request.service_start_date.strftime("%a %b %d, %Y") if !@service_request.service_start_date.nil? %></td>
+					<td><%= @service_request.service_end_date.strftime("%a %b %d, %Y") if !@service_request.service_end_date.nil? %></td>
+				<% else %>
+					<td>Repeating request</td>
+					<td>
+						<% if !@service_request.frequency.nil? %>
+							<%= @service_request.frequency.titleize %>
+							<% if @service_request.frequency == "weekly" || @service_request.frequency == "every_other_week" %>
+								on <%= @service_request.service_week_day%>s
+							<% else %>
+								on the <%= @service_request.service_month_day.ordinalize %>
+							<% end %>
+						<% end %>
+					</td>
+					<td><%= @service_request.first_scheduled.strftime("%a %b %d, %Y") if !@service_request.first_scheduled.nil? %></td>
+				<% end %>
+
+				<td><%= @service_request.instructions %></td>
+				
+			</tr>
+		</tbody>
+	</table>
+</div>					
+

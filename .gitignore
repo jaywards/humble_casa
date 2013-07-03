@@ -16,3 +16,6 @@
 
 # Ignore .DS files
 .DS_Store
+
+# Ignore .DS files
+app/DS_Store

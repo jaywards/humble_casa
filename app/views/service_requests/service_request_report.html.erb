@@ -1,0 +1,17 @@
+<h2>Completed Service Request</h2>
+<b>Request #: </b><%= @service_request.service_request_id %><br><br>
+<b>Property:</b> <ol><%= render @property %></ol><br><br>
+<b>Service:</b> <ol><%= render @service %></ol><br><br>
+<b>Service request details:</b>
+<ol>
+	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %><br>
+	Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - 
+		<%= @service_request.service_end_date.strftime("%m/%d/%Y") %><br>
+	Special instructions for this request: <%= @service_request.instructions %><br>
+	<br>
+	Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %><br>
+	Completed by: <%= @service_request.users.first.to_label %><br>
+</ol>
+<button class="btn btn-small" type="button" id="close">
+		<i class="icon-off"></i> Close
+</button>

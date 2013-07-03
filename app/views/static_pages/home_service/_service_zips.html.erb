@@ -1,0 +1,8 @@
+<h5>Service zip codes:</h5>
+<% if @zips_list.count == 0 %>
+	No service area zip codes defined. Your business won't appear for any potential customers until you update your business profile with the zip codes that you do business in. Click "Edit Business" to select service zip codes.
+<% else %>
+	<ol class="service-zips">
+		<%= render @zips_list %>
+	</ol>
+<% end %>

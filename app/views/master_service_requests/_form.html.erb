@@ -1,0 +1,55 @@
+<%= simple_form_for @master_service_request do |f| %>
+	<div class="service_request">    
+	    <b>
+	    Property: <%= @property.name %><br>
+	    Service: <%= @service.name %><br>
+		</b><br>
+
+	    <%= f.hidden_field :property_id, value: @property.id %>
+	    <%= f.hidden_field :service_id, value: @service.id %>
+
+	  
+	    <%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},
+	    	collection: [[true, 'One-time request'], [false, 'Repeating request']],
+	    	label_method: :last, value_method: :first, label: "Request type:", as: :radio_buttons %> 
+	
+	    
+
+	    <div class="onetime-fields">
+	    
+			<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "Do not perform service before this date:" %>
+	    	<%= f.input :service_start_date, as: :hidden, input_html: { class: "service_start_date"} %>
+
+	    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "Service must be completed by this date:" %>
+	    	<%= f.input :service_end_date, as: :hidden, input_html: { class: "service_end_date"} %>
+
+		</div>
+
+		<div class="repeating-fields">
+		    	
+		    	<%= f.input :frequency, input_html: {value: @master_service_request.frequency, class: "frequency" },
+		    	collection: [['weekly', 'Weekly'], ['every_other_week', 'Every other week'], ['monthly', 'Monthly'], 
+		    		['every_other_month', 'Every other month']], label_method: :last, value_method: :first %>
+				
+		    	<div class="weekly-fields">
+		    		<%= f.input :service_week_day, input_html: {value: @master_service_request.service_week_day, id: "daypicker" }, label: "Which day of the week:", collection: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %>
+		    	</div>
+
+		    	<div class="monthly-fields">
+		    		<%= f.input :service_month_day, input_html: {value: @master_service_request.service_month_day, id: "monthpicker" }, label: "Which day of the month:", collection: 1...31 %>
+		    	</div>
+
+		    	<div id="first-scheduled-fields">
+		    		First service will be scheduled on: <b><span id="date-string"></span></b><br><br>
+		    		<%= f.input :first_scheduled, as: :hidden, input_html: { class: "first_scheduled"} %>
+		    	</div>
+		    
+		</div>
+
+
+	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text, :input_html => { :cols => 40, :rows => 10 } %>
+
+
+  		<%= render 'shared/modal_buttons' %>
+	</div>
+<% end %>

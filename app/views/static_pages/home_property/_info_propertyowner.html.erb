@@ -1,0 +1,24 @@
+<br>
+<center><%= image_tag("HClogo.jpg", alt: "HumbleCasa.com logo", size: "120x45") %></center>
+<p id="main-title">
+	<h1>Welcome to HumbleCasa!</h1>
+	<h2>...simplify your home maintenance</h2>
+</p>
+<p>
+	HumbleCasa makes it easy to <b>schedule</b>, <b>track</b>, and <b>verify</b> that your home maintainence has been completed.
+	We are ideal for 2nd home owners, or anybody with a busy lifestyle that isn't always home to check up on house cleaners, landscapers, pool cleaners, etc.
+</p>
+<p>
+	Create an account online, register with your service providers, and manage your house from your computer or smartphone <b>all for free!</b>
+</p>
+<br>
+<p>
+	<center>
+		<%= link_to new_user_path(role: "propertyowner"), class: "btn btn-primary" do %>
+			<i class="icon-user icon-white"></i> Create Property Owner Account
+		<% end %>
+		<% if current_user.nil? %>
+			<%= render 'shared/login_link'%>
+		<% end %>
+	</center>
+</p>

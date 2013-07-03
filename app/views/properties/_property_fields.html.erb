@@ -4,6 +4,6 @@
 <%= field.input :city %>
 <%= field.input :state %>
 <%= field.input :zip %>
-<%= field.input :phone, as: :tel,  required: false, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999" }, placholder: 'Optional: only if different than your account number' %>
+<%= field.input :phone, as: :tel,  required: false, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999" }, placeholder: 'Optional: only if different than your account number' %>
 
 <%= field.input :instructions, label: 'Instructions for the property', placeholder: 'These instructions are only seen by the service providers you select.  Examples: lock box code, security disarm code, preferred entry door, etc.', as: :text %>

@@ -1,0 +1,39 @@
+<%= render 'static_pages/home_property/property_welcome_message' %>
+
+<div class="tabcontainer"> 
+	<div id="content">
+    	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">	
+	    	<% @first = true %>
+	    	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>
+	    		<% if @first %>
+	    			<li class="active">
+	    			<% @first = false %>
+	    		<% else %>
+	    			<li>
+	    		<% end %>
+	    			<a href=<%= "#property-" + listing.id.to_s %> data-toggle="tab"><%= listing.name %></a></li>
+	        <% end %>
+	    	<li><a href=<%= new_user_property_path(@user)%> data-toggle="nav">+ Add another property</a></li>
+	    </ul>
+ 
+    	<div id="my-tab-content" class="tab-content">
+        	<% @first = true %>
+        	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>			    
+        		<% if @first %>
+        			<div class="tab-pane active" id=<%= "property-" + listing.id.to_s %>>
+	            	<% @first = false %>
+	            <% else %>
+        			<div class="tab-pane" id=<%= "property-" + listing.id.to_s %>>
+	            <% end %>
+	            	<%= render 'static_pages/home_property/property_listing', property_listing: listing %> 
+					<%= render 'static_pages/home_property/all_service_providers', property_listing: listing %>
+    	    	</div>
+        	<% end %>
+        	<% if @first %>
+        		<div class="tab-pane active" id=<%= new_user_property_path(@user)%>>
+        	<% else %>
+        		<div class="tab-pane" id=<%= new_user_property_path(@user)%>>
+        	<% end %>
+    	</div>
+	</div>
+</div>

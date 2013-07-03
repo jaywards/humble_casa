@@ -1,0 +1,19 @@
+<%= simple_form_for(@service_request) do |f| %>
+	<% @employees = @service.service_employees %>
+	<%= f.simple_fields_for :work_assignments, @service_request.work_assignments do |work_assignment| %>
+	    <%= render 'work_assignment_fields', :f => work_assignment %>
+    	<% if !work_assignment.nil? %>
+	    	<%= f.hidden_field :assigned, value: true %>
+	    <% end %>
+	    <% if !@service_request.onetime %>
+	    	This is a repeating request. Would you like to assign this employee to all future instances or just this single request?
+	    	<br>
+	    	<%= f.input :all_assigned, label: false, input_html: {value: @service_request.all_assigned},
+	    	collection: [[true, 'All future instances'], [false, 'Just this one time']],
+	    	label_method: :last, value_method: :first, as: :radio_buttons %>
+	    <% end %> 
+    <% end %>
+
+	<%= render 'shared/modal_buttons' %>
+
+<% end %>

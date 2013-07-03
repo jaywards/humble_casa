@@ -1,0 +1,82 @@
+<h4>Current service providers for this property:</h4><br>
+<table class="table table-condensed table-striped">			
+	<thead>
+		<tr>
+			<th>Category</th>
+			<th>Selected Provider</th>
+			<th>Service Requests</th>
+		</tr>
+	</thead>
+	<tbody>
+
+		<% Service::CATEGORIES.each do |category| %>		
+			<tr>
+				<td>
+					<%= category.titleize %>
+				</td>
+				<td>	
+					<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
+						<% if check_availability(area_services(property_listing.zip), category) %>			
+							<b>Services available!</b> - 
+							<%= link_to assign_services_property_path(property_listing), remote: true, class: "btn btn-mini btn-primary" do %>
+								<i class="icon-check"></i> Register or Change Services
+							<% end %>
+						<% else %>
+							No service providers for your area.
+						<% end %>
+						</td><td></td>							
+						<% @valid_service_row = false %>
+					<% else %> 
+						<% @valid_service_row = true %>
+						<%= @selected_service.name %><br><br>
+						Next service scheduled:<br>
+						<% if !(@open_SRs = open_requests(@selected_service, property_listing)).nil? %>	
+							
+							<%= javascript_tag do %>
+									window.openSRs = <%= raw @open_SRs.to_json %>
+							<% end %>
+						 	<span id="scheduled-string"></span><br>
+	    		
+						<% else %>
+							N/A
+						<% end %>
+					<% end %>
+				</td>
+					
+				<% if @valid_service_row %>
+					<td>				
+						<p class="launch-service-request">
+							<%= link_to "create a new service request", new_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success", remote: true %>
+						</p>
+
+						<% if !@open_SRs.nil? %>										
+							<% @open_SRs.sort_by {|a| a.first_scheduled} %>
+							<p><a data-toggle="collapse" data-target="#pending-SRs">
+  								+ View pending service requests (<%= @open_SRs.count.to_s %>)
+							</button></p>
+
+							<div id="pending-SRs" class="collapse">
+								<% @open_SRs.each do |request| %>
+									<%= render request %>
+								<% end %>
+							</div>
+						<% end %>
+
+						<% if !(@completed_SRs = completed_requests(@selected_service, property_listing)).nil? %>	
+							<p><a data-toggle="collapse" data-target="#completed-SRs">
+  								+ View completed service requests (<%= @completed_SRs.count.to_s %>)
+							</button></p>
+
+							<div id="completed-SRs" class="collapse">
+								<% @completed_SRs.each do |request| %>
+									<%= render request %>
+								<% end %>
+							</div>
+						<% end %>
+					</td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+

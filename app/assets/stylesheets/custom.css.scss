@@ -251,7 +251,7 @@ input[type="color"],
   vertical-align: middle;
 }
 
-#property_instructions, #service_request_instructions {
+#property_instructions, #master_service_request_instructions {
 	height: 80px;
 }
 
@@ -266,5 +266,6 @@ a {
 	color: rgb(0,97,152);
 }
 
-
-
+#nested-zip-codes {
+	text-align: right;
+}

@@ -17,29 +17,62 @@
 		</thead>
 		<tbody>
 			<tr>
-				<td><% if service_request.completed? %>Completed<% else %>Pending<% end %></td>
+				<td>
+					<% if service_request.completed %>
+						Completed
+					<% elsif service_request.assigned? %>
+						<% @assignee = assigned_employee(service_request) %>
+						Assigned to: <%= @assignee.last_name %>, <%= @assignee.first_name[0] %> 
+					<% else %>
+						Pending
+					<% end %>	
+				</td>
+
 				<% if service_request.onetime? %>
 					<td>One-time request</td>
 					<td><%= service_request.service_start_date.strftime("%a %b %d, %Y") if !service_request.service_start_date.nil? %></td>
 					<td><%= service_request.service_end_date.strftime("%a %b %d, %Y") if !service_request.service_end_date.nil? %></td>
 				<% else %>
 					<td>Repeating request</td>
-					<td><% if !service_request.frequency.nil? %><%= service_request.frequency.titleize %><% end %></td>
-					<td><%= service_request.first_scheduled.strftime("%a %b %d, %Y") if !service_request.first_scheduled.nil? %></td>
-				<% end %>
-				<td><%= service_request.instructions %></td>
-				<% if current_user.role == "propertyowner" %>
 					<td>
-						<% if service_request.completed? %>
-							<%= link_to "view report", service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %><br>
-						<% else %>		
-							<p class="launch-service-request">
-								<%= link_to "view/edit", edit_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %> 
-							</p>  
-							<%= link_to "delete", service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %><br> 
+						<% if !service_request.frequency.nil? %>
+							<%= service_request.frequency.titleize %>
+							<% if service_request.frequency == "weekly" || service_request.frequency == "every_other_week" %>
+								on <%= service_request.service_week_day%>s
+							<% else %>
+								on the <%= service_request.service_month_day.ordinalize %>
+							<% end %>
 						<% end %>
 					</td>
+					<td><%= service_request.first_scheduled.strftime("%a %b %d, %Y") if !service_request.first_scheduled.nil? %></td>
 				<% end %>
+
+				<td><%= service_request.instructions %></td>
+				
+				<td>
+					<% if service_request.completed? %>
+						<%= link_to "view report", service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %><br>
+					<% else %>
+						<% case current_user.role %> 
+							<% when "propertyowner" %>
+								<p class="launch-service-request">
+									<%= link_to "view/edit", edit_master_service_request_path(id: service_request.master_service_request_id), class: "btn btn-mini", remote: true %> 
+								</p>  
+								<%= link_to "delete", service_request.master_service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+	
+							<% when "serviceowner" %>
+								<%= link_to "assign request", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+								<%= link_to "delete", service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+
+							<% when "employee" %>
+								add link to show service request report
+								<%#= link_to "view request", show_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+								<p class="launch-service-request">
+									<%= link_to "complete request", complete_request_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+								</p>
+						<% end %>
+					<% end %>
+				</td>
 			</tr>
 		</tbody>
 	</table>

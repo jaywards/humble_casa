@@ -1,6 +1,9 @@
 HumbleCasa::Application.routes.draw do
   resources :user_sessions
   resources :users do
+    member do
+      get 'assign_employment'
+    end
     resources :properties, :services, :service_zips
   end
   resources :properties do
@@ -9,7 +12,13 @@ HumbleCasa::Application.routes.draw do
     end
   end
   resources :services
-  resources :service_requests
+  resources :service_requests do
+    member do
+      get 'assign_to_employee'
+      get 'complete_request'
+    end
+  end
+  resources :master_service_requests
 
 
   match '/login', to: 'user_sessions#new', :as => :login

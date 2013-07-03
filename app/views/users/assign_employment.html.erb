@@ -1,0 +1,23 @@
+<%= provide(:title, 'Employers') %>
+<h2>Select your employer</h2>
+
+<%= simple_form_for @user do |f| %>
+
+	<% if !(@services = Service.all).empty? %>
+	   <% @sorted_services = @services.sort_by {|a| a.name } %>
+    <% end %>
+    <% @employer = Employment.where(:user_id => @user.id) %>
+
+    <%= f.simple_fields_for :employments, @employer do |employment| %>
+        <%= render 'employment_fields', :f => employment %>
+    <% end %>  
+
+	<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
+		<i class="icon-ok icon-white"></i> Save
+	</button>
+	&nbsp		
+	<button class="btn" type="button" id="close">
+		<i class="icon-off"></i> Close
+	</button>
+
+<% end %> 

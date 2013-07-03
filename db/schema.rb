@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130627215925) do
+ActiveRecord::Schema.define(:version => 20130702221645) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -30,6 +30,24 @@ ActiveRecord::Schema.define(:version => 20130627215925) do
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "master_service_requests", :force => true do |t|
+    t.integer  "property_id"
+    t.integer  "service_id"
+    t.datetime "service_start_date"
+    t.datetime "service_end_date"
+    t.text     "instructions"
+    t.string   "request_id"
+    t.boolean  "onetime"
+    t.string   "frequency"
+    t.string   "service_week_day"
+    t.integer  "service_month_day"
+    t.datetime "first_scheduled"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.boolean  "all_assigned"
+    t.integer  "active_request_id"
   end
 
   create_table "properties", :force => true do |t|
@@ -56,19 +74,22 @@ ActiveRecord::Schema.define(:version => 20130627215925) do
     t.datetime "service_start_date"
     t.datetime "service_end_date"
     t.text     "instructions"
-    t.datetime "created_at",                                           :null => false
-    t.datetime "updated_at",                                           :null => false
+    t.datetime "created_at",                                                  :null => false
+    t.datetime "updated_at",                                                  :null => false
     t.datetime "completed_date"
     t.string   "request_id"
-    t.boolean  "mailed_created",                    :default => false
-    t.boolean  "mailed_assigned",                   :default => false
-    t.boolean  "mailed_completed",                  :default => false
+    t.boolean  "mailed_created",                           :default => false
+    t.boolean  "mailed_assigned",                          :default => false
+    t.boolean  "mailed_completed",                         :default => false
     t.boolean  "onetime"
     t.string   "frequency"
     t.string   "service_week_day"
-    t.integer  "service_month_day",  :limit => 255
+    t.integer  "service_month_day",         :limit => 255
     t.boolean  "asap"
     t.datetime "first_scheduled"
+    t.integer  "master_service_request_id"
+    t.boolean  "all_assigned"
+    t.string   "completion_note"
   end
 
   create_table "service_zips", :force => true do |t|
@@ -121,8 +142,11 @@ ActiveRecord::Schema.define(:version => 20130627215925) do
   create_table "work_assignments", :force => true do |t|
     t.integer  "user_id"
     t.integer  "service_request_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                :null => false
+    t.datetime "updated_at",                :null => false
+    t.integer  "assignable_id"
+    t.string   "assignable_type"
+    t.integer  "master_service_request_id"
   end
 
 end

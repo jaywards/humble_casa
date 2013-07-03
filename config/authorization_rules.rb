@@ -1,6 +1,6 @@
 authorization do
   role :admin do
-    has_permission_on [:users, :properties, :user_sessions, :static_pages, :services], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on [:users, :properties, :user_sessions, :static_pages, :services, :master_service_requests], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
   end
   
   role :guest do
@@ -23,6 +23,7 @@ authorization do
     has_permission_on :properties, :to => [:new, :create, :show, :edit, :update, :destroy, :assign_services] #do
     #  if_attribute :user => is { user }
     #end
+    has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy]
     has_permission_on :user_sessions, :to => [:destroy, :new, :create]
   end
   
@@ -36,6 +37,7 @@ authorization do
   role :employee do
     includes :guest
     includes :standard_user
+    has_permission_on :users, to: [:assign_employment]
 
   end
 
