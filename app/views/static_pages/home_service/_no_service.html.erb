@@ -1,0 +1,17 @@
+<h3>Welcome to HumbleCasa!</h3><br>
+<p>
+	To get started you need to register your business. You can only have one business per user account, so if you want to register a second business you'll need to create a another Service Owner account.
+</p>
+<p>
+	We're going to ask you for your business details - location, phone and email contact info, and the zip codes that you operate in.  
+</p>
+<p>
+	While your personal account info that you just provided is private, the business details that you will be providing can be seen all of your current and potential customers! So don't enter your home phone number or personal email address, unless that is how you want your customers to contact you.
+</p> 
+
+<br>
+<center>
+	<%= link_to new_user_service_path(@user), remote: true, class: "btn btn-primary" do %>
+		<i class="icon-pencil icon-white"></i> Register Business
+	<% end %>
+</center>

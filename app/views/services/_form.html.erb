@@ -4,18 +4,26 @@
 	    <%= f.input :address2 %>
 	    <%= f.input :city %>
 	    <%= f.input :state %>
-	    <%= f.input :zip,label: "Zip code" %>
-	   	<%= f.input :phone, as: :tel, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999" } %>
-	    <%= f.input :email %>
+	    <%= f.input :zip, label: "Zip code" %>
+	   	<%= f.input :phone, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999" } %>
+	   	<%= f.input :email, placeholder: "Email address for customer inquiries and notification of new service requests" %>
 		<%= f.input :category, collection: [['landscaping', 'Landscaping'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['housecleaning', 'Housecleaning'], ['snow_removal', 'Snow removal'], ['handyman/general_maintenance', 'Handyman/General maintenance']], label_method: :last, value_method: :first %>
 		<%= f.hidden_field :user_id, value: current_user.id %>
 
 		<b>Service area zip codes</b><br>
-		<%= f.simple_fields_for :service_zips do |zip| %>
-			<%= render 'service_zip_fields', :f => zip %>
-		<% end %>
-		<div class="links">
-			<%= link_to_add_association('add another service area zip code', f, :service_zips) %>
+		These are the zip codes in which your business operates. When your customers register their properties on HumbleCasa, your business will only show up for them if their property is in one of your service area zip codes below.
+		<br>
+		<br>
+		<div id="nested-zip-codes">
+			<%= f.simple_fields_for :service_zips do |zip| %>
+				<%= render 'service_zip_fields', :f => zip %>
+			<% end %>
+		
+			<div class="links">
+				<%= link_to_add_association('+ add another zip code', f, :service_zips) %>
+			</div>
+			<br>
 		</div>
-		<%= f.button :submit %>
+		<%= render 'shared/modal_buttons' %>
+
 <% end %>

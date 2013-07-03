@@ -1,0 +1,19 @@
+<%= simple_form_for(@service_request) do |f| %>
+
+	<%= provide(:title, 'Complete service request') %>
+	<h2>Complete Service Request</h2>	
+	<%= render 'service_request_no_action' %>
+	<hr>
+	<%= f.input :completed, label: "Service request completed?", input_html: {value: @service_request.completed},
+	    	collection: [[true, 'Yes'], [false, 'No']],
+	    	label_method: :last, value_method: :first, as: :radio_buttons %>
+	
+	<%= f.input :completed_date, as: :fake, input_html: {id: "completed-date-picker", value: @service_request.try(:completed_date).try(:strftime,'%m/%d/%Y')}, label: "Date service was completed on:" %>
+	<%= f.input :completed_date, as: :hidden, input_html: { class: "completed_date"} %>
+
+
+	<%= f.input :completion_note, as: :text, label: "Notes", placeholder: "Any details or notes for the homeowner" %>
+	
+	<%= render 'shared/modal_buttons' %>
+
+<% end %>

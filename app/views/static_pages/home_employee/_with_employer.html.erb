@@ -1,0 +1,19 @@
+<%= render 'static_pages/home_employee/employee_welcome_message' %>
+
+<hr>
+
+<h4>Your employer:</h4>
+<%= render @employer %>
+<br><br>
+<%= link_to assign_employment_user_path(@user), remote: true, class: "btn btn-mini" do %>
+	<i class="icon-edit"></i> Change Employer 
+<% end %>
+
+<hr>
+
+<h4>Your service requests:</h4><br>
+<% if !@sorted_service_requests.nil? %>
+	<% @sorted_service_requests.each do |request| %>
+		<%= render request %>						
+	<% end %>
+<% end %>

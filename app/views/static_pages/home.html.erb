@@ -1,65 +1,34 @@
 <%= provide(:title, '') %>
 
 <% if params[:content] == "services" %>
-	<%= render 'home_info_serviceowner' %>
+	<%= render 'static_pages/home_service/info_serviceowner' %>
 <% elsif params[:content] == "homeowner" || current_user.nil? %>
-	<%= render 'home_info_propertyowner' %>
+	<%= render 'static_pages/home_property/info_propertyowner' %>
 <% else %>
 
 	<h2>Welcome, <%= @user.first_name %></h2>
 	
-	<% if @user.role.to_s == "propertyowner" %>
-
-		<% if @user.properties.count() == 0 %>
-			<%= render 'home_noprop_propertyowner' %>			
+	<% case @user.role %>
+	 	<% when "propertyowner" %>
+			<% if @user.properties.count() == 0 %>
+				<%= render 'static_pages/home_property/no_property' %>			
+			<% else %>
+				<%= render 'static_pages/home_property/with_property' %>
+			<% end %>
+		<% when "serviceowner" %>
+			<% if @service.first.nil? %>
+				<%= render 'static_pages/home_service/no_service' %>		
+			<% else %>	
+				<%= render 'static_pages/home_service/with_service' %>
+			<% end %>
+		<% when "employee" %>
+			<% if @employer.nil? %>
+				<%= render 'static_pages/home_employee/no_employer' %>		
+			<% else %>	
+				<%= render 'static_pages/home_employee/with_employer' %>
+			<% end %>
 		<% else %>
-			<%= render 'home_prop_propertyowner' %>
-		<% end %>
-
-	<% elsif @user.role.to_s == "serviceowner" %>
-
-		<div class="span8">
-
-			<% if !@service.first.nil? %>
-
-				<%= render 'shared/service_listing' %>
-				
-			<% else %>
-				
-				<h4>Let's get started!<br><br>Register your service business first so that you'll appear when your customers sign up: </h4>
-				<%= link_to "Register a service", new_user_service_path(@user) %>
-			
-			<% end %>
-		</div>
-
-
-
-	<% elsif @user.role.to_s == "employee" %>
-		
-		<div class="span8">
-
-			<% if !@employer.nil? %>
-
-				<h4>Your employer:</h4><br>	
-				<%= render @employer %><br><br>
-				
-				<h4>Your service requests:</h4><br>
-				<ol class="service request listing">
-					<% if !@sorted_service_requests.nil? %>
-						<% @sorted_service_requests.each do |request| %>
-							<li><%= render request %></li><br>						
-						<% end %>
-					<% end %>
-				</ol>
-			<% else %>
-				You don't yet have an employer.<br>
-				<%= link_to "Select your employer", edit_user_path(current_user) %>
-			<% end %>
-		</div>
-	
-
-	<% else %>
-		No recognized user role
+			No recognized user role - please contact HumbleCasa support for help.
 	<% end %>
 
 <% end %>

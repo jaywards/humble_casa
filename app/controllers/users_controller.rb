@@ -45,4 +45,9 @@ class UsersController < ApplicationController
       render :action => 'edit'
     end
   end
+
+  def assign_employment
+    render action: "assign_employment"
+  end
+
 end

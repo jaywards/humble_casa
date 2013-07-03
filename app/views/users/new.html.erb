@@ -1,4 +1,11 @@
 <%= provide(:title, 'Sign up') %>
-<h2>Create a new user account</h2>
+<% case params[:role] %>
+	<% when "propertyowner" %>
+		<h2>Create a new Property Owner account</h2>
+	<% when "serviceowner" %>
+		<h2>Create a new Service Owner account</h2>
+	<% when "employee" %>
+		<h2>Create a new Employee account</h2>
+<% end %>
 <%= render 'form' %>
 

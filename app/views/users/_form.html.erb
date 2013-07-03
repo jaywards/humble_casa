@@ -1,4 +1,3 @@
-<%#= simple_form_for @user do |f| %>
 <%= simple_form_for @user do |f| %>
     
     <%= f.input :first_name %> 
@@ -7,28 +6,16 @@
 
     <%= f.input :primary_phone, input_html: { maxlength: 14, :"data-mask" => "999-999-9999" } %>
 
-    <%= f.input :email, placeholder: "This will also your be your signin name" %>
+    <%= f.input :email, placeholder: "This will also your be your sign in name" %>
 
     <%= f.input :password, placeholder: "Must be at least 6 characters" %>
 
     <%= f.input :password_confirmation %>
-
+    
     <% if @user.role.nil? %>
-        <%= f.hidden_field :role, value: params[:role] %>
+        <%= f.hidden_field :role, value: params[:role] %>    
     <% else %>
         <%= f.hidden_field :role, value: @user.role %>
-
-        <% if @user.role == "employee" %>
-        	<% if !(@services = Service.all).empty? %>
-        	   <% @sorted_services = @services.sort_by {|a| a.name } %>
-            <% end %>
-            <% @employer = Employment.where(:user_id => @user.id) %>
-
-            <b>Select your employer</b><br>
-            <%= f.simple_fields_for :employments, @employer do |employment| %>
-                <%= render 'employment_fields', :f => employment %>
-            <% end %>  
-        <% end %> 
     <% end %>
 
     <%= f.button :submit %>
