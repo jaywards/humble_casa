@@ -112,6 +112,31 @@ footer {
 	}
 }
 
+/* forms */
+
+ input, textarea, select, .uneditable-input {
+	 border: 1px solid #bbb;
+	 width: 100%;
+	 padding: 5px;
+	 height: 30px;
+	 margin-bottom: 5px;
+	 @include box_sizing;
+}
+
+#error_explanation {
+	color: #f00;
+	ul {
+		list-style: none;
+		margin: 0 0 18px 0;
+	}
+}
+
+.field_with_errors {
+	@extend .control-group;
+	@extend .error;
+}
+
+
 /* tabs */
 
 .tabs {
@@ -154,72 +179,6 @@ footer {
 	color: black;	
 }
 
-
-/* Set link color and hover */
-a:hover,
-a:focus {
-  color: rgb(0,176,223);
-  text-decoration: none;
-}
-
-a {
-	color: rgb(0,97,152);
-}
-
-#nested-zip-codes {
-	text-align: right;
-}
-
-
-/* FORMS */
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-.uneditable-input {
-  height: 30px;
-  line-height: 30px;
-  width: 100%;
-  @include box_sizing;
-  display: inline-block;
-}
-
-#property_instructions, #master_service_request_instructions, #service_request_instructions {
-	height: 80px;
-}
-
-#error_explanation {
-  color: #f00;
-  ul {
-    list-style: none;
-    margin: 0 0 18px 0;
-  }
-}
-
-.field_with_errors {
-  @extend .control-group;
-  @extend .error;
-}
-
-.simple_form div.property_assignments_interested {
-  float: right;
-  width: 400px;
-  padding-right: 10px;
-}
-
-
 .onetime-fields, 
 .repeating-fields, 
 .weekly-fields,
@@ -227,18 +186,6 @@ input[type="color"],
 #first-scheduled-fields  {
   display: none;
 }
-
-
-#terms-agreement-details {
-	font-size: .8em;
-}
-
-
-.simple_form div.master_service_request_terms_agreement label {
-  width: 275px;
-  padding-right: 15px;
-}
-
 
 #modal-container {
   display: none;
@@ -271,6 +218,51 @@ input[type="color"],
   }
 }
 
-#service-request-table {
-	font-size: .75em;
+select,
+textarea,
+input[type="text"],
+input[type="password"],
+input[type="datetime"],
+input[type="datetime-local"],
+input[type="date"],
+input[type="month"],
+input[type="time"],
+input[type="week"],
+input[type="number"],
+input[type="email"],
+input[type="url"],
+input[type="search"],
+input[type="tel"],
+input[type="color"],
+.uneditable-input {
+  display: inline-block;
+  height: 30px;
+  padding: 4px 6px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 20px;
+  color: #555555;
+  -webkit-border-radius: 4px;
+  -moz-border-radius: 4px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+#property_instructions, #service_request_instructions {
+	height: 80px;
+}
+
+/* Set link color and hover */
+a:hover,
+a:focus {
+  color: rgb(0,176,223);
+  text-decoration: none;
+}
+
+a {
+	color: rgb(0,97,152);
+}
+
+label {
+  display: inline-block;
 }

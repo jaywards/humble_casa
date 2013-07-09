@@ -22,9 +22,10 @@
 		    				<% end %>	
 		    			<% else %>
 							None available yet for your area.<br>
-								<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
-			    			 		<%= render 'interest_fields', f: assignment, thisCategory: category %>
-			    				<% end %>
+
+							<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
+			    			 	<%= render 'interest_fields', f: assignment, thisCategory: category %>
+			    			<% end %>
 						<% end %>
 					</td>
 					<% @i += 1 %>

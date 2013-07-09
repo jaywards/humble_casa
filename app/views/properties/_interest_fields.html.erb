@@ -1,4 +1,5 @@
 <p class="interested-fields">
-	<%= f.input :interested, as: :boolean, inline_label: "I'd be interested in this service category when it becomes available", label: false %> 
+	<%= f.input_field :interested, type: "checkbox" %>
+	<%= f.label "I'm interested in this category when available." %>
 	<%= f.hidden_field :category, value: thisCategory %>
 </p>
