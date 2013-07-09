@@ -3,7 +3,7 @@ class MasterServiceRequestsController < ApplicationController
 
 	def create
 		@master_request = MasterServiceRequest.new(params[:master_service_request])
-
+		
 		@service_request = view_context.spawnServiceRequest(@master_request)
 
 		if @master_request.save && @service_request.save
@@ -30,18 +30,17 @@ class MasterServiceRequestsController < ApplicationController
 
 	end
 
-	def show
-		@master_request = MasterServiceRequest.find_by_id(params[:id])
-		@service = Service.find_by_id(@master_request.service_id)
-		@property = Property.find_by_id(@master_request.property_id)
-		render 'completed_request'
-
-	end
+	#def show
+	#	@master_request = MasterServiceRequest.find_by_id(params[:id])
+	#	@service = Service.find_by_id(@master_request.service_id)
+	#	@property = Property.find_by_id(@master_request.property_id)
+	#	render 'completed_request'
+	#end
 
 	def edit
 		@master_request = MasterServiceRequest.find_by_id(params[:id])
-		@service = Service.find_by_id(@master_request.service_id)
-		@property = Property.find_by_id(@master_request.property_id)
+		@service = Service.find_by_id(params[:service_id])
+		@property = Property.find_by_id(params[:property_id])
 	end
 
 	

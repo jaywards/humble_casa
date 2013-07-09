@@ -1,17 +1,46 @@
 <h2>Completed Service Request</h2>
-<b>Request #: </b><%= @service_request.service_request_id %><br><br>
-<b>Property:</b> <ol><%= render @property %></ol><br><br>
-<b>Service:</b> <ol><%= render @service %></ol><br><br>
-<b>Service request details:</b>
-<ol>
-	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %><br>
-	Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - 
-		<%= @service_request.service_end_date.strftime("%m/%d/%Y") %><br>
-	Special instructions for this request: <%= @service_request.instructions %><br>
+<h4>Request #: </h4><%= @service_request.service_request_id %><br>
+<h4>Property:</h4> 
+<p>
+	<%= render @service_request.property %>
+</p>
+<h4>Service:</h4> 
+<p>
+	<%= render @service_request.service %>
+</p>
+
+<hr>
+
+<h4>Service request details:</h4>
+<p>
+	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %>
 	<br>
-	Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %><br>
-	Completed by: <%= @service_request.users.first.to_label %><br>
-</ol>
+	<% if @service_request.onetime %>
+		One-time request
+		<br>
+		Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - 
+			<%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+	<% else %>
+		Repeating request
+		<br>
+		<% if !@service_request.frequency.nil? %>
+			<%= @service_request.frequency.titleize %>
+			<% if @service_request.frequency == "weekly" || @service_request.frequency == "every_other_week" %>
+				on <%= @service_request.service_week_day%>s
+			<% else %>
+				on the <%= @service_request.service_month_day.ordinalize %>
+			<% end %>
+		<% end %>
+	<% end %>
+		<br>
+		Special instructions for this request: <%= @service_request.instructions %><br>
+	<br>
+	Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
+	<br>
+	Completed by: <%= @service_request.user.to_label %>
+	<br>
+	Notes from servicer: <%= @service_requestion.completion_note %>
+</p>
 <button class="btn btn-small" type="button" id="close">
 		<i class="icon-off"></i> Close
 </button>

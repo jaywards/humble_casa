@@ -35,6 +35,8 @@ end
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
+gem 'client_side_validations'
+gem 'client_side_validations-simple_form'
 
 group :test do
 	gem 'rspec-rails', '~> 2.12.2'

@@ -1,26 +1,34 @@
-<%= simple_form_for @master_service_request do |f| %>
+
+<%= simple_form_for @master_service_request, :validate => true do |f| %>
+
 	<div class="service_request">    
 	    <b>
-	    Property: <%= @property.name %><br>
-	    Service: <%= @service.name %><br>
-		</b><br>
+	    <% if !@property.nil? && !@service.nil? %> 
+		    Property: <%= @property.name %><br>
+		    Service: <%= @service.name %><br>
+			</b><br>
 
-	    <%= f.hidden_field :property_id, value: @property.id %>
-	    <%= f.hidden_field :service_id, value: @service.id %>
+		    <%= f.hidden_field :property_id, value: @property.id %>
+		    <%= f.hidden_field :service_id, value: @service.id %>
+		<% else %>
+			Property and service are nil.<br>
+			@master_service_request.id = <%= @master_service_request.id %>
+		<% end %>
 
-	  
 	    <%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},
 	    	collection: [[true, 'One-time request'], [false, 'Repeating request']],
-	    	label_method: :last, value_method: :first, label: "Request type:", as: :radio_buttons %> 
+	    	label_method: :last, value_method: :first, label: "* Request type:", as: :radio_buttons, item_wrapper_class: "inline" %> 
 	
 	    
 
 	    <div class="onetime-fields">
-	    
-			<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "Do not perform service before this date:" %>
+	    	<p>
+	    		Define a service window when you need this service completed by:
+	    	</p>
+			<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "* Do not perform service before:" %>
 	    	<%= f.input :service_start_date, as: :hidden, input_html: { class: "service_start_date"} %>
 
-	    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "Service must be completed by this date:" %>
+	    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "* Service must be completed by:" %>
 	    	<%= f.input :service_end_date, as: :hidden, input_html: { class: "service_end_date"} %>
 
 		</div>
@@ -47,9 +55,20 @@
 		</div>
 
 
-	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text, :input_html => { :cols => 40, :rows => 10 } %>
-
-
+	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text, placeholder: "optional", :input_html => { :cols => 40, :rows => 10 } %>
   		<%= render 'shared/modal_buttons' %>
+		<br>
+		<br>
+	    <div class="terms-agreement">
+	 		
+	    	<h5>Terms and Conditions:</h5>
+	 		<div id="terms-agreeement-details">  
+		    	Clicking 'Save' will automatically schedule and alert your service provider for this service request. By creating this service request you agree to pay your service provider the agreed upon amount upon the completion of the work. We highly recommend that you contact your service provider before scheduling your first service to determine payment terms and rates.
+		    </div>
+		    <br>
+		    <div>
+		 		<%= f.input :terms_agreement, label: "I agree to the Terms and Conditions" %>
+			</div>
+	    </div>
 	</div>
 <% end %>

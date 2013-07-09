@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130702221645) do
+ActiveRecord::Schema.define(:version => 20130707003333) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -48,6 +48,7 @@ ActiveRecord::Schema.define(:version => 20130702221645) do
     t.datetime "updated_at",         :null => false
     t.boolean  "all_assigned"
     t.integer  "active_request_id"
+    t.boolean  "terms_agreement"
   end
 
   create_table "properties", :force => true do |t|

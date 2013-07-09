@@ -1,3 +1,11 @@
 // Place all the styles related to the Properties controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+
+
+/* Places "I'd be interested in this service" in the right place */
+.simple_form div.property_assignments_interested {
+  margin-left: -175px;
+  float: left;
+}

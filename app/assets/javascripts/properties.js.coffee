@@ -3,5 +3,9 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-	$(document).ready ->
-		$("#property_name").focus()
+	$(".launch-property").click ->
+		setTimeout (->
+			$("#property_name").focus()
+			$("#new_property").enableClientSideValidations()
+			$("[id^=edit_property]").enableClientSideValidations()
+		), 500

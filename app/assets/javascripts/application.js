@@ -18,3 +18,5 @@
 //= require bootstrap-inputmask
 //= require_tree .
 //= require cocoon
+//= require rails.validations
+//= require rails.validations.simple_form
