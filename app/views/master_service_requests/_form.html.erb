@@ -15,10 +15,11 @@
 			@master_service_request.id = <%= @master_service_request.id %>
 		<% end %>
 
-	    <%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},
+	    <div class="checkbox inline">
+		    <%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},
 	    	collection: [[true, 'One-time request'], [false, 'Repeating request']],
 	    	label_method: :last, value_method: :first, label: "* Request type:", as: :radio_buttons, item_wrapper_class: "inline" %> 
-	
+		</div>
 	    
 
 	    <div class="onetime-fields">
@@ -56,7 +57,7 @@
 
 
 	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text, placeholder: "optional", :input_html => { :cols => 40, :rows => 10 } %>
-  		<%= render 'shared/modal_buttons' %>
+  		<%= render partial: 'shared/modal_buttons', locals: {save_button_label: save_service_label} %>
 		<br>
 		<br>
 	    <div class="terms-agreement">
@@ -67,7 +68,7 @@
 		    </div>
 		    <br>
 		    <div>
-		 		<%= f.input :terms_agreement, label: "I agree to the Terms and Conditions" %>
+		 		<%= f.input :terms_agreement, as: :boolean, inline_label: "I agree to the Terms and Conditions", label: false %>
 			</div>
 	    </div>
 	</div>

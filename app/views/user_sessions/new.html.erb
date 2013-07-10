@@ -4,7 +4,7 @@
   <%= f.input :email %><br />
   <%= f.input :password %><br />
   <center>
-    <%= render 'shared/modal_buttons' %>
+    <%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Login"} %>
   </center>
 <% end %>
 

@@ -18,6 +18,9 @@ html {
 	overflow-y: scroll;
 }
 
+body {
+	padding-top: 60px;
+}
 
 section {
 	overflow: auto;
@@ -112,7 +115,7 @@ footer {
 	}
 }
 
-/* forms */
+ /* forms */
 
  input, textarea, select, .uneditable-input {
 	 border: 1px solid #bbb;
@@ -135,7 +138,6 @@ footer {
 	@extend .control-group;
 	@extend .error;
 }
-
 
 /* tabs */
 
@@ -178,6 +180,7 @@ footer {
 .tab-pane {
 	color: black;	
 }
+
 
 .onetime-fields, 
 .repeating-fields, 
@@ -248,7 +251,7 @@ input[type="color"],
   vertical-align: middle;
 }
 
-#property_instructions, #service_request_instructions {
+#property_instructions, #master_service_request_instructions {
 	height: 80px;
 }
 
@@ -263,6 +266,8 @@ a {
 	color: rgb(0,97,152);
 }
 
-label {
-  display: inline-block;
+#nested-zip-codes {
+	text-align: right;
 }
+
+

@@ -2,3 +2,12 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+
+.simple_form div.master_service_request_onetime label.radio  {
+	width: 350px;
+}
+
+.simple_form div.master_service_request_onetime {
+	float: center;
+	display: block;
+}

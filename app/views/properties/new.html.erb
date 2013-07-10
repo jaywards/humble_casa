@@ -1,7 +1,7 @@
 <%= provide(:title, 'Register Property') %>
 <h2>Register a property</h2>
 <% if params[:creation] == "modal" %>
-	<%= render 'form' %>
+	<%= render partial: 'form', locals: {save_property_label: "Create property"}  %>
 <% else %>
 	<%= render 'non_modal_form' %>
 <% end %>
