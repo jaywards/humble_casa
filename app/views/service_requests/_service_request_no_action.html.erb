@@ -20,8 +20,8 @@
 					<% if @service_request.completed %>
 						Completed
 					<% elsif @service_request.assigned? %>
-						<% @assignee = assigned_employee(@service_request) %>
-						Assigned to: <%= @assignee.last_name %>, <%= @assignee.first_name[0] %> 
+						<%# @assignee = assigned_employee(@service_request) %>
+						Assigned to: <%= @service_request.user.last_name %> <%= @service_request.user.first_name[0] %><%#= @assignee.last_name %>, <%= @assignee.first_name[0] %> 
 					<% else %>
 						Pending
 					<% end %>	

@@ -1,18 +1,11 @@
 <title>Login</title>
-<%= form_for @user_session do |f| %>
-  <!--<%= f.error_messages %>-->
-  <% flash.each do |key, value| %>
-      <div class="alert alert-<%= key %>"><%= value %></div>
-    <% end %>
-  <p>
-    <%= f.label :email %><br />
-    <%= f.text_field :email %>
-  </p>
-  <p>
-    <%= f.label :password %><br />
-    <%= f.password_field :password %>
-  </p>
-  <p><%= f.submit %></p>
+<h2>Login</h2>
+<%= simple_form_for @user_session, :validate => true do |f| %>
+  <%= f.input :email %><br />
+  <%= f.input :password %><br />
+  <center>
+    <%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Login"} %>
+  </center>
 <% end %>
 
 

@@ -7,5 +7,5 @@
 	<% when "employee" %>
 		<h2>Create a new Employee account</h2>
 <% end %>
-<%= render 'form' %>
+<%= render partial: 'form', locals: {save_user_label: "Create user"} %>
 

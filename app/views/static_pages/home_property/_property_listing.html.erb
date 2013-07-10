@@ -4,9 +4,11 @@
 	<i class="icon-check"></i> Register or Change Services
 <% end %>
 &nbsp
-<%= link_to edit_property_path(id: property_listing.id), remote: true, class: "btn btn-mini" do%>
-	<i class="icon-edit"></i> Edit Property
-<% end %>
+<span class="launch-property">
+	<%= link_to edit_property_path(id: property_listing.id), remote: true, class: "btn btn-mini" do%>
+		<i class="icon-edit"></i> Edit Property
+	<% end %>
+</span>
 &nbsp
 <%= link_to property_listing, class: "btn btn-mini", method: :delete, confirm: "Are you sure?", title: property_listing.name do%>
 	<i class="icon-trash"></i> Delete Property

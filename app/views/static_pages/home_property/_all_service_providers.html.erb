@@ -46,7 +46,7 @@
 				<% if @valid_service_row %>
 					<td>				
 						<p class="launch-service-request">
-							<%= link_to "create a new service request", new_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success", remote: true %>
+							<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success", remote: true %>
 						</p>
 
 						<% if !@open_SRs.nil? %>										

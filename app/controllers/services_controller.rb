@@ -4,6 +4,9 @@ class ServicesController < ApplicationController
 
 def create
 		@service = current_user.services.build(params[:service])
+		@service.employments.build
+		@service.employments.first.user_id = current_user.id
+		@service.employments.first.service_id = @service.id
 		if @service.save
 			flash[:success] = "Service created!"
 			redirect_to root_path(message: "welcome")

@@ -34,13 +34,15 @@
 </p>
 <br>
 <center>
-	<%= link_to new_user_path(role: "serviceowner"), class: "btn btn-primary" do%>
-		<i class="icon-user"></i> Create Service Owner Account
-	<% end %>
-	<br><br>
-	<%= link_to new_user_path(role: "employee"), class: "btn" do%>
-		<i class="icon-user"></i> Create Employee Account
-	<% end %>
+	<div class="launch-user-form">
+		<%= link_to new_user_path(role: "serviceowner"), remote: true, class: "btn btn-primary" do %>
+			<i class="icon-user"></i> Create Service Owner Account
+		<% end %>
+		<br><br>
+		<%= link_to new_user_path(role: "employee"), remote: true, class: "btn" do %>
+			<i class="icon-user"></i> Create Employee Account
+		<% end %>
+	</div>
 	<% if current_user.nil? %>
 		<%= render 'shared/login_link'%>
 	<% end %>

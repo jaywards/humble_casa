@@ -1,10 +1,10 @@
-<%= simple_form_for @user do |f| %>
+<%= simple_form_for @user, :validate => true do |f| %>
     
     <%= f.input :first_name %> 
 
     <%= f.input :last_name %>
 
-    <%= f.input :primary_phone, input_html: { maxlength: 14, :"data-mask" => "999-999-9999" } %>
+    <%= f.input :primary_phone, input_html: { :"data-mask" => "999-999-9999", maxlength: 14 } %>
 
     <%= f.input :email, placeholder: "This will also your be your sign in name" %>
 
@@ -18,6 +18,6 @@
         <%= f.hidden_field :role, value: @user.role %>
     <% end %>
 
-    <%= f.button :submit %>
+    <%= render partial: 'shared/modal_buttons', locals: {save_button_label: save_user_label} %>
 
 <% end %>

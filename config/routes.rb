@@ -1,25 +1,35 @@
 HumbleCasa::Application.routes.draw do
   resources :user_sessions
+  
   resources :users do
     member do
       get 'assign_employment'
     end
     resources :properties, :services, :service_zips
   end
+  
   resources :properties do
     member do
       get 'assign_services'
     end
   end
-  resources :services
+  
+  resources :services do
+    resources :properties do
+      resources :master_service_requests, only: [:new, :edit]
+    end
+  end
+  
+  resources :master_service_requests, only: [:update, :index, :show, :create, :destroy]
+
   resources :service_requests do
     member do
       get 'assign_to_employee'
       get 'complete_request'
     end
   end
-  resources :master_service_requests
-
+  
+  
 
   match '/login', to: 'user_sessions#new', :as => :login
   match '/logout', to: 'user_sessions#destroy', :as => :logout

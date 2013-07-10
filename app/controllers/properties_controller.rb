@@ -1,6 +1,6 @@
 class PropertiesController < ApplicationController
 	filter_resource_access
-	before_filter :correct_user, only: [:show, :destroy, :edit, :update]
+	before_filter :correct_user, only: [:show, :destroy, :edit, :update, :assign_services]
 
 	def create
 		@property = current_user.properties.build(params[:property])

@@ -18,9 +18,9 @@ module ApplicationHelper
 		
 		@service_request = ServiceRequest.new(params[:service_request])
 		@service_request = updateServiceRequest(@service_request, master_request)
+		@service_request.build_work_assignment
 		@service_request.assigned = false
 		@service_request.completed = false
-		@service_request.work_assignments.build
 
 		return @service_request
 

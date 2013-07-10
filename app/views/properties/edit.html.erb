@@ -1,4 +1,3 @@
 <%= provide(:title, 'Edit Property') %>
 <h2>Edit Property</h2>
-<%= render 'form' %>
-
+<%= render partial: 'form', locals: {save_property_label: "Update property"}  %>

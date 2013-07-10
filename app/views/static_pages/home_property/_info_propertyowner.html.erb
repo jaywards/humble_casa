@@ -14,9 +14,11 @@
 <br>
 <p>
 	<center>
-		<%= link_to new_user_path(role: "propertyowner"), class: "btn btn-primary" do %>
-			<i class="icon-user icon-white"></i> Create Property Owner Account
-		<% end %>
+		<div class="launch-user-form">
+			<%= link_to new_user_path(role: "propertyowner"), remote: true, class: "btn btn-primary" do %>
+				<i class="icon-user icon-white"></i> Create Property Owner Account
+			<% end %>
+		</div>
 		<% if current_user.nil? %>
 			<%= render 'shared/login_link'%>
 		<% end %>
