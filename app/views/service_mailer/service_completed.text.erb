@@ -8,7 +8,7 @@ Service request details:
 	Special instructions for this request: <%= @service_request.instructions %>
 	
 	Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
-	Completed by: <%= @service_request.users.first.full_name %>
+	Completed by: <%= @service_request.user.full_name %>
 
 	
 <% if @service_request.onetime? %>

@@ -51,10 +51,7 @@ setDatePickers = ->
     altField: '.service_end_date',
     altFormat: 'yy-mm-dd'
     )
-  $('#completed-date-picker').datepicker(
-    altField: '.service_completed_date',
-    altFormat: 'yy-mm-dd'
-    )
+
 
 populateForm = ->
   if $("#master_service_request_onetime_true").attr("checked")

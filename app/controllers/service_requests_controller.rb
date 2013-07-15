@@ -29,47 +29,39 @@ class ServiceRequestsController < ApplicationController
 		## SHOULD ONLY OCCUR WHEN ASSIGNING TO EMPLOYEE OR COMPLETING REQUEST, 
 		## OTHERWISE ALL CHANGES ARE MADE IN MASTER_SERVICE_REQUEST AND PROPOGATE DOWN
 	    @service_request = ServiceRequest.find_by_id(params[:id])
-	    @assignee = @service_request.work_assignments.first.user_id
-		@current_assigned = @service_request.all_assigned
-	    @current_completed = @service_request.completed
+		@current_completed = @service_request.completed
 		@master_request = MasterServiceRequest.find_by_id(@service_request.master_service_request_id)
 		@save_success = false
 
 	    if @service_request.update_attributes(params[:service_request]) 
+	    	## If initial one-time assignment, this takes care of everything
 	    	@save_success = true
 
-		    if @current_assigned != @service_request.all_assigned
+			## If assignment (initial or otherwise) is all_assigned
+		    if @master_request.all_assigned != @service_request.all_assigned
 		      	@master_request.update_attribute(:all_assigned, @service_request.all_assigned)
 				
+		    ## If request was completed
 			elsif @current_completed != @service_request.completed
 
+				## If marked as completed and a repeating request
 				if @service_request.completed && !@service_request.onetime
-					@new_service_request = view_context.spawnServiceRequest(@master_request)
-					view_context.linkRequests(@master_request, @new_service_request)
+					
+					## If all_assigned copy the assignment to new request
+					if @master_request.all_assigned?
+						@new_service_request = view_context.spawnServiceRequest(@master_request, @service_request.user)
+						view_context.linkRequests(@master_request, @new_service_request)
+					
+					## Not all_assigned
+					else
+						@new_service_request = view_context.spawnServiceRequest(@master_request)
+						view_context.linkRequests(@master_request, @new_service_request)
+					end	
 
-					if @new_service_request.save 	
-						
-						if @master_request.all_assigned?
-						
-							@new_workA = WorkAssignment.where(service_request_id: @new_service_request.id)
-							@new_work.update_attribute(:user_id, @assignee)
-							@new_service_request.assigned = true
-							@new_service_request.all_assigned = true
-							# SAVE MIGHT BE UNNECESSARY
-							if  @new_workA.save 
-								@save_success = true 
-							else
-								@save_success = false
-							end
-						else						
-							@new_service_request.all_assigned = false
-						end
-
-						if @new_service_request.save 
-							@save_success = true 
-						else
-							@save_success = false
-						end
+					if @new_service_request.save 
+						@save_success = true 
+					else
+						@save_success = false
 					end
 				end
 			end

@@ -14,12 +14,17 @@ module ApplicationHelper
 	end 
 
 	
-	def spawnServiceRequest(master_request)
+	def spawnServiceRequest(master_request, assignee)
 		
 		@service_request = ServiceRequest.new(params[:service_request])
 		@service_request = updateServiceRequest(@service_request, master_request)
-		@service_request.build_work_assignment
-		@service_request.assigned = false
+		if assignee.nil?
+			@service_request.build_work_assignment
+			@service_request.assigned = false
+		else
+			@service_request.build_work_assignment(user_id: assignee.id)
+			@service_request.assigned = true
+		end
 		@service_request.completed = false
 
 		return @service_request
@@ -38,6 +43,7 @@ module ApplicationHelper
 		service_request.service_week_day = master_request.service_week_day
     	service_request.service_month_day = master_request.service_month_day
     	service_request.first_scheduled = master_request.first_scheduled
+    	service_request.all_assigned = master_request.all_assigned
 
     	return service_request
 	end

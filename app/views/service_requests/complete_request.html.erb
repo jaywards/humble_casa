@@ -1,4 +1,4 @@
-<%= simple_form_for(@service_request) do |f| %>
+<%= simple_form_for @service_request do |f| %>
 
 	<%= provide(:title, 'Complete service request') %>
 	<h2>Complete Service Request</h2>	
@@ -14,6 +14,6 @@
 
 	<%= f.input :completion_note, as: :text, label: "Notes", placeholder: "Any details or notes for the homeowner" %>
 	
-	<%= render 'shared/modal_buttons' %>
+	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Complete request"} %>
 
 <% end %>

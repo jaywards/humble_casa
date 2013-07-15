@@ -61,13 +61,22 @@
 								<%= link_to "delete", service_request.master_service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
 	
 							<% when "serviceowner" %>
-								<%= link_to "assign request", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+								<% if service_request.assigned %>
+									<p class="launch-complete-service-request">
+										<%= link_to "complete request", complete_request_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+									</p>
+									<p>
+										<%= link_to "change assignment", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+									</p>
+								<% else %>
+									<%= link_to "assign request", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+								<% end %>
 								<%= link_to "delete", service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
 
 							<% when "employee" %>
 								add link to show service request report
 								<%#= link_to "view request", show_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
-								<p class="launch-service-request">
+								<p class="launch-complete-service-request">
 									<%= link_to "complete request", complete_request_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
 								</p>
 						<% end %>

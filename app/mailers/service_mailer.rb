@@ -25,7 +25,7 @@ class ServiceMailer < ActionMailer::Base
     @service = @service_request.service
     @property = @service_request.property
 
-    mail to: @service_request.users.first.email, subject: "Service request assigned"
+    mail to: @service_request.user.email, subject: "Service request assigned"
   end
 
 

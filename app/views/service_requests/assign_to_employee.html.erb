@@ -1,8 +1,8 @@
-<%= simple_form_for(@service_request) do |f| %>
+<%= simple_form_for @service_request do |f| %>
 	<% @employees = @service.service_employees %>
 	<%#= f.simple_fields_for :work_assignments, @service_request.work_assignments do |work_assignment| %>
 	    <%#= render 'work_assignment_fields', :f => work_assignment %>
-    	<%= f.simple_fields_for :work_assignments do |work_assignment| %>
+    	<%= f.simple_fields_for :work_assignment do |work_assignment| %>
     		<%= work_assignment.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request", include_blank: true %>
 
     	<% if !work_assignment.nil? %>
@@ -17,6 +17,6 @@
 	    <% end %> 
     <% end %>
 
-	<%= render 'shared/modal_buttons' %>
+	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Assign request"} %>
 
 <% end %>
