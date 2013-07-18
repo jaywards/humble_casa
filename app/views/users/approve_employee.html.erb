@@ -1,0 +1,21 @@
+<%= provide(:title, 'Approve Employee') %>
+<h2><%= pluralize(@employments.size, 'Approve Employee')%></h2>
+
+<%= simple_form_for @service do |f| %>
+
+	<% @employments.each do |e| %>
+
+		
+    	Do you want to approve the following employee accounts for your business. Once approved, you can assign service requests to each employee.
+    	<br>
+    	<%= f.simple_fields_for :employments, e do |employment| %>		
+			<%= employment.input :approved, label: false, input_html: {value: e.approved},
+	    	collection: [[true, 'Approve this employee account'], [false, 'Do not approve this employee']],
+	    	label_method: :last, value_method: :first, as: :radio_buttons %>
+		<% end %>
+		<hr>
+	<% end %>
+
+	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Submit"} %>
+
+<% end %>

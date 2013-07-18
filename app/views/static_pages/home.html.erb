@@ -6,8 +6,6 @@
 	<%= render 'static_pages/home_property/info_propertyowner' %>
 <% else %>
 
-	<h2>Welcome, <%= @user.first_name %></h2>
-	
 	<% case @user.role %>
 	 	<% when "propertyowner" %>
 			<% if @user.properties.count() == 0 %>

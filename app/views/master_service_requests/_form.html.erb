@@ -57,6 +57,11 @@
 
 
 	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text, placeholder: "optional", :input_html => { :cols => 40, :rows => 10 } %>
+  		
+	    <% if current_user != @property.user %>
+	    	<p><b>ATTENTION</b>: You are creating a service request for a property which you are not the owner of. This not allowed without the expressed permission of the property owner.</p>
+	    <% end %>
+
   		<%= render partial: 'shared/modal_buttons', locals: {save_button_label: save_service_label} %>
 		<br>
 		<br>

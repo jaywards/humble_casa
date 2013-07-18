@@ -12,6 +12,9 @@ HumbleCasa::Application.routes.draw do
   end
   
   resources :services do
+    member do
+      get 'approve_employee'
+    end
     resources :properties do
       resources :master_service_requests, only: [:new, :edit]
     end

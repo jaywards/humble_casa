@@ -22,7 +22,7 @@ class User < ActiveRecord::Base
   has_many :services, through: :employments
   accepts_nested_attributes_for :employments
   
-  has_many :work_assignments
+  has_many :work_assignments, dependent: :destroy
   has_many :service_requests, through: :work_assignments
   accepts_nested_attributes_for :work_assignments
 

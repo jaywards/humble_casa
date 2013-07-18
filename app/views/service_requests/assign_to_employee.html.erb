@@ -1,5 +1,14 @@
+<%= provide(:title, 'Assign service request') %>
+<h2>Assign Service Request</h2>
+
+<%= render @service_request.property %>
+<hr>
+<%= render 'service_request_no_action' %>
+<hr>
+
 <%= simple_form_for @service_request do |f| %>
-	<% @employees = @service.service_employees %>
+	
+	<% @employees = @service.users.find_all { |x| x.employments.first.approved == true } %>
 	<%= f.simple_fields_for :work_assignment do |work_assignment| %>
 		<%= work_assignment.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request", include_blank: true %>
 

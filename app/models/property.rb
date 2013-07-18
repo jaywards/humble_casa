@@ -21,4 +21,10 @@ class Property < ActiveRecord::Base
 
   default_scope order: 'properties.created_at DESC'
 
+
+def full_address
+  return (address1 + ", " + address2 + ", " + city + ", " + state + " " + zip)
+end
+
+
 end

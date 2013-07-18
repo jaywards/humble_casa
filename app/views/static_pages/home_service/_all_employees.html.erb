@@ -1,4 +1,32 @@
-<h4>Your employees:</h4><br>
-<ol class="employee listing">
-	<%= render @employees %>
-</ol>
+
+<div id="employee-table">
+	<table class="table table-condensed">			
+		<thead>
+			<tr>
+				<th>Employee Name</th>
+				<th>Employee Email</th>
+				<th>Employee Phone</th>
+				<th></th>
+			</tr>
+		</thead>		
+		<tbody>
+			<% @employees.each do |employee| %>
+				<tr>
+					<td>
+						<%= employee.full_name %>
+					</td>
+					<td>
+						<%= employee.email %>
+					</td>
+					<td>
+						<%= employee.primary_phone %>
+					</td>
+					
+					<td>
+						<%= link_to "delete", employee, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

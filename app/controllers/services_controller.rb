@@ -7,6 +7,7 @@ def create
 		@service.employments.build
 		@service.employments.first.user_id = current_user.id
 		@service.employments.first.service_id = @service.id
+		@service.employments.first.approved = true
 		if @service.save
 			flash[:success] = "Service created!"
 			redirect_to root_path(message: "welcome")
@@ -40,5 +41,12 @@ def create
       render :action => 'edit'
     end
   end
+
+  def approve_employee
+    @service = Service.find(params[:id])
+    @employments = Employment.find_all_by_service_id_and_approved(@service.id, '')
+    render action: "approve_employee"
+  end
+
 
 end

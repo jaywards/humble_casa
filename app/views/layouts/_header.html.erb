@@ -6,6 +6,11 @@
 			<nav>
 				<ul class="nav pull-right">
 					<% if current_user %>
+						Welcome, <%= current_user.first_name %>
+						&nbsp
+						&nbsp
+						&nbsp
+						
 						<%= link_to "User Account", edit_user_path(current_user), remote: true, class: "launch-user-form"%> | 
 						<%= link_to "Logout", logout_path %>
 					<% else %>

@@ -1,7 +1,8 @@
 <%= simple_form_for @service_request, html: {multipart: true} do |f| %>
 
 	<%= provide(:title, 'Complete service request') %>
-	<h2>Complete Service Request</h2>	
+	<h2>Complete Service Request</h2>
+	<%= render @service_request.property %>	
 	<%= render 'service_request_no_action' %>
 	<hr>
 	<%= f.input :completed, label: "Service request completed?", input_html: {value: @service_request.completed},
@@ -10,10 +11,10 @@
 	
 	<%= f.input :completed_date, as: :fake, input_html: {id: "completed-date-picker", value: @service_request.try(:completed_date).try(:strftime,'%m/%d/%Y')}, label: "Date service was completed on:" %>
 	<%= f.input :completed_date, as: :hidden, input_html: { class: "completed_date"} %>
-
-	<%#= image_tag(@service_request.service_photo_1_url) if @service_request.service_photo_1? %>
+	Note: If you want your completed service requests to be marked as verified you must upload at least one service verification photo taken <b>with a smartphone</b> at the time of service. HumbleCasa matches the GPS and timestamp data from the photos to the property address and time of service. Otherwise the service request will be shown as completed but we will not indicate that it has been verified.
+	<br>
+	<br>
 	<%= f.input :service_photo_1, as: :file, label: "Service photo 1:" %>
-	<%#= f.input :remove_service_photo_1, as: :boolean %>
 	<%= f.input :service_photo_2, as: :file, label: "Service photo 2:" %>
 	<%= f.input :service_photo_3, as: :file, label: "Service photo 3:" %>
 

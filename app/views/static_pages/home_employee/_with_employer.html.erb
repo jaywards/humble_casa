@@ -1,21 +1,30 @@
 <%= render 'static_pages/home_employee/employee_welcome_message' %>
 
 <hr>
+<% if @user.employments.first == true %>
 
-<h4>Your employer:</h4>
-<%= render @employer %>
-<br><br>
-<%= link_to edit_user_path(@user), remote: true, class: "btn btn-mini" do %>
-	<i class="icon-edit"></i> Update account 
-<% end %>
-
-<hr>
-
-<h4>Your service requests:</h4><br>
-<% if !@sorted_service_requests.nil? %>
-	<%= render 'shared/service_request_table_head' %>
-	<% @sorted_service_requests.each do |request| %>
-		<%= render request %>						
+	<h4>Your employer:</h4>
+	<%= render @employer %>
+	<br><br>
+	<%= link_to edit_user_path(@user), remote: true, class: "btn btn-mini" do %>
+		<i class="icon-edit"></i> Update account 
 	<% end %>
-	<%= render 'shared/service_request_table_foot' %>
+
+	<hr>
+
+	<h4>Your service requests:</h4><br>
+	<% if !@sorted_service_requests.nil? %>
+		<%= render 'shared/service_request_table_head' %>
+		<% @sorted_service_requests.each do |request| %>
+			<%= render request %>						
+		<% end %>
+		<%= render 'shared/service_request_table_foot' %>
+	<% end %>
+<% elsif @user.employments.first == false  %>
+	The employer you selected has rejected your request to register as an employee with their business. Did you select the wrong business? Try again.
+	<%= link_to edit_user_path(@user), remote: true, class: "btn btn-mini btn-primary" do %>
+		<i class="icon-check icon-white"></i> Update account
+	<% end %>
+<% else %>	
+	Your selected employer has not yet approved your account. You may want to contact your employer to remind them that your account needs activation.
 <% end %>

@@ -1,0 +1,59 @@
+<div class="dashboard">
+	<h5>Current events needing action:</h5>
+	<ul>
+		<% @alluncompleted = @business.service_requests.find_all { |x| x.completed == false}.size %>
+		<% @unassigned = @business.service_requests.find_all { |x| x.assigned == false} %>
+		<% @uncompleted = @business.service_requests.find_all { |x| x.completed == false && x.assigned == true} %>
+		<% @newemployees = @business.employments.find_all { |x| x.approved == nil } %>
+		<% if @alluncompleted > 0 || @newemployees.size > 0 %>
+			<% if @alluncompleted > 0 %>
+				<li>
+					<%= pluralize(@alluncompleted, 'open service request') %> for your business:
+					<ul>
+						<% if @unassigned.size > 0 %>
+							<% @unassigned.each do |asr| %>
+								<li>Unassigned request for <%= asr.property.name %> - <%= link_to "see details and assign", assign_to_employee_service_request_path(asr), remote: true %></li>
+							<% end %>
+						<% end %>
+					
+						<% if @uncompleted.size > 0 %>
+							<% @uncompleted.each do |csr| %>
+								<li>Assigned but not completed request for: <%= csr.property.name %>. Assigned to <%= csr.user.full_name%> - 
+									<% if csr.user == current_user %>
+										<z class="launch-complete-service-request">
+										<%= link_to "complete request", complete_request_service_request_path(csr), remote: true %> or </z>
+									<% end %>
+									<%= link_to "see details and re-assign", assign_to_employee_service_request_path(csr), remote: true %>
+								</li>
+							<% end %>
+						<% end %>
+					</ul>
+				</li>
+			<% end %>
+			<% if @newemployees.size > 0 %>
+			 	<li>You have <%= pluralize(@newemployees.size, 'employee account') %> awaiting authorization - <%= link_to "approve or reject employee accounts", approve_employee_service_path(@business), remote: true %></li></li>
+			 		<ul><% @newemployees.each do |e| %>
+			 			<li>Name: <%= e.user.full_name %>, email: <%= e.user.email%> 
+			 		<% end %></ul>
+			 <% end %>
+		<% else %>
+			<li>no actions required at this time</li>
+		<% end %>
+	</ul>
+	<br>
+	<h5>Other account updates since your last visit:</h5>
+	<ul>
+		<% @newassignments = @business.assignments.find_all { |x| x.updated_at > current_user.last_login_at }.size %>
+		<% @newcompleted = @business.service_requests.find_all { |x| x.completed == true && x.updated_at > current_user.last_login_at }.size %>
+		<% if @newassignments > 0 || @newcompleted > 0 %>
+			<% if @newassignments > 0 %>
+				<li><%= pluralize(@newassignments, 'new customer') %> signed-up for your business</li>
+			<% end %>
+			<% if @newcompleted > 0 %>
+				<li><%= pluralize(@newcompleted, 'service request was') %> completed</li>
+			<% end %>
+		<% else %>
+			<li>no updates at this time</li>
+		<% end %>
+	</ul>
+</div>

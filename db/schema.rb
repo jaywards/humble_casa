@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130717232046) do
+ActiveRecord::Schema.define(:version => 20130718202749) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -28,8 +28,9 @@ ActiveRecord::Schema.define(:version => 20130717232046) do
   create_table "employments", :force => true do |t|
     t.integer  "service_id"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.boolean  "approved",   :default => false
   end
 
   create_table "locations", :force => true do |t|
@@ -153,6 +154,8 @@ ActiveRecord::Schema.define(:version => 20130717232046) do
     t.string   "primary_phone"
     t.string   "role"
     t.integer  "employer_id"
+    t.datetime "last_login_at"
+    t.datetime "current_login_at"
   end
 
   create_table "work_assignments", :force => true do |t|

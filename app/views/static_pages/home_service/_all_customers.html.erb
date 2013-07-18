@@ -1,0 +1,41 @@
+<div id="customer-table">
+	<table class="table table-condensed">			
+		<thead>
+			<tr>
+				<th>Owner Name</th>
+				<th>Owner Email</th>
+				<th>Owner Phone</th>
+				<th>Property Name</th>
+				<th>Property Address</th>
+				<th></th>
+			</tr>
+		</thead>		
+		<tbody>
+			<% @properties = @business.properties %>
+			<% @properties.each do |property| %>
+				<tr>
+					<td>
+						<%= property.user.full_name %>
+					</td>
+					<td>
+						<%= property.user.email %>
+					</td>
+					<td>
+						<%= property.user.primary_phone %>
+					</td>
+					<td>
+						<%= property.name %>
+					</td>
+					<td>
+						<%= property.full_address %>
+					</td>
+					<td>
+						<z class="launch-service-request">
+							<%= link_to "create service request for this customer", new_service_property_master_service_request_path(service_id: @business.id, property_id: property.id), class: "btn btn-mini", remote: true %>
+						</z>
+					</td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+</div>

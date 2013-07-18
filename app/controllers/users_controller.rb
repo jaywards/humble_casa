@@ -51,11 +51,11 @@ class UsersController < ApplicationController
 
   def destroy
     @user = User.find(params[:id])
-    respond_to do |format|
-      format.html { redirect_to root_path }
-      format.json { head :no_content }
-    end
+    @user.destroy
+    flash[:success] = "Account deleted."
+    redirect_to root_path
   end
+
 
 
 end

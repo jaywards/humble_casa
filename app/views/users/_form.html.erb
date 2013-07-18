@@ -21,17 +21,21 @@
     <% end %>
 
     <% if @role == "employee" %>
+
         <% if !(@services = Service.all).empty? %>
             <% @sorted_services = @services.sort_by {|a| a.name } %>
         <% end %>
-    
+        
         <%= f.simple_fields_for :employments do |employment| %>
             <%= employment.association :service, collection: @sorted_services, :as => :select, label: "Select employer (in alphabetic order)", include_blank: true %>
         <% end %>
+    
     <% end %>
 
     <%= render partial: 'shared/modal_buttons', locals: {save_button_label: save_user_label} %>
+    
     &nbsp
+    
     <% if controller.action_name == "edit" %>     
         <%= link_to @user, class: "btn btn-warning", method: :delete, confirm: "Are you sure you want to delete your entire account?" do %>
             <i class="icon-trash"></i> Delete user account
