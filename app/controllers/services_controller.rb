@@ -1,9 +1,9 @@
 class ServicesController < ApplicationController
 	filter_resource_access
-	before_filter :correct_user, only: [:destroy, :edit, :update]
 
 def create
-		@service = current_user.services.build(params[:service])
+		@user = current_user
+		@service = @user.build_business(params[:service])
 		@service.employments.build
 		@service.employments.first.user_id = current_user.id
 		@service.employments.first.service_id = @service.id
@@ -22,12 +22,13 @@ def create
 	end
 
 	def destroy
+		@service = Service.find_by_id(params[:id])
 		@service.destroy
+		flash[:success] = "Business deleted"
 		redirect_to root_path
 	end
 
 	def edit
-		@service = Service.find_by_id(params[:id])
 	end
 
 	def update
@@ -39,11 +40,5 @@ def create
       render :action => 'edit'
     end
   end
-
-	private 
-		def correct_user
-			@service = current_user.user_service.find_by_id(params[:id])
-			redirect_to root_path if @service.nil?
-		end
 
 end

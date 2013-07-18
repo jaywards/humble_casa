@@ -3,7 +3,7 @@ $ ->
     
     setTimeout (->
     	$('#completed-date-picker').datepicker(
-    		altField: '.service_completed_date',
+    		altField: '.completed_date',
     		altFormat: 'yy-mm-dd'
     	)
     ),400

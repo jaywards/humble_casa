@@ -4,7 +4,7 @@ class MasterServiceRequestsController < ApplicationController
 	def create
 		@master_request = MasterServiceRequest.new(params[:master_service_request])
 		
-		@service_request = view_context.spawnServiceRequest(@master_request)
+		@service_request = view_context.spawnServiceRequest(@master_request, nil)
 
 		if @master_request.save && @service_request.save
 			flash[:success] = "Service request created!"
@@ -73,8 +73,15 @@ class MasterServiceRequestsController < ApplicationController
 
 	def destroy
 		@master_request = MasterServiceRequest.find_by_id(params[:id])
+		@active_service_request = ServiceRequest.find_by_id(@master_request.active_request_id)
 		@master_request.destroy
+		@active_service_request.destroy
+		flash[:success] = "Service request deleted"	      
 		redirect_to root_path
+	end
+
+	def index
+		@master_requests = MasterServiceRequest.all
 	end
 
 end

@@ -26,6 +26,9 @@ module ApplicationHelper
 			@service_request.assigned = true
 		end
 		@service_request.completed = false
+		@service_request.location_verified = false
+		@service_request.timestamp_verified = false
+		@service_request.build_location
 
 		return @service_request
 
@@ -52,5 +55,24 @@ module ApplicationHelper
 		service_request.update_attribute(:master_service_request_id, master_request.id)
 		master_request.update_attribute(:active_request_id, service_request.id)
 	end
+
+
+	def nextScheduled(master_request)
+		@today = Date.today
+		@frequency = master_request.frequency
+
+		case @master_request.frequency
+			when "weekly"
+				@next_scheduled = master_request.first_scheduled + 1.week
+			when "every_other_week"
+				@next_scheduled = master_request.first_scheduled + 2.weeks
+			when "monthly"
+				@next_scheduled = master_request.first_scheduled + 1.month
+			when "every_other_month"
+				@next_scheduled = master_request.first_scheduled + 2.months
+		end
+		return @next_scheduled
+	end
+
 
 end

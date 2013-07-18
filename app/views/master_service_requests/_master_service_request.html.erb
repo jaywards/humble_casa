@@ -1,0 +1,34 @@
+<%= render master_service_request.property %>
+<br>
+<%= render master_service_request.service %>
+<br>
+<br>
+<% if master_service_request.onetime? %>
+	One-time request
+	<br>
+	Service window from
+	<%= master_service_request.service_start_date.strftime("%a %b %d, %Y") if !master_service_request.service_start_date.nil? %>
+	 to 
+	<%= master_service_request.service_end_date.strftime("%a %b %d, %Y") if !master_service_request.service_end_date.nil? %>
+<% else %>
+	Repeating request
+	<br>
+	<% if !master_service_request.frequency.nil? %>
+		<%= master_service_request.frequency.titleize.downcase %>
+		<% if master_service_request.frequency == "weekly" || master_service_request.frequency == "every_other_week" %>
+			on <%= master_service_request.service_week_day%>s.
+		<% else %>
+			on the <%= master_service_request.service_month_day.ordinalize %>.
+		<% end %>
+	<% end %>
+	<br>
+	Next scheduled service on: <%= master_service_request.first_scheduled.strftime("%a %b %d, %Y") if !master_service_request.first_scheduled.nil? %>
+<% end %>
+<br>
+Instructions: <%= master_service_request.instructions %>
+<br>
+<p class="launch-service-request">
+	<%= link_to "view/edit", edit_service_property_master_service_request_path(id: master_service_request.id, service_id: master_service_request.service_id, property_id: master_service_request.property_id,), class: "btn btn-mini", remote: true %> 
+</p>  
+<%= link_to "delete", master_service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+<hr>

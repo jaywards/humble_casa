@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130707003333) do
+ActiveRecord::Schema.define(:version => 20130717232046) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -30,6 +30,16 @@ ActiveRecord::Schema.define(:version => 20130707003333) do
     t.integer  "user_id"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
+  end
+
+  create_table "locations", :force => true do |t|
+    t.string   "address"
+    t.float    "latitude"
+    t.float    "longitude"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "property_id"
+    t.integer  "service_request_id"
   end
 
   create_table "master_service_requests", :force => true do |t|
@@ -91,6 +101,11 @@ ActiveRecord::Schema.define(:version => 20130707003333) do
     t.integer  "master_service_request_id"
     t.boolean  "all_assigned"
     t.string   "completion_note"
+    t.string   "service_photo_1"
+    t.string   "service_photo_2"
+    t.string   "service_photo_3"
+    t.boolean  "location_verified"
+    t.boolean  "timestamp_verified"
   end
 
   create_table "service_zips", :force => true do |t|

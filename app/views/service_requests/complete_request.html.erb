@@ -1,4 +1,4 @@
-<%= simple_form_for @service_request do |f| %>
+<%= simple_form_for @service_request, html: {multipart: true} do |f| %>
 
 	<%= provide(:title, 'Complete service request') %>
 	<h2>Complete Service Request</h2>	
@@ -11,6 +11,11 @@
 	<%= f.input :completed_date, as: :fake, input_html: {id: "completed-date-picker", value: @service_request.try(:completed_date).try(:strftime,'%m/%d/%Y')}, label: "Date service was completed on:" %>
 	<%= f.input :completed_date, as: :hidden, input_html: { class: "completed_date"} %>
 
+	<%#= image_tag(@service_request.service_photo_1_url) if @service_request.service_photo_1? %>
+	<%= f.input :service_photo_1, as: :file, label: "Service photo 1:" %>
+	<%#= f.input :remove_service_photo_1, as: :boolean %>
+	<%= f.input :service_photo_2, as: :file, label: "Service photo 2:" %>
+	<%= f.input :service_photo_3, as: :file, label: "Service photo 3:" %>
 
 	<%= f.input :completion_note, as: :text, label: "Notes", placeholder: "Any details or notes for the homeowner" %>
 	

@@ -11,6 +11,10 @@ gem 'dynamic_form'
 gem 'declarative_authorization'
 gem 'simple_form'
 gem 'cocoon'
+gem 'mini_magick'
+gem 'carrierwave'
+gem 'geocoder'
+gem 'exifr'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

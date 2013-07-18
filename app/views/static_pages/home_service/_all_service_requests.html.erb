@@ -1,11 +1,11 @@
 <h4>Your service requests:</h4><br>
 <ol class="service request listing">
 	<% if !@sorted_service_requests.nil? %>
+		<%= render 'shared/service_request_table_head' %>
 		<% @sorted_service_requests.each do |request| %>
-			<li>
-				<%= render request %> 
-			</li>
+			<%= render request %>
 		<% end %>
+		<%= render 'shared/service_request_table_foot' %>
 	<% else %>
 		No service requests have been created yet by your customers. If you think this is in error, please contact HumbleCasa Support for assistance.
 	<% end %>

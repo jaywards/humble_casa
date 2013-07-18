@@ -2,9 +2,6 @@ HumbleCasa::Application.routes.draw do
   resources :user_sessions
   
   resources :users do
-    member do
-      get 'assign_employment'
-    end
     resources :properties, :services, :service_zips
   end
   

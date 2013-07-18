@@ -56,9 +56,11 @@
 							</button></p>
 
 							<div id="pending-SRs" class="collapse">
+								<%= render 'shared/service_request_table_head' %>
 								<% @open_SRs.each do |request| %>
 									<%= render request %>
 								<% end %>
+								<%= render 'shared/service_request_table_foot' %>
 							</div>
 						<% end %>
 
@@ -68,9 +70,11 @@
 							</button></p>
 
 							<div id="completed-SRs" class="collapse">
+								<%= render 'shared/service_request_table_head' %>
 								<% @completed_SRs.each do |request| %>
 									<%= render request %>
 								<% end %>
+								<%= render 'shared/service_request_table_foot' %>
 							</div>
 						<% end %>
 					</td>

@@ -1,12 +1,14 @@
 class PropertiesController < ApplicationController
 	filter_resource_access
-	before_filter :correct_user, only: [:show, :destroy, :edit, :update, :assign_services]
-
+	
 	def create
 		@property = current_user.properties.build(params[:property])
 		Service::CATEGORIES.count.times do 
 			@property.assignments.build
 		end
+		@property.build_location
+		@property.location.address = 
+			@property.address1 + " " + @property.address2 + ", " + @property.city + ", " + @property.state
 
 		if @property.save
 			flash[:success] = "Property created."
@@ -28,16 +30,18 @@ class PropertiesController < ApplicationController
 	end
 
 	def destroy
+		@property = Property.find_by_id(params[:id])
 		@property.destroy
-		respond_to do |format|
-			format.html { redirect_to root_path }
-			format.json { head :no_content }
-		end
+		flash[:success] = "Property deleted"
+		redirect_to root_path
+		#respond_to do |format|
+		#	format.html { redirect_to root_path }
+		#	format.json { head :no_content }
+		#end
 	end
 
 	def edit
-		@property = Property.find_by_id(params[:id])
-
+		#@property = Property.find_by_id(params[:id])
 	end
 
 	def update
@@ -64,9 +68,4 @@ class PropertiesController < ApplicationController
 		render action: "assign_services"
 	end
 
-	private 
-		def correct_user
-			@property = current_user.properties.find_by_id(params[:id])
-			redirect_to root_path if @property.nil?
-		end
 end

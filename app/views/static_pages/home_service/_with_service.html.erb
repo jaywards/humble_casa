@@ -1,14 +1,14 @@
 <%= render 'static_pages/home_service/service_welcome_message' %>
 <hr>
-<%= render @service %>
+<%= render @business %>
 <br>
 <%= render 'static_pages/home_service/service_zips' %>
 
-<%= link_to edit_service_path(id: @service.first.id), remote: true, class: "btn btn-mini" do%>
+<%= link_to edit_service_path(id: @business.id), remote: true, class: "btn btn-mini" do%>
 	<i class="icon-edit"></i> Edit Business
 <% end %>
 &nbsp
-<%= link_to @service.first, class: "btn btn-mini", method: :delete, confirm: "Are you sure? This will delete your association with all of your existing customers.", title: @service.first.name do%>
+<%= link_to @business, class: "btn btn-mini", method: :delete, confirm: "Are you sure? This will delete your association with all of your existing customers.", title: @business.name do%>
 	<i class="icon-trash"></i> Delete Service
 <% end %>
 

@@ -15,12 +15,13 @@ class User < ActiveRecord::Base
   validates :role, presence: true
   
   has_many :properties, dependent: :destroy
-  has_many :services, dependent: :destroy
-
-  has_many :employments
+  
+  has_one :business, class_name: "Service", dependent: :destroy
+  
+  has_many :employments, dependent: :destroy
   has_many :services, through: :employments
   accepts_nested_attributes_for :employments
-
+  
   has_many :work_assignments
   has_many :service_requests, through: :work_assignments
   accepts_nested_attributes_for :work_assignments

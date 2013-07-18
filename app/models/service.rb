@@ -15,7 +15,7 @@ class Service < ActiveRecord::Base
   validates :state, presence: true, length: {maximum: 2}
   validates :zip, presence: true, length: {maximum: 10}
 
-  belongs_to :user
+  belongs_to :owner, class_name: "User"
 
   has_many :assignments, dependent: :destroy
   has_many :properties, through: :assignments

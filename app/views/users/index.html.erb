@@ -1,0 +1,37 @@
+<% @users.each do |u| %>
+	<li>
+		<%= render u %>
+		<ul>
+			<% case u.role %>
+				<% when "propertyowner" %>
+					Property owner account<br><br>
+					<% @props = u.properties %>
+					<% @props.each do |p| %>
+						<%= render p %>
+						<%= link_to "edit", edit_property_path(p) %>
+						&nbsp
+						<%= link_to "delete", p, method: :delete, confirm: "Are you sure?" %>
+					<% end %>
+				<% when "serviceowner" %>
+					Service owner account<br><br>
+					<% @service = u.business %>
+					<%= render @service %><br>
+					<%= link_to "edit", edit_service_path(@service) %>
+						&nbsp
+					<%= link_to "delete", @service, method: :delete, confirm: "Are you sure?" %>
+				<% when "employee" %>
+					Employee account<br><br>
+					<%= render u.services.first %>
+				<% when "admin" %>
+					Admin account<br>
+				<% else %>
+					No recognized user role
+			<% end %>
+		</ul>
+		<%= link_to "edit", edit_user_path(u) %>
+		&nbsp
+		<%= link_to "delete", u, method: :delete, confirm: "Are you sure?" %>
+	</li>
+<% end %>
+<hr>
+<%= link_to "back", root_path %>

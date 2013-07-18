@@ -27,16 +27,15 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = current_user
   end
 
   def show
-    @user = current_user
+    @user = User.find(params[:id])
   end
 
 
   def update
-    @user = current_user
+    #@user = current_user
     if @user.update_attributes(params[:user])
       flash[:success] = "Successfully updated user."
       redirect_to root_path
@@ -46,8 +45,17 @@ class UsersController < ApplicationController
     end
   end
 
-  def assign_employment
-    render action: "assign_employment"
+  def index
+    @users = User.all  
   end
+
+  def destroy
+    @user = User.find(params[:id])
+    respond_to do |format|
+      format.html { redirect_to root_path }
+      format.json { head :no_content }
+    end
+  end
+
 
 end

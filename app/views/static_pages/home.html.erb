@@ -16,7 +16,7 @@
 				<%= render 'static_pages/home_property/with_property' %>
 			<% end %>
 		<% when "serviceowner" %>
-			<% if @service.first.nil? %>
+			<% if @user.business.nil? %>
 				<%= render 'static_pages/home_service/no_service' %>		
 			<% else %>	
 				<%= render 'static_pages/home_service/with_service' %>
@@ -27,6 +27,10 @@
 			<% else %>	
 				<%= render 'static_pages/home_employee/with_employer' %>
 			<% end %>
+		<% when "admin" %>
+			<%= link_to "all users/properties/services", users_path %><br>
+			<%= link_to "all master service requests", master_service_requests_path %><br>
+			<%= link_to "all service requests", service_requests_path %>
 		<% else %>
 			No recognized user role - please contact HumbleCasa support for help.
 	<% end %>

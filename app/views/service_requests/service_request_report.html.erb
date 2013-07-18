@@ -21,8 +21,7 @@
 		Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - 
 			<%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
 	<% else %>
-		Repeating request
-		<br>
+		Repeating request: 
 		<% if !@service_request.frequency.nil? %>
 			<%= @service_request.frequency.titleize %>
 			<% if @service_request.frequency == "weekly" || @service_request.frequency == "every_other_week" %>
@@ -35,12 +34,37 @@
 		<br>
 		Special instructions for this request: <%= @service_request.instructions %><br>
 	<br>
-	Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
+	<% if @service_request.completed %>
+		<% if @service_request.location_verified && @service_request.timestamp_verified %>
+			<h5>Verified completed with GPS and photo timestamp data</h5>
+		<% end %>
+		Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
+		<br>
+		Completed by: <%= @service_request.user.to_label %>
+		<br>
+		Additional notes from servicer: 
+		<% if @service_request.completion_note.blank? %> 
+			none 
+		<% else %>
+			<%= @service_request.completion_note %>
+		<% end %>
+	<% end %>
 	<br>
-	Completed by: <%= @service_request.user.to_label %>
-	<br>
-	Notes from servicer: <%= @service_requestion.completion_note %>
+	
+	<hr>
+
+	<h4>Service images:</h4>
+	<div>
+		<%= image_tag @service_request.service_photo_1_url if @service_request.service_photo_1? %>
+		&nbsp
+		<%= image_tag @service_request.service_photo_2_url if @service_request.service_photo_2? %>
+		&nbsp
+		<%= image_tag @service_request.service_photo_3_url if @service_request.service_photo_3? %>
+	</div>
 </p>
-<button class="btn btn-small" type="button" id="close">
-		<i class="icon-off"></i> Close
-</button>
+<br>
+<center>
+	<button class="btn btn-small" type="button" id="close">
+			<i class="icon-off"></i> Close
+	</button>
+</center>
