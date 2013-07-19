@@ -3,4 +3,3 @@ class ChangeColumnApprovedInEmploymentAgain < ActiveRecord::Migration
     change_column :employments, :approved, :boolean
   end
 end
-end
