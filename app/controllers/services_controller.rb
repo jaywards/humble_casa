@@ -18,11 +18,8 @@ def create
 				render :action => 'new'
 			end
 		else
-			@user.employments.first.user_id = current_user.id
-			@user.employments.first.service_id = @service.id
-			@user.employments.first.approved = true
-			
-			if @service.save && @user.save
+			if @service.save
+				@user.employments.first.update_attributes(:user_id => current_user.id, :service_id => @service.id, :approved => true)		
 				flash[:success] = "Service created!"
 				redirect_to root_path(message: "welcome")
 			else
