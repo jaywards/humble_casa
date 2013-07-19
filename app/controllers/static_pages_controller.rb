@@ -1,5 +1,7 @@
 class StaticPagesController < ApplicationController
-
+  USER_NAME, PASSWORD = "humble", "house"
+  before_filter :authenticate
+  
   def home
     @user = current_user
     
@@ -15,7 +17,7 @@ class StaticPagesController < ApplicationController
         @business = @user.business
         if !@business.nil?
           @zips_list = @business.service_servicezips
-          @employees = User.find(Employment.where(:service_id => @business.id).map(&:user_id).uniq) 
+          @employees = User.find(Employment.where(:service_id => @business.id, :approved => true).map(&:user_id).uniq) 
           if !(@service_request_listings = @business.service_requests).empty?
             @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
           end
@@ -53,4 +55,11 @@ class StaticPagesController < ApplicationController
 
   def careers
   end
+
+  private
+    def authenticate
+      authenticate_or_request_with_http_basic do |user_name, password|
+        user_name == USER_NAME && password == PASSWORD
+      end
+    end
 end

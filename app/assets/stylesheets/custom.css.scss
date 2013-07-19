@@ -72,9 +72,9 @@ p {
 }
 
 /* header */
-#logo {
+.logo {
 	float: left;
-	margin-right: 10px;
+	margin-right: 1px;
 	font-size: 1.6em;
 	font-weight: bold;
 	color: rgb(0,97,152);
@@ -85,6 +85,11 @@ p {
 		color: rgb(0,176,223);
 		text-decoration: none;
 	}
+}
+.beta {
+	color: rgb(0,97,152);
+	letter-spacing: -1px;
+	font-weight: bold;
 }
 
 /* footer */

@@ -4,16 +4,31 @@ class ServicesController < ApplicationController
 def create
 		@user = current_user
 		@service = @user.build_business(params[:service])
-		@service.employments.build
-		@service.employments.first.user_id = current_user.id
-		@service.employments.first.service_id = @service.id
-		@service.employments.first.approved = true
-		if @service.save
-			flash[:success] = "Service created!"
-			redirect_to root_path(message: "welcome")
+		if @user.employments.empty?
+			@service.employments.build
+			@service.employments.first.user_id = current_user.id
+			@service.employments.first.service_id = @service.id
+			@service.employments.first.approved = true
+
+			if @service.save
+				flash[:success] = "Service created!"
+				redirect_to root_path(message: "welcome")
+			else
+				flash[:error] = "Service couldn't be created."
+				render :action => 'new'
+			end
 		else
-			flash[:error] = "Service couldn't be created."
-			render :action => 'new'
+			@user.employments.first.user_id = current_user.id
+			@user.employments.first.service_id = @service.id
+			@user.employments.first.approved = true
+			
+			if @service.save && @user.save
+				flash[:success] = "Service created!"
+				redirect_to root_path(message: "welcome")
+			else
+				flash[:error] = "Service couldn't be created."
+				render :action => 'new'
+			end
 		end
 	end
 

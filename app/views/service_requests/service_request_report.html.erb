@@ -1,5 +1,8 @@
 <h2>Completed Service Request</h2>
-<h4>Request #: </h4><%= @service_request.service_request_id %><br>
+<h4>Request #: </h4>
+<p>
+	<%= @service_request.service_request_id %>
+</p>
 <h4>Property:</h4> 
 <p>
 	<%= render @service_request.property %>
@@ -36,7 +39,7 @@
 	<br>
 	<% if @service_request.completed %>
 		<% if @service_request.location_verified && @service_request.timestamp_verified %>
-			<h5>Verified completed with GPS and photo timestamp data</h5>
+			<h5>Verified completed by HumbleCasa!</h5>
 		<% end %>
 		Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
 		<br>

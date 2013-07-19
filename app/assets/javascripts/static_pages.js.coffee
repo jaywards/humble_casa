@@ -21,7 +21,7 @@ $ ->
 		else
 			firstDateString = new Date(SR.first_scheduled.substring(0, 10).replace(/-/g, "/")).toDateString()		
 			scheduleString = "Repeating request (" + SR.frequency.replace(/_/g, " ") + ") with next scheduled for " + firstDateString
-		$('#scheduled-string').text scheduleString
+		$('.scheduled-string').text scheduleString
 
 	findSoonest = (serviceRequests) ->
 		serviceRequests.sort SRcompare

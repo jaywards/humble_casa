@@ -17,9 +17,8 @@
 				<td>	
 					<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
 						<% if check_availability(area_services(property_listing.zip), category) %>			
-							<b>Services available!</b> - 
 							<%= link_to assign_services_property_path(property_listing), remote: true, class: "btn btn-mini btn-primary" do %>
-								<i class="icon-check"></i> Register or Change Services
+								<i class="icon-check icon-white"></i> Services available! Sign-up
 							<% end %>
 						<% else %>
 							No service providers for your area.
@@ -35,7 +34,7 @@
 							<%= javascript_tag do %>
 									window.openSRs = <%= raw @open_SRs.to_json %>
 							<% end %>
-						 	<span id="scheduled-string"></span><br>
+						 	<span class="scheduled-string"></span><br>
 	    		
 						<% else %>
 							N/A

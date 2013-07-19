@@ -1,0 +1,54 @@
+<div class="dashboard">
+	<h5>Updates by property:</h5>
+	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>
+		<%= listing.name %><br>
+		<ul>			
+			<% listing.services.each do |s| %>
+				<li><%= s.category.titleize %>: <%= s.name %>
+					<ul>
+						<% if !(@completed = completed_requests(s, listing)).nil? %>
+							<% @newcompleted = @completed.find_all { |x| x.updated_at > current_user.last_login_at}%>
+							<% if @newcompleted.size > 0 %>
+								<li><%= pluralize(@newcompleted.size, 'service request ') %> completed since your last login
+									<ul>
+										<% @newcompleted.each do |nc| %>
+											<li>Completed on <%= nc.completed_date.strftime("%a %b %d, %Y") %>.
+												<%= link_to "view report", service_request_path(nc), class: "btn btn-mini", remote: true %>
+											</li>
+										<% end %>
+									</ul>
+								</li>
+							<% end %>
+						<% end %>
+						<li>Next scheduled service:
+							<% if !(@open_SRs = open_requests(s, listing)).nil? %>	
+								<%= javascript_tag do %>
+										window.openSRs = <%= raw @open_SRs.to_json %>
+								<% end %>
+							 	<span class="scheduled-string"></span><br>
+							 <% else %>
+								no future service scheduled
+							<% end %>
+						</li>
+						<% if @newcompleted.size == 0 %>
+							<li>Last service completed:
+								<% if !(@completed_SRs = completed_requests(s, listing)).nil? %>
+									<%= (@last = @completed_SRs.sort_by { |sr| sr.completed_date }.last).completed_date.strftime("%a %b %d, %Y") %> 
+									<%= link_to "view report", service_request_path(@last), class: "btn btn-mini", remote: true %>
+								<% else %>	
+									no completed requests for this service
+								<% end %>
+							</li>
+						<% end %>
+					</ul>
+				</li>
+			<% end %>
+			<% if listing.services.size == 0 %>
+				<li> No services registered for this property. Click "Register or Change Services" below to sign-up!</li>
+			<% end %>
+		</ul>
+	<% end %>
+	<% if @property_listings.size == 0 %>
+		No properties registered.
+	<% end %>
+</div>
