@@ -94,8 +94,6 @@ GEM
     factory_girl_rails (1.4.0)
       factory_girl (~> 2.3.0)
       railties (>= 3.0.0)
-    faker (1.0.1)
-      i18n (~> 0.4)
     ffi (1.9.0)
     formatador (0.2.4)
     geocoder (1.1.8)
@@ -250,7 +248,6 @@ DEPENDENCIES
   dynamic_form
   exifr
   factory_girl_rails (= 1.4.0)
-  faker (= 1.0.1)
   geocoder
   growl (= 1.0.3)
   guard-rspec (= 0.5.5)

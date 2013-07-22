@@ -6,7 +6,7 @@ class Service < ActiveRecord::Base
 
   validates :user_id, presence: true
   validates :category, presence: true
-  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX}, uniqueness: { case_sensitive: false}
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX}
   validates :name, presence: true, length: {maximum: 150}
   validates :phone, presence: true, length: {maximum: 15}
   validates :address1, presence: true, length: {maximum: 150}
