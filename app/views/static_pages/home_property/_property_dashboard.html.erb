@@ -30,7 +30,7 @@
 								no future service scheduled
 							<% end %>
 						</li>
-						<% if @newcompleted.size == 0 %>
+						<% if !@newcompleted.nil? %>
 							<li>Last service completed:
 								<% if !(@completed_SRs = completed_requests(s, listing)).nil? %>
 									<%= (@last = @completed_SRs.sort_by { |sr| sr.completed_date }.last).completed_date.strftime("%a %b %d, %Y") %> 
