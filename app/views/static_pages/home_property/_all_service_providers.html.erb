@@ -50,11 +50,11 @@
 
 						<% if !@open_SRs.nil? %>										
 							<% @open_SRs.sort_by {|a| a.first_scheduled} %>
-							<p><a data-toggle="collapse" data-target="#pending-SRs">
+							<p><a data-toggle="collapse" data-target="#" + <%= category %> + "-pending-SRs">
   								+ View pending service requests (<%= @open_SRs.count.to_s %>)
 							</button></p>
 
-							<div id="pending-SRs" class="collapse">
+							<div id=<%= category %> + "-pending-SRs" class="collapse">
 								<%= render 'shared/service_request_table_head' %>
 								<% @open_SRs.each do |request| %>
 									<%= render request %>
@@ -64,11 +64,11 @@
 						<% end %>
 
 						<% if !(@completed_SRs = completed_requests(@selected_service, property_listing)).nil? %>	
-							<p><a data-toggle="collapse" data-target="#completed-SRs">
+							<p><a data-toggle="collapse" data-target="#" + <%= category %> + "-completed-SRs">
   								+ View completed service requests (<%= @completed_SRs.count.to_s %>)
 							</button></p>
 
-							<div id="completed-SRs" class="collapse">
+							<div id=<%= category %> + "-completed-SRs" class="collapse">
 								<%= render 'shared/service_request_table_head' %>
 								<% @completed_SRs.each do |request| %>
 									<%= render request %>
