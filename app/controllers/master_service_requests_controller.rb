@@ -84,4 +84,8 @@ class MasterServiceRequestsController < ApplicationController
 		@master_requests = MasterServiceRequest.all
 	end
 
+	def pause
+		render action: "pause"
+	end
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130719223244) do
+ActiveRecord::Schema.define(:version => 20130723220449) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -55,11 +55,12 @@ ActiveRecord::Schema.define(:version => 20130719223244) do
     t.string   "service_week_day"
     t.integer  "service_month_day"
     t.datetime "first_scheduled"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
     t.boolean  "all_assigned"
     t.integer  "active_request_id"
     t.boolean  "terms_agreement"
+    t.boolean  "paused",             :default => false
   end
 
   create_table "properties", :force => true do |t|
@@ -107,6 +108,7 @@ ActiveRecord::Schema.define(:version => 20130719223244) do
     t.string   "service_photo_3"
     t.boolean  "location_verified"
     t.boolean  "timestamp_verified"
+    t.boolean  "paused"
   end
 
   create_table "service_zips", :force => true do |t|

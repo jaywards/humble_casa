@@ -1,9 +1,10 @@
 authorization do
   role :admin do
-    has_permission_on [:users, :user_sessions, :static_pages, :services, :master_service_requests], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on [:users, :user_sessions, :static_pages], :to => [:index, :show, :new, :create, :edit, :update, :destroy]
     has_permission_on :services, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :approve_employee]
     has_permission_on :properties, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :view_completed, :assign_services]
     has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :assign_employment]
+    has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]
   end
   
   role :guest do
@@ -20,7 +21,7 @@ authorization do
     includes :guest
     has_permission_on :users, :to => [:show, :edit, :update]
     has_permission_on :properties, :to => [:new, :create, :show, :edit, :update, :destroy, :assign_services, :view_completed]
-    has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy]
+    has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]
     has_permission_on :user_sessions, :to => [:destroy, :new, :create]
   end
   
@@ -29,7 +30,7 @@ authorization do
     has_permission_on :users, :to => [:show, :edit, :update]
     has_permission_on :user_sessions, :to => [:destroy, :new, :create]
     has_permission_on :services, :to => [:new, :create, :show, :edit, :update, :destroy, :approve_employee]
-    has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy]
+    has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]
   end
 
   role :employee do

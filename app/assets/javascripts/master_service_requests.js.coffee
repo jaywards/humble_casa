@@ -31,10 +31,11 @@ $ ->
 
       $("#daypicker").change ->
         nextScheduledWeekDay($(this).val())
-
+        $('#first-scheduled-fields').show(400)
 
       $("#monthpicker").change ->
         nextScheduledMonthDay($(this).val())
+        $('#first-scheduled-fields').show(400)
 
       $("#save-btn").click ->
         validateForm()
@@ -84,8 +85,7 @@ nextScheduledWeekDay = (day) ->
   $('.first_scheduled').val scheduled_date
   dateString = scheduled_date.toDateString()
   $('#date-string').text dateString
-  $('#first-scheduled-fields').show(400)
-
+ 
 nextScheduledMonthDay = (selected_day_num) ->
   today = new Date()
   today_day = today.getDate()
@@ -96,8 +96,7 @@ nextScheduledMonthDay = (selected_day_num) ->
   $('.first_scheduled').val scheduled_date
   dateString = scheduled_date.toDateString()
   $('#date-string').text dateString
-  $('#first-scheduled-fields').show(400)
-
+ 
 validateForm = -> 
   if $("#master_service_request_onetime_true").is(":checked")
     validateOneTimeRequest()
@@ -169,3 +168,65 @@ validateRepeatingRequest = ->
   else
     alert("You must select a service frequency before saving.")
     false
+
+
+
+$ ->
+  $(".launch-pause").click ->
+    
+    setTimeout (->
+
+      $("#restart-date-picker").datepicker(
+        altFormat: 'yy-mm-dd'
+      )
+
+      stringDate = new Date(document.getElementById("master_service_request_first_scheduled").value.substring(0, 19).replace(/-/g, "/")).toDateString()
+      $('#date-string').text stringDate
+
+      $(".paused").change ->
+        if $(this).val() == "true"
+          $(".master_service_request_restart_date").show(400)
+        else
+          $(".master_service_request_restart_date").hide(400)
+          frequency = $("#master_service_request_frequency").val()
+          if frequency == "weekly" || frequency == "every_other_week"
+            day = $("#master_service_request_service_week_day").val()
+            nextScheduledWeekDay(day, $(this).val())
+          else
+            day = $("#master_service_request_service_month_day").val()
+            nextScheduledMonthDay(day, $(this).val())
+          
+
+      $("#restart-date-picker").change ->
+        frequency = $("#master_service_request_frequency").val()
+        if frequency == "weekly" || frequency == "every_other_week"
+          day = $("#master_service_request_service_week_day").val()
+          futureNextScheduledWeekDay(day, $(this).val())
+        else
+          day = $("#master_service_request_service_month_day").val()
+          futureNextScheduledMonthDay(day, $(this).val())
+    ), 400
+
+  futureNextScheduledWeekDay = (day, future) ->
+    futureDate = new Date(future.substring(6), future.substring(0,2) - 1, future.substring(3,5))
+    days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
+    selected_day_num = days.indexOf(day)
+    future_day = futureDate.getDay()
+    if selected_day_num > future_day
+      scheduled_date = new Date 1900+futureDate.getYear(), futureDate.getMonth(), futureDate.getDate()+(selected_day_num - future_day) 
+    else
+      scheduled_date = new Date 1900+futureDate.getYear(), futureDate.getMonth(), futureDate.getDate()+(selected_day_num - future_day + 7)
+    $('.first_scheduled').val scheduled_date
+    dateString = scheduled_date.toDateString()
+    $('#date-string').text dateString
+
+  futureNextScheduledMonthDay = (selected_day_num, future) ->
+    futureDate = new Date(future.substring(6), future.substring(0,2) - 1, future.substring(3,5))
+    future_day = futureDate.getDate()
+    if selected_day_num > future_day
+      scheduled_date = new Date 1900+futureDate.getYear(), futureDate.getMonth(), selected_day_num 
+    else
+      scheduled_date = new Date 1900+futureDate.getYear(), (futureDate.getMonth() + 1), selected_day_num
+    $('.first_scheduled').val scheduled_date
+    dateString = scheduled_date.toDateString()
+    $('#date-string').text dateString

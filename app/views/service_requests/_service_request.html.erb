@@ -6,7 +6,9 @@
 			<% else %>
 				Completed
 			<% end %>
-		<% elsif service_request.assigned? %>
+		<% elsif service_request.paused %>
+			Paused
+		<% elsif service_request.assigned %>
 			<% @assignee = assigned_employee(service_request) %>
 			Assigned to: <%= @assignee.last_name %>, <%= @assignee.first_name[0] %> 
 		<% else %>
@@ -35,7 +37,12 @@
 				<% end %>
 			<% end %>
 			<br>
-			Next scheduled service on: <%= service_request.first_scheduled.strftime("%a %b %d, %Y") if !service_request.first_scheduled.nil? %>
+			<% if service_request.paused %>
+				Resumes on: 
+			<% else %>
+				Next scheduled service on: 
+			<% end %>
+			<%= service_request.first_scheduled.strftime("%a %b %d, %Y") if !service_request.first_scheduled.nil? %>
 		</td>
 	<% end %>
 
@@ -50,6 +57,17 @@
 					<p class="launch-service-request">
 						<%= link_to "view/edit", edit_service_property_master_service_request_path(id: service_request.master_service_request_id, service_id: service_request.master_service_request.service_id, property_id: service_request.master_service_request.property_id,), class: "btn btn-mini btn-info", remote: true %> 
 					</p>  
+					<% if !service_request.onetime %>
+						<% if service_request.paused %>
+							<p class="launch-pause">
+								<%= link_to "resume", pause_master_service_request_path(id: service_request.master_service_request_id), class: "btn btn-mini btn-success", remote: true %> 
+							</p>
+						<% else %>
+							<p class="launch-pause">
+								<%= link_to "pause", pause_master_service_request_path(id: service_request.master_service_request_id), class: "btn btn-mini btn-warning", remote: true %> 
+							</p>
+						<% end %>
+					<% end %>
 					<%= link_to "delete", service_request.master_service_request, method: :delete, class: "btn btn-mini", confirm: "Are you sure?" %>
 
 				<% when "serviceowner" %>

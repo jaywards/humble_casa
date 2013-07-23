@@ -19,7 +19,9 @@
 				<td>
 					<% if @service_request.completed %>
 						Completed
-					<% elsif @service_request.assigned? %>
+					<% elsif @service_request.paused %>
+						Paused
+					<% elsif @service_request.assigned %>
 						Assigned to: <%= @service_request.user.last_name %>, <%= @service_request.user.first_name[0] %>
 					<% else %>
 						Pending
@@ -42,7 +44,11 @@
 							<% end %>
 						<% end %>
 					</td>
-					<td><%= @service_request.first_scheduled.strftime("%a %b %d, %Y") if !@service_request.first_scheduled.nil? %></td>
+					<td>
+						<% if @service_request.paused %>
+						Resumes on:
+						<% end %>
+						<%= @service_request.first_scheduled.strftime("%a %b %d, %Y") if !@service_request.first_scheduled.nil? %></td>
 				<% end %>
 
 				<td><%= @service_request.instructions %></td>

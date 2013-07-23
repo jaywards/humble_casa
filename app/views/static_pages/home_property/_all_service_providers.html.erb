@@ -35,7 +35,7 @@
 							<br>
 							<h5>Next service scheduled:</h5>
 								<% if !(@open_SRs = open_requests(@selected_service, property_listing)).nil? %>	
-									<% @open_SRs.sort_by {|a| a.first_scheduled} %>
+									<% @open_SRs = @open_SRs.sort_by {|a| a.first_scheduled} %>			
 									<%= @open_SRs.first.first_scheduled.strftime("%a %b %d, %Y") %>		
 								<% else %>
 									N/A

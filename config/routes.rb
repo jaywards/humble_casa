@@ -17,7 +17,6 @@ HumbleCasa::Application.routes.draw do
     end
     resources :properties do
       resources :master_service_requests, only: [:new, :edit]
-      #just added - not sure about this
       resources :service_requests do
         member do
           get 'view_completed'
@@ -26,7 +25,11 @@ HumbleCasa::Application.routes.draw do
     end
   end
   
-  resources :master_service_requests, only: [:update, :index, :show, :create, :destroy]
+  resources :master_service_requests, only: [:update, :index, :show, :create, :destroy] do
+    member do
+      get 'pause'
+    end
+  end
 
   resources :service_requests do
     member do
