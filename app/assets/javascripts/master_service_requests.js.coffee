@@ -4,8 +4,6 @@
 
 
 $ ->
-  $('.form').is('new_master_service_request') ->
-    alert("look at me")
     $("#master_service_request_onetime_true").focus()
     $("#new_master_service_request").enableClientSideValidations()
     $("[id^=edit_master_service_request]").enableClientSideValidations()
@@ -168,9 +166,7 @@ validateRepeatingRequest = ->
 
 
 $ ->
-  $('.form').is('[id^=edit_master_service_request]') ->
-    alert("im here")
-    $("#restart-date-picker").datepicker(
+   $("#restart-date-picker").datepicker(
       altFormat: 'yy-mm-dd'
     )
 
