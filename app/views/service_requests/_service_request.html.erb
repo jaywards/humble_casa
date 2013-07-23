@@ -48,9 +48,9 @@
 			<% case current_user.role %> 
 				<% when "propertyowner" %>
 					<p class="launch-service-request">
-						<%= link_to "view/edit", edit_service_property_master_service_request_path(id: service_request.master_service_request_id, service_id: service_request.master_service_request.service_id, property_id: service_request.master_service_request.property_id,), class: "btn btn-mini", remote: true %> 
+						<%= link_to "view/edit", edit_service_property_master_service_request_path(id: service_request.master_service_request_id, service_id: service_request.master_service_request.service_id, property_id: service_request.master_service_request.property_id,), class: "btn btn-mini btn-info", remote: true %> 
 					</p>  
-					<%= link_to "delete", service_request.master_service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+					<%= link_to "delete", service_request.master_service_request, method: :delete, class: "btn btn-mini", confirm: "Are you sure?" %>
 
 				<% when "serviceowner" %>
 					<% if service_request.assigned %>

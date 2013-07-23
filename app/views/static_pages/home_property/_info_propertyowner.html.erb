@@ -1,9 +1,9 @@
 <br>
 <center><%= image_tag("HClogo.jpg", alt: "HumbleCasa.com logo", size: "120x45") %></center>
-<p id="main-title">
+<z id="main-title">
 	<h1>Welcome to HumbleCasa!</h1>
 	<h2>...simplify your home maintenance</h2>
-</p>
+</z>
 <p>
 	HumbleCasa is the <b>free</b> and easy way to <b>schedule</b> and <b>track</b> home maintenance requests. See all of your maintenance requests in one place (house cleaners, landscapers, pool cleaners, etc.) and receive <b>verification</b> that the requested home services have been completed! 
 </p>
@@ -46,4 +46,14 @@
 		<br>
 		<%= link_to "Back to homepage", root_path, class: "btn"%>
 	<% end %>
+	<br>
+	<br>
+	<div class="row-fluid">
+		<div class="span8 offset2">
+			<p class="service-notification">
+				Do you own a company that provides home maintainence services? HumbleCasa can help you to connect with your customers, manage your workforce, and simplify both invoicing and payroll.<br> 
+				Visit our <%= link_to "Service Provider page", business_path %> to get more details and sign up.
+			</p>
+		</div>
+	</div>
 </center>

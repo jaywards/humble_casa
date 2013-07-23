@@ -73,6 +73,4 @@ module ApplicationHelper
 		end
 		return @next_scheduled
 	end
-
-
 end

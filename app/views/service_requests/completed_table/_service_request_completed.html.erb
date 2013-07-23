@@ -1,0 +1,44 @@
+<tr>
+	<td>
+		<% if @service_request.location_verified && @service_request.timestamp_verified %>
+			Completed - HumbleCasa Verified!
+		<% else %>
+			Completed
+		<% end %>
+	</td>
+	<td>
+		<%= @service_request.service_request_id %>
+	</td>
+	<td>
+		<% if @service_request.onetime? %>
+			One-time request<br>
+			Service window from
+			<%= @service_request.service_start_date.strftime("%a %b %d, %Y") if !@service_request.service_start_date.nil? %>
+ 			to 
+			<%= @service_request.service_end_date.strftime("%a %b %d, %Y") if !@service_request.service_end_date.nil? %>
+		<% else %>
+			Repeating request - 
+			<% if !@service_request.frequency.nil? %>
+				<%= @service_request.frequency.titleize.downcase %>
+				<% if @service_request.frequency == "weekly" || @service_request.frequency == "every_other_week" %>
+					on <%= @service_request.service_week_day%>s.
+				<% else %>
+					on the <%= @service_request.service_month_day.ordinalize %>.
+				<% end %>
+			<% end %>
+		<% end %>
+	</td>
+	<td><%= @service_request.instructions %></td>
+	<td><%= @service_request.completed_date.strftime("%a %b %d, %Y") %></td>
+	<td><%= @service_request.user.last_name %>, <%= @service_request.user.first_name[0] %></td>
+	<td><%= @service_request.completion_note %></td>
+	<td>	
+		<%= image_tag @service_request.service_photo_1_url if @service_request.service_photo_1? %>
+		&nbsp
+		<%= image_tag @service_request.service_photo_2_url if @service_request.service_photo_2? %>
+		&nbsp
+		<%= image_tag @service_request.service_photo_3_url if @service_request.service_photo_3? %>
+	</td>
+</tr>
+				
+

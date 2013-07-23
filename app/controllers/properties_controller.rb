@@ -34,14 +34,9 @@ class PropertiesController < ApplicationController
 		@property.destroy
 		flash[:success] = "Property deleted"
 		redirect_to root_path
-		#respond_to do |format|
-		#	format.html { redirect_to root_path }
-		#	format.json { head :no_content }
-		#end
 	end
 
 	def edit
-		#@property = Property.find_by_id(params[:id])
 	end
 
 	def update

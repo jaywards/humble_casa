@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-	if $('body').hasClass('static_pages')
+	if $('body').hasClass('WILL NEVER LOAD')
 
 		setTimeout (->
 

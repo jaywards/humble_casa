@@ -26,10 +26,10 @@
 	    	<p>
 	    		Define a service window when you need this service completed by:
 	    	</p>
-			<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "* Do not perform service before:" %>
+			<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "* Don't start before:" %>
 	    	<%= f.input :service_start_date, as: :hidden, input_html: { class: "service_start_date"} %>
 
-	    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "* Service must be completed by:" %>
+	    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "* Must be completed by:" %>
 	    	<%= f.input :service_end_date, as: :hidden, input_html: { class: "service_end_date"} %>
 
 		</div>

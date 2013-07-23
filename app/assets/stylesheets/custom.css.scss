@@ -65,10 +65,24 @@ p {
 }
 
 #main-title {
-	font-size: 1.6em;
 	font-weight: bold;
 	color: black;
-	letter-spacing: -1px;
+	line-height: 1;
+	h1 {
+		font-size: 2em;
+		letter-spacing: -2px;
+		margin-bottom: 5px;
+		margin-top: -15px;
+		text-align: center;
+	}
+	h2 {
+		font-size: 1.2em;
+		letter-spacing: -1px;
+		margin-bottom: 20px;
+		text-align: center;
+		font-weight: normal;
+		color: rgb(0,97,152);
+	}
 }
 
 /* header */
@@ -281,4 +295,11 @@ a {
 	background: lightgrey;
 }
 
+#completed-service-request-table {
+	font-size: .9em;
+}
 
+.service-notification {
+	border: 1px solid rgb(0,97,152);
+	padding: 5px;
+}

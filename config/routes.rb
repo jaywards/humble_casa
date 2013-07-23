@@ -17,6 +17,12 @@ HumbleCasa::Application.routes.draw do
     end
     resources :properties do
       resources :master_service_requests, only: [:new, :edit]
+      #just added - not sure about this
+      resources :service_requests do
+        member do
+          get 'view_completed'
+        end
+      end
     end
   end
   
@@ -29,27 +35,22 @@ HumbleCasa::Application.routes.draw do
     end
   end
   
-  
-
   match '/login', to: 'user_sessions#new', :as => :login
   match '/logout', to: 'user_sessions#destroy', :as => :logout
   match '/new_user', to: 'users#new', :as => :new_user
+  match '/business', to: 'static_pages#business', :as => :business
+  match '/pricing_plans', to: 'static_pages#pricing_plans', :as => :pricing_plans
 
   root to: 'static_pages#home'
 
   get "static_pages/home"
-
   get "static_pages/help"
-
   get "static_pages/about"
-
   get "static_pages/pricing_plans"
-
   get "static_pages/feature_tour"
-
   get "static_pages/contact_us"
-
   get "static_pages/careers"
+  get "static_pages/business"
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

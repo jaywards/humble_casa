@@ -9,7 +9,7 @@
 						<% if !(@completed = completed_requests(s, listing)).nil? %>
 							<% @newcompleted = @completed.find_all { |x| x.updated_at > current_user.last_login_at}%>
 							<% if @newcompleted.size > 0 %>
-								<li><%= pluralize(@newcompleted.size, 'service request ') %> completed since your last login
+								<li><%= pluralize(@newcompleted.size, 'service request') %> completed since your last login
 									<ul>
 										<% @newcompleted.each do |nc| %>
 											<li>Completed on <%= nc.completed_date.strftime("%a %b %d, %Y") %>.
@@ -22,11 +22,19 @@
 						<% end %>
 						<li>Next scheduled service:
 							<% if !(@open_SRs = open_requests(s, listing)).nil? %>	
-								<%= javascript_tag do %>
-										window.openSRs = <%= raw @open_SRs.to_json %>
-								<% end %>
-							 	<span class="scheduled-string"></span><br>
-							 <% else %>
+								<% @open_SRs.sort_by {|a| a.first_scheduled} %>
+								<%= @open_SRs.first.first_scheduled.strftime("%a %b %d, %Y") %>
+								<% if @open_SRs.first.onetime? %>
+									(one-time request to be completed between "<%=@open_SRs.first.start_date.strftime("%a %b %d, %Y")%> and <%= @open_SRs.first.end_date.strftime("%a %b %d, %Y") %>)
+								<% else %>
+									(repeating request - <%= @open_SRs.first.frequency.titleize.downcase %>
+									<% if @open_SRs.first.frequency == "weekly" || @open_SRs.first.frequency == "every_other_week" %>
+										on <%= @open_SRs.first.service_week_day%>s.
+									<% else %>
+										on the <%= @open_SRs.first.service_month_day.ordinalize %>.
+									<% end %>)
+								<% end %>									
+							<% else %>
 								no future service scheduled
 							<% end %>
 						</li>

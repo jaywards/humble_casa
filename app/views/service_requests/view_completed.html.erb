@@ -1,0 +1,13 @@
+<%= provide(:title, 'All Completed Requests for ' + @property.name) %>
+<h2>Completed Service Requests</h2>
+Property: <%= @property.name %><br>
+Service provider: <%= @service.name %>
+<hr>
+<%= render 'service_requests/completed_table/completed_SR_table_head' %>
+<% @completed_requests.each do |request| %>
+	<%= render partial: 'service_requests/completed_table/service_request_completed', locals: { :@service_request => request} %>
+<% end %>	
+<%= render 'service_requests/completed_table/completed_SR_table_foot' %>
+<center>
+	<%= link_to "Back", root_path, class: "btn btn-mini btn-primary"%>
+</center>
