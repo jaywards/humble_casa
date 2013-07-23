@@ -25,7 +25,7 @@
 								<% @open_SRs.sort_by {|a| a.first_scheduled} %>
 								<%= @open_SRs.first.first_scheduled.strftime("%a %b %d, %Y") %>
 								<% if @open_SRs.first.onetime? %>
-									(one-time request to be completed between "<%=@open_SRs.first.start_date.strftime("%a %b %d, %Y")%> and <%= @open_SRs.first.end_date.strftime("%a %b %d, %Y") %>)
+									(one-time request to be completed between <%=@open_SRs.first.service_start_date.strftime("%a %b %d, %Y")%> and <%= @open_SRs.first.service_end_date.strftime("%a %b %d, %Y") %>)
 								<% else %>
 									(repeating request - <%= @open_SRs.first.frequency.titleize.downcase %>
 									<% if @open_SRs.first.frequency == "weekly" || @open_SRs.first.frequency == "every_other_week" %>
