@@ -4,38 +4,41 @@
 
 
 $ ->
-    $("#master_service_request_onetime_true").focus()
-    $("#new_master_service_request").enableClientSideValidations()
-    $("[id^=edit_master_service_request]").enableClientSideValidations()
+    $(".launch-service-request").click ->
+      setTimeout (->
 
-    setDatePickers()
+        $("#master_service_request_onetime_true").focus()
+        $("#new_master_service_request").enableClientSideValidations()
+        $("[id^=edit_master_service_request]").enableClientSideValidations()
 
-    populateForm()
+        setDatePickers()
 
-    $(".onetime").change ->
-      if $(this).val() == "true"
-        showAndHideFields('.onetime-fields', '.repeating-fields')
-      else
-        showAndHideFields('.repeating-fields', '.onetime-fields')
-      
-    $(".frequency").change ->
-      $('#first-scheduled-fields').hide(400)
-      if $(this).val() == "weekly" || $(this).val() == "every_other_week"
-          showAndHideFields('.weekly-fields', '.monthly-fields')
-      else
-          showAndHideFields('.monthly-fields', '.weekly-fields')
+        populateForm()
 
-    $("#daypicker").change ->
-      nextScheduledWeekDay($(this).val())
-      $('#first-scheduled-fields').show(400)
+        $(".onetime").change ->
+          if $(this).val() == "true"
+            showAndHideFields('.onetime-fields', '.repeating-fields')
+          else
+            showAndHideFields('.repeating-fields', '.onetime-fields')
+          
+        $(".frequency").change ->
+          $('#first-scheduled-fields').hide(400)
+          if $(this).val() == "weekly" || $(this).val() == "every_other_week"
+              showAndHideFields('.weekly-fields', '.monthly-fields')
+          else
+              showAndHideFields('.monthly-fields', '.weekly-fields')
 
-    $("#monthpicker").change ->
-      nextScheduledMonthDay($(this).val())
-      $('#first-scheduled-fields').show(400)
+        $("#daypicker").change ->
+          nextScheduledWeekDay($(this).val())
+          $('#first-scheduled-fields').show(400)
 
-    $("#save-btn").click ->
-      validateForm()
+        $("#monthpicker").change ->
+          nextScheduledMonthDay($(this).val())
+          $('#first-scheduled-fields').show(400)
 
+        $("#save-btn").click ->
+          validateForm()
+      ), 1000
  
 setDatePickers = ->
   $("#start-date-picker").datepicker(
@@ -166,36 +169,38 @@ validateRepeatingRequest = ->
 
 
 $ ->
-   $("#restart-date-picker").datepicker(
-      altFormat: 'yy-mm-dd'
-    )
+  $(".launch-pause").click ->
+    setTimeout (->
+      $("#restart-date-picker").datepicker(
+        altFormat: 'yy-mm-dd'
+      )
 
-    stringDate = new Date(document.getElementById("master_service_request_first_scheduled").value.substring(0, 19).replace(/-/g, "/")).toDateString()
-    $('#date-string').text stringDate
+      stringDate = new Date(document.getElementById("master_service_request_first_scheduled").value.substring(0, 19).replace(/-/g, "/")).toDateString()
+      $('#date-string').text stringDate
 
-    $(".paused").change ->
-      if $(this).val() == "true"
-        $(".master_service_request_restart_date").show(400)
-      else
-        $(".master_service_request_restart_date").hide(400)
+      $(".paused").change ->
+        if $(this).val() == "true"
+          $(".master_service_request_restart_date").show(400)
+        else
+          $(".master_service_request_restart_date").hide(400)
+          frequency = $("#master_service_request_frequency").val()
+          if frequency == "weekly" || frequency == "every_other_week"
+            day = $("#master_service_request_service_week_day").val()
+            nextScheduledWeekDay(day, $(this).val())
+          else
+            day = $("#master_service_request_service_month_day").val()
+            nextScheduledMonthDay(day, $(this).val())
+          
+
+      $("#restart-date-picker").change ->
         frequency = $("#master_service_request_frequency").val()
         if frequency == "weekly" || frequency == "every_other_week"
           day = $("#master_service_request_service_week_day").val()
-          nextScheduledWeekDay(day, $(this).val())
+          futureNextScheduledWeekDay(day, $(this).val())
         else
           day = $("#master_service_request_service_month_day").val()
-          nextScheduledMonthDay(day, $(this).val())
-        
-
-    $("#restart-date-picker").change ->
-      frequency = $("#master_service_request_frequency").val()
-      if frequency == "weekly" || frequency == "every_other_week"
-        day = $("#master_service_request_service_week_day").val()
-        futureNextScheduledWeekDay(day, $(this).val())
-      else
-        day = $("#master_service_request_service_month_day").val()
-        futureNextScheduledMonthDay(day, $(this).val())
-
+          futureNextScheduledMonthDay(day, $(this).val())
+    ), 400 
 
   futureNextScheduledWeekDay = (day, future) ->
     futureDate = new Date(future.substring(6), future.substring(0,2) - 1, future.substring(3,5))
