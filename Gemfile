@@ -14,6 +14,7 @@ gem 'mini_magick'
 gem 'carrierwave'
 gem 'geocoder'
 gem 'exifr'
+gem 'roadie'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

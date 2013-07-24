@@ -1,5 +1,3 @@
-Hi,
-
 A new service request has been created by one of your clients:
 
 Service request details:
@@ -25,9 +23,12 @@ Service request details:
 	<% end %>
 <% end %>
 
-Property details: 
-	<%= @property.name %>
+Client and Property details: 
 	<%= @property.user.first_name %> <%= @property.user.last_name %>
+	<%= @property.user.primary_phone %>
+	<%= @property.user.email %>
+	
+	<%= @property.name %>
 	<%= @property.address1 %>
 	<% if !@property.address2.empty? %>
 	<%= @property.address2 %>
