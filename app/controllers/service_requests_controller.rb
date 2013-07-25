@@ -111,6 +111,7 @@ class ServiceRequestsController < ApplicationController
 					@next_scheduled = view_context.nextScheduled(@master_request)
 					@master_request.update_attribute(:first_scheduled, @next_scheduled)
 					@new_service_request.first_scheduled = @next_scheduled
+					@new_service_request.completed_date = @next_scheduled
 
 
 					## Handle if paused

@@ -46,6 +46,7 @@ module ApplicationHelper
 		service_request.service_week_day = master_request.service_week_day
     	service_request.service_month_day = master_request.service_month_day
     	service_request.first_scheduled = master_request.first_scheduled
+    	service_request.completed_date = master_request.first_scheduled
     	service_request.paused = master_request.paused
     	service_request.all_assigned = master_request.all_assigned
 
