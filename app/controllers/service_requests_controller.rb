@@ -114,7 +114,7 @@ class ServiceRequestsController < ApplicationController
 
 
 					## Handle if paused
-					if @master_service.paused?
+					if @master_request.paused?
 						@master_request.update_attribute(:paused, false)
 						@new_service_request.paused = false
 					end
