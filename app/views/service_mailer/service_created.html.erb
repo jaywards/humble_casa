@@ -16,10 +16,10 @@
 <body>
   <table width="100%" id="background" border="0" cellpadding="0" cellspacing="0">
     <tr><td align="center" valign="top">
-      <table width="750" id="main" border="0" cellpadding="0" cellspacing="20">
+      <table width="750" id="main" border="0" cellpadding="0" cellspacing="10">
         <tr>
           <td id="header" colspan="1" align="center">
-            <a href="http://humblecasa.com/"><img src="http://www.humblecasa.com/assets/SmallLogo.jpg" width="250" height="151" alt="HumbleCasa"></a>
+            <a href="http://humblecasa.com/"><img src="http://www.humblecasa.com/assets/SmallLogo.jpg" width="250" height="100" alt="HumbleCasa"></a>
           </td>
         </tr>
         <tr>
@@ -32,7 +32,7 @@
               <h4>Service request details:</h4>
                 Request #: <%= @service_request.service_request_id %><br>
                 Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %><br>
-                <% if @service_request.instructions.empty? %>
+                <% if !@service_request.instructions.empty? %>
                   Special instructions for this request: <%= @service_request.instructions %><br>
                 <% end %>
                 <% if @service_request.onetime? %>
@@ -40,15 +40,16 @@
                   Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
                 <% else %>
                   Repeating request<br>
-                  Frequency: <%= @service_request.frequency.titleize %>
-                  <% if @service_request.frequency == "weekly" %> 
-                    When: <%= @service_request.service_week_day.titleize %> of each week
-                  <% elsif @service_request.frequency == "every_other_week" %>
-                    When: <%= @service_request.service_week_day.titleize %> every other week
-                  <% elsif @service_request.frequency == "monthly" %> 
-                    When: <%= @service_request.service_month_day.ordinalize %> of each month
-                  <% elsif @service_request.frequency == "every_other_month" %> 
-                    When: <%= @service_request.service_month_day.ordinalize %> of every other month
+                  Frequency: <%= @service_request.frequency.titleize.downcase %>
+                  <% case @service_request.frequency %>
+                    <% when "weekly" %> 
+                      on <%= @service_request.service_week_day.titleize %> of each week
+                    <% when "every_other_week" %>
+                      on <%= @service_request.service_week_day.titleize %> of every other week
+                    <% when "monthly" %> 
+                      on the <%= @service_request.service_month_day.ordinalize %> of each month
+                    <% when "every_other_month" %> 
+                      on the <%= @service_request.service_month_day.ordinalize %> of every other month
                   <% end %>
                 <% end %>
             </p>
@@ -70,7 +71,8 @@
               <% end %>
             </p>
             <br>
-            <p>Please log on to HumbleCasa to assign and complete this request.</p>
+            <br>
+            <p>Please log on to <a href="http://humblecasa.com/">HumbleCasa</a> to assign and complete this request.</p>
             <br>
             <p>
               Thank you,<br>
@@ -83,7 +85,7 @@
         </tr>
         <tr>
           <td id="footer" colspan="2" align="center">
-            <p><a href="#">Unsubscribe</a> update your account settings if you do not wish to receive these emails in the future.</p>
+            <p>To unsubscribe from future notifications log on to your HumbleCasa account and update your account settings.</p>
             <p>&copy;2013 HumbleCasa</p>
           </td>
         </tr>

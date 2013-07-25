@@ -1,5 +1,3 @@
-Hi,
-
 A new service request has been assigned to you:
 
 Service request details:
@@ -25,9 +23,12 @@ Service request details:
 	<% end %>
 <% end %>
 
-Property details: 
-	<%= @property.name %>
+Client and Property details: 
 	<%= @property.user.first_name %> <%= @property.user.last_name %>
+	<%= @property.user.primary_phone %>
+	<%= @property.user.email %>
+	
+	<%= @property.name %>
 	<%= @property.address1 %>
 	<% if !@property.address2.empty? %>
 	<%= @property.address2 %>
@@ -38,7 +39,7 @@ Property details:
 	Special instructions for this property: <%= @property.instructions %>
 	<% end %>
 
-Please log on to HumbleCasa to complete this request.
+Please log on to HumbleCasa to assign and complete this request.
 
 Thank you,
 The HumbleCasa Team

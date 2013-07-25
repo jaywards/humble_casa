@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130723220449) do
+ActiveRecord::Schema.define(:version => 20130725182639) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -149,8 +149,8 @@ ActiveRecord::Schema.define(:version => 20130723220449) do
     t.string   "crypted_password"
     t.string   "password_salt"
     t.string   "persistence_token"
-    t.datetime "created_at",        :null => false
-    t.datetime "updated_at",        :null => false
+    t.datetime "created_at",                          :null => false
+    t.datetime "updated_at",                          :null => false
     t.string   "first_name"
     t.string   "last_name"
     t.string   "primary_phone"
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(:version => 20130723220449) do
     t.integer  "employer_id"
     t.datetime "last_login_at"
     t.datetime "current_login_at"
+    t.boolean  "notify",            :default => true
   end
 
   create_table "work_assignments", :force => true do |t|

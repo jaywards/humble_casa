@@ -11,7 +11,9 @@ class ServiceMailer < ActionMailer::Base
     @service = @service_request.service
     @property = @service_request.property
 
-    mail to: @service.email, subject: "New service request"
+    if User.find_by_id(@service.user_id).notify?
+      mail to: @service.email, subject: "New service request"
+    end
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -24,8 +26,14 @@ class ServiceMailer < ActionMailer::Base
     @service_request = service_request
     @service = @service_request.service
     @property = @service_request.property
-
-    mail to: @service_request.user.email, subject: "Service request assigned"
+    
+    if @service_request.user.notify?
+      if @service_request.user == User.find_by_id(@service.user_id)
+        mail to: @service_request.service.email, subject: "Service request assigned"
+      else          
+        mail to: @service_request.user.email, subject: "Service request assigned"
+      end
+    end
   end
 
 
@@ -34,6 +42,8 @@ class ServiceMailer < ActionMailer::Base
     @service = @service_request.service
     @property = @service_request.property
 
-    mail to: @property.user.email, subject: "Service request completed"
+    if @property.user.notify?
+      mail to: @property.user.email, subject: "Service request completed"
+    end
   end
 end

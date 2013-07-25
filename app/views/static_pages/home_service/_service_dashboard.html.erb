@@ -50,7 +50,7 @@
 				<li><%= pluralize(@newassignments, 'new customer') %> signed-up for your business</li>
 			<% end %>
 			<% if @newcompleted > 0 %>
-				<li><%= pluralize(@newcompleted, 'service request was') %> completed</li>
+				<li><%= pluralize(@newcompleted, 'service request') %> completed</li>
 			<% end %>
 		<% else %>
 			<li>no updates at this time</li>

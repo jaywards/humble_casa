@@ -1,0 +1,109 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <title>HumbleCasa: Service Completed</title>
+  <style type="text/css">
+  body, td { color:#000000; font-size:14px; font-family:Verdana,Helvetica,Arial; }
+  .logo {font-family: "Helvetica Neue"; font-size: 2em; font-weight: bold; color: rgb(0,97,152); letter-spacing: -1px; }
+  .divider { background-color:#555555; height:2px; }
+  .service h2 { margin-top:0; margin-bottom:8px; font-size:18px; }
+  .service p { margin:8px 0; }
+  #footer { font-size:11px; color:#555555; }
+  #footer a { color:#555555;}
+  </style>
+</head>
+<body>
+  <table width="100%" id="background" border="0" cellpadding="0" cellspacing="0">
+    <tr><td align="center" valign="top">
+      <table width="750" id="main" border="0" cellpadding="0" cellspacing="10">
+        <tr>
+          <td id="header" colspan="1" align="center">
+            <a href="http://humblecasa.com/"><img src="http://www.humblecasa.com/assets/SmallLogo.jpg" width="250" height="100" alt="HumbleCasa"></a>
+          </td>
+        </tr>
+        <tr>
+          <td class="divider" colspan="2" bgcolor="#555555" height="2"></td>
+        </tr>
+        <tr class="service">
+          <td valign="top">
+            <h2>Your service request for <%= @property.name %> has been completed!</h2>
+            <p>
+              <h4> Completion details:</h4>
+              <% if @service_request.location_verified && @service_request.timestamp_verified %>
+                <h5>Verified completed by HumbleCasa</h5>
+              <% end %>
+              Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %><br>
+              Completed by: <%= @service_request.user.full_name %><br>
+              <% if !@service_request.completion_note.empty? %>
+                Notes: <%= @service_request.completion_note %><br>
+              <% end %>
+              <% if @service_request.service_photo_1? || @service_request.service_photo_2? || @service_request.service_photo_3? %>
+                Service photos:
+                <div>
+                  <%= image_tag @service_request.service_photo_1 if @service_request.service_photo_1? %>
+                  <br>
+                  <%= image_tag @service_request.service_photo_2 if @service_request.service_photo_2? %>
+                  <br>
+                  <%= image_tag @service_request.service_photo_3 if @service_request.service_photo_3? %>
+                  <br>
+                </div>
+              <% end %>
+            </p>           
+            <p>
+              <h4>Service request details:</h4>
+              Request #: <%= @service_request.service_request_id %><br>
+              Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %><br>
+              <% if !@service_request.instructions.empty? %>
+                Special instructions for this request: <%= @service_request.instructions %><br>
+              <% end %>
+              <% if @service_request.onetime? %>
+                One time request<br>
+                Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+              <% else %>
+                Repeating request<br>
+                Frequency: <%= @service_request.frequency.titleize.downcase %>
+                <% case @service_request.frequency %>
+                  <% when "weekly" %> 
+                    on <%= @service_request.service_week_day.titleize %> of each week
+                  <% when "every_other_week" %>
+                    on <%= @service_request.service_week_day.titleize %> of every other week
+                  <% when "monthly" %> 
+                    on the <%= @service_request.service_month_day.ordinalize %> of each month
+                  <% when "every_other_month" %> 
+                    on the <%= @service_request.service_month_day.ordinalize %> of every other month
+                <% end %>
+              <% end %>
+            </p>
+            <p>
+              <h4>Service details:</h4>
+              <%= @service.name %><br>
+              Owner: <%= User.find_by_id(@service.user_id).full_name %><br>
+              <%= @service.phone %><br>
+              <%= @service.email %><br>
+              <br>
+            </p>
+            <br>
+            <br>
+            <p>If you have any questions, please don't hesitate to contact your service provider.</p>
+            <br>
+            <p>
+              Thank you,<br>
+              The HumbleCasa Team
+            </p>
+          </td>
+        </tr>
+        <tr>
+          <td class="divider" colspan="2" bgcolor="#555555" height="2"></td>
+        </tr>
+        <tr>
+          <td id="footer" colspan="2" align="center">
+            <p>To unsubscribe from future notifications log on to your HumbleCasa account and update your account settings.</p>
+            <p>&copy;2013 HumbleCasa</p>
+          </td>
+        </tr>
+      </table>
+    </td></tr>
+  </table>
+</body>
+</html>

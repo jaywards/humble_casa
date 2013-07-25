@@ -1,6 +1,6 @@
 class User < ActiveRecord::Base
-  attr_accessible :email, :password, :password_confirmation, :last_name, :first_name, :primary_phone, :role, :employer_id, 
-    :employments_attributes, :work_assignments_attributes
+  attr_accessible :email, :password, :password_confirmation, :last_name, :first_name, :primary_phone, :role, 
+  :employer_id, :notify, :employments_attributes, :work_assignments_attributes
   
   acts_as_authentic
 

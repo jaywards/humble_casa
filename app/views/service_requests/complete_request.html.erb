@@ -9,7 +9,7 @@
 	    	collection: [[true, 'Yes'], [false, 'No']],
 	    	label_method: :last, value_method: :first, as: :radio_buttons %>
 	
-	<%= f.input :completed_date, as: :fake, input_html: {id: "completed-date-picker", value: @service_request.try(:completed_date).try(:strftime,'%m/%d/%Y')}, label: "Date service was completed on:" %>
+	<%= f.input :completed_date, as: :fake, input_html: {id: "completed-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y')}, label: "Date service was completed on:" %>
 	<%= f.input :completed_date, as: :hidden, input_html: { class: "completed_date"} %>
 	Note: If you want your completed service requests to be marked as verified you must upload at least one service verification photo taken <b>with a smartphone</b> at the time of service. HumbleCasa matches the GPS and timestamp data from the photos to the property address and time of service. Otherwise the service request will be shown as completed but we will not indicate that it has been verified.
 	<br>

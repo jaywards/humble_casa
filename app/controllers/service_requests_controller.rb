@@ -112,6 +112,13 @@ class ServiceRequestsController < ApplicationController
 					@master_request.update_attribute(:first_scheduled, @next_scheduled)
 					@new_service_request.first_scheduled = @next_scheduled
 
+
+					## Handle if paused
+					if @master_service.paused?
+						@master_request.update_attribute(:paused, false)
+						@new_service_request.paused = false
+					end
+
 					if @new_service_request.save 
 						@save_success = true 
 					else
