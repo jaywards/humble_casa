@@ -6,4 +6,6 @@ $ ->
     		altField: '.completed_date',
     		altFormat: 'yy-mm-dd'
     	)
-    ),400
+
+
+    ),1000

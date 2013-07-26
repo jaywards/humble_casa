@@ -161,9 +161,11 @@ footer {
 	width: 100%;
 }
 
-
+.simple_form div.property_assignments_interested div.controls{
+	margin-left: 0px;
+}
 .simple_form div.property_assignments_interested label.checkbox {
-	line-height: 38px;
+	line-height: 24px;
 }
 .simple_form div.property_assignments_service div.controls {
 	margin-left: 0px;
@@ -174,7 +176,7 @@ footer {
 
 
 .simple_form div.master_service_request_onetime label.radio {
-	line-height: 38px;
+	line-height: 20px;
 }
 .simple_form div.master_service_request_onetime label.radio_buttons.optional.control-label {
 	line-height: 38px;
@@ -182,7 +184,7 @@ footer {
 .simple_form div.master_service_request_terms_agreement label.checkbox {
 	width: 400px;
 	padding-right: 200px;
-	line-height: 38px;
+	line-height: 24px;
 }
 #terms-agreeement-details {
 	font-size: .8em;
@@ -190,10 +192,11 @@ footer {
 
 
 .simple_form div.master_service_request_paused label.radio {
-	line-height: 38px;
+	line-height: 20px;
+	width: 350px;
 }
 .simple_form div.master_service_request_paused label.radio_buttons.optional.control-label {
-	line-height: 35px;
+	line-height: 38px;
 }
 
 
