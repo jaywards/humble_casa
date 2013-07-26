@@ -17,19 +17,15 @@ $grayMediumLight: #eaeaea;
 html {
 	overflow-y: scroll;
 }
-
 body {
 	padding-top: 60px;
 }
-
 section {
 	overflow: auto;
 }
-
 textarea {
 	resize: vertical;
 }
-
 .center {
 	text-align: center;
 	h1 {
@@ -41,15 +37,12 @@ textarea {
 h1, h2, h3, h4, h5, h6 {
 	line-height: 1;
 }
-
-
 h1 {
 	font-size: 3em;
 	letter-spacing: -2px;
 	margin-bottom: 30px;
 	text-align: center;
 }
-
 h2 {
 	font-size: 1.7em;
 	letter-spacing: -1px;
@@ -58,12 +51,10 @@ h2 {
 	font-weight: normal;
 	color: rgb(0,97,152);
 }
-
 p {
 	font-size: 1em;
 	line-height: 1.7em;
 }
-
 #main-title {
 	font-weight: bold;
 	color: black;
@@ -83,6 +74,15 @@ p {
 		font-weight: normal;
 		color: rgb(0,97,152);
 	}
+}
+/* Set link color and hover */
+a:hover,
+a:focus {
+  color: rgb(0,176,223);
+  text-decoration: none;
+}
+a {
+	color: rgb(0,97,152);
 }
 
 /* header */
@@ -135,14 +135,74 @@ footer {
 }
 
  /* forms */
-
- input, textarea, select, .uneditable-input {
+ .simple_form 
+	input[type="text"],
+	input[type="password"],
+	input[type="datetime"],
+	input[type="datetime-local"],
+	input[type="date"],
+	input[type="month"],
+	input[type="time"],
+	input[type="week"],
+	input[type="number"],
+	input[type="email"],
+	input[type="url"],
+	input[type="search"],
+	input[type="tel"],
+	input[type="color"],, textarea, .uneditable-input {
 	 border: 1px solid #bbb;
 	 width: 100%;
 	 padding: 5px;
 	 height: 30px;
 	 margin-bottom: 5px;
-	 @include box_sizing;
+}
+
+.simple_form div.user_notify label.checkbox {
+	width: 100%;
+}
+
+
+.simple_form div.property_assignments_interested label.checkbox {
+	line-height: 38px;
+}
+.simple_form div.property_assignments_service div.controls {
+	margin-left: 0px;
+}
+.simple_form div.property_assignments_service .select.optional {
+	width: 100%
+}
+
+
+.simple_form div.master_service_request_onetime label.radio {
+	line-height: 38px;
+}
+.simple_form div.master_service_request_onetime label.radio_buttons.optional.control-label {
+	line-height: 38px;
+}
+.simple_form div.master_service_request_terms_agreement label.checkbox {
+	width: 400px;
+	padding-right: 200px;
+	line-height: 38px;
+}
+#terms-agreeement-details {
+	font-size: .8em;
+}
+
+
+.simple_form div.master_service_request_paused label.radio {
+	line-height: 38px;
+}
+.simple_form div.master_service_request_paused label.radio_buttons.optional.control-label {
+	line-height: 35px;
+}
+
+
+#property_instructions, #master_service_request_instructions {
+	height: 80px;
+}
+
+#service_biz_description {
+	height: 60px;
 }
 
 #error_explanation {
@@ -152,14 +212,12 @@ footer {
 		margin: 0 0 18px 0;
 	}
 }
-
 .field_with_errors {
 	@extend .control-group;
 	@extend .error;
 }
 
 /* tabs */
-
 .tabs {
 	margin: 0;
 	padding: 0;	
@@ -187,7 +245,6 @@ footer {
 	color: black;
 	position: relative;
 }
-
 .tab-pane.active {
 	clear: both;
 	margin-bottom: 25px;	
@@ -195,95 +252,8 @@ footer {
 	background-color: white;
 	padding: 10px;
 }
-
 .tab-pane {
 	color: black;	
-}
-
-
-.onetime-fields, 
-.repeating-fields, 
-.weekly-fields,
-.monthly-fields,
-#first-scheduled-fields,
-.master_service_request_restart_date  {
-  display: none;
-}
-
-#modal-container {
-  display: none;
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  background: rgba(0,0,0,0.4);
-}
- 
-#modal {
-  display: none;
-  position: absolute;
-  width: 600px;
-  left: 50%;
-  margin-left: (-600px - 40px) / 2;
-  padding: 20px;
-  background: #fff;
-  border: 5px solid #eee;
- 
-  & > .close {
-    position: absolute;
-    right: 3px;
-    top: -1px;
-    color: #666;
-    &:hover, &:active {
-      color: #000;
-    }
-  }
-}
-
-select,
-textarea,
-input[type="text"],
-input[type="password"],
-input[type="datetime"],
-input[type="datetime-local"],
-input[type="date"],
-input[type="month"],
-input[type="time"],
-input[type="week"],
-input[type="number"],
-input[type="email"],
-input[type="url"],
-input[type="search"],
-input[type="tel"],
-input[type="color"],
-.uneditable-input {
-  display: inline-block;
-  height: 30px;
-  padding: 4px 6px;
-  margin-bottom: 10px;
-  font-size: 14px;
-  line-height: 20px;
-  color: #555555;
-  -webkit-border-radius: 4px;
-  -moz-border-radius: 4px;
-  border-radius: 4px;
-  vertical-align: middle;
-}
-
-#property_instructions, #master_service_request_instructions {
-	height: 80px;
-}
-
-/* Set link color and hover */
-a:hover,
-a:focus {
-  color: rgb(0,176,223);
-  text-decoration: none;
-}
-
-a {
-	color: rgb(0,97,152);
 }
 
 #nested-zip-codes {

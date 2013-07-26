@@ -17,9 +17,11 @@
 				<td>	
 					<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
 						<% if check_availability(area_services(property_listing.zip), category) %>			
+							<z class="launch-assign-services">
 							<%= link_to assign_services_property_path(property_listing), remote: true, class: "btn btn-mini btn-primary" do %>
 								<i class="icon-check icon-white"></i> Services available! Sign-up
 							<% end %>
+							</z>
 						<% else %>
 							No service providers for your area.
 						<% end %>

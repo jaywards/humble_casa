@@ -1,6 +1,6 @@
 class Service < ActiveRecord::Base
-  attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, :user_id,
-  	:service_zips_attributes, :assignments_attributes, :employments_attributes
+  attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, :user_id, 
+  :biz_description,	:service_zips_attributes, :assignments_attributes, :employments_attributes
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 

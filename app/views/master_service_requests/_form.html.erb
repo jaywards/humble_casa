@@ -1,80 +1,60 @@
-
 <%= simple_form_for @master_service_request, :validate => true do |f| %>
-
-	<div class="service_request">    
-	    <b>
-	    <% if !@property.nil? && !@service.nil? %> 
-		    Property: <%= @property.name %><br>
-		    Service: <%= @service.name %><br>
-			</b><br>
-
-		    <%= f.hidden_field :property_id, value: @property.id %>
-		    <%= f.hidden_field :service_id, value: @service.id %>
-		<% else %>
-			Property and service are nil.<br>
-			@master_service_request.id = <%= @master_service_request.id %>
-		<% end %>
-
-	    <div class="checkbox inline">
-		    <%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},
+	  
+	Property: <%= @property.name %><br>
+	Service: <%= @service.name %><br>
+	<%= f.hidden_field :property_id, value: @property.id %>
+	<%= f.hidden_field :service_id, value: @service.id %>
+	<br>
+	<%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},
 	    	collection: [[true, 'One-time request'], [false, 'Repeating request']],
-	    	label_method: :last, value_method: :first, label: "* Request type:", as: :radio_buttons, item_wrapper_class: "inline" %> 
-		</div>
-	    
+	    	label_method: :last, value_method: :first, label: "* Request type:", as: :radio_buttons %>
 
-	    <div class="onetime-fields">
-	    	<p>
-	    		Define a service window when you need this service completed by:
-	    	</p>
-			<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "* Don't start before:" %>
-	    	<%= f.input :service_start_date, as: :hidden, input_html: { class: "service_start_date"} %>
+    <div class="onetime-fields">
+    	<p>
+    		Define a service window when you need this service completed by:
+    	</p>
+		<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "* Don't start before:" %>
+    	<%= f.input :service_start_date, as: :hidden, input_html: { class: "service_start_date"} %>
 
-	    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "* Must be completed by:" %>
-	    	<%= f.input :service_end_date, as: :hidden, input_html: { class: "service_end_date"} %>
+    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "* Must be completed by:" %>
+    	<%= f.input :service_end_date, as: :hidden, input_html: { class: "service_end_date"} %>
 
-		</div>
-
-		<div class="repeating-fields">
-		    	
-		    	<%= f.input :frequency, input_html: {value: @master_service_request.frequency, class: "frequency" },
-		    	collection: [['weekly', 'Weekly'], ['every_other_week', 'Every other week'], ['monthly', 'Monthly'], 
-		    		['every_other_month', 'Every other month']], label_method: :last, value_method: :first %>
-				
-		    	<div class="weekly-fields">
-		    		<%= f.input :service_week_day, input_html: {value: @master_service_request.service_week_day, id: "daypicker" }, label: "Which day of the week:", collection: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %>
-		    	</div>
-
-		    	<div class="monthly-fields">
-		    		<%= f.input :service_month_day, input_html: {value: @master_service_request.service_month_day, id: "monthpicker" }, label: "Which day of the month:", collection: 1...31 %>
-		    	</div>
-
-		    	<div id="first-scheduled-fields">
-		    		First service will be scheduled on: <b><span id="date-string"></span></b><br><br>
-		    		<%= f.input :first_scheduled, as: :hidden, input_html: { class: "first_scheduled"} %>
-		    	</div>
-		    
-		</div>
-
-
-	    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text, placeholder: "optional", :input_html => { :cols => 40, :rows => 10 } %>
-  		
-	    <% if current_user != @property.user %>
-	    	<p><b>ATTENTION</b>: You are creating a service request for a property which you are not the owner of. This not allowed without the expressed permission of the property owner.</p>
-	    <% end %>
-
-  		<%= render partial: 'shared/modal_buttons', locals: {save_button_label: save_service_label} %>
-		<br>
-		<br>
-	    <div class="terms-agreement">
-	 		
-	    	<h5>Terms and Conditions:</h5>
-	 		<div id="terms-agreeement-details">  
-		    	Clicking 'Save' will automatically schedule and alert your service provider for this service request. By creating this service request you agree to pay your service provider the agreed upon amount upon the completion of the work. We highly recommend that you contact your service provider before scheduling your first service to determine payment terms and rates.
-		    </div>
-		    <br>
-		    <div>
-		 		<%= f.input :terms_agreement, as: :boolean, inline_label: "I agree to the Terms and Conditions", label: false %>
-			</div>
-	    </div>
 	</div>
+
+	<div class="repeating-fields">
+	    	
+	    	<%= f.input :frequency, input_html: {value: @master_service_request.frequency, class: "frequency" },
+	    	collection: [['weekly', 'Weekly'], ['every_other_week', 'Every other week'], ['monthly', 'Monthly'], 
+	    		['every_other_month', 'Every other month']], label_method: :last, value_method: :first %>
+			
+	    	<div class="weekly-fields">
+	    		<%= f.input :service_week_day, input_html: {value: @master_service_request.service_week_day, id: "daypicker" }, label: "Which day of the week:", collection: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'] %>
+	    	</div>
+
+	    	<div class="monthly-fields">
+	    		<%= f.input :service_month_day, input_html: {value: @master_service_request.service_month_day, id: "monthpicker" }, label: "Which day of the month:", collection: 1...31 %>
+	    	</div>
+
+	    	<div id="first-scheduled-fields">
+	    		First service will be scheduled on: <b><span id="date-string"></span></b><br><br>
+	    		<%= f.input :first_scheduled, as: :hidden, input_html: { class: "first_scheduled"} %>
+	    	</div>
+	    
+	</div>
+
+    <%= f.input :instructions, label: "Specific instructions for this service request:", as: :text, placeholder: "optional", :input_html => { :cols => 40, :rows => 10 } %>
+  		
+    <% if current_user != @property.user %>
+    	<p><b>ATTENTION</b>: You are creating a service request for a property which you are not the owner of. This not allowed without the expressed permission of the property owner.</p>
+    <% end %>
+		
+	<br>
+    	
+	<p id="terms-agreeement-details">  
+    	<b>Terms and Conditions:</b>
+    	Clicking 'Save' will automatically schedule and alert your service provider for this service request. By creating this service request you agree to pay your service provider the agreed upon amount upon the completion of the work. We highly recommend that you contact your service provider before scheduling your first service to determine payment terms and rates.
+    </p>
+    <%= f.input :terms_agreement, as: :boolean, inline_label: "I agree to the Terms and Conditions", label: false %>
+	<br>
+	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: save_service_label} %>
 <% end %>

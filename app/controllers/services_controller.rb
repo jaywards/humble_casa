@@ -44,6 +44,11 @@ def create
 	def edit
 	end
 
+	def show
+		@service = Service.find_by_id(params[:id])
+		render :text => @service.biz_description
+	end
+
 	def update
     if @service.update_attributes(params[:service])
       flash[:success] = "Successfully updated service."

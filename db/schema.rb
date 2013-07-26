@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725182639) do
+ActiveRecord::Schema.define(:version => 20130725225458) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -131,8 +131,9 @@ ActiveRecord::Schema.define(:version => 20130725182639) do
     t.string   "email"
     t.string   "category"
     t.integer  "user_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",      :null => false
+    t.datetime "updated_at",      :null => false
+    t.text     "biz_description"
   end
 
   add_index "services", ["user_id"], :name => "index_services_on_user_id"

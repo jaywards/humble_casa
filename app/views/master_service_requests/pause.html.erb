@@ -8,7 +8,7 @@
 	<div class="checkbox inline">	    
   	<%= f.input :paused, input_html: {value: @master_service_request.paused, class: "paused"},
 	    	collection: [[true, 'Yes'], [false, 'No']],
-	    	label_method: :last, value_method: :first, label: "Pause request:", as: :radio_buttons, item_wrapper_class: "inline" %> 
+	    	label_method: :last, value_method: :first, label: "Pause request:", as: :radio_buttons %> 
 	</div>
 
 	<%= f.input :restart_date, as: :fake, input_html: {id: "restart-date-picker", value: @master_service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y')}, label: "Resume on:" %>

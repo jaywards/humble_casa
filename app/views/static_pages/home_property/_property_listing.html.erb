@@ -1,8 +1,10 @@
 <!-- Property details -->
 <%= render property_listing %><br>
+<z class="launch-assign-services">
 <%= link_to assign_services_property_path(property_listing), remote: true, class: "btn btn-mini btn-primary" do %>
 	<i class="icon-check"></i> Register or Change Services
 <% end %>
+</z>
 &nbsp
 <span class="launch-property">
 	<%= link_to edit_property_path(id: property_listing.id), remote: true, class: "btn btn-mini" do%>

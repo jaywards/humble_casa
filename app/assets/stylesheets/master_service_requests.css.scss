@@ -1,13 +1,8 @@
-// Place all the styles related to the master_service_requests controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
-
-
-.simple_form div.master_service_request_onetime label.radio  {
-	width: 350px;
-}
-
-.simple_form div.master_service_request_onetime {
-	float: center;
-	display: block;
+.onetime-fields, 
+.repeating-fields, 
+.weekly-fields,
+.monthly-fields,
+#first-scheduled-fields,
+.master_service_request_restart_date  {
+  display: none;
 }
