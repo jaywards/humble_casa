@@ -61,14 +61,12 @@ p {
 	line-height: 1;
 	h1 {
 		font-size: 2em;
-		letter-spacing: -2px;
 		margin-bottom: 5px;
 		margin-top: -15px;
 		text-align: center;
 	}
 	h2 {
 		font-size: 1.2em;
-		letter-spacing: -1px;
 		margin-bottom: 20px;
 		text-align: center;
 		font-weight: normal;
@@ -101,7 +99,7 @@ a {
 	}
 }
 .beta {
-	color: rgb(0,97,152);
+	color: rgb(241,167,16);
 	letter-spacing: -1px;
 	font-weight: bold;
 }
@@ -274,6 +272,134 @@ footer {
 }
 
 .service-notification {
+	border: 2px solid rgb(241,167,16);
+	padding: 5px;
+}
+
+.home-buttons {
 	border: 1px solid rgb(0,97,152);
 	padding: 5px;
+}
+
+.carousel-caption {
+      margin-bottom: 20px;
+      background-color: transparent;
+}
+
+.pool-caption {
+	font-size: 1.4em;
+	font-weight: bold;
+	color: white;
+	background: transparent;
+}
+
+.pool-caption-minor {
+	font-size: 1.1em;
+	color: white;
+	font-weight: bold;
+	a:hover,
+	a:focus {
+  		color: black;
+  		text-decoration: underline;
+	}
+	a {
+		color: rgb(241,167,16);
+		text-decoration: underline;
+	}
+}
+
+.landscape div.carousel-caption {
+	text-align: center;
+}
+
+.landscape-caption {
+	font-size: 1.4em;
+	font-weight: bold;
+	color: white;
+	background: transparent;
+}
+
+.landscape-caption-minor {
+	font-size: 1.1em;
+	color: white;
+	font-weight: bold;
+	a:hover,
+	a:focus {
+  		color: rgb(241,167,16);
+  		text-decoration: underline;
+	}
+	a {
+		color: white;
+		text-decoration: underline;
+	}
+
+}
+
+.housecleaner div.carousel-caption {
+	text-align: center;
+}
+
+.housecleaner-caption {
+	font-size: 1.4em;
+	font-weight: bold;
+	color: white;
+	background: transparent;
+	valign: top;
+	
+}
+
+.housecleaner-caption-minor {
+	font-size: 1.1em;
+	color: white;
+	font-weight: bold;
+	a:hover,
+	a:focus {
+  		color: black;
+  		text-decoration: underline;
+	}
+	a {
+		color: rgb(241,167,16);
+		text-decoration: underline;
+	}
+}
+
+.snowplow div.carousel-caption {
+	margin-bottom: 10px;
+}
+
+.snowplow-caption {
+	font-size: 1.4em;
+	font-weight: bold;
+	color: rgb(241,167,16);
+	background: transparent;
+	valign: top;
+	
+}
+
+.snowplow-caption-minor {
+	font-size: 1.1em;
+	color: black;
+	font-weight: bold;
+	a:hover,
+	a:focus {
+  		color: black;
+  		text-decoration: underline;
+	}
+	a {
+		color: rgb(241,167,16);
+		text-decoration: underline;
+	}
+}
+
+#logo-and-buttons {
+	border: 2px solid rgb(0,97,152);
+	padding: 5px;
+}
+
+a.left.carousel-control {
+	background: transparent;
+}
+
+a.right.carousel-control {
+	background: transparent;
 }

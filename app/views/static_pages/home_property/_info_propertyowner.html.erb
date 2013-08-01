@@ -1,59 +1,134 @@
-<br>
-<center><%= image_tag("HClogo.jpg", alt: "HumbleCasa.com logo", size: "120x45") %></center>
-<z id="main-title">
-	<h1>Welcome to HumbleCasa!</h1>
-	<h2>...simplify your home maintenance</h2>
-</z>
-<p>
-	HumbleCasa is the <b>free</b> and easy way to <b>schedule</b> and <b>track</b> home maintenance requests. See all of your maintenance requests in one place (house cleaners, landscapers, pool cleaners, etc.) and receive <b>verification</b> that the requested home services have been completed! 
-</p>
-<p>	Through HumbleCasa you'll receive email notifications with pictures from your service provider when each service 		request is complete. And HumbleCasa will verify the accuracy of these reports, giving you confidence that your home 	is in top shape.
-</p>	
-<p>
-	We are ideal for 2nd home owners who need to remotely turn properties around for future rentals or visitors, or anybody with a busy lifestyle that isn't always home to check up on their home service providers.
-</p>
-<p>
-	Create an account, register with your service providers, and manage your house from your computer or smartphone <b>all for free!</b>
-</p>
-<br>
-<center>
-	<% if current_user.nil? %>
-		<div class="row-fluid">
-			<div class="span6 offset3">
-				<div class="span5">
-					<p>
-						<h5>New property owner account</h5>
-						<p class="launch-user-form">
-							<%= link_to new_user_path(role: "propertyowner"), remote: true, class: "btn btn-primary" do %>
-								<i class="icon-user icon-white"></i> Create Account
-							<% end %>
-						</p>
-					</p>
-				</div>
-				<div class="span2">
-					<br>- or -
-				</div>
-				<div class="span5">
+<div class="row-fluid">
+	<div class="span6">
+    	<div id="carousel-example-generic" class="carousel slide bs-docs-carousel-example">
+        	<ol class="carousel-indicators">
+          		<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+          		<li data-target="#carousel-example-generic" data-slide-to="1"></li>
+          		<li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          		<li data-target="#carousel-example-generic" data-slide-to="3"></li>
+        	</ol>
+        
+        	<div class="carousel-inner">
+          		<div class="item active">
+            		<%= image_tag("poolcleaning wfx.jpg", :size => "631x353") %>
+            		<div class="carousel-caption">
+            			<p class="pool-caption">
+            				Free for homeowners
+            			</p>
+            			<p>
+            				<z class="pool-caption-minor">
+	            				<%= link_to "sign-up", new_user_path(role: "propertyowner"), remote: true %> for your account
+    						</z>
+            			</p>
+            		</div>
+          		</div>
+          		<div class="item">
+            		<%= image_tag("landscaping wfx.jpg", :size => "631x353") %>
+            		<z class="landscape">
+	            		<div class="carousel-caption">    
+	            		    <p class="landscape-caption">
+	            				Home maintenance service provider?
+	            			</p>
+	            			<p>
+	            				<z class="landscape-caption-minor">
+	            					take a <%= link_to "feature tour", feature_tour_path %>, view our <%= link_to "pricing plans", pricing_plans_path %>, and <%= link_to "sign-up", new_user_path(role: "serviceowner"), remote: true %> for an account
+	            				</z>
+	            			</p>
+	            		</div>
+	            	</z>
+          		</div>
+          		<div class="item">
+            		<%= image_tag("housecleaning wfx.jpg", :size => "631x353") %>
+            		<z class="housecleaner">
+	            		<div class="carousel-caption">    
+	            		    <p>
+		            		    <z class="housecleaner-caption">
+		            				Manage multiple properties
+		            			</z> 
+		            		</p>
+	               			<p>
+	               				<z class="housecleaner-caption-minor">
+		               				ideal for <%= link_to "2nd home owners", new_user_path(role: "propertyowner"), remote: true %>
+	   							</z>
+	            			</p>
+	            		</div>
+	            	</z>
+          		</div>
+          		<div class="item">
+            		<%= image_tag("snowplow wfx.jpg", :size => "631x353") %>
+            		<z class="snowplow">
+	            		<div class="carousel-caption">    
+	            		    <p>
+		            		    <z class="snowplow-caption">
+		            				Remote home service monitoring
+		            			</z> 
+		            		</p>
+	               			<p>
+	               				<z class="snowplow-caption-minor">
+		               				receive email alerts and verification that services are completed
+	   							</z>
+	            			</p>
+	            		</div>
+	            	</z>
+          		</div>
+        	</div>
+        
+
+        	<a class="carousel-control left" href="#carousel-example-generic" data-slide="prev">‹</a>
+  			<a class="carousel-control right" href="#carousel-example-generic" data-slide="next">›</a>
+    	</div>
+	</div>
+	<div class="span6" id="logo-and-buttons">
+		<center>
+			<br>
+			<%= image_tag("logo.jpg", alt: "HumbleCasa logo", size: "173x59") %>
+			<z id="main-title">
+				<h1>Welcome to HumbleCasa!</h1>
+				<h2>...simplify your home maintenance</h2>
+			</z>
+			<br>
+			<div class="row-fluid">	
+				<div class="span6">
 					<%= render 'shared/login_link'%>
 				</div>
+				<div class="span6">
+					<h5>New to the site? Sign-up:</h5>
+					<z class="launch-user-form">
+						<%= link_to new_user_path(role: "propertyowner"), remote: true, class: "btn btn-warning" do %>
+							<i class="icon-user icon-white"></i> New property owner account
+						<% end %>
+					</z>
+				</div>
 			</div>
-		</div>
-	<% else %>
-		<br>
-		<h5>You are currently logged in. If you'd like to create a new Property Owner account, click "Logout" below:</h5>
-		<%= link_to "Logout", logout_path, class: "btn btn-primary"%>
-		<br>
-		<br>
-		<%= link_to "Back to homepage", root_path, class: "btn"%>
-	<% end %>
-	<br>
-	<br>
-	<div class="row-fluid">
-		<div class="span8 offset2">
-			<p class="service-notification">
-				Do you own a company that provides home maintainence services? HumbleCasa can help you to connect with your customers, manage your workforce, and simplify both invoicing and payroll.<br> 
-				Visit our <%= link_to "Service Provider page", business_path %> to get more details and sign up.
-			</p>
-		</div>
+			<br>		
+		</center>
 	</div>
-</center>
+</div>
+<div class="row-fluid">
+	<div class="span12">
+		<p>
+			HumbleCasa is the <b>free</b> and easy way to <b>schedule</b> and <b>track</b> home maintenance requests. See all of your maintenance requests in one place (house cleaners, landscapers, pool cleaners, etc.) and receive <b>verification</b> that the requested home services have been completed!
+		</p>
+		<ul>
+			<li>
+				Receive email notifications with pictures from your service provider when each service request is complete 
+			</li>
+			<li>
+				HumbleCasa will verify the accuracy of these reports, giving you confidence that your home is in top shape
+			</li>
+			<li>
+				Ideal for 2nd home owners who need to remotely turn properties around for future rentals or visitors, or anybody with a busy lifestyle that isn't always home to check up on their home service providers
+			</li>
+		</ul>
+		<p>Create an account, register with your service providers, and manage your house from your computer or smartphone <b>all for free!</b></p>
+	</div>
+</div>
+<br>
+
+<div class="row-fluid">
+	<div class="span12">
+		<center><p class="service-notification">
+			<b>Do you own a company that provides home maintainence services?</b><br> We can help you to connect with your customers, manage your workforce, and simplify both invoicing and payroll. Visit our <%= link_to "Service Provider page", business_path %> to get more details and sign up.
+		</p></center>
+	</div>
+</div>

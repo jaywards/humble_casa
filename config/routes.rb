@@ -43,6 +43,7 @@ HumbleCasa::Application.routes.draw do
   match '/new_user', to: 'users#new', :as => :new_user
   match '/business', to: 'static_pages#business', :as => :business
   match '/pricing_plans', to: 'static_pages#pricing_plans', :as => :pricing_plans
+  match '/feature_tour', to: 'static_pages#feature_tour', :as => :feature_tour
 
   root to: 'static_pages#home'
 
