@@ -24,8 +24,11 @@
 		    			 		<%= assignment.hidden_field :category, value: category %>
 								<%= assignment.association :service, collection: @category_services_in_area, :as => :select, label: false, include_blank: true %>
 								<% @idstring = "service-description-" + @i.to_s %>
-								<p id=<%=@idstring %>><%= @property.assignments[@i].service.biz_description %></p>
-
+								<p id=<%=@idstring %>>
+									<% if !@property.assignments[@i].service.nil? %>
+										<%= @property.assignments[@i].service.biz_description %>
+									<% end %>
+								</p>
 		    				<% end %>	
 		    			<% else %>
 							None available yet for your area.
