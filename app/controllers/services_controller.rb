@@ -3,6 +3,7 @@ class ServicesController < ApplicationController
 
 def create
 		@user = current_user
+		@service.user_id = @user.id
 		@service = @user.build_business(params[:service])
 		if @user.employments.empty?
 			@service.employments.build

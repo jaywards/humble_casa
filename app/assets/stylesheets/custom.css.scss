@@ -197,6 +197,15 @@ footer {
 	line-height: 38px;
 }
 
+.simple_form div.service_service_zips_zip input.string.optional {
+	width: 200px;
+	vertical-align: top;
+}
+
+.simple_form div.service_service_zips_zip .control-label  {
+	text-align: center;
+	width: 100px;
+}
 
 #property_instructions, #master_service_request_instructions {
 	height: 80px;
