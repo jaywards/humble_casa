@@ -10,7 +10,7 @@
 	
 	<% @employees = @service.users.find_all { |x| x.employments.first.approved == true } %>
 	<%= f.simple_fields_for :work_assignment do |work_assignment| %>
-		<%= work_assignment.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request", include_blank: true %>
+		<%= work_assignment.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request:", include_blank: true %>
 
 		<% if !work_assignment.nil? %>
 	    	<%= f.hidden_field :assigned, value: true %>
@@ -22,8 +22,26 @@
 	    	<%= f.input :all_assigned, label: false, input_html: {value: @service_request.all_assigned},
 	    	collection: [[true, 'All future instances'], [false, 'Just this one time']],
 	    	label_method: :last, value_method: :first, as: :radio_buttons %>
-	    <% end %> 
+	    	<br>
+	    	The scheduling for this repeating request must be confirmed either by you or the employee you assign it to. This will notify the homeowner that you have accepted the service request and the days that it will be performed.
+	    	<br>
+	    	<%= f.input :scheduled, label: false, input_html: {value: @service_request.scheduled, class: "scheduled"},
+	    	collection: [[true, 'I confirm the scheduling'], [false, 'My employee will confirm the scheduling']],
+	    	label_method: :last, value_method: :first, as: :radio_buttons %>
+	    <% else %>
+	    	This one-time request must be scheduled. You can either schedule it now or let the employee assigned to the request schedule it themselves.
+	    	<br>
+			<%= f.input :scheduled, label: false, input_html: {value: @service_request.scheduled, class: "scheduled"},
+	    	collection: [[true, 'I will schedule'], [false, 'Employee will schedule']],
+	    	label_method: :last, value_method: :first, as: :radio_buttons %>
+	    	<%= f.input :first_scheduled_date, as: :fake, input_html: {id: "scheduled-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y')}, label: "Schedule service for:" %>
+    		<%= f.input :first_scheduled, as: :hidden, input_html: { class: "first_scheduled_date"} %>
+	    <% end %>
+	    
+
     <% end %>
+    <%= f.input :service_start_date, as: :hidden %>
+	<%= f.input :service_end_date, as: :hidden %>
 
 	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Assign request"} %>
 

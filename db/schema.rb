@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130725225458) do
+ActiveRecord::Schema.define(:version => 20130806203412) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -109,6 +109,8 @@ ActiveRecord::Schema.define(:version => 20130725225458) do
     t.boolean  "location_verified"
     t.boolean  "timestamp_verified"
     t.boolean  "paused"
+    t.boolean  "scheduled",                                :default => false
+    t.boolean  "mailed_scheduled",                         :default => false
   end
 
   create_table "service_zips", :force => true do |t|

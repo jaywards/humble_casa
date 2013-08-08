@@ -1,0 +1,43 @@
+Hello <%= @property.user.full_name %>,
+
+Your service request has been scheduled by <%= @service.name %>.
+
+Schedule details:
+	Schedule date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
+	Completed by: <%= @service_request.user.full_name %>
+
+Service request details:
+	Request #: <%= @service_request.service_request_id %>
+	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %>
+	<% if !@service_request.instructions.empty? %>
+  Special instructions for this request: <%= @service_request.instructions %>
+  <% end %>
+  <% if @service_request.onetime? %>
+    One time request
+    Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+  <% else %>
+    Repeating request
+    Frequency: <%= @service_request.frequency.titleize.downcase %>
+    <% case @service_request.frequency %>
+      <% when "weekly" %> 
+        on <%= @service_request.service_week_day.titleize %> of each week
+      <% when "every_other_week" %>
+        on <%= @service_request.service_week_day.titleize %> of every other week
+      <% when "monthly" %> 
+        on the <%= @service_request.service_month_day.ordinalize %> of each month
+      <% when "every_other_month" %> 
+        on the <%= @service_request.service_month_day.ordinalize %> of every other month
+    <% end %>
+  <% end %>
+	
+Service details:
+ 	<%= @service.name %>
+  	Owner: <%= User.find_by_id(@service.user_id).full_name %>
+  	<%= @service.phone %>
+  	<%= @service.email %>
+
+
+If you have any questions, please don't hesitate to contact your service provider.
+
+Thank you,
+The HumbleCasa Team

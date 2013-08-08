@@ -37,7 +37,12 @@
                 <% end %>
                 <% if @service_request.onetime? %>
                   One time request<br>
-                  Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+                  <% if @service_request.scheduled? %>
+                    Scheduled for: <%= @service_request.first_scheduled.strftime("%m/%d/%Y") %>
+                  <% else %>
+                    Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %><br>
+                    <b>This request has not yet been scheduled. Please log on to HumbleCasa to schedule this request.</b>
+                  <% end %>
                 <% else %>
                   Repeating request<br>
                   Frequency: <%= @service_request.frequency.titleize.downcase %>

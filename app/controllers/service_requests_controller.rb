@@ -20,7 +20,7 @@ class ServiceRequestsController < ApplicationController
 
 		@completed_requests = ServiceRequest.where(service_id: params[:service_id], property_id: params[:property_id], completed: true)
 		if !@completed_requests.empty?
-			@completed_requests.sort_by {|a| a.completed_date }
+			@completed_requests = @completed_requests.sort_by {|a| a.completed_date }
 		end
 		render action: "view_completed"
 	end
@@ -40,9 +40,14 @@ class ServiceRequestsController < ApplicationController
 		@service_request = ServiceRequest.find_by_id(params[:id])
 		render action: "complete_request"
 	end
+
+	def schedule_request
+		@service_request = ServiceRequest.find_by_id(params[:id])
+		render action: "schedule_request"
+	end
 	
 	def update
-		## SHOULD ONLY OCCUR WHEN ASSIGNING TO EMPLOYEE OR COMPLETING REQUEST, 
+		## SHOULD ONLY OCCUR WHEN ASSIGNING TO EMPLOYEE, SCHEDULING DATE, OR COMPLETING REQUEST 
 		## OTHERWISE ALL CHANGES ARE MADE IN MASTER_SERVICE_REQUEST AND PROPOGATE DOWN
 	    @service_request = ServiceRequest.find_by_id(params[:id])
 		@current_completed = @service_request.completed
@@ -50,7 +55,7 @@ class ServiceRequestsController < ApplicationController
 		@save_success = false
 
 	    if @service_request.update_attributes(params[:service_request]) 
-	    	## If initial one-time assignment, this takes care of everything
+	    	## If initial one-time assignment or scheduling, this takes care of everything
 	    	@save_success = true
 
 			## If assignment (initial or otherwise) is all_assigned
@@ -133,12 +138,15 @@ class ServiceRequestsController < ApplicationController
 
 		if @save_success == true
 	      	flash[:success] = "Successfully updated service request."
-	      	if @service_request.assigned && !@mailed_assigned 
+	      	if @service_request.assigned && !@service_request.mailed_assigned 
 	      		ServiceMailer.service_assigned(@service_request).deliver
 	      		@service_request.update_attribute(:mailed_assigned, true) 
 	 	    end
-	      	if @service_request.completed && !@mailed_completed
-		      	#@service_request.update_attribute(:completed_date, Time.now) 
+	 	    if @service_request.scheduled && !@service_request.mailed_scheduled
+	      		ServiceMailer.service_scheduled(@service_request).deliver
+	      		@service_request.update_attribute(:mailed_scheduled, true) 
+	 	    end
+	      	if @service_request.completed && !@service_request.mailed_completed
 		      	ServiceMailer.service_completed(@service_request).deliver
 		      	@service_request.update_attribute(:mailed_completed, true)
 		    end       

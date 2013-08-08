@@ -207,6 +207,20 @@ footer {
 	width: 100px;
 }
 
+.simple_form div.service_request_work_assignment_user label.select.optional.control-label  {
+	width: 200px;
+	padding-right: 20px;
+}
+
+.simple_form div.service_request_first_scheduled_date label.fake.optional.control-label  {
+	line-height: 28px;
+}
+
+.simple_form div.service_request_scheduled_date label.fake.optional.control-label  {
+	line-height: 30px;
+}
+
+
 #property_instructions, #master_service_request_instructions {
 	height: 80px;
 }

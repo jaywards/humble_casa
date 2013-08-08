@@ -36,6 +36,16 @@ class ServiceMailer < ActionMailer::Base
     end
   end
 
+  def service_scheduled(service_request)
+    @service_request = service_request
+    @service = @service_request.service
+    @property = @service_request.property
+    
+    if @property.user.notify?
+        mail to: @property.user.email, subject: "Service request scheduled"
+    end
+  end
+
 
   def service_completed(service_request)
     @service_request = service_request

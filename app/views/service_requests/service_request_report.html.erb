@@ -1,8 +1,13 @@
-<h2>Completed Service Request</h2>
+<% if @service_request.completed %>
+	<h2>Completed Service Request</h2>
+<% else %>
+	<h2>Full Request Details</h2>
+<% end %>
 <h4>Request #: </h4>
 <p>
 	<%= @service_request.service_request_id %>
 </p>
+<br>
 <h4>Property:</h4> 
 <p>
 	<%= render @service_request.property %>
@@ -23,6 +28,13 @@
 		<br>
 		Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - 
 			<%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+		<br>
+		<% if @service_request.scheduled? %>
+			Scheduled for: <%= @service_request.first_scheduled.strftime("%a %b %d, %Y") %>
+		<% else %>
+			<b>This request is not yet scheduled.</b>
+		<% end %>
+		<br>
 	<% else %>
 		Repeating request: 
 		<% if !@service_request.frequency.nil? %>

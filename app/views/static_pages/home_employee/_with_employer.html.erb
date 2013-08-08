@@ -1,7 +1,7 @@
 <%= render 'static_pages/home_employee/employee_welcome_message' %>
 
 <hr>
-<% if @user.employments.first == true %>
+<% if @user.employments.first.approved == true %>
 
 	<h4>Your employer:</h4>
 	<%= render @employer %>
@@ -20,7 +20,7 @@
 		<% end %>
 		<%= render 'shared/service_request_table_foot' %>
 	<% end %>
-<% elsif @user.employments.first == false  %>
+<% elsif @user.employments.first.approved == false  %>
 	The employer you selected has rejected your request to register as an employee with their business. Did you select the wrong business? Try again.
 	<%= link_to edit_user_path(@user), remote: true, class: "btn btn-mini btn-primary" do %>
 		<i class="icon-check icon-white"></i> Update account

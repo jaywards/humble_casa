@@ -1,0 +1,16 @@
+<%= simple_form_for @service_request do |f| %>
+
+	<%= provide(:title, 'Schedule service request') %>
+	<h2>Schedule Service Request</h2>
+	<%= render @service_request.property %>	
+	<%= render 'service_request_no_action' %>
+	<hr>
+	<%= f.input :scheduled_date, as: :fake, input_html: {id: "scheduled-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y')}, label: "Schedule service for:" %>
+    <%= f.input :first_scheduled, as: :hidden, input_html: { class: "scheduled_date"} %>
+    <%= f.input :scheduled, as: :hidden, input_html: { class: "scheduled"} %>
+    <%= f.input :service_start_date, as: :hidden %>
+	<%= f.input :service_end_date, as: :hidden %>
+	
+	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Schedule request"} %>
+
+<% end %>

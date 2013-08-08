@@ -8,6 +8,7 @@ HumbleCasa::Application.routes.draw do
   resources :properties do
     member do
       get 'assign_services'
+      get 'show_property'
     end
   end
   
@@ -35,6 +36,7 @@ HumbleCasa::Application.routes.draw do
     member do
       get 'assign_to_employee'
       get 'complete_request'
+      get 'schedule_request'
     end
   end
   

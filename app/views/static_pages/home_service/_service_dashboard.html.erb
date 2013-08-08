@@ -3,7 +3,8 @@
 	<ul>
 		<% @alluncompleted = @business.service_requests.find_all { |x| x.completed == false}.size %>
 		<% @unassigned = @business.service_requests.find_all { |x| x.assigned == false} %>
-		<% @uncompleted = @business.service_requests.find_all { |x| x.completed == false && x.assigned == true} %>
+		<% @unscheduled = @business.service_requests.find_all { |x| x.assigned == true && x.scheduled == false && x.completed == false } %>
+		<% @uncompleted = @business.service_requests.find_all { |x| x.completed == false && x.scheduled == true } %>
 		<% @newemployees = @business.employments.find_all { |x| x.approved == nil } %>
 		<% if @alluncompleted > 0 || @newemployees.size > 0 %>
 			<% if @alluncompleted > 0 %>
@@ -11,19 +12,32 @@
 					<%= pluralize(@alluncompleted, 'open service request') %> for your business:
 					<ul>
 						<% if @unassigned.size > 0 %>
+							<% @unassigned = @unassigned.sort_by {|x| x.first_scheduled } %>
 							<% @unassigned.each do |asr| %>
-								<li>Unassigned request for <%= asr.property.name %> - <%= link_to "see details and assign", assign_to_employee_service_request_path(asr), remote: true %></li>
+								<z class="launch-assign-service-request">
+									<li>Unassigned request for <%= link_to asr.property.name, show_property_property_path(asr.property), remote: true %> - <%= link_to "assign/schedule request", assign_to_employee_service_request_path(asr), remote: true %></li>
+								</z>
 							<% end %>
 						<% end %>
-					
+						<% if @unscheduled.size > 0 %>
+							<% @unscheduled = @unscheduled.sort_by {|x| x.first_scheduled } %>
+							<% @unscheduled.each do |ssr| %>
+								<z class="launch-schedule-service-request">
+									<li>Unscheduled request for <%= link_to ssr.property.name, show_property_property_path(ssr.property), remote: true %>. Assigned to <%= ssr.user.full_name %> - <%= link_to "schedule request", schedule_request_service_request_path(ssr), remote: true %></li>
+								</z>
+							<% end %>
+						<% end %>
 						<% if @uncompleted.size > 0 %>
+							<% @uncompleted = @uncompleted.sort_by {|x| x.first_scheduled } %>
 							<% @uncompleted.each do |csr| %>
-								<li>Assigned but not completed request for: <%= csr.property.name %>. Assigned to <%= csr.user.full_name%> - 
+								<li>Pending request for <%= link_to csr.property.name, show_property_property_path(csr.property), remote: true %>. Scheduled for <%= csr.first_scheduled.strftime("%a %b %d, %Y") %>. Assigned to <%= csr.user.full_name%> - 
 									<% if csr.user == current_user %>
 										<z class="launch-complete-service-request">
 										<%= link_to "complete request", complete_request_service_request_path(csr), remote: true %> or </z>
 									<% end %>
-									<%= link_to "see details and re-assign", assign_to_employee_service_request_path(csr), remote: true %>
+									<z class="launch-assign-service-request">
+										<%= link_to "reassign or reschedule", assign_to_employee_service_request_path(csr), remote: true %>
+									</z>
 								</li>
 							<% end %>
 						<% end %>

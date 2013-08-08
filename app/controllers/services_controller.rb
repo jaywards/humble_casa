@@ -62,7 +62,7 @@ def create
 
   def approve_employee
     @service = Service.find(params[:id])
-    @employments = Employment.find_all_by_service_id_and_approved(@service.id, '')
+    @employments = @service.employments.find_all { |x| x.approved == nil } 
     render action: "approve_employee"
   end
 
