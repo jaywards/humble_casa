@@ -10,7 +10,7 @@
 	
 	<% @employees = @service.users.find_all { |x| x.employments.first.approved == true } %>
 	<%= f.simple_fields_for :work_assignment do |work_assignment| %>
-		<%= work_assignment.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request:", include_blank: true %>
+		<%= work_assignment.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request:", include_blank: false %>
 
 		<% if !work_assignment.nil? %>
 	    	<%= f.hidden_field :assigned, value: true %>
