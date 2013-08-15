@@ -41,15 +41,41 @@ $ ->
       ), 1000
  
 setDatePickers = ->
-  $("#start-date-picker").datepicker(
-    altField: '.service_start_date, .first_scheduled'
-    altFormat: 'yy-mm-dd'
-    )
-  $('#end-date-picker').datepicker(
-    altField: '.service_end_date',
-    altFormat: 'yy-mm-dd'
-    )
+  
+  minD = new Date()
+  minD.setDate(minD.getDate() + 1)
+  minD.setHours(8)
+  minD.setMinutes(0)
 
+  $('#start-date-picker').datetimepicker({
+    timeFormat: 'h:mmtt',
+    stepMinute: 15,
+    altField: '.service_start_date, .first_scheduled',
+    altFieldTimeOnly: false; 
+    altFormat: 'yy-mm-dd',
+    altTimeFormat: 'HH:mm',
+    minDate: minD
+    hourMin: 8,
+    hourMax: 18,
+    onSelect: (dateText, inst) -> 
+      endD = $("#start-date-picker").datetimepicker("getDate")
+      endD.setDate(endD.getDate() + 1)
+      $("#end-date-picker").datetimepicker "option", "minDate", endD
+  })
+
+  minD.setDate(minD.getDate() + 1)
+
+  $('#end-date-picker').datetimepicker({
+    timeFormat: 'h:mmtt',
+    stepMinute: 15,
+    altField: '.service_end_date',
+    altFieldTimeOnly: false; 
+    altFormat: 'yy-mm-dd',
+    altTimeFormat: 'HH:mm',
+    minDate: minD
+    hourMin: 8,
+    hourMax: 18
+  })
 
 populateForm = ->
   if $("#master_service_request_onetime_true").attr("checked")
@@ -76,24 +102,31 @@ nextScheduledWeekDay = (day) ->
   today = new Date()
   today_day = today.getDay()
   if selected_day_num > today_day
-    scheduled_date = new Date 1900+today.getYear(), today.getMonth(), today.getDate()+(selected_day_num - today_day) 
+    scheduled_date = new Date 1900+today.getYear(), today.getMonth(), today.getDate()+(selected_day_num - today_day), 8, 0, 0 
   else
-    scheduled_date = new Date 1900+today.getYear(), today.getMonth(), today.getDate()+(selected_day_num - today_day + 7)
+    scheduled_date = new Date 1900+today.getYear(), today.getMonth(), today.getDate()+(selected_day_num - today_day + 7), 8, 0, 0
   $('.first_scheduled').val scheduled_date
   dateString = scheduled_date.toDateString()
   $('#date-string').text dateString
+  $(".service_start_date").val scheduled_date
+  scheduled_date.setHours(18)
+  $(".service_end_date").val scheduled_date
  
 nextScheduledMonthDay = (selected_day_num) ->
   today = new Date()
   today_day = today.getDate()
   if selected_day_num > today_day
-    scheduled_date = new Date 1900+today.getYear(), today.getMonth(), selected_day_num 
+    scheduled_date = new Date 1900+today.getYear(), today.getMonth(), selected_day_num, 8, 0, 0 
   else
-    scheduled_date = new Date 1900+today.getYear(), (today.getMonth() + 1), selected_day_num
+    scheduled_date = new Date 1900+today.getYear(), (today.getMonth() + 1), selected_day_num, 8, 0, 0
   $('.first_scheduled').val scheduled_date
   dateString = scheduled_date.toDateString()
   $('#date-string').text dateString
+  $(".service_start_date").val scheduled_date
+  scheduled_date.setHours(18)
+  $(".service_end_date").val scheduled_date
  
+
 validateForm = -> 
   if $("#master_service_request_onetime_true").is(":checked")
     validateOneTimeRequest()
@@ -140,10 +173,7 @@ validateRepeatingRequest = ->
         alert("You must agree to the Terms and Conditions before saving.")
         false
       else
-        blankdate = new Date()
         $("#monthpicker").val 1
-        $("#master_service_request_service_start_date").val blankdate   
-        $("#master_service_request_service_end_date").val blankdate   
     else
       alert("You must select which day of the week you want the services scheduled for.")
       false
@@ -155,10 +185,7 @@ validateRepeatingRequest = ->
         alert("You must agree to the Terms and Conditions before saving.")
         false
       else
-        blankdate = new Date()
         $("#daypicker").val "Monday"
-        $("#master_service_request_service_start_date").val blankdate   
-        $("#master_service_request_service_end_date").val blankdate
     else
       alert("You must select the day of the month you want the services scheduled for.")
       false

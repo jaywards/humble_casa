@@ -20,19 +20,23 @@
 								</li>
 							<% end %>
 						<% end %>
-						<li>Next scheduled service:
+						<li>Next service:
 							<% if !(@open_SRs = open_requests(s, listing)).nil? %>	
 								<% @open_SRs = @open_SRs.sort_by {|a| a.first_scheduled} %>
-								<%= @open_SRs.first.first_scheduled.strftime("%a %b %d, %Y") %>
-								<% if @open_SRs.first.onetime? %>
-									(one-time request to be completed between <%=@open_SRs.first.service_start_date.strftime("%a %b %d, %Y")%> and <%= @open_SRs.first.service_end_date.strftime("%a %b %d, %Y") %>)
+								<% if @open_SRs.first.scheduled %>
+									scheduled for <%= Time.zone.parse(@open_SRs.first.first_scheduled.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
 								<% else %>
-									(repeating request - <%= @open_SRs.first.frequency.titleize.downcase %>
-									<% if @open_SRs.first.frequency == "weekly" || @open_SRs.first.frequency == "every_other_week" %>
-										on <%= @open_SRs.first.service_week_day%>s.
+									<% if @open_SRs.first.onetime? %>
+										one-time request to be completed between <%= Time.zone.parse(@open_SRs.first.service_start_date.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%> and <%= Time.zone.parse(@open_SRs.first.service_end_date.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>.
 									<% else %>
-										on the <%= @open_SRs.first.service_month_day.ordinalize %>.
-									<% end %>)
+										repeating request <%= @open_SRs.first.frequency.titleize.downcase %>
+										<% if @open_SRs.first.frequency == "weekly" || @open_SRs.first.frequency == "every_other_week" %>
+											on <%= @open_SRs.first.service_week_day%>s.
+										<% else %>
+											on the <%= @open_SRs.first.service_month_day.ordinalize %>.
+										<% end %>
+										Pending scheduling by <%= s.name %>
+									<% end %>
 								<% end %>									
 							<% else %>
 								no future service scheduled

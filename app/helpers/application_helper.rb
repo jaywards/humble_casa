@@ -30,6 +30,10 @@ module ApplicationHelper
 		@service_request.timestamp_verified = false
 		@service_request.build_location
 
+		if master_request.all_scheduled
+			@service_request.scheduled = true
+		end
+
 		return @service_request
 
 	end
@@ -49,6 +53,9 @@ module ApplicationHelper
     	service_request.completed_date = master_request.first_scheduled
     	service_request.paused = master_request.paused
     	service_request.all_assigned = master_request.all_assigned
+    	service_request.time_zone = master_request.time_zone
+    	service_request.duration = master_request.duration
+    	service_request.all_scheduled = master_request.all_scheduled
 
     	return service_request
 	end

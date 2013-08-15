@@ -9,10 +9,15 @@ class PropertiesController < ApplicationController
 		@property.build_location
 		@property.location.address = 
 			@property.address1 + " " + @property.address2 + ", " + @property.city + ", " + @property.state
-
+			
 		if @property.save
-			flash[:success] = "Property created."
-			redirect_to root_path(message: "welcome")
+			@time_zone = Timezone::Zone.new :latlon => [@property.location.latitude, @property.location.longitude]
+			if @property.update_attribute(:time_zone, @time_zone.zone)
+				flash[:success] = "Property created."
+				redirect_to root_path(message: "welcome")
+			else
+				flash[:error] = "Property created but there was an issue finding the time zone."
+			end
 		else
 			flash[:error] = "Couldn't create property."
 			render action: 'new'
@@ -40,13 +45,25 @@ class PropertiesController < ApplicationController
 	end
 
 	def update
-
-	    if @property.update_attributes(params[:property])
-	      flash[:success] = "Successfully updated property."	      
-	      redirect_to root_path	    
+		if @property.update_attributes(params[:property])
+	    	@location = @property.location
+	    	@location.address = @property.address1 + " " + @property.address2 + ", " + @property.city + ", " + @property.state
+	   	 	if @location.save
+		   	 	@time_zone = Timezone::Zone.new :latlon => [@property.location.latitude, @property.location.longitude]
+				if @property.update_attribute(:time_zone, @time_zone.zone)	
+			      	flash[:success] = "Successfully updated property."	      
+		    	  	redirect_to root_path	    
+	    		else
+					flash[:error] = "Couldn't update property. There was an issue with identifying the correct time zone."
+	      			render :action => 'edit'
+	    		end
+	    	else
+	    		flash[:error] = "Couldn't update property. There was an issue with the address provided."
+	      		render :action => 'edit'
+	      	end
 	    else
-	      flash[:error] = "Couldn't update property."
-	      render :action => 'edit'
+	      	flash[:error] = "Couldn't update property."
+	      	render :action => 'edit'
 	    end
 	end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130806203412) do
+ActiveRecord::Schema.define(:version => 20130814223848) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20130806203412) do
     t.datetime "updated_at",         :null => false
     t.integer  "property_id"
     t.integer  "service_request_id"
+    t.integer  "service_id"
   end
 
   create_table "master_service_requests", :force => true do |t|
@@ -61,6 +62,9 @@ ActiveRecord::Schema.define(:version => 20130806203412) do
     t.integer  "active_request_id"
     t.boolean  "terms_agreement"
     t.boolean  "paused",             :default => false
+    t.string   "time_zone"
+    t.integer  "duration"
+    t.boolean  "all_scheduled"
   end
 
   create_table "properties", :force => true do |t|
@@ -75,6 +79,7 @@ ActiveRecord::Schema.define(:version => 20130806203412) do
     t.integer  "user_id"
     t.datetime "created_at",   :null => false
     t.datetime "updated_at",   :null => false
+    t.string   "time_zone"
   end
 
   add_index "properties", ["user_id"], :name => "index_properties_on_user_id"
@@ -111,6 +116,9 @@ ActiveRecord::Schema.define(:version => 20130806203412) do
     t.boolean  "paused"
     t.boolean  "scheduled",                                :default => false
     t.boolean  "mailed_scheduled",                         :default => false
+    t.string   "time_zone"
+    t.integer  "duration"
+    t.boolean  "all_scheduled"
   end
 
   create_table "service_zips", :force => true do |t|
@@ -136,6 +144,7 @@ ActiveRecord::Schema.define(:version => 20130806203412) do
     t.datetime "created_at",      :null => false
     t.datetime "updated_at",      :null => false
     t.text     "biz_description"
+    t.string   "time_zone"
   end
 
   add_index "services", ["user_id"], :name => "index_services_on_user_id"
@@ -162,6 +171,7 @@ ActiveRecord::Schema.define(:version => 20130806203412) do
     t.datetime "last_login_at"
     t.datetime "current_login_at"
     t.boolean  "notify",            :default => true
+    t.string   "time_zone"
   end
 
   create_table "work_assignments", :force => true do |t|

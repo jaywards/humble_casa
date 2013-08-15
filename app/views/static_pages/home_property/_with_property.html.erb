@@ -3,7 +3,7 @@
 <hr>
 <div class="tabcontainer"> 
 	<div id="content">
-    	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">	
+    	<ul id="property-tabs" class="nav nav-tabs" data-tabs="tabs">	
 	    	<% @first = true %>
 	    	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>
 	    		<% if @first %>
@@ -17,9 +17,9 @@
 	    	<li><a href=<%= new_user_property_path(@user)%> data-toggle="nav">+ Add another property</a></li>
 	    </ul>
  
-    	<div id="my-tab-content" class="tab-content">
+    	<div id="property-tab-contents" class="tab-content">
         	<% @first = true %>
-        	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>			    
+        	<% @property_listings.each do |listing| %>			    
         		<% if @first %>
         			<div class="tab-pane active" id=<%= "property-" + listing.id.to_s %>>
 	            	<% @first = false %>

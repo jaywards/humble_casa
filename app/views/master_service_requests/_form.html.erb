@@ -4,6 +4,8 @@
 	Service: <%= @service.name %><br>
 	<%= f.hidden_field :property_id, value: @property.id %>
 	<%= f.hidden_field :service_id, value: @service.id %>
+	<%= f.hidden_field :time_zone, value: @property.time_zone %>
+	<% Time.zone = @property.time_zone %>
 	<br>
 	<%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},
 	    	collection: [[true, 'One-time request'], [false, 'Repeating request']],
@@ -13,12 +15,11 @@
     	<p>
     		Define a service window when you need this service completed by:
     	</p>
-		<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y')}, label: "* Don't start before:" %>
+		<%= f.input :start_date, as: :fake, input_html: {id: "start-date-picker", value: @master_service_request.try(:service_start_date).try(:strftime,'%m/%d/%Y %I:%M%p %z')}, label: "* Don't start before:" %>
     	<%= f.input :service_start_date, as: :hidden, input_html: { class: "service_start_date"} %>
 
-    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y')}, label: "* Must be completed by:" %>
+    	<%= f.input :end_date, as: :fake, input_html: {id: "end-date-picker", value: @master_service_request.try(:service_end_date).try(:strftime,'%m/%d/%Y %I:%M%p %z')}, label: "* Must be completed by:" %>
     	<%= f.input :service_end_date, as: :hidden, input_html: { class: "service_end_date"} %>
-
 	</div>
 
 	<div class="repeating-fields">

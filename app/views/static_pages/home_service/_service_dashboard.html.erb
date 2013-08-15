@@ -30,7 +30,7 @@
 						<% if @uncompleted.size > 0 %>
 							<% @uncompleted = @uncompleted.sort_by {|x| x.first_scheduled } %>
 							<% @uncompleted.each do |csr| %>
-								<li>Pending request for <%= link_to csr.property.name, show_property_property_path(csr.property), remote: true %>. Scheduled for <%= csr.first_scheduled.strftime("%a %b %d, %Y") %>. Assigned to <%= csr.user.full_name%> - 
+								<li>Pending request for <%= link_to csr.property.name, show_property_property_path(csr.property), remote: true %>. Scheduled for <%= Time.zone.parse(csr.first_scheduled.to_s).in_time_zone(csr.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>. Assigned to <%= csr.user.full_name %> - 
 									<% if csr.user == current_user %>
 										<z class="launch-complete-service-request">
 										<%= link_to "complete request", complete_request_service_request_path(csr), remote: true %> or </z>

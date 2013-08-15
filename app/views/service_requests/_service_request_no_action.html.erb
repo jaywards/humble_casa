@@ -2,39 +2,46 @@
 	<table class="table table-condensed">			
 		<thead>
 			<tr>
+				<th>Property & Owner</th>
 				<th>Status</th>
-				<th>Type</th>
-				<% if @service_request.onetime? %>
-					<th>Start Date</th>
-					<th>End Date</th>
-				<% else %>
-					<th>Frequency</th>
-					<th>Next Scheduled</th>
+				<th>Schedule Details</th>
+				<% if !@service_request.instructions.empty? %>
+					<th>Request Instructions</th>
 				<% end %>
-				<th>Request Instructions</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr>
 				<td>
+					<%= render @service_request.property %>
+					<%= render @service_request.property.user %>
+				</td>
+				<td>
 					<% if @service_request.completed %>
 						Completed
 					<% elsif @service_request.paused %>
 						Paused
+					<% elsif @service_request.scheduled %>
+						Assigned to <%= @service_request.user.last_firstInitial %><br>
+						Scheduled for <%= Time.zone.parse(@service_request.first_scheduled.to_s).in_time_zone(@service_request.time_zone).strftime("%a %m/%d/%y %I:%M%p") if !@service_request.first_scheduled.nil? %>
 					<% elsif @service_request.assigned %>
-						Assigned to: <%= @service_request.user.last_name %>, <%= @service_request.user.first_name[0] %>
+						Assigned to <%= @service_request.user.last_firstInitial %><br> 
+						Pending scheduling
 					<% else %>
-						Pending
+						New request - pending assignment and scheduling
 					<% end %>	
 				</td>
-
 				<% if @service_request.onetime? %>
-					<td>One-time request</td>
-					<td><%= @service_request.service_start_date.strftime("%a %b %d, %Y") if !@service_request.service_start_date.nil? %></td>
-					<td><%= @service_request.service_end_date.strftime("%a %b %d, %Y") if !@service_request.service_end_date.nil? %></td>
-				<% else %>
-					<td>Repeating request</td>
 					<td>
+						One-time request<br>
+						Service window: 
+						<%= Time.zone.parse(@service_request.service_start_date.to_s).in_time_zone(@service_request.time_zone).strftime("%a %m/%d/%y %I:%M%p") if !@service_request.service_start_date.nil? %>
+						to 
+						<%= Time.zone.parse(@service_request.service_end_date.to_s).in_time_zone(@service_request.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") if !@service_request.service_end_date.nil? %>
+					</td>
+				<% else %>
+					<td>
+						Repeating request</br>
 						<% if !@service_request.frequency.nil? %>
 							<%= @service_request.frequency.titleize %>
 							<% if @service_request.frequency == "weekly" || @service_request.frequency == "every_other_week" %>
@@ -43,15 +50,22 @@
 								on the <%= @service_request.service_month_day.ordinalize %>
 							<% end %>
 						<% end %>
-					</td>
-					<td>
-						<% if @service_request.paused %>
-						Resumes on:
+						<br>
+						<% if @service_request.scheduled %>
+							Next scheduled: <%= Time.zone.parse(@service_request.first_scheduled.to_s).in_time_zone(@service_request.time_zone).strftime("%a %m/%d/%y %I:%M%p") if !@service_request.first_scheduled.nil? %>
+						<% else %>
+							<% if @service_request.paused %>
+								Resumes on: 
+							<% else %>
+								Next requested service: 
+							<% end %>
+						<%= Time.zone.parse(@service_request.first_scheduled.to_s).in_time_zone(@service_request.time_zone).strftime("%a %m/%d/%y") if !@service_request.first_scheduled.nil? %>
 						<% end %>
-						<%= @service_request.first_scheduled.strftime("%a %b %d, %Y") if !@service_request.first_scheduled.nil? %></td>
+					</td>
 				<% end %>
-
-				<td><%= @service_request.instructions %></td>
+				<% if !@service_request.instructions.empty? %>
+					<td><%= @service_request.instructions %></td>
+				<% end %>
 				
 			</tr>
 		</tbody>

@@ -1,5 +1,5 @@
 class Property < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :instructions, :name, :phone, :state, :zip, :assignments_attributes
+  attr_accessible :address1, :address2, :city, :instructions, :name, :phone, :state, :zip, :time_zone, :assignments_attributes
   belongs_to :user
   
   has_many :assignments, dependent: :destroy

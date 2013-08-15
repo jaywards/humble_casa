@@ -3,7 +3,7 @@ Hello <%= @property.user.full_name %>,
 Your service request has been scheduled by <%= @service.name %>.
 
 Schedule details:
-	Schedule date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
+	Schedule date: <%= @service_request.completed_date.strftime("%a %m/%d/%y %I:%M%p %Z") %>
 	Completed by: <%= @service_request.user.full_name %>
 
 Service request details:
@@ -14,7 +14,7 @@ Service request details:
   <% end %>
   <% if @service_request.onetime? %>
     One time request
-    Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+    Service window: <%= @service_request.service_start_date.strftime("%a %m/%d/%y %I:%M%p %Z") %> - <%= @service_request.service_end_date.strftime("%a %m/%d/%y %I:%M%p %Z") %>
   <% else %>
     Repeating request
     Frequency: <%= @service_request.frequency.titleize.downcase %>

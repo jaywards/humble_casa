@@ -5,4 +5,4 @@ $ ->
       $("#new_user").enableClientSideValidations()
       $("[id^=edit_user]").enableClientSideValidations()
 
-    ), 400
+    ), 500

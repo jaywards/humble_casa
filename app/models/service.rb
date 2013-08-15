@@ -1,6 +1,6 @@
 class Service < ActiveRecord::Base
   attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, :user_id, 
-  :biz_description,	:service_zips_attributes, :assignments_attributes, :employments_attributes
+  :biz_description,	:service_zips_attributes, :assignments_attributes, :time_zone, :employments_attributes
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -29,6 +29,8 @@ class Service < ActiveRecord::Base
   accepts_nested_attributes_for :service_zips, reject_if: :all_blank, allow_destroy: :true
 
   has_many :service_requests
+
+  has_one :location, dependent: :destroy
 
 
   CATEGORIES = %w[landscaping pool/spa_cleaning housecleaning snow_removal handyman/general_maintenance]

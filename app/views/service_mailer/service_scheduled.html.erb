@@ -30,7 +30,7 @@
             <h2>Your service request for <%= @property.name %> has been assigned and scheduled!</h2>
             <p>
               <h4> Schedule details:</h4>
-              Scheduled date: <%= @service_request.first_scheduled.strftime("%m/%d/%Y") %><br>
+              Scheduled date: <%= @service_request.first_scheduled.strftime("%a %m/%d/%y %I:%M%p %Z") %><br>
               Assigned to: <%= @service_request.user.full_name %><br>
             </p>           
             <p>
@@ -42,7 +42,7 @@
               <% end %>
               <% if @service_request.onetime? %>
                 One time request<br>
-                Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+                Service window: <%= @service_request.service_start_date.strftime("%a %m/%d/%y %I:%M%p %Z") %> - <%= @service_request.service_end_date.strftime("%a %m/%d/%y %I:%M%p %Z") %>
               <% else %>
                 Repeating request<br>
                 Frequency: <%= @service_request.frequency.titleize.downcase %>

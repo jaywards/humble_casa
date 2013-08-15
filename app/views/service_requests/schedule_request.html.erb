@@ -1,16 +1,27 @@
 <%= simple_form_for @service_request do |f| %>
-
+	<% Time.zone = @service_request.time_zone %>
 	<%= provide(:title, 'Schedule service request') %>
 	<h2>Schedule Service Request</h2>
-	<%= render @service_request.property %>	
 	<%= render 'service_request_no_action' %>
 	<hr>
-	<%= f.input :scheduled_date, as: :fake, input_html: {id: "scheduled-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y')}, label: "Schedule service for:" %>
-    <%= f.input :first_scheduled, as: :hidden, input_html: { class: "scheduled_date"} %>
+	<%= f.input :scheduled_date, as: :fake, input_html: {id: "scheduled-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y %I:%M %p')}, label: "Schedule service:" %>
+	<%= f.input :duration, as: :select, label: "Approximate duration:", collection: [['1 hour', 1], ['2 hours', 2], ['3 hours', 3], ['4 hours', 4], ['5 hours', 5], ['6 hours', 6]], label_method: :first, value_method: :last, include_blank: false %>
+    <%= f.input :first_scheduled, as: :hidden, input_html: { class: "first_scheduled_date"} %>
     <%= f.input :scheduled, as: :hidden, input_html: { class: "scheduled"} %>
-    <%= f.input :service_start_date, as: :hidden %>
-	<%= f.input :service_end_date, as: :hidden %>
-	
+    <% if !@service_request.onetime %>	
+		Should we apply this scheduled time for all services of this repeating request? We'll remember your selection and automatically schedule the next service at the same time. If you choose to schedule individually we'll remind you to set scheduling for each event. You can change this option at any time.
+		<%= f.input :all_scheduled, label: false, input_html: {value: @service_request.all_scheduled},
+		collection: [[true, 'Schedule all services for the same time'], [false, 'Schedule each service individually']],
+		label_method: :last, value_method: :first, as: :radio_buttons %>
+	<% end %>
+
+
+
+    <div class="hidden-fields">
+	    <%= f.input :start_date, as: :fake, input_html: {value: @service_request.service_start_date} %>
+		<%= f.input :end_date, as: :fake, input_html: {value: @service_request.service_end_date} %>
+	</div>
+
 	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Schedule request"} %>
 
 <% end %>

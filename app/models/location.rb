@@ -5,5 +5,6 @@ class Location < ActiveRecord::Base
 
   belongs_to :property
   belongs_to :service_request
+  belongs_to :service
 
 end

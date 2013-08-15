@@ -15,7 +15,8 @@ gem 'carrierwave'
 gem 'geocoder'
 gem 'exifr'
 gem 'roadie'
-gem 'fullcalendar-rails'
+gem 'jquery-timepicker-rails'
+gem 'timezone'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

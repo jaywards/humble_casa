@@ -59,7 +59,7 @@
               <% end %>
               <% if @service_request.onetime? %>
                 One time request<br>
-                Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - <%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
+                Service window: <%= @service_request.service_start_date.strftime("%a %m/%d/%y %I:%M%p %Z") %> - <%= @service_request.service_end_date.strftime("%a %m/%d/%y %I:%M%p %Z") %>
               <% else %>
                 Repeating request<br>
                 Frequency: <%= @service_request.frequency.titleize.downcase %>

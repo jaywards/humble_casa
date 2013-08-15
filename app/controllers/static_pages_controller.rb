@@ -10,7 +10,7 @@ class StaticPagesController < ApplicationController
       if @user.role == "propertyowner"
 
         @property = @user.properties.build
-        @property_listings = @user.user_properties
+        @property_listings = @user.user_properties.sort_by { |listing| listing.created_at}
     
       elsif @user.role == "serviceowner"
 

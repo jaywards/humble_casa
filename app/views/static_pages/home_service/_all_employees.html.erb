@@ -23,7 +23,9 @@
 					</td>
 					
 					<td>
-						<%= link_to "delete", employee, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+						<% if current_user != employee %>
+							<%= link_to "delete", employee, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+						<% end %>
 					</td>
 				</tr>
 			<% end %>

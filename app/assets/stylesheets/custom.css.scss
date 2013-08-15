@@ -181,7 +181,7 @@ footer {
 }
 .simple_form div.master_service_request_terms_agreement label.checkbox {
 	width: 400px;
-	padding-right: 200px;
+	padding-right: 100px;
 	line-height: 24px;
 }
 #terms-agreeement-details {
@@ -220,6 +220,22 @@ footer {
 	line-height: 30px;
 }
 
+.simple_form div.service_request_start_timepicker {
+	.fake.optional.ui-timepicker-input {
+		width: 100px;
+	}
+}
+
+.simple_form div.service_request_end_timepicker {
+	.fake.optional.ui-timepicker-input {
+		width: 100px;
+	}
+}
+
+.simple_form div.service_request_completed label.radio_buttons.optional.control-label {
+	line-height: 38px;
+}
+
 
 #property_instructions, #master_service_request_instructions {
 	height: 80px;
@@ -247,13 +263,13 @@ footer {
 	padding: 0;	
 	zoom: 1;
 }
-#tabs li {
+#property-tabs li {
 	float: left;
 	list-style: none;
 	padding: 0;
 	margin: 0;
 }
-#tabs a {
+#property-tabs a {
 	display: block;
 	text-decoration: none;
 	padding: 3px 5px;
@@ -264,7 +280,7 @@ footer {
 	margin-bottom: -1px;
 	color: white;
 }
-#tabs li.active a {
+#property-tabs li.active a {
 	border-bottom: 1px solid white;
 	background-color: white;
 	color: black;

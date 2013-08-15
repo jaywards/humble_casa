@@ -2,7 +2,7 @@ class ServiceRequest < ActiveRecord::Base
   attr_accessible :assigned, :completed, :instructions, :property_id, :service_end_date, :service_id, :service_start_date, 
   :request_id, :completed_date, :onetime, :frequency, :service_week_day, :service_month_day, :asap, :first_scheduled, 
   :all_assigned, :master_service_request_id, :work_assignment_attributes, :completion_note, :service_photo_1, 
-  :service_photo_2, :service_photo_3, :scheduled
+  :service_photo_2, :service_photo_3, :scheduled, :time_zone, :duration, :all_scheduled
 
   mount_uploader :service_photo_1, ServicePicsUploader  
   mount_uploader :service_photo_2, ServicePicsUploader  

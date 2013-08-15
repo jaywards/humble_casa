@@ -49,4 +49,8 @@ class User < ActiveRecord::Base
   def full_name
     "#{first_name} #{last_name}"
   end
+
+  def last_firstInitial
+    "#{last_name}, #{first_name[0]}"
+  end
 end

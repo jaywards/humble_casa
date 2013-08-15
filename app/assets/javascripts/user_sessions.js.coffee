@@ -4,4 +4,4 @@ $ ->
       $("#user_session_email").focus()
       $("#login").enableClientSideValidations()
 
-    ), 400
+    ), 500

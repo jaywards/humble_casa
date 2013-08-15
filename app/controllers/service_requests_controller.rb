@@ -61,9 +61,16 @@ class ServiceRequestsController < ApplicationController
 			## If assignment (initial or otherwise) is all_assigned
 		    if @master_request.all_assigned != @service_request.all_assigned
 		      	@master_request.update_attribute(:all_assigned, @service_request.all_assigned)
-				
+			end
+
+			## If scheduled (initial or otherwise) is all_scheduled
+			if @master_request.all_scheduled != @service_request.all_scheduled
+				@master_request.update_attributes(:all_scheduled => @service_request.all_scheduled, 
+					:duration => @service_request.duration, :first_scheduled => @service_request.first_scheduled)
+			end
+
 		    ## If request was completed
-			elsif @current_completed != @service_request.completed
+			if @current_completed != @service_request.completed
 
 				## If completed and first image has EXIF info
 				if !@service_request.service_photo_1.current_path.nil?
@@ -101,8 +108,9 @@ class ServiceRequestsController < ApplicationController
 				## If marked as completed and a repeating request
 				if @service_request.completed && !@service_request.onetime
 
-					## If all_assigned copy the assignment to new request
-					if @master_request.all_assigned?
+					## If all_assigned copy the assignment to new request. Both cases will handle all_assigned within
+					## the spawn helper
+					if @master_request.all_assigned
 						@new_service_request = view_context.spawnServiceRequest(@master_request, @service_request.user)
 						view_context.linkRequests(@master_request, @new_service_request)
 					
@@ -112,12 +120,11 @@ class ServiceRequestsController < ApplicationController
 						view_context.linkRequests(@master_request, @new_service_request)
 					end	
 
-					## Update next scheduled
+					## Update next scheduled (will handle all_assigned - time of service carries over)
 					@next_scheduled = view_context.nextScheduled(@master_request)
 					@master_request.update_attribute(:first_scheduled, @next_scheduled)
 					@new_service_request.first_scheduled = @next_scheduled
 					@new_service_request.completed_date = @next_scheduled
-
 
 					## Handle if paused
 					if @master_request.paused?

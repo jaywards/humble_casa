@@ -1,13 +1,9 @@
-<%= provide(:title, 'Assign service request') %>
-<h2>Assign Service Request</h2>
-
-<%= render @service_request.property %>
-<hr>
-<%= render 'service_request_no_action' %>
-<hr>
-
 <%= simple_form_for @service_request do |f| %>
-	
+	<% Time.zone = @service_request.time_zone %>
+	<%= provide(:title, 'Assign service request') %>
+	<h2>Assign Service Request</h2>	
+	<%= render 'service_request_no_action' %>
+	<hr>
 	<% @employees = @service.users.find_all { |x| x.employments.first.approved == true } %>
 	<%= f.simple_fields_for :work_assignment do |work_assignment| %>
 		<%= work_assignment.association :user, collection: @employees, :value_method => :id, :as => :select, label: "Assign this service request:", include_blank: false %>
@@ -15,34 +11,41 @@
 		<% if !work_assignment.nil? %>
 	    	<%= f.hidden_field :assigned, value: true %>
 	    <% end %>
-    
+
 	    <% if !@service_request.onetime %>
 	    	This is a repeating request. Would you like to assign this employee to all future instances or just this single request?
 	    	<br>
 	    	<%= f.input :all_assigned, label: false, input_html: {value: @service_request.all_assigned},
 	    	collection: [[true, 'All future instances'], [false, 'Just this one time']],
 	    	label_method: :last, value_method: :first, as: :radio_buttons %>
-	    	<br>
-	    	The scheduling for this repeating request must be confirmed either by you or the employee you assign it to. This will notify the homeowner that you have accepted the service request and the days that it will be performed.
-	    	<br>
-	    	<%= f.input :scheduled, label: false, input_html: {value: @service_request.scheduled, class: "scheduled"},
-	    	collection: [[true, 'I confirm the scheduling'], [false, 'My employee will confirm the scheduling']],
-	    	label_method: :last, value_method: :first, as: :radio_buttons %>
-	    <% else %>
+	      	
+	      	This request must be scheduled either by you or by the employee you assign it to. This will notify the homeowner that you have accepted the service request and the days that it will be performed.
+	    <% else %>	
 	    	This one-time request must be scheduled. You can either schedule it now or let the employee assigned to the request schedule it themselves.
-	    	<br>
-			<%= f.input :scheduled, label: false, input_html: {value: @service_request.scheduled, class: "scheduled"},
-	    	collection: [[true, 'I will schedule'], [false, 'Employee will schedule']],
-	    	label_method: :last, value_method: :first, as: :radio_buttons %>
-	    	<%= f.input :first_scheduled_date, as: :fake, input_html: {id: "scheduled-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y')}, label: "Schedule service for:" %>
-    		<%= f.input :first_scheduled, as: :hidden, input_html: { class: "first_scheduled_date"} %>
-	    <% end %>
+		<% end %>
+	    <br>
+    	<%= f.input :scheduled, label: false, input_html: {value: @service_request.scheduled, class: "scheduled"},
+    	collection: [[true, 'I will schedule'], [false, 'Employee will schedule']],
+    	label_method: :last, value_method: :first, as: :radio_buttons %>
 	    
+    	<div class="scheduling-fields">
+      		<%= f.input :first_scheduled_date, as: :fake, input_html: {id: "scheduled-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y %I:%M %p')}, label: "Schedule service for:" %>
+    		<%= f.input :first_scheduled, as: :hidden, input_html: { class: "first_scheduled_date"} %>
+    		<%= f.input :duration, as: :select, label: "Approximate duration:", collection: [['1 hour', 1], ['2 hours', 2], ['3 hours', 3], ['4 hours', 4], ['5 hours', 5], ['6 hours', 6]], label_method: :first, value_method: :last, include_blank: false %>
 
-    <% end %>
-    <%= f.input :service_start_date, as: :hidden %>
-	<%= f.input :service_end_date, as: :hidden %>
-
+		    <% if !@service_request.onetime %>	
+	    		Should we apply this scheduled time for all services of this repeating request? We'll remember your selection and automatically schedule the next service at the same time. If you choose to schedule individually we'll remind you to set scheduling for each event. You can change this option at any time.
+	    		<%= f.input :all_scheduled, label: false, input_html: {value: @service_request.all_scheduled},
+	    		collection: [[true, 'Schedule all services for the same time'], [false, 'Schedule each service individually']],
+	    		label_method: :last, value_method: :first, as: :radio_buttons %>
+	    	<% end %>
+	    </div>
+	<% end %>
+	    
+    <div class="hidden-fields">
+	    <%= f.input :start_date, as: :fake, input_html: {value: @service_request.service_start_date} %>
+		<%= f.input :end_date, as: :fake, input_html: {value: @service_request.service_end_date} %>
+	</div>
 	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Assign request"} %>
 
 <% end %>
