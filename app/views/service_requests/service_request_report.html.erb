@@ -3,23 +3,27 @@
 <% else %>
 	<h2>Full Request Details</h2>
 <% end %>
-<h4>Request #: </h4>
-<p>
-	<%= @service_request.service_request_id %>
-</p>
-<br>
-<h4>Property:</h4> 
-<p>
-	<%= render @service_request.property %>
-</p>
-<h4>Service:</h4> 
-<p>
-	<%= render @service_request.service %>
-</p>
+<h4>Request #: </h4><%= @service_request.service_request_id %>
 
 <hr>
+<div class="row-fluid">
+	<div class="span6">
+		<h4>Property Details:</h4> 
+		<%= render @service_request.property %>
+	</div>
+	
+	<div class="span6">
+		<h4>Owner Details:</h4>
+		<%= render @service_request.property.user %>
+	</div>
+</div>
 
-<h4>Service request details:</h4>
+<hr>
+<h4>Service:</h4> 
+<%= render @service_request.service %>
+
+<hr>
+<h4>Service Request Details:</h4>
 <p>
 	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %>
 	<br>
@@ -44,10 +48,20 @@
 			<% else %>
 				on the <%= @service_request.service_month_day.ordinalize %>
 			<% end %>
+			<br>
+		<% end %>
+		<% if !@service_request.completed %>
+			Next scheduled: <%= Time.zone.parse(@service_request.first_scheduled.to_s).in_time_zone(@service_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") if !@service_request.first_scheduled.nil? %>
 		<% end %>
 	<% end %>
-		<br>
-		Special instructions for this request: <%= @service_request.instructions %><br>
+	<br>
+	Special instructions for this request: 
+	<% if @service_request.instructions.blank? %>
+			 none
+	<% else %>
+		<%= @service_request.instructions %>
+	<% end %>
+	<br>
 	<br>
 	<% if @service_request.completed %>
 		<% if @service_request.location_verified && @service_request.timestamp_verified %>
@@ -64,18 +78,19 @@
 			<%= @service_request.completion_note %>
 		<% end %>
 	<% end %>
-	<br>
 	
-	<hr>
-
-	<h4>Service images:</h4>
-	<div>
-		<%= image_tag @service_request.service_photo_1_url if @service_request.service_photo_1? %>
-		&nbsp
-		<%= image_tag @service_request.service_photo_2_url if @service_request.service_photo_2? %>
-		&nbsp
-		<%= image_tag @service_request.service_photo_3_url if @service_request.service_photo_3? %>
-	</div>
+	<% if @service_request.completed %>
+		<br>
+		<hr>
+		<h4>Service images:</h4>
+		<div>
+			<%= image_tag @service_request.service_photo_1_url if @service_request.service_photo_1? %>
+			&nbsp
+			<%= image_tag @service_request.service_photo_2_url if @service_request.service_photo_2? %>
+			&nbsp
+			<%= image_tag @service_request.service_photo_3_url if @service_request.service_photo_3? %>
+		</div>
+	<% end %>
 </p>
 <br>
 <center>

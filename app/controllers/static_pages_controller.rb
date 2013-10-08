@@ -15,11 +15,13 @@ class StaticPagesController < ApplicationController
       elsif @user.role == "serviceowner"
 
         @business = @user.business
+        @date = params[:date] ? Date.parse(params[:date]) : Date.today
         if !@business.nil?
           @zips_list = @business.service_servicezips
           @employees = User.find(Employment.where(:service_id => @business.id, :approved => true).map(&:user_id).uniq) 
           if !(@service_request_listings = @business.service_requests).empty?
             @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
+            @srs_by_date = @sorted_service_requests.group_by {|b| b.first_scheduled.in_time_zone(b.property.time_zone).to_date.to_formatted_s(:db) }
           end
         end
       

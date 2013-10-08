@@ -8,16 +8,16 @@
 <div class="tabcontainer"> 
 	<div id="content">
     	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">	
-	    	<li class="active"><a href="#service-requests-tab" data-toggle="tab">Service requests</a></li>
+	    	<li class="active"><a href="#calendar-tab" data-toggle="tab">Calendar View</a></li>
 	    	<li><a href="#customers-tab" data-toggle="tab">Customers</a></li>
 	    	<li><a href="#business-tab" data-toggle="tab">Business Details</a></li>
 	    	<li><a href="#employees-tab" data-toggle="tab">Employees</a></li>
-	    	<li><a href="#calendar-tab" data-toggle="tab">Calendar View</a></li>
+	    	<li><a href="#service-requests-tab" data-toggle="tab">List View</a></li>
 	    </ul>
  
 	    <div id="my-tab-content" class="tab-content">
-	    	<div class="tab-pane active" id="service-requests-tab">
-				<%= render 'static_pages/home_service/all_service_requests' %>
+	    	<div class="tab-pane active" id="calendar-tab">
+				<%= render 'static_pages/home_service/service_calendar_view' %>
 			</div>
 			<div class="tab-pane" id="business-tab">
 				<%= render @business %>
@@ -37,9 +37,10 @@
 			<div class="tab-pane" id="employees-tab">
 				<%= render 'static_pages/home_service/all_employees' %>
 			</div>
-			<div class="tab-pane" id="calendar-tab">
-				<div id="calendar"></div>
+			<div class="tab-pane" id="service-requests-tab">
+				<%= render 'static_pages/home_service/all_service_requests' %>
 			</div>
+
 		</div>
 	</div>
 </div>
