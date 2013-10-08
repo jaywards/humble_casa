@@ -126,7 +126,6 @@ GEM
       jquery-rails
       railties (>= 3.1.0)
     json (1.8.0)
-    later_dude (0.3.3)
     listen (1.2.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -267,7 +266,6 @@ DEPENDENCIES
   jquery-rails
   jquery-timepicker-rails
   jquery-ui-rails
-  later_dude
   mini_magick
   mocha
   nifty-generators (~> 0.4.2)
