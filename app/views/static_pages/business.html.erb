@@ -1,83 +1,8 @@
 <div class="row-fluid">
 	<div class="span6">
-    	<div id="carousel-example-generic" class="carousel slide bs-docs-carousel-example">
-        	<ol class="carousel-indicators">
-          		<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-          		<li data-target="#carousel-example-generic" data-slide-to="1"></li>
-          		<li data-target="#carousel-example-generic" data-slide-to="2"></li>
-          		<li data-target="#carousel-example-generic" data-slide-to="3"></li>
-        	</ol>
-        
-        	<div class="carousel-inner">
-          		<div class="item active">
-            		<%= image_tag("poolcleaning wfx.jpg", :size => "631x353") %>
-            		<div class="carousel-caption">
-            			<p class="pool-caption">
-            				Free for homeowners
-            			</p>
-            			<p>
-            				<z class="pool-caption-minor">
-	            				<%= link_to "sign-up", new_user_path(role: "propertyowner"), remote: true %> for your account
-    						</z>
-            			</p>
-            		</div>
-          		</div>
-          		<div class="item">
-            		<%= image_tag("landscaping wfx.jpg", :size => "631x353") %>
-            		<z class="landscape">
-	            		<div class="carousel-caption">    
-	            		    <p class="landscape-caption">
-	            				Home maintenance service provider?
-	            			</p>
-	            			<p>
-	            				<z class="landscape-caption-minor">
-	            					take a <%= link_to "feature tour", feature_tour_path %>, view our <%= link_to "pricing plans", pricing_plans_path %>, and <%= link_to "sign-up", new_user_path(role: "serviceowner"), remote: true %> for an account
-	            				</z>
-	            			</p>
-	            		</div>
-	            	</z>
-          		</div>
-          		<div class="item">
-            		<%= image_tag("housecleaning wfx.jpg", :size => "631x353") %>
-            		<z class="housecleaner">
-	            		<div class="carousel-caption">    
-	            		    <p>
-		            		    <z class="housecleaner-caption">
-		            				Manage multiple properties
-		            			</z> 
-		            		</p>
-	               			<p>
-	               				<z class="housecleaner-caption-minor">
-		               				ideal for <%= link_to "2nd home owners", new_user_path(role: "propertyowner"), remote: true %>
-	   							</z>
-	            			</p>
-	            		</div>
-	            	</z>
-          		</div>
-          		<div class="item">
-            		<%= image_tag("snowplow wfx.jpg", :size => "631x353") %>
-            		<z class="snowplow">
-	            		<div class="carousel-caption">    
-	            		    <p>
-		            		    <z class="snowplow-caption">
-		            				Remote home service monitoring
-		            			</z> 
-		            		</p>
-	               			<p>
-	               				<z class="snowplow-caption-minor">
-		               				receive email alerts and verification that services are completed
-	   							</z>
-	            			</p>
-	            		</div>
-	            	</z>
-          		</div>
-        	</div>
-        
-
-        	<a class="carousel-control left" href="#carousel-example-generic" data-slide="prev">‹</a>
-  			<a class="carousel-control right" href="#carousel-example-generic" data-slide="next">›</a>
-    	</div>
+    	<%= render :partial => 'static_pages/intro_carousel', :locals => { :property_carousel => false } %>
 	</div>
+
 	<div class="span6" id="logo-and-buttons">
 		<center>
 			<br>
@@ -107,6 +32,7 @@
 						</p>
 					</div>
 				</div>
+				<br>
 			<% else %>	
 				You are currently logged in. Logout first to create a new Service Owner or Employee account.
 				<br>

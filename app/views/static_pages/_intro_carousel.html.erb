@@ -1,0 +1,83 @@
+<div id="intro-carousel" class="carousel slide">
+	<ol class="carousel-indicators" style="width: 100px; height: 20px;">
+  		<li data-target="#intro-carousel" data-slide-to="0" class="active"></li>
+  		<li data-target="#intro-carousel" data-slide-to="1"></li>
+  		<li data-target="#intro-carousel" data-slide-to="2"></li>
+  		<li data-target="#intro-carousel" data-slide-to="3"></li>
+	</ol>
+
+	<div class="carousel-inner">
+  		<% if property_carousel %>
+	    	<div class="item active">    	
+    			<%= image_tag("poolcleaning wfx.jpg", :size => "631x353") %>
+	    		<div class="carousel-caption">
+	    			<p class="pool-caption">Free for homeowners </p>
+	    			<p class="pool-caption-minor">
+	        			<%= link_to "sign-up", new_user_path(role: "propertyowner"), remote: true %> for your account
+					</p>
+	    		</div>
+	    	</div>
+	    
+	    	<div class="item">
+    			<%= image_tag("landscaping wfx.jpg", :size => "631x353") %>
+	    		<z class="landscape">
+	        		<div class="carousel-caption">    
+	        		    <p class="landscape-caption">Home maintenance service provider?</p>
+	        			<p class="landscape-caption-minor">
+	        					take a <%= link_to "feature tour", feature_tour_path %>, view our <%= link_to "pricing plans", pricing_plans_path %>, and <%= link_to "sign-up", new_user_path(role: "serviceowner"), remote: true %> for an account
+	        			</p>
+	        		</div>
+	        	</z>
+	  		</div>
+	    <% else %>
+    		<div class="item active">    	
+	    		<%= image_tag("landscaping wfx.jpg", :size => "631x353") %>
+    			<z class="landscape">
+        			<div class="carousel-caption">    
+        		    	<p class="landscape-caption">Home maintenance service provider?</p>
+        				<p class="landscape-caption-minor">
+        					take a <%= link_to "feature tour", feature_tour_path %>, view our <%= link_to "pricing plans", pricing_plans_path %>, and <%= link_to "sign-up", new_user_path(role: "serviceowner"), remote: true %> for an account
+ 		       			</p>
+        			</div>
+        		</z>
+    		</div>
+
+    		<div class="item">
+    			<%= image_tag("poolcleaning wfx.jpg", :size => "631x353") %>
+    			<div class="carousel-caption">
+	    			<p class="pool-caption">Free for homeowners</p>
+	    			<p class="pool-caption-minor">
+	        			<%= link_to "sign-up", new_user_path(role: "propertyowner"), remote: true %> for your account
+					</p>
+    			</div>
+    		</div>
+        <% end %>
+
+  		<div class="item">
+    		<%= image_tag("housecleaning wfx.jpg", :size => "631x353") %>
+    		<z class="housecleaner">
+        		<div class="carousel-caption">    
+        		    <p class="housecleaner-caption">Manage multiple properties</p>
+           			<p class="housecleaner-caption-minor">
+               			ideal for <%= link_to "2nd home owners", new_user_path(role: "propertyowner"), remote: true %>
+        			</p>
+        		</div>
+        	</z>
+  		</div>
+
+  		<div class="item">
+    		<%= image_tag("snowplow wfx.jpg", :size => "631x353") %>
+    		<z class="snowplow">
+        		<div class="carousel-caption">    
+        		    <p class="snowplow-caption">Remote home service monitoring</p>
+           			<p class="snowplow-caption-minor"> receive email alerts and verification that services are completed
+           			</p>
+        		</div>
+        	</z>
+  		</div>
+	</div>
+
+
+	<a class="left carousel-control" href="#intro-carousel" data-slide="prev">‹</a>
+	<a class="right carousel-control" href="#intro-carousel" data-slide="next">›</a>
+</div>
