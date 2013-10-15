@@ -9,11 +9,11 @@
 						&nbsp
 						&nbsp
 						&nbsp
-						<%= link_to "User Account", edit_user_path(current_user), remote: true, class: "launch-user-form"%> | 
+						<%= link_to "User Account", edit_user_path(current_user) %> | 
 						<%= link_to "Logout", logout_path %>
 					<% else %>
-						<%= link_to "Register", new_user_path(role: "propertyowner"), remote: true, class: "launch-user-form" %> | 
-						<%= link_to "Login", login_path, remote: true, class: "launch-login-form" %>
+						<%#= link_to "Register", new_user_path(role: "propertyowner"), class: "launch-user-form" %> <!--| --> 
+						<%#= link_to "Login", login_path, remote: true, class: "launch-login-form" %>
 					<% end %>
 				</ul>
 			</nav>

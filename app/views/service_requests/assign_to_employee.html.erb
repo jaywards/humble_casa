@@ -1,7 +1,7 @@
 <%= simple_form_for @service_request do |f| %>
 	<% Time.zone = @service_request.time_zone %>
 	<%= provide(:title, 'Assign service request') %>
-	<h2>Assign Service Request</h2>	
+	<h2 class="assign-request-form">Assign Service Request</h2>	
 	<%= render 'service_request_no_action' %>
 	<hr>
 	<% @employees = @service.users.find_all { |x| x.employments.first.approved == true } %>
@@ -11,7 +11,7 @@
 		<% if !work_assignment.nil? %>
 	    	<%= f.hidden_field :assigned, value: true %>
 	    <% end %>
-
+	    <hr>
 	    <% if !@service_request.onetime %>
 	    	This is a repeating request. Would you like to assign this employee to all future instances or just this single request?
 	    	<br>
@@ -46,6 +46,12 @@
 	    <%= f.input :start_date, as: :fake, input_html: {value: @service_request.service_start_date} %>
 		<%= f.input :end_date, as: :fake, input_html: {value: @service_request.service_end_date} %>
 	</div>
-	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Assign request"} %>
+	 <center>
+		<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
+			<i class="icon-ok icon-white"></i> Save
+		</button>
+		&nbsp		
+		<%= link_to "Cancel", root_path, class: "btn" %>
+	</center>
 
 <% end %>

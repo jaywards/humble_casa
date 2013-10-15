@@ -73,16 +73,16 @@
 			<% case current_user.role %> 
 				<% when "propertyowner" %>
 					<p class="launch-service-request">
-						<%= link_to "view/edit", edit_service_property_master_service_request_path(id: service_request.master_service_request_id, service_id: service_request.master_service_request.service_id, property_id: service_request.master_service_request.property_id,), class: "btn btn-mini btn-info", remote: true %> 
+						<%= link_to "view/edit", edit_service_property_master_service_request_path(service_request.master_service_request.service, service_request.master_service_request.property, service_request.master_service_request), class: "btn btn-mini btn-info" %> 
 					</p>  
 					<% if !service_request.onetime %>
 						<% if service_request.paused %>
-							<p class="launch-pause">
-								<%= link_to "resume", pause_master_service_request_path(id: service_request.master_service_request_id), class: "btn btn-mini btn-success", remote: true %> 
+							<p>
+								<%= link_to "resume", pause_master_service_request_path(service_request.master_service_request), class: "btn btn-mini btn-success" %> 
 							</p>
 						<% else %>
-							<p class="launch-pause">
-								<%= link_to "pause", pause_master_service_request_path(id: service_request.master_service_request_id), class: "btn btn-mini btn-warning", remote: true %> 
+							<p>
+								<%= link_to "pause", pause_master_service_request_path(service_request.master_service_request), class: "btn btn-mini btn-warning" %> 
 							</p>
 						<% end %>
 					<% end %>
@@ -91,18 +91,18 @@
 				<% when "serviceowner" %>
 					<% if service_request.scheduled %>
 						<p class="launch-complete-service-request">
-							<%= link_to "complete request", complete_request_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "complete request", complete_request_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 						<p class="launch-assign-service-request">
-							<%= link_to "reassign or reschedule", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "reassign or reschedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% elsif service_request.assigned %>
 						<p class="launch-assign-service-request">
-							<%= link_to "reassign or schedule", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "reassign or schedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% else %>
 						<p class="launch-assign-service-request">
-							<%= link_to "assign/schedule request", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "assign/schedule request", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% end %>
 					<%= link_to "delete", service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
@@ -110,39 +110,41 @@
 				<% when "employee" %>
 					<% if service_request.scheduled %>
 						<p class="launch-complete-service-request">
-							<%= link_to "complete request", complete_request_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "complete request", complete_request_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% else %>
 						<p class="launch-schedule-service-request">
-							<%= link_to "schedule request", schedule_request_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "schedule request", schedule_request_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% end %>
 				<% when "admin" %>
 					<p class="launch-service-request">
-						<%= link_to "view/edit", edit_service_property_master_service_request_path(id: service_request.master_service_request_id, service_id: service_request.master_service_request.service_id, property_id: service_request.master_service_request.property_id,), class: "btn btn-mini", remote: true %> 
+						<%= link_to "view/edit", edit_service_property_master_service_request_path(service_request.master_service_request.service, service_request.master_service_request.property, service_request.master_service_request), class: "btn btn-mini" %> 
 					</p>  
 					<p>
 						<%= link_to "delete", service_request.master_service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
 					</p>
 					<% if service_request.scheduled %>
 						<p class="launch-complete-service-request">
-							<%= link_to "complete request", complete_request_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "complete request", complete_request_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 						<p class="launch-assign-service-request">
-							<%= link_to "reassign or reschedule", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "reassign or reschedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% elsif service_request.assigned %>
 						<p class="launch-assign-service-request">
-							<%= link_to "reassign or schedule", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "reassign or schedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% else %>
 						<p class="launch-assign-service-request">
-							<%= link_to "assign/schedule request", assign_to_employee_service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %>
+							<%= link_to "assign/schedule request", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %>
 						</p>
 					<% end %>
 			<% end %>
 		<% end %>
 	</td>
 </tr>
+
+
 				
 

@@ -13,7 +13,7 @@
 									<ul>
 										<% @newcompleted.each do |nc| %>
 											<li>Completed on <%= nc.completed_date.strftime("%a %b %d, %Y") %>.
-												<%= link_to "view report", service_request_path(nc), class: "btn btn-mini", remote: true %>
+												<%= link_to "view report", service_request_path(nc), class: "btn btn-mini" %>
 											</li>
 										<% end %>
 									</ul>
@@ -46,7 +46,7 @@
 							<li>Last service completed:
 								<% if !(@completed_SRs = completed_requests(s, listing)).nil? %>
 									<%= (@last = @completed_SRs.sort_by { |sr| sr.completed_date }.last).completed_date.strftime("%a %b %d, %Y") %> 
-									<%= link_to "view report", service_request_path(@last), class: "btn btn-mini", remote: true %>
+									<%= link_to "view report", service_request_path(@last), class: "btn btn-mini" %>
 								<% else %>	
 									no completed requests for this service
 								<% end %>

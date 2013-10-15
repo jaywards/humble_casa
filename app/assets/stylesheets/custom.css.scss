@@ -421,5 +421,33 @@ footer {
 
 #logo-and-buttons {
 	border: 2px solid rgb(0,97,152);
-	padding: 5px;
+	padding: 2px;
+}
+
+#new-to-site {
+	border: 2px solid rgb(241,167,16);
+	padding: 2px;
+}
+
+.homepage .simple_form {
+	div.user_session_email {
+		margin-bottom: 6px;
+		label.email.required.control-label {
+			width: 100px;
+		}
+		.controls {
+			margin-left: 140px;
+			margin-right: 80px;
+		}
+	}
+	div.user_session_password {
+		margin-bottom: 6px;
+		label.password.required.control-label {
+			width: 100px;
+		}
+		.controls {
+			margin-left: 140px;
+			margin-right: 80px;
+		}
+	}
 }

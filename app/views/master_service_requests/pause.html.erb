@@ -1,16 +1,14 @@
 <%= provide(:title, 'Pause Service Request') %>
-<h2>Pause Service Request</h2>
+<h2 class="pause-form">Pause Service Request</h2>
 <p>
-	Schedule a pause in your repeating service request. Tell us when you'd like to resume this service and we'll schedule for the next available date according your request's scheduling rules.
+	Schedule a pause in your repeating service request. Tell us when you'd like to resume this service and we'll schedule for the next available date according your request scheduling rules.
 </p>
 <br>
 <%= simple_form_for @master_service_request do |f| %>
-	<div class="checkbox inline">	    
-  	<%= f.input :paused, input_html: {value: @master_service_request.paused, class: "paused"},
+	<%= f.input :paused, input_html: {value: @master_service_request.paused, class: "paused"},
 	    	collection: [[true, 'Yes'], [false, 'No']],
 	    	label_method: :last, value_method: :first, label: "Pause request:", as: :radio_buttons %> 
-	</div>
-
+	
 	<%= f.input :restart_date, as: :fake, input_html: {id: "restart-date-picker", value: @master_service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y')}, label: "Resume on:" %>
 
 
@@ -20,9 +18,13 @@
 	<%= f.input :frequency, as: :hidden %>
 	<%= f.input :service_week_day, as: :hidden %>
 	<%= f.input :service_month_day, as: :hidden %>
-
-	<center><div><%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Update service request"} %></div></center>
 		
+	<center>
+		<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
+			<i class="icon-ok icon-white"></i> Save
+		</button>
+		&nbsp		
+		<%= link_to "Cancel", root_path, class: "btn" %>
+	</center>
+
 <% end %>
-
-

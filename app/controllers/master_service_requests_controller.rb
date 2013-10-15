@@ -13,9 +13,12 @@ class MasterServiceRequestsController < ApplicationController
 			@service_request.update_attribute(:mailed_created, true)
 			redirect_to root_path
 		else
+			@service = Service.find_by_id(@master_request.service_id)
+			@property = Property.find_by_id(@master_request.property_id)
 			flash[:error] = "Service request couldn't be created."
 			render :action => 'new'
 		end
+
 	end
 
 	def new
@@ -24,8 +27,8 @@ class MasterServiceRequestsController < ApplicationController
 		@property = Property.find_by_id(params[:property_id])
 
 		respond_to do |format|
-      		format.html # new.html.erb
-      		format.json { render json: @master_request}
+      		format.html
+      		format.js
     	end
 
 	end
@@ -85,7 +88,10 @@ class MasterServiceRequestsController < ApplicationController
 	end
 
 	def pause
-		render action: "pause"
+		respond_to do |format|
+      		format.html
+      		format.js
+    	end
 	end
 
 end

@@ -17,11 +17,9 @@
 				<td>	
 					<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
 						<% if check_availability(area_services(property_listing.zip), category) %>			
-							<z class="launch-assign-services">
-							<%= link_to assign_services_property_path(property_listing), remote: true, class: "btn btn-mini btn-primary" do %>
+							<%= link_to assign_services_property_path(property_listing), class: "btn btn-mini btn-primary" do %>
 								<i class="icon-check icon-white"></i> Services available! Sign-up
 							<% end %>
-							</z>
 						<% else %>
 							No service providers for your area.
 						<% end %>
@@ -30,8 +28,8 @@
 					<% else %> 
 						<% @valid_service_row = true %>
 						<h5><%= @selected_service.name %></h5>
-						<p class="launch-service-request">
-							<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success", remote: true %>
+						<p>
+							<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success"  %>
 						</p>
 						<p>
 							<br>
@@ -68,4 +66,6 @@
 		<% end %>
 	</tbody>
 </table>
+
+
 

@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'rails', '3.2.8'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
 gem 'bootstrap-sass'
 gem 'bcrypt-ruby', '3.0.1'
 gem 'will_paginate', '3.0.3'
@@ -17,6 +19,9 @@ gem 'exifr'
 gem 'roadie'
 gem 'jquery-timepicker-rails'
 gem 'timezone'
+gem 'client_side_validations'
+gem 'client_side_validations-simple_form'
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -39,10 +44,6 @@ group :assets do
   gem 'uglifier', '1.2.3'
 end
 
-gem 'jquery-rails'
-gem 'jquery-ui-rails'
-gem 'client_side_validations'
-gem 'client_side_validations-simple_form'
 
 group :test do
 	gem 'rspec-rails', '~> 2.12.2'

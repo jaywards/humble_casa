@@ -4,44 +4,40 @@
 
 
 $ ->
-    $(".launch-service-request").click ->
-      setTimeout (->
+  if $('body').hasClass("master_service_requests") && $(".sr-form").length > 0
+    $("#master_service_request_onetime_true").focus()
+    $("#new_master_service_request").enableClientSideValidations()
+    $("[id^=edit_master_service_request]").enableClientSideValidations()
+    setDatePickers()
+    populateForm()
 
-        $("#master_service_request_onetime_true").focus()
-        $("#new_master_service_request").enableClientSideValidations()
-        $("[id^=edit_master_service_request]").enableClientSideValidations()
+    $(".onetime").change ->
+      if $(this).val() == "true"
+        showAndHideFields('.onetime-fields', '.repeating-fields')
+      else
+        showAndHideFields('.repeating-fields', '.onetime-fields')
+      
+    $(".frequency").change ->
+      $('#first-scheduled-fields').hide(400)
+      if $(this).val() == "weekly" || $(this).val() == "every_other_week"
+          showAndHideFields('.weekly-fields', '.monthly-fields')
+      else
+          showAndHideFields('.monthly-fields', '.weekly-fields')
 
-        setDatePickers()
+    $("#daypicker").change ->
+      nextScheduledWeekDay($(this).val())
+      $('#first-scheduled-fields').show(400)
 
-        populateForm()
+    $("#monthpicker").change ->
+      nextScheduledMonthDay($(this).val())
+      $('#first-scheduled-fields').show(400)
 
-        $(".onetime").change ->
-          if $(this).val() == "true"
-            showAndHideFields('.onetime-fields', '.repeating-fields')
-          else
-            showAndHideFields('.repeating-fields', '.onetime-fields')
-          
-        $(".frequency").change ->
-          $('#first-scheduled-fields').hide(400)
-          if $(this).val() == "weekly" || $(this).val() == "every_other_week"
-              showAndHideFields('.weekly-fields', '.monthly-fields')
-          else
-              showAndHideFields('.monthly-fields', '.weekly-fields')
-
-        $("#daypicker").change ->
-          nextScheduledWeekDay($(this).val())
-          $('#first-scheduled-fields').show(400)
-
-        $("#monthpicker").change ->
-          nextScheduledMonthDay($(this).val())
-          $('#first-scheduled-fields').show(400)
-
-        $("#save-btn").click ->
-          validateForm()
-      ), 1000
+    $("#save-btn").click ->
+      validateForm()
  
+
 setDatePickers = ->
-  
+ 
   minD = new Date()
   minD.setDate(minD.getDate() + 1)
   minD.setHours(8)
@@ -51,13 +47,13 @@ setDatePickers = ->
     timeFormat: 'h:mmtt',
     stepMinute: 15,
     altField: '.service_start_date, .first_scheduled',
-    altFieldTimeOnly: false; 
+    altFieldTimeOnly: false;
     altFormat: 'yy-mm-dd',
     altTimeFormat: 'HH:mm',
     minDate: minD
     hourMin: 8,
     hourMax: 18,
-    onSelect: (dateText, inst) -> 
+    onSelect: (dateText, inst) ->
       endD = $("#start-date-picker").datetimepicker("getDate")
       endD.setDate(endD.getDate() + 1)
       $("#end-date-picker").datetimepicker "option", "minDate", endD
@@ -69,13 +65,14 @@ setDatePickers = ->
     timeFormat: 'h:mmtt',
     stepMinute: 15,
     altField: '.service_end_date',
-    altFieldTimeOnly: false; 
+    altFieldTimeOnly: false;
     altFormat: 'yy-mm-dd',
     altTimeFormat: 'HH:mm',
     minDate: minD
     hourMin: 8,
     hourMax: 18
   })
+
 
 populateForm = ->
   if $("#master_service_request_onetime_true").attr("checked")
@@ -196,39 +193,36 @@ validateRepeatingRequest = ->
 
 
 $ ->
-  $(".launch-pause").click ->
-    setTimeout (->
-      $("#restart-date-picker").datepicker(
-        altFormat: 'yy-mm-dd'
-      )
+  if $('body').hasClass("master_service_requests") && $(".pause-form").length > 0
+    $("#restart-date-picker").datepicker(
+      altFormat: 'yy-mm-dd'
+    )
+    stringDate = new Date(document.getElementById("master_service_request_first_scheduled").value.substring(0, 19).replace(/-/g, "/")).toDateString()
+    $('#date-string').text stringDate
 
-      stringDate = new Date(document.getElementById("master_service_request_first_scheduled").value.substring(0, 19).replace(/-/g, "/")).toDateString()
-      $('#date-string').text stringDate
-
-      $(".paused").change ->
-        if $(this).val() == "true"
-          $(".master_service_request_restart_date").show(400)
-        else
-          $(".master_service_request_restart_date").hide(400)
-          frequency = $("#master_service_request_frequency").val()
-          if frequency == "weekly" || frequency == "every_other_week"
-            day = $("#master_service_request_service_week_day").val()
-            nextScheduledWeekDay(day, $(this).val())
-          else
-            day = $("#master_service_request_service_month_day").val()
-            nextScheduledMonthDay(day, $(this).val())
-          
-
-      $("#restart-date-picker").change ->
+    $(".paused").change ->
+      if $(this).val() == "true"
+        $(".master_service_request_restart_date").show(400)
+      else
+        $(".master_service_request_restart_date").hide(400)
         frequency = $("#master_service_request_frequency").val()
         if frequency == "weekly" || frequency == "every_other_week"
           day = $("#master_service_request_service_week_day").val()
-          futureNextScheduledWeekDay(day, $(this).val())
+          nextScheduledWeekDay(day, $(this).val())
         else
           day = $("#master_service_request_service_month_day").val()
-          futureNextScheduledMonthDay(day, $(this).val())
-    ), 400 
+          nextScheduledMonthDay(day, $(this).val())
+        
 
+    $("#restart-date-picker").change ->
+      frequency = $("#master_service_request_frequency").val()
+      if frequency == "weekly" || frequency == "every_other_week"
+        day = $("#master_service_request_service_week_day").val()
+        futureNextScheduledWeekDay(day, $(this).val())
+      else
+        day = $("#master_service_request_service_month_day").val()
+        futureNextScheduledMonthDay(day, $(this).val())
+ 
   futureNextScheduledWeekDay = (day, future) ->
     futureDate = new Date(future.substring(6), future.substring(0,2) - 1, future.substring(3,5))
     days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']

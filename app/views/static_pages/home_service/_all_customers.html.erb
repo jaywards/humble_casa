@@ -33,9 +33,7 @@
 							<%= property.full_address %>
 						</td>
 						<td>
-							<z class="launch-service-request">
-								<%= link_to "create service request for this customer", new_service_property_master_service_request_path(service_id: @business.id, property_id: property.id), class: "btn btn-mini", remote: true %>
-							</z>
+							<%= link_to "create service request for this customer", new_service_property_master_service_request_path(service_id: @business.id, property_id: property.id), class: "btn btn-mini" %>
 						</td>
 					</tr>
 				<% end %>

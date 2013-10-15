@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
 	#before_filter { |c| Authorization.current_user = c.current_user }
 
 	#for modals https://gist.github.com/coreyward/1456815
-	layout Proc.new { |controller| controller.request.xhr? ? nil : 'application' }
+	#layout Proc.new { |controller| controller.request.xhr? ? nil : 'application' }
 
 
 	before_filter :set_current_user

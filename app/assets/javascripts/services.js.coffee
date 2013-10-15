@@ -3,9 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
-	$(".launch-service-form").click ->
-		setTimeout (->
-			$("#service_name").focus()
-			$("#new_service").enableClientSideValidations()
-			$("[id^=edit_service]").enableClientSideValidations()
-		), 500
+	if $('body').hasClass("services") && $(".service-form").length > 0
+		$("#service_name").focus()
+		$("#new_service").enableClientSideValidations()
+		$("[id^=edit_service]").enableClientSideValidations()

@@ -1,12 +1,11 @@
 <%= provide(:title, 'Property Details') %>
 <h2>Property Details</h2>
-
+<h5>Property:</h5>
 <%= render @property %>
 <hr>
+<h5>Owner:</h5>
 <%= render @property.user %>
 <br>
 <center>
-	<button class="btn" type="button" id="close">
-		<i class="icon-off"></i> Close
-	</button>
+	<%= link_to "Back", root_path, class: "btn" %>
 </center>

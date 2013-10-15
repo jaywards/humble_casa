@@ -37,7 +37,14 @@
 
     <% end %>
     <center>
-    <%= render partial: 'shared/modal_buttons', locals: {save_button_label: save_user_label} %>
+    
+    <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
+        <i class="icon-ok icon-white"></i> <%= save_user_label %>
+    </button>
+    &nbsp       
+    <%= link_to "Cancel", root_path, class: "btn" %>
+
+
     <% if controller.action_name == "edit" %>     
         &nbsp    
         <%= link_to @user, class: "btn btn-warning", method: :delete, confirm: "Are you sure you want to delete your entire account?" do %>

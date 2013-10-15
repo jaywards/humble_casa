@@ -1,7 +1,7 @@
 <%= simple_form_for @service_request, html: {multipart: true} do |f| %>
 	<% Time.zone = @service_request.time_zone %>
 	<%= provide(:title, 'Complete service request') %>
-	<h2>Complete Service Request</h2>
+	<h2 class="complete-request-form">Complete Service Request</h2>
 	<%= render 'service_request_no_action' %>
 	<hr>
 	<%= f.input :completed, label: "Request completed?", input_html: {value: @service_request.completed},
@@ -20,6 +20,12 @@
 
 	<%= f.input :completion_note, as: :text, label: "Notes", placeholder: "Any details or notes for the homeowner" %>
 	
-	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Complete request"} %>
+	<center>
+		<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
+			<i class="icon-ok icon-white"></i> Save
+		</button>
+		&nbsp		
+		<%= link_to "Cancel", root_path, class: "btn" %>
+	</center>
 
 <% end %>

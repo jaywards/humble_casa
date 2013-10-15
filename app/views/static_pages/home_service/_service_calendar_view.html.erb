@@ -19,7 +19,7 @@
 					<% else %>
 						<li class="open">
 					<% end %>
-						<%= link_to @link, service_request_path(id: sr.id), remote: true %><br>
+						<%= link_to @link, service_request_path(sr) %><br>
 					</li>
 	    		<% end %>
 				</ul>

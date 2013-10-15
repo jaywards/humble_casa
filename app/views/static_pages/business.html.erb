@@ -4,35 +4,25 @@
 	</div>
 
 	<div class="span6" id="logo-and-buttons">
-		<center>
+		<center class="homepage"
 			<br>
-			<%= image_tag("logo.jpg", alt: "HumbleCasa logo", size: "174x66") %>
+			<%= image_tag("logo.jpg", alt: "HumbleCasa logo", size: "145x46") %>
 			<z id="main-title">
 			<h1>Welcome to HumbleCasa!</h1>
 			<h2>...customer management and business tools for home service providers</h2>
 			<% if current_user.nil? %>
 				<div class="row-fluid">
-					<div class="span6">
-						<h5>New service owner account</h5>
-						<p class="launch-user-form">
-							<%= link_to new_user_path(role: "serviceowner"), remote: true, class: "btn btn-primary" do %>
-								<i class="icon-user icon-white"></i> New Service Owner Account
-							<% end %>
-						</p>
-					
+					<div class="span12">
+						<h5>Already have an account?</h5>
+						<%= simple_form_for @user_session, :validate => true do |f| %>
+						  	<%= f.input :email %>
+							<%= f.input :password %>
+							<button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
+								<i class="icon-ok-sign icon-white"></i> Login
+							</button>
+						<% end %>
 					</div>
-					<div class="span6">
-						<p>
-							<h5>New employee account</h5>
-							<p class="launch-user-form">
-								<%= link_to new_user_path(role: "employee"), remote: true, class: "btn btn-primary" do %>
-									<i class="icon-user icon-white"></i> New Employee Account
-								<% end %>
-							</p>
-						</p>
-					</div>
-				</div>
-				<br>
+				</div>	
 			<% else %>	
 				You are currently logged in. Logout first to create a new Service Owner or Employee account.
 				<br>
@@ -49,36 +39,48 @@
 			<% end %>
 		</center>
 	</div>
+	<div class="row-fluid">
+		<center>
+			<div class="span12" id="new-to-site">
+				<h5>New to the site?</h5>
+				<div class="row-fluid">
+				<div class="span6">
+					<%= link_to new_user_path(role: "serviceowner"), class: "btn btn-primary" do %>
+							<i class="icon-user icon-white"></i> New Service Owner Account
+					<% end %>	
+				</div>
+				<div class="span6">
+					<%= link_to new_user_path(role: "employee"), class: "btn btn-primary" do %>
+						<i class="icon-user icon-white"></i> New Employee Account
+					<% end %>
+				</div>
+			</div>
+			<br>
+		</center>
+	</div>
 </div>
 
 
 <p>
 	HumbleCasa is designed for small businesses in the home upkeep and maintainence industry. Our site tools make it easy to <b>improve customer satisfaction</b>, <b>manage your work requests and your workforce</b>, and <b>simplify invoicing and payroll</b>.
 </p> 
-<p>	We <u>are not</u> a marketplace for bidding on new customers or a place for your customers to move their business to 	somebody else! We help you strengthen your connection with your existing customers and find new customers.
+<p>	We <u>are not</u> a marketplace for bidding on new customers or a place for your customers to move their business to 	somebody else. We help you strengthen your connection with your existing customers and find new customers.
 </p>
 <p>
-<uL>
-	<li>
-		<b>How it works:</b>
-		<ol>
-			<li>You <b>create a profile for your business</b> on HumbleCasa. If you want to user our workforce management tools, have your employees create accounts too.</li>
-			<li>Your <b>customers create their accounts</b> on HumbleCasa (or some of our existing users become your new customers!) and they use our site tools to <b>schedule service requests</b>.</li>
-			<li><b>Email notifications are sent</b> and you can <b>assign each request to one of your employees</b>.</li>
-			<li>Your employee goes to the property, completes the service, and marks that it is done. <b>Your customer gets notified via email that their property has been serviced.</b></li>
-			<li>At any time you can pull a report for your data from the site, which feeds into <b>customer invoices and payroll</b>.</li>
-		</ol>
-	</li>
-	<br>
-	<li>	
-		<b>Cost:</b> HumbleCasa is completely free to your customers. We charge you a minimal amount for each of your active customers. So if you're a seasonal business and your customers are only going to be using HumbleCasa for 1/2 of the year, you only pay for the months that they're active.
-	</li>
-	<br>
-	<li>
-		<b>Our promise:</b> if you're not completely happy you can cancel at anytime and we'll refund your last 2 months charges. In addition, we offer the first month for free, so try us for 3 months at no risk.
-	</li>
-</ul>
+	<b>How it works:</b>
+	<ol>
+		<li>You <b>create a profile for your business</b> on HumbleCasa. If you want to use our workforce management tools, have your employees create accounts too.</li>
+		<li>Your <b>customers create their accounts</b> on HumbleCasa (or some of our existing users become your new customers!) and they use our site tools to <b>schedule service requests</b>.</li>
+		<li><b>Email notifications are sent</b> and you can <b>assign each request to one of your employees</b>.</li>
+		<li>Your employee goes to the property, completes the service, and marks that it is done. <b>Your customer gets notified via email that their property has been serviced.</b></li>
+		<li>At any time you can pull a report for your data from the site, which feeds into <b>customer invoices and payroll</b>.</li>
+	</ol>
 </p>
-	Not convinced? Take a <%= link_to "Feature Tour", static_pages_feature_tour_path%> and view our 
-	<%= link_to "Pricing Plans", pricing_plans_path%>.
-</p>
+<p><b>Cost:</b></p> 
+<p>HumbleCasa is completely free to your customers. We charge you a minimal amount for each of your active customers. So if you're a seasonal business and your customers are only going to be using HumbleCasa for 1/2 of the year, you only pay for the months that they're active.</p>
+
+<p><b>Our promise:</b></p>
+<p>If you're not completely happy with HumbleCasa, cancel at anytime and we'll refund your last 2 months charges. And the first month for all customers is free, so try us for 3 months at no risk.</p>
+
+<p>Not convinced? Take a <%= link_to "Feature Tour", static_pages_feature_tour_path%> and view our 
+	<%= link_to "Pricing Plans", pricing_plans_path%>.</p>

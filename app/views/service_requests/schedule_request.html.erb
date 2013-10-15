@@ -1,7 +1,7 @@
 <%= simple_form_for @service_request do |f| %>
 	<% Time.zone = @service_request.time_zone %>
 	<%= provide(:title, 'Schedule service request') %>
-	<h2>Schedule Service Request</h2>
+	<h2 class="schedule-request-form">Schedule Service Request</h2>
 	<%= render 'service_request_no_action' %>
 	<hr>
 	<%= f.input :scheduled_date, as: :fake, input_html: {id: "scheduled-date-picker", value: @service_request.try(:first_scheduled).try(:strftime,'%m/%d/%Y %I:%M %p')}, label: "Schedule service:" %>
@@ -22,6 +22,12 @@
 		<%= f.input :end_date, as: :fake, input_html: {value: @service_request.service_end_date} %>
 	</div>
 
-	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Schedule request"} %>
+	<center>
+		<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
+			<i class="icon-ok icon-white"></i> Save
+		</button>
+		&nbsp		
+		<%= link_to "Cancel", root_path, class: "btn" %>
+	</center>
 
 <% end %>

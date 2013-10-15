@@ -27,11 +27,6 @@ class PropertiesController < ApplicationController
 
 	def new
 		@property = Property.new
-
-		respond_to do |format|
-      		format.html # new.html.erb
-      		format.json { render json: @property}
-    	end
 	end
 
 	def destroy
@@ -42,6 +37,10 @@ class PropertiesController < ApplicationController
 	end
 
 	def edit
+		respond_to do |format|
+      		format.html 
+      		format.js
+      	end
 	end
 
 	def update
@@ -77,7 +76,11 @@ class PropertiesController < ApplicationController
 	end
 
 	def assign_services
-		render action: "assign_services"
+		#render action: "assign_services"
+		respond_to do |format|
+      		format.html 
+      		format.js
+      	end
 	end
 
 	def show_property

@@ -36,8 +36,16 @@ class StaticPagesController < ApplicationController
         end
       end
     
+    else
+      @user_session = UserSession.new
     end
   
+  end
+
+  def business    
+    if current_user.nil?
+      @user_session = UserSession.new
+    end
   end
 
   def help

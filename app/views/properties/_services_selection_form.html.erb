@@ -1,0 +1,46 @@
+<%= provide(:title, 'Register Services') %>
+<h2>Register Services</h2>
+<%= simple_form_for(@property) do |f| %>
+	<%= render @property %>
+	<br>  
+	<table class="table table-condensed table-striped">			
+		<thead>
+			<tr>
+				<th>Category</th>
+				<th>Select a Provider</th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @i = 0 %>
+			<% Service::CATEGORIES.each do |category| %>	
+		    	<tr>
+		    		<td>
+		    			<%= category.titleize %>
+		    		</td> 	
+		    		<td>
+		    			<% if !(@category_services_in_area = area_category_services(@property.zip, category)).empty? %>
+		    				<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
+		    			 		<%= assignment.hidden_field :category, value: category %>
+								<%= assignment.association :service, collection: @category_services_in_area, :as => :select, label: false, include_blank: true %>
+								<% @idstring = "service-description-" + @i.to_s %>
+								<p id=<%=@idstring %>>
+									<% if !@property.assignments[@i].service.nil? %>
+										<%= @property.assignments[@i].service.biz_description %>
+									<% end %>
+								</p>
+		    				<% end %>	
+		    			<% else %>
+							None available yet for your area.
+							<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
+			    			 	<%#= render 'interest_fields', f: assignment, thisCategory: category %>
+								<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
+								<%= assignment.hidden_field :category, value: category %>
+			    			<% end %>
+						<% end %>
+					</td>
+					<% @i += 1 %>
+				</tr>	   		
+		   	<% end %>
+		</tbody>
+	</table>
+<% end %>

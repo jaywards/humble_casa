@@ -1,8 +1,5 @@
 $ ->
-  $(".launch-user-form").click ->
-    setTimeout (->
-      $("#user_first_name").focus()
-      $("#new_user").enableClientSideValidations()
-      $("[id^=edit_user]").enableClientSideValidations()
-
-    ), 500
+	if $('body').hasClass("users")
+    	$("#user_first_name").focus()
+    	$("#new_user").enableClientSideValidations()
+    	$("[id^=edit_user]").enableClientSideValidations()

@@ -1,51 +1,66 @@
 <%= provide(:title, 'Register Services') %>
 <h2>Register Services</h2>
-<%= simple_form_for(@property) do |f| %>
-	<%= render @property %>
-	<br>  
-	<table class="table table-condensed table-striped">			
-		<thead>
-			<tr>
-				<th>Category</th>
-				<th>Select a Provider</th>
-			</tr>
-		</thead>
-		<tbody>
-			<% @i = 0 %>
-			<% Service::CATEGORIES.each do |category| %>	
-		    	<tr>
-		    		<td>
-		    			<%= category.titleize %>
-		    		</td> 	
-		    		<td>
-		    			<% if !(@category_services_in_area = area_category_services(@property.zip, category)).empty? %>
-		    				<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
-		    			 		<%#= render 'assignment_fields', f: assignment, thisCategory: category %>
-		    			 		<%= assignment.hidden_field :category, value: category %>
-								<%= assignment.association :service, collection: @category_services_in_area, :as => :select, label: false, include_blank: true %>
-								<% @idstring = "service-description-" + @i.to_s %>
-								<p id=<%=@idstring %>>
-									<% if !@property.assignments[@i].service.nil? %>
-										<%= @property.assignments[@i].service.biz_description %>
-									<% end %>
-								</p>
-		    				<% end %>	
-		    			<% else %>
-							None available yet for your area.
-							<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>		
-			    			 	<%#= render 'interest_fields', f: assignment, thisCategory: category %>
-								<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
-								<%= assignment.hidden_field :category, value: category %>
-			    			<% end %>
-						<% end %>
-					</td>
-					<% @i += 1 %>
-				</tr>	   		
-		   	<% end %>
-		</tbody>
-	</table>
-
-	<%= render partial: 'shared/modal_buttons', locals: {save_button_label: "Assign services"} %>
-
+<%= simple_form_for(@property) do |f| %>	
+	<div class="row-fluid">
+		<div class="span3">
+			<h5>Owner:</h5>
+			<%= render @property.user %>
+			<hr>
+			<h5>Property:</h5>
+			<%= render @property %>
+			<hr>
+			<h5>No Services?</h5>
+			We're a young but growing site, so you might not see any service providers available yet in your area. If you wish we had a service available for you to select, please check the "I'm interested" box! This will help us to convince service providers that there are potential customers waiting for them to join the site.  Thanks!
+		</div>
+		<div class="span9">	
+			<table class="table table-condensed table-striped">			
+				<thead>
+					<tr>
+						<th>Category</th>
+						<th>Select a Provider</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% @i = 0 %>
+					<% Service::CATEGORIES.each do |category| %>	
+				    	<tr>
+				    		<td>
+				    			<%= category.titleize %>
+				    		</td> 	
+				    		<td>
+				    			<% if !(@category_services_in_area = area_category_services(@property.zip, category)).empty? %>
+				    				<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>
+				    			 		<%= assignment.hidden_field :category, value: category %>
+										<%= assignment.association :service, collection: @category_services_in_area, :as => :select, label: false, include_blank: true %>
+										<% @idstring = "service-description-" + @i.to_s %>
+										<p id=<%=@idstring %>>
+											<% if !@property.assignments[@i].service.nil? %>
+												<%= @property.assignments[@i].service.biz_description %>
+											<% end %>
+										</p>
+				    				<% end %>	
+				    			<% else %>
+									None available yet for your area.
+									<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>
+					    			 	<%#= render 'interest_fields', f: assignment, thisCategory: category %>
+										<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
+										<%= assignment.hidden_field :category, value: category %>
+					    			<% end %>
+								<% end %>
+							</td>
+							<% @i += 1 %>
+						</tr>	   		
+				   	<% end %>
+				</tbody>
+			</table>
+		</div>
+	</div>
+	<center>
+		<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
+			<i class="icon-ok icon-white"></i> Save
+		</button>
+		&nbsp		
+		<%= link_to "Cancel", root_path, class: "btn" %>
+	</center>
 
 <% end %>
