@@ -1,5 +1,6 @@
 class ServiceRequestsController < ApplicationController
 
+
 	def show
 		@service_request = ServiceRequest.find_by_id(params[:id])
 		@service = Service.find_by_id(@service_request.service_id)

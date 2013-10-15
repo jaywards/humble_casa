@@ -1,11 +1,10 @@
 class ServiceMailer < ActionMailer::Base
   default from: "jason@humblecasa.com"
+  require 'icalendar'
+  require 'date'
+  include Icalendar
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.service_mailer.service_created.subject
-  #
+
   def service_created(service_request)
     @service_request = service_request
     @service = @service_request.service
@@ -15,12 +14,6 @@ class ServiceMailer < ActionMailer::Base
       mail to: @service.email, subject: "New service request"
     end
   end
-
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.service_mailer.service_completed.subject
-  #
  
   def service_assigned(service_request)
     @service_request = service_request
@@ -37,12 +30,9 @@ class ServiceMailer < ActionMailer::Base
   end
 
   def service_scheduled(service_request)
-    @service_request = service_request
-    @service = @service_request.service
-    @property = @service_request.property
-    
-    if @property.user.notify?
-        mail to: @property.user.email, subject: "Service request scheduled"
+    if service_request.property.user.notify?
+        createEventandMail(service_request.property.user.email, service_request, 
+          "Service request scheduled", service_request.service.name + ": service for " + service_request.property.name)
     end
   end
 
@@ -53,7 +43,33 @@ class ServiceMailer < ActionMailer::Base
     @property = @service_request.property
 
     if @property.user.notify?
-      mail to: @property.user.email, subject: "Service request completed"
+       mail to: @property.user.email, subject: "Service request completed"
     end
   end
+
+  def createEventandMail(email, sr, subject, summary)
+    @service_request = sr
+    @service = @service_request.service
+    @property = @service_request.property    
+    
+    @start = DateTime.parse(sr.first_scheduled.to_s).in_time_zone(sr.property.time_zone)
+    @end = DateTime.parse((sr.first_scheduled + sr.duration.hours).to_s).in_time_zone(sr.property.time_zone)
+
+    ical = Icalendar::Calendar.new
+    e = Icalendar::Event.new
+    e.start       @start
+    e.end         @end
+    e.summary     summary
+    ical.add_event(e)
+    ical.publish
+    ical.to_ical
+
+    attachments['event.ics'] = { 
+      :mime_type => 'text/calendar', 
+      :content => ical.to_ical 
+    }
+       
+    mail to: email, subject: subject
+  end
+
 end

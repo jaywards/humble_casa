@@ -28,7 +28,7 @@
 Instructions: <%= master_service_request.instructions %>
 <br>
 <p class="launch-service-request">
-	<%= link_to "view/edit", edit_service_property_master_service_request_path(id: master_service_request.id, service_id: master_service_request.service_id, property_id: master_service_request.property_id,), class: "btn btn-mini", remote: true %> 
+	<%= link_to "view/edit", edit_service_property_master_service_request_path(id: master_service_request.id, service_id: master_service_request.service_id, property_id: master_service_request.property_id,), class: "btn btn-mini" %> 
 </p>  
 <%= link_to "delete", master_service_request, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
 <hr>

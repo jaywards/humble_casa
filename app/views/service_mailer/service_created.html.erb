@@ -31,13 +31,13 @@
             <p>
               <h4>Service request details:</h4>
                 Request #: <%= @service_request.service_request_id %><br>
-                Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %><br>
+                Service request created on: <%= DateTime.parse(@service_request.created_at.to_s).in_time_zone(@service_request.property.time_zone).strftime("%m/%d/%Y") %><br>
                 <% if !@service_request.instructions.empty? %>
                   Special instructions for this request: <%= @service_request.instructions %><br>
                 <% end %>
                 <% if @service_request.onetime? %>
                   One time request<br>
-                  Service window: <%= @service_request.service_start_date.strftime("%a %m/%d/%y %I:%M%p %Z") %> - <%= @service_request.service_end_date.strftime("%a %m/%d/%y %I:%M%p %Z") %>
+                  Service window: <%= DateTime.parse(@service_request.service_start_date.to_s).in_time_zone(@service_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %> - <%= DateTime.parse(@service_request.service_end_date.to_s).in_time_zone(@service_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
                 <% else %>
                   Repeating request<br>
                   Frequency: <%= @service_request.frequency.titleize.downcase %>

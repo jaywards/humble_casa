@@ -21,6 +21,7 @@ gem 'jquery-timepicker-rails'
 gem 'timezone'
 gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
+gem 'icalendar'
 
 
 # Bundle edge Rails instead:
