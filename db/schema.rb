@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130814223848) do
+ActiveRecord::Schema.define(:version => 20131015204638) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -83,6 +83,21 @@ ActiveRecord::Schema.define(:version => 20130814223848) do
   end
 
   add_index "properties", ["user_id"], :name => "index_properties_on_user_id"
+
+  create_table "reportable_cache", :force => true do |t|
+    t.string   "model_name",                        :null => false
+    t.string   "report_name",                       :null => false
+    t.string   "grouping",                          :null => false
+    t.string   "aggregation",                       :null => false
+    t.string   "conditions",                        :null => false
+    t.float    "value",            :default => 0.0, :null => false
+    t.datetime "reporting_period",                  :null => false
+    t.datetime "created_at",                        :null => false
+    t.datetime "updated_at",                        :null => false
+  end
+
+  add_index "reportable_cache", ["model_name", "report_name", "grouping", "aggregation", "conditions", "reporting_period"], :name => "name_model_grouping_aggregation_period", :unique => true
+  add_index "reportable_cache", ["model_name", "report_name", "grouping", "aggregation", "conditions"], :name => "name_model_grouping_agregation"
 
   create_table "service_requests", :force => true do |t|
     t.boolean  "assigned"

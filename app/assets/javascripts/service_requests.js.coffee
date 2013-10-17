@@ -1,9 +1,13 @@
 $ ->
   if $('body').hasClass("service_requests") && $(".complete-request-form").length > 0
-  	$('#completed-date-picker').datepicker(
-  		altField: '.completed_date',
-  		altFormat: 'yy-mm-dd'
-  	)
+    maxD = new Date()
+    maxD.setDate(maxD.getDate()) 
+
+    $('#completed-date-picker').datepicker(
+      altField: '.completed_date',
+      altFormat: 'yy-mm-dd',
+      maxDate: maxD
+    )
 
 $ ->
   if $('body').hasClass("service_requests") && $(".assign-request-form").length > 0

@@ -1,0 +1,7 @@
+<%= form_for @report, as: :options, url: url_for, html: {method: :get} do |f| %>
+  <%= f.label "Zip code:" %>
+  <%= f.text_field :zip %>
+  <%= f.button "Submit" %>
+  <% end %>
+
+<%= render template: 'dossier/reports/show', locals: {report: @report} %>

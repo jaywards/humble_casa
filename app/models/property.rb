@@ -22,9 +22,12 @@ class Property < ActiveRecord::Base
   default_scope order: 'properties.created_at DESC'
 
 
-def full_address
-  return (address1 + ", " + address2 + ", " + city + ", " + state + " " + zip)
-end
-
+  def full_address
+    if address2.nil?
+      return (address1 + ", " + city + ", " + state + " " + zip)
+    else
+      return (address1 + ", " + address2 + ", " + city + ", " + state + " " + zip)
+    end
+  end
 
 end

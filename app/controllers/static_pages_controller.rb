@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   
   def home
     @user = current_user
-    
+        
     if !current_user.nil?
       
       if @user.role == "propertyowner"
@@ -13,8 +13,16 @@ class StaticPagesController < ApplicationController
         @property_listings = @user.user_properties.sort_by { |listing| listing.created_at}
     
       elsif @user.role == "serviceowner"
-
+    
         @business = @user.business
+
+        #@customers_report = CustomersReport.new(service_id: @business.id)
+        #@mtd_services_customer_report = MTDServicesCustomerReport.new(service_id: @business.id)
+        @customers_report = @business.properties
+        @completed_requests = ServiceRequest.where(:service_id => @business.id, :completed => true)
+        @mtd_service_customer_report = @completed_requests.where(["completed_date > ?", Date.today.at_beginning_of_month]).sort_by {|a| a.completed_date}
+        @mtd_service_employee_report = @mtd_service_customer_report.sort_by { |b| b.user.last_name }
+
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
         if !@business.nil?
           @zips_list = @business.service_servicezips
