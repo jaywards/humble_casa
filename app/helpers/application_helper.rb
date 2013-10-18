@@ -66,20 +66,47 @@ module ApplicationHelper
 	end
 
 
-	def nextScheduled(master_request)
-		@today = Date.today
-		@frequency = master_request.frequency
-
-		case @master_request.frequency
+	def nextScheduled(frequency, current)
+		case frequency
 			when "weekly"
-				@next_scheduled = master_request.first_scheduled + 1.week
+				@next_scheduled = current + 1.week
 			when "every_other_week"
-				@next_scheduled = master_request.first_scheduled + 2.weeks
+				@next_scheduled = current + 2.weeks
 			when "monthly"
-				@next_scheduled = master_request.first_scheduled + 1.month
+				@next_scheduled = current + 1.month
 			when "every_other_month"
-				@next_scheduled = master_request.first_scheduled + 2.months
+				@next_scheduled = current + 2.months
 		end
 		return @next_scheduled
 	end
+
+	def createRepeats(srs, date)
+    	@startdate = date.at_beginning_of_month
+    	@enddate = date.at_end_of_month
+    	@updatedSRs = []
+    	srs.each do |sr|
+	        if sr.first_scheduled >= @startdate && sr.first_scheduled <= @enddate
+		    	@updatedSRs << sr
+		    end
+	        if !sr.onetime && !sr.completed
+	        	@inDateRange = true
+	        	@scheduledDate = sr.first_scheduled
+	         	while @inDateRange
+	            	@newSR = sr.dup
+	            	@newSR.first_scheduled = nextScheduled(sr.frequency, @scheduledDate)
+	            	if @newSR.first_scheduled >= @startdate 
+	            		if @newSR.first_scheduled <= @enddate 
+	              			@updatedSRs << @newSR
+	              			@scheduledDate = @newSR.first_scheduled
+	            		else
+	              			@inDateRange = false
+	              		end
+	            	else
+	            		@scheduledDate = @newSR.first_scheduled
+	            	end
+	          	end
+        	end
+      	end
+      return @updatedSRs
+    end
 end

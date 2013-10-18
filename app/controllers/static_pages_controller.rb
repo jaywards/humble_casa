@@ -4,7 +4,7 @@ class StaticPagesController < ApplicationController
   
   def home
     @user = current_user
-        
+    
     if !current_user.nil?
       
       if @user.role == "propertyowner"
@@ -24,12 +24,14 @@ class StaticPagesController < ApplicationController
         @mtd_service_employee_report = @mtd_service_customer_report.sort_by { |b| b.user.last_name }
 
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
+
         if !@business.nil?
           @zips_list = @business.service_servicezips
           @employees = User.find(Employment.where(:service_id => @business.id, :approved => true).map(&:user_id).uniq) 
           if !(@service_request_listings = @business.service_requests).empty?
             @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
-            @srs_by_date = @sorted_service_requests.group_by {|b| b.first_scheduled.in_time_zone(b.property.time_zone).to_date.to_formatted_s(:db) }
+            @srs_with_repeats = view_context.createRepeats(@sorted_service_requests, @date)
+            @srs_for_calendar = @srs_with_repeats.group_by {|b| b.first_scheduled.in_time_zone(b.property.time_zone).to_date.to_formatted_s(:db) }
           end
         end
       

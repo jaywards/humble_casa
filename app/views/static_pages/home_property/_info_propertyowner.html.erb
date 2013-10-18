@@ -27,10 +27,11 @@
 	<div class="span12" id="new-to-site">
 		<center>
 			<h5>
-				New to the site? It's completely free for homeowners! Sign-up for a new property owner account 
-				<%= link_to "here", new_user_path(role: "propertyowner") %>
+				New to the site? It's completely free for homeowners! Sign-up for a new property owner account:
 			</h5>
-
+			<%= link_to new_user_path(role: "propertyowner"), class: "btn btn-primary" do %>
+				<i class="icon-user icon-white"></i> New Property Owner Account
+			<% end %>
 			<h5>Or do you own a company that provides home maintainence services?
 				We can help you to connect with your customers, manage your workforce, and simplify both invoicing and payroll. Visit our <%= link_to "Service Provider page", business_path %> to get more details and sign up.
 			</h5>

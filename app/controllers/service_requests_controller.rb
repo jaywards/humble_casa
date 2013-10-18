@@ -122,7 +122,7 @@ class ServiceRequestsController < ApplicationController
 					end	
 
 					## Update next scheduled (will handle all_assigned - time of service carries over)
-					@next_scheduled = view_context.nextScheduled(@master_request)
+					@next_scheduled = view_context.nextScheduled(@master_request.frequency, @master_request.first_scheduled)
 					@master_request.update_attribute(:first_scheduled, @next_scheduled)
 					@new_service_request.first_scheduled = @next_scheduled
 					@new_service_request.completed_date = @next_scheduled

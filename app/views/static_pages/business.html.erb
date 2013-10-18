@@ -5,36 +5,35 @@
 
 	<div class="span6" id="logo-and-buttons">
 		<center class="homepage"
-			<br>
-			<%= image_tag("logo.jpg", alt: "HumbleCasa logo", size: "145x46") %>
-			<z id="main-title">
-			<h1>Welcome to HumbleCasa!</h1>
-			<h2>...customer management and business tools for home service providers</h2>
 			<% if current_user.nil? %>
-				<div class="row-fluid">
-					<div class="span12">
-						<h5>Already have an account?</h5>
-						<%= simple_form_for @user_session, :validate => true do |f| %>
-						  	<%= f.input :email %>
-							<%= f.input :password %>
-							<button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
-								<i class="icon-ok-sign icon-white"></i> Login
-							</button>
-						<% end %>
-					</div>
-				</div>	
+				<br>
+				<%= image_tag("logo.jpg", alt: "HumbleCasa logo", size: "145x46") %>
+				<z id="main-title">
+				<h1>Welcome to HumbleCasa!</h1>
+				<h2>...customer management and business tools for home service providers</h2>
+					<div class="row-fluid">
+						<div class="span12">
+							<h5>Already have an account?</h5>
+							<%= simple_form_for @user_session, :validate => true do |f| %>
+							  	<%= f.input :email %>
+								<%= f.input :password %>
+								<button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
+									<i class="icon-ok-sign icon-white"></i> Login
+								</button>
+							<% end %>
+						</div>
+					</div>	
 			<% else %>	
-				You are currently logged in. Logout first to create a new Service Owner or Employee account.
 				<br>
 				<br>
-				<div class="row-fluid">
-					<div class="span6">
-						<%= link_to "Logout", logout_path, class: "btn btn-primary"%>
-					</div>
-					<div class="span6">
-						<%= link_to "Back to homepage", root_path, class: "btn"%>
-					</div>
-				</div>
+				<br>
+				<br>
+				<%= image_tag("logo.jpg", alt: "HumbleCasa logo", size: "176x55") %>
+				<z id="main-title">
+				<h1>Welcome to HumbleCasa!</h1>
+				<h2>...customer management and business tools for home service providers</h2>
+				<br>
+				<br>
 				<br>
 			<% end %>
 		</center>
@@ -42,18 +41,35 @@
 	<div class="row-fluid">
 		<center>
 			<div class="span12" id="new-to-site">
-				<h5>New to the site?</h5>
-				<div class="row-fluid">
-				<div class="span6">
-					<%= link_to new_user_path(role: "serviceowner"), class: "btn btn-primary" do %>
-							<i class="icon-user icon-white"></i> New Service Owner Account
-					<% end %>	
-				</div>
-				<div class="span6">
-					<%= link_to new_user_path(role: "employee"), class: "btn btn-primary" do %>
-						<i class="icon-user icon-white"></i> New Employee Account
-					<% end %>
-				</div>
+				<h4>New to the site?</h4>
+				<h5>Create a new Service Owner account and get your business registered on HumbleCasa! It costs nothing to register and you can cancel at anytime. Employee accounts help you manage your business and invoicing.</h5>
+				<% if current_user.nil? %>
+					<div class="row-fluid">
+					<div class="span6">
+						<%= link_to new_user_path(role: "serviceowner"), class: "btn btn-primary" do %>
+								<i class="icon-user icon-white"></i> New Service Owner Account
+						<% end %>	
+					</div>
+					<div class="span6">
+						<%= link_to new_user_path(role: "employee"), class: "btn btn-primary" do %>
+							<i class="icon-user icon-white"></i> New Employee Account
+						<% end %>
+					</div>
+				<% else %>
+					<div class="row-fluid">
+						<div class="span7">
+							You are currently logged in. Logout first to create a new Service Owner or Employee account.
+						</div>
+						<div class="span1">
+								<%= link_to "Logout", logout_path, class: "btn btn-primary"%>
+						</div>
+						<div class="span1">
+								<%= link_to "Back to homepage", root_path, class: "btn"%>
+						</div>
+						<div class="span3"></div>
+					</div>
+					<br>
+				<% end %>
 			</div>
 			<br>
 		</center>
@@ -73,7 +89,7 @@
 		<li>Your <b>customers create their accounts</b> on HumbleCasa (or some of our existing users become your new customers!) and they use our site tools to <b>schedule service requests</b>.</li>
 		<li><b>Email notifications are sent</b> and you can <b>assign each request to one of your employees</b>.</li>
 		<li>Your employee goes to the property, completes the service, and marks that it is done. <b>Your customer gets notified via email that their property has been serviced.</b></li>
-		<li>At any time you can pull a report for your data from the site, which feeds into <b>customer invoices and payroll</b>.</li>
+		<li>At any time you can pull a report for your data from the site, which feeds into <b>customer invoices</b> and <b>employee payroll</b>.</li>
 	</ol>
 </p>
 <p><b>Cost:</b></p> 
@@ -81,6 +97,7 @@
 
 <p><b>Our promise:</b></p>
 <p>If you're not completely happy with HumbleCasa, cancel at anytime and we'll refund your last 2 months charges. And the first month for all customers is free, so try us for 3 months at no risk.</p>
-
+<!--
 <p>Not convinced? Take a <%= link_to "Feature Tour", static_pages_feature_tour_path%> and view our 
 	<%= link_to "Pricing Plans", pricing_plans_path%>.</p>
+	-->
