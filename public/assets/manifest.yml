@@ -4,8 +4,10 @@ landscaping wfx.jpg: landscaping wfx-8d3b855b68fbd877aa829a1f71cecc25.jpg
 logo.jpg: logo-e6a6dc04757c48b9ec392e220b853990.jpg
 poolcleaning wfx.jpg: poolcleaning wfx-8006f1c867fd522853f319419c94c8e2.jpg
 snowplow wfx.jpg: snowplow wfx-49391801947d81f5694829f0faea0507.jpg
-application.js: application-4f1d449d3ef4207177521f8376f9cc82.js
-application.css: application-d7546ac56cfc517e98ed21dd548c2a81.css
+application.js: application-85272ba3015d6718b74014d1de834984.js
+application.css: application-06ae32ce9b124d4a383188469aa9f720.css
+dossier/application.js: dossier/application-7f978c3838a5a9507f9040cc266af752.js
+dossier/application.css: dossier/application-7270767b2a9e9fff880aa5de378ca791.css
 glyphicons-halflings-white.png: glyphicons-halflings-white-13553a5bf21ae3cc374006592488ec64.png
 glyphicons-halflings.png: glyphicons-halflings-ab3144065a860d198f1d7d9a4882640c.png
 jquery-ui/animated-overlay.gif: jquery-ui/animated-overlay-691b2d4343303de8d214ad5395fd895d.gif
