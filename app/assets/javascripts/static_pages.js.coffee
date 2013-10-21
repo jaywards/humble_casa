@@ -14,3 +14,9 @@ $ ->
   #go to the latest tab, if it exists:
   lastTab = localStorage.getItem("lastTab")
   $("a[href=\"" + lastTab + "\"]").click()  if lastTab
+
+$ ->
+	if $('body').hasClass("static_pages")
+		$('.carousel').carousel({
+  			interval: 2000
+		})
