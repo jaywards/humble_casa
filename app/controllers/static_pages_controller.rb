@@ -1,6 +1,6 @@
 class StaticPagesController < ApplicationController
-  USER_NAME, PASSWORD = "humble", "house"
-  before_filter :authenticate
+  #USER_NAME, PASSWORD = "humble", "house"
+  #before_filter :authenticate
   
   def home
     @user = current_user
@@ -76,10 +76,10 @@ class StaticPagesController < ApplicationController
   def careers
   end
 
-  private
-    def authenticate
-      authenticate_or_request_with_http_basic do |user_name, password|
-        user_name == USER_NAME && password == PASSWORD
-      end
-    end
+  #private
+    #def authenticate
+     # authenticate_or_request_with_http_basic do |user_name, password|
+     #   user_name == USER_NAME && password == PASSWORD
+     # end
+    #end
 end
