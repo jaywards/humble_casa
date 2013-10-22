@@ -12,10 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require bootstrap
 //= require jquery.ui.all
+//= require bootstrap
+//= require jquery.maskedinput
 //= require jquery.timepicker
-//= require bootstrap-inputmask
 //= require_tree .
 //= require cocoon
 //= require rails.validations

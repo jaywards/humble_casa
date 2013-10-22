@@ -15,17 +15,18 @@ class StaticPagesController < ApplicationController
       elsif @user.role == "serviceowner"
     
         @business = @user.business
+        @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
         #@customers_report = CustomersReport.new(service_id: @business.id)
         #@mtd_services_customer_report = MTDServicesCustomerReport.new(service_id: @business.id)
-        @customers_report = @business.properties
-        @completed_requests = ServiceRequest.where(:service_id => @business.id, :completed => true)
-        @mtd_service_customer_report = @completed_requests.where(["completed_date > ?", Date.today.at_beginning_of_month]).sort_by {|a| a.completed_date}
-        @mtd_service_employee_report = @mtd_service_customer_report.sort_by { |b| b.user.last_name }
-
-        @date = params[:date] ? Date.parse(params[:date]) : Date.today
-
+        
+        
         if !@business.nil?
+          @customers_report = @business.properties
+          @completed_requests = ServiceRequest.where(:service_id => @business.id, :completed => true)
+          @mtd_service_customer_report = @completed_requests.where(["completed_date > ?", Date.today.at_beginning_of_month]).sort_by {|a| a.completed_date}
+          @mtd_service_employee_report = @mtd_service_customer_report.sort_by { |b| b.user.last_name }
+
           @zips_list = @business.service_servicezips
           @employees = User.find(Employment.where(:service_id => @business.id, :approved => true).map(&:user_id).uniq) 
           if !(@service_request_listings = @business.service_requests).empty?

@@ -23,7 +23,7 @@ gem 'client_side_validations'
 gem 'client_side_validations-simple_form'
 gem 'icalendar'
 gem 'dossier'
-
+gem 'masked_input-rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

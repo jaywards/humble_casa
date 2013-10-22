@@ -7,3 +7,4 @@ $ ->
 		$("#service_name").focus()
 		$("#new_service").enableClientSideValidations()
 		$("[id^=edit_service]").enableClientSideValidations()
+		$("#service_phone").mask("(999) 999-9999")

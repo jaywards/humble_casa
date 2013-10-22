@@ -5,7 +5,7 @@
 	    <%= f.input :city %>
 	    <%= f.input :state %>
 	    <%= f.input :zip, label: "Zip code" %>
-	   	<%= f.input :phone, :input_html => { :maxlength => 14, :"data-mask" => "999-999-9999" } %>
+	   	<%= f.input :phone %>
 	   	<%= f.input :email, placeholder: "Email address for customer inquiries and notification of new service requests" %>
 		<%= f.input :biz_description, as: :text, :input_html => { :maxlength => 140 }, label: "Short company description (max 140 characters)", placeholder: "Example: XYZ, Inc. has been proudly serving the community since 1995" %>
 		<%= f.input :category, collection: [['landscaping', 'Landscaping'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['housecleaning', 'Housecleaning'], ['snow_removal', 'Snow removal'], ['handyman/general_maintenance', 'Handyman/General maintenance']], label_method: :last, value_method: :first %>

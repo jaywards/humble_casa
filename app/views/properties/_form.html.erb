@@ -1,6 +1,6 @@
 <%= simple_form_for @property, :validate => true do |f| %>
     <div class="row-fluid">
-		<div class="span3">
+		<div class="span2">
 			<% if !@property.user.nil? %>
 				<h5>Owner:</h5>
 				<%= render @property.user %>
@@ -13,7 +13,7 @@
 				<li>If you  keep info like your home alarm code up-to-date here, all service providers for this property will see it.</li>
 			</ul>
 		</div>
-		<div class="span9">
+		<div class="span10">
     		<%= render 'property_fields', field: f %>
     	</div>
 	    <center>

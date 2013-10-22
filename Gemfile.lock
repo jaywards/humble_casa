@@ -127,6 +127,8 @@ GEM
       i18n (>= 0.4.0)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    masked_input-rails (1.1.0)
+      railties (~> 3.1)
     metaclass (0.0.1)
     mime-types (1.23)
     mini_magick (3.6.0)
@@ -235,6 +237,7 @@ DEPENDENCIES
   jquery-rails
   jquery-timepicker-rails
   jquery-ui-rails
+  masked_input-rails
   mini_magick
   mocha
   nifty-generators (~> 0.4.2)
