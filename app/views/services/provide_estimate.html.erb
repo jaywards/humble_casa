@@ -1,0 +1,32 @@
+<%= provide(:title, 'Provide Standard Service Cost Estimate') %>
+<h2 class="provide-estimate">Provide Standard Service Cost Estimate</h2>
+
+<%= simple_form_for(@service) do |f| %>	
+	<div class="row-fluid">
+		<div class="span3">
+			<h5>Owner:</h5>
+			<%= render @property.user %>
+			<hr>
+			<h5>Property:</h5>
+			<%= render @property %>
+			<hr>
+		</div>
+
+		<div class="span9">
+			<p>This new client has requested that you provide an estimated standard service cost. This will be the amount charged to this client for each standard service request that you complete at their home.</p>
+			<p>You will always have the option to adjust the price for each service request (i.e. there is more or less work required than usual, or the client has requested additional services for a particular request). You will be required to provide an explanation to the property owner if/when you are charging an amount different from this standard cost.</p>
+			<br>
+			<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
+				<%= assignment.input :cost, label: 'Standard service cost $' %>
+				<%= assignment.input :note, label: 'Notes on this estimate', placeholder: 'Add any additional notes to the property owner regarding this cost estimate. For example, if there are set cost for additional services (i.e. shoveling the walkway is an additional $10, mopping the floors is +$15, etc.)', as: :text %>
+			<% end %>		 		
+		</div>
+	</div>
+	<center>
+		<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
+			<i class="icon-ok icon-white"></i> Save
+		</button>
+		&nbsp		
+		<%= link_to "Cancel", root_path, class: "btn" %>
+	</center>
+<% end %> 

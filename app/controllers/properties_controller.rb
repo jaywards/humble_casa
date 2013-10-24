@@ -83,9 +83,15 @@ class PropertiesController < ApplicationController
       	end
 	end
 
-	def show_property
+
+	def confirm_assignment
+		@service = Service.find_by_id(params[:service_id])
 		@property = Property.find_by_id(params[:id])
-		render action: "show_property"
+		@assignment = Assignment.find_by_service_id_and_property_id(@service, @property)
+	end
+	
+	def show
+		@property = Property.find_by_id(params[:id])
 	end
 
 end

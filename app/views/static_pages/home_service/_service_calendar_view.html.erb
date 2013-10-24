@@ -6,23 +6,25 @@
 	</h2>
 	<%= calendar @date do |date| %>
 	    <%= date.day %>
-	    <% if !@srs_for_calendar[date.to_s].nil? %>
-				<ul>
-	    		<% @srs_for_calendar[date.to_s].each do |sr| %>
-					<% @start = Time.zone.parse(sr.first_scheduled.to_s).in_time_zone(sr.property.time_zone).strftime("%I:%M") %>
-					<% @end = Time.zone.parse((sr.first_scheduled + sr.duration.hours).to_s).in_time_zone(sr.property.time_zone).strftime("%I:%M%p %Z") %>
-					<% @link = sr.property.name + " " + @start + "-" + @end %>
-					<% if sr.completed %>
-						<li class="completed">	
-					<% elsif date < Date.today %>
-						<li class="late">	
-					<% else %>
-						<li class="open">
-					<% end %>
-						<%= link_to @link, service_request_path(id: sr.master_service_request.active_request_id) %><br>
-					</li>
-	    		<% end %>
-				</ul>
-		<% end %>
-  	<% end %>
+		<% if !@srs_for_calendar.nil? %>    
+		    <% if !@srs_for_calendar[date.to_s].nil? %>
+					<ul>
+		    		<% @srs_for_calendar[date.to_s].each do |sr| %>
+						<% @start = Time.zone.parse(sr.first_scheduled.to_s).in_time_zone(sr.property.time_zone).strftime("%I:%M") %>
+						<% @end = Time.zone.parse((sr.first_scheduled + sr.duration.hours).to_s).in_time_zone(sr.property.time_zone).strftime("%I:%M%p %Z") %>
+						<% @link = sr.property.name + " " + @start + "-" + @end %>
+						<% if sr.completed %>
+							<li class="completed">	
+						<% elsif date < Date.today %>
+							<li class="late">	
+						<% else %>
+							<li class="open">
+						<% end %>
+							<%= link_to @link, service_request_path(id: sr.master_service_request.active_request_id) %><br>
+						</li>
+		    		<% end %>
+					</ul>
+			<% end %>
+  		<% end %>
+	<% end %>
 </div>

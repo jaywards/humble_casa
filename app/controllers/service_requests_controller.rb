@@ -39,6 +39,7 @@ class ServiceRequestsController < ApplicationController
 
 	def complete_request
 		@service_request = ServiceRequest.find_by_id(params[:id])
+		@assignment = @service_request.property.assignments.find_by_service_id(@service_request.service)
 		render action: "complete_request"
 	end
 

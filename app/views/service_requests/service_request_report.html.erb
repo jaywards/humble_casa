@@ -3,42 +3,47 @@
 <% else %>
 	<h2>Full Request Details</h2>
 <% end %>
-<h4>Request #: </h4><%= @service_request.service_request_id %>
 
-<hr>
 <div class="row-fluid">
-	<div class="span6">
-		<h4>Property Details:</h4> 
+	<div class="span4">
+		<h4>Property:</h4> 
 		<%= render @service_request.property %>
 	</div>
 	
-	<div class="span6">
-		<h4>Owner Details:</h4>
+	<div class="span4">
+		<h4>Owner:</h4>
 		<%= render @service_request.property.user %>
+	</div>
+
+	<div class="span4">
+		<h4>Service:</h4> 
+		<%= render @service_request.service %>
 	</div>
 </div>
 
 <hr>
-<h4>Service:</h4> 
-<%= render @service_request.service %>
-
-<hr>
 <h4>Service Request Details:</h4>
 <p>
-	Service request created on: <%= @service_request.created_at.strftime("%m/%d/%Y") %>
+	Request #: <%= @service_request.service_request_id %><br>
+	Created on: <%= Time.zone.parse(@service_request.created_at.to_s).in_time_zone(@service_request.property.time_zone).strftime("%a %m/%d/%y") %><br>
+	
+	<% if @service_request.scheduled? %>
+		Scheduled for: <%= Time.zone.parse(@service_request.first_scheduled.to_s).in_time_zone(@service_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") if !@service_request.first_scheduled.nil? %>
+	<% else %>
+		<b>This request is not yet scheduled.</b>
+	<% end %>
 	<br>
-	<% if @service_request.onetime %>
-		One-time request
-		<br>
-		Service window: <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - 
-			<%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
-		<br>
-		<% if @service_request.scheduled? %>
-			Scheduled for: <%= @service_request.first_scheduled.strftime("%a %b %d, %Y") %>
-		<% else %>
-			<b>This request is not yet scheduled.</b>
+
+	<% if @service_request.completed %>
+		<% if @service_request.location_verified && @service_request.timestamp_verified %>
+			<h5>Verified completed by HumbleCasa!</h5>
 		<% end %>
-		<br>
+		Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %><br>
+	<% end %>
+	
+	<% if @service_request.onetime %>
+		One-time request: service window <%= @service_request.service_start_date.strftime("%m/%d/%Y") %> - 
+			<%= @service_request.service_end_date.strftime("%m/%d/%Y") %>
 	<% else %>
 		Repeating request: 
 		<% if !@service_request.frequency.nil? %>
@@ -48,12 +53,9 @@
 			<% else %>
 				on the <%= @service_request.service_month_day.ordinalize %>
 			<% end %>
-			<br>
-		<% end %>
-		<% if !@service_request.completed %>
-			Next scheduled: <%= Time.zone.parse(@service_request.first_scheduled.to_s).in_time_zone(@service_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") if !@service_request.first_scheduled.nil? %>
 		<% end %>
 	<% end %>
+	<br>
 	<br>
 	Special instructions for this request: 
 	<% if @service_request.instructions.blank? %>
@@ -64,12 +66,11 @@
 	<br>
 	<br>
 	<% if @service_request.completed %>
-		<% if @service_request.location_verified && @service_request.timestamp_verified %>
-			<h5>Verified completed by HumbleCasa!</h5>
+		Completed by: <%= @service_request.user.to_label %><br>
+		Service charge: <%= number_to_currency(@service_request.charge) %><br>
+		<% if !@service_request.charge_notes.blank? %>
+			Charge explanation: <%= @service_request.charge_notes %><br>
 		<% end %>
-		Completion date: <%= @service_request.completed_date.strftime("%m/%d/%Y") %>
-		<br>
-		Completed by: <%= @service_request.user.to_label %>
 		<br>
 		Additional notes from servicer: 
 		<% if @service_request.completion_note.blank? %> 
@@ -77,9 +78,6 @@
 		<% else %>
 			<%= @service_request.completion_note %>
 		<% end %>
-	<% end %>
-	
-	<% if @service_request.completed %>
 		<br>
 		<hr>
 		<h4>Service images:</h4>

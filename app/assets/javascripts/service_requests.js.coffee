@@ -88,3 +88,12 @@ validateScheduling = ->
     false
   else
     $('.scheduled').val "t"
+
+$ ->
+  if $('body').hasClass("service_requests") && $(".complete-request-form").length > 0
+    standardCharge = $("#service_request_charge").val()
+    $("#save-btn").click ->
+      charge = $("#service_request_charge").val()
+      if charge != standardCharge && $("#service_request_charge_notes").val() == ""
+        alert("The standard charge for this property is $" + standardCharge + " and you have entered $" + charge + ". Since you are not charging the standard amount you must provide a charge explanation to complete this request.")
+        false

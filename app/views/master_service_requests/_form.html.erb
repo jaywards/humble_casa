@@ -9,6 +9,7 @@
 			<%= f.hidden_field :time_zone, value: @property.time_zone %>
 			<% Time.zone = @property.time_zone %>
 			<%= f.hidden_field :duration, value: 1 %> 
+			<%= f.hidden_field :charge, value: @assignment.cost %>
 		</div>
 		<div class="span10">
 			<%= f.input :onetime, input_html: {value: @master_service_request.onetime, class: "onetime"},

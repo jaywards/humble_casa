@@ -38,12 +38,17 @@
 												<%= @property.assignments[@i].service.biz_description %>
 											<% end %>
 										</p>
+										<z id=<%="confirmed" + @i.to_s%>>
+											<hr>
+											Do you need this provider to give you an estimate before starting services on your house? This is typical unless you've already worked with this company and know what they will charge you.
+											<%= assignment.input :confirmed, label: false, input_html: {value: @property.assignments[@i].confirmed}, collection: [[false, 'Yes, I need an estimate'], [true, 'No, I know what I will be charged for a standard service already']],
+	 		   									label_method: :last, value_method: :first, as: :radio_buttons %>
+	 		   							</z>
 				    				<% end %>	
 				    			<% else %>
 									None available yet for your area.
 									<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>
-					    			 	<%#= render 'interest_fields', f: assignment, thisCategory: category %>
-										<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
+					    			 	<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
 										<%= assignment.hidden_field :category, value: category %>
 					    			<% end %>
 								<% end %>

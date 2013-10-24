@@ -18,5 +18,5 @@ $ ->
 $ ->
 	if $('body').hasClass("static_pages")
 		$('.carousel').carousel({
-  			interval: 2000
+  			interval: 3000
 		})

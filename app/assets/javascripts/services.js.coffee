@@ -8,3 +8,9 @@ $ ->
 		$("#new_service").enableClientSideValidations()
 		$("[id^=edit_service]").enableClientSideValidations()
 		$("#service_phone").mask("(999) 999-9999")
+
+$ ->
+	if $('body').hasClass("services") && $(".provide-estimate").length > 0
+		$("#service_assignments_attributes_0_cost").mask("9?99")
+		$("#service_assignments_attributes_0_cost").focus()
+

@@ -1,56 +1,67 @@
 <div class="dashboard">
-	<h5>Updates by property:</h5>
+	<center><h4>Property Dashboard</h4></center>
 	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>
-		<%= listing.name %><br>
+		<b><%= listing.name %></b><br>
 		<ul>			
 			<% listing.services.each do |s| %>
 				<li><%= s.category.titleize %>: <%= s.name %>
 					<ul>
-						<% if !(@completed = completed_requests(s, listing)).nil? %>
-							<% @newcompleted = @completed.find_all { |x| x.updated_at > current_user.last_login_at}%>
-							<% if @newcompleted.size > 0 %>
-								<li><%= pluralize(@newcompleted.size, 'service request') %> completed since your last login
-									<ul>
-										<% @newcompleted.each do |nc| %>
-											<li>Completed on <%= nc.completed_date.strftime("%a %b %d, %Y") %>.
-												<%= link_to "view report", service_request_path(nc), class: "btn btn-mini" %>
-											</li>
-										<% end %>
-									</ul>
-								</li>
-							<% end %>
-						<% end %>
-						<li>Next service:
-							<% if !(@open_SRs = open_requests(s, listing)).nil? %>	
-								<% @open_SRs = @open_SRs.sort_by {|a| a.first_scheduled} %>
-								<% if @open_SRs.first.scheduled %>
-									scheduled for <%= Time.zone.parse(@open_SRs.first.first_scheduled.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
-								<% else %>
-									<% if @open_SRs.first.onetime? %>
-										one-time request to be completed between <%= Time.zone.parse(@open_SRs.first.service_start_date.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%> and <%= Time.zone.parse(@open_SRs.first.service_end_date.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>.
-									<% else %>
-										repeating request <%= @open_SRs.first.frequency.titleize.downcase %>
-										<% if @open_SRs.first.frequency == "weekly" || @open_SRs.first.frequency == "every_other_week" %>
-											on <%= @open_SRs.first.service_week_day%>s.
-										<% else %>
-											on the <%= @open_SRs.first.service_month_day.ordinalize %>.
-										<% end %>
-										Pending scheduling by <%= s.name %>
-									<% end %>
-								<% end %>									
+						<% @assignment = listing.assignments.find_by_service_id(s) %>
+						<% if !@assignment.confirmed %>
+							<% if @assignment.cost == 0 %>
+								Waiting for estimate from service provider
 							<% else %>
-								no future service scheduled
+								Estimate provided - <%= link_to "review and approve", confirm_assignment_service_property_path(s, listing) %>
 							<% end %>
-						</li>
-						<% if !@newcompleted.nil? %>
-							<li>Last service completed:
-								<% if !(@completed_SRs = completed_requests(s, listing)).nil? %>
-									<%= (@last = @completed_SRs.sort_by { |sr| sr.completed_date }.last).completed_date.strftime("%a %b %d, %Y") %> 
-									<%= link_to "view report", service_request_path(@last), class: "btn btn-mini" %>
-								<% else %>	
-									no completed requests for this service
+						<% elsif @assignment.cost == 0 %>
+							Waiting for service provider to define standard service charge
+						<% else %>	
+							<% if !(@completed = completed_requests(s, listing)).nil? %>
+								<% @newcompleted = @completed.find_all { |x| x.updated_at > current_user.last_login_at}%>
+								<% if @newcompleted.size > 0 %>
+									<li><%= pluralize(@newcompleted.size, 'service request') %> completed since your last login
+										<ul>
+											<% @newcompleted.each do |nc| %>
+												<li>Completed on <%= nc.completed_date.strftime("%a %b %d, %Y") %>.
+													<%= link_to "view report", service_request_path(nc), class: "btn btn-mini" %>
+												</li>
+											<% end %>
+										</ul>
+									</li>
+								<% end %>
+							<% end %>
+							<li>Next service:
+								<% if !(@open_SRs = open_requests(s, listing)).nil? %>	
+									<% @open_SRs = @open_SRs.sort_by {|a| a.first_scheduled} %>
+									<% if @open_SRs.first.scheduled %>
+										scheduled for <%= Time.zone.parse(@open_SRs.first.first_scheduled.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
+									<% else %>
+										<% if @open_SRs.first.onetime? %>
+											one-time request to be completed between <%= Time.zone.parse(@open_SRs.first.service_start_date.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%> and <%= Time.zone.parse(@open_SRs.first.service_end_date.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>.
+										<% else %>
+											repeating request <%= @open_SRs.first.frequency.titleize.downcase %>
+											<% if @open_SRs.first.frequency == "weekly" || @open_SRs.first.frequency == "every_other_week" %>
+												on <%= @open_SRs.first.service_week_day%>s.
+											<% else %>
+												on the <%= @open_SRs.first.service_month_day.ordinalize %>.
+											<% end %>
+											Pending scheduling by <%= s.name %>
+										<% end %>
+									<% end %>									
+								<% else %>
+									no future service scheduled
 								<% end %>
 							</li>
+							<% if !@newcompleted.nil? %>
+								<li>Last service completed:
+									<% if !(@completed_SRs = completed_requests(s, listing)).nil? %>
+										<%= (@last = @completed_SRs.sort_by { |sr| sr.completed_date }.last).completed_date.strftime("%a %b %d, %Y") %> 
+										<%= link_to "view report", service_request_path(@last), class: "btn btn-mini" %>
+									<% else %>	
+										no completed requests for this service
+									<% end %>
+								</li>
+							<% end %>
 						<% end %>
 					</ul>
 				</li>

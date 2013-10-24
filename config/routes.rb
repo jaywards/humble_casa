@@ -8,7 +8,11 @@ HumbleCasa::Application.routes.draw do
   resources :properties do
     member do
       get 'assign_services'
-      get 'show_property'
+    end
+    resources :services do 
+      member do 
+        get 'provide_estimate'
+      end
     end
   end
   
@@ -17,6 +21,9 @@ HumbleCasa::Application.routes.draw do
       get 'approve_employee'
     end
     resources :properties do
+      member do
+        get 'confirm_assignment'
+      end
       resources :master_service_requests, only: [:new, :edit]
       resources :service_requests do
         member do

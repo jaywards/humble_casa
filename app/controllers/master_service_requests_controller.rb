@@ -25,20 +25,13 @@ class MasterServiceRequestsController < ApplicationController
 		@master_request = MasterServiceRequest.new
 		@service = Service.find_by_id(params[:service_id])
 		@property = Property.find_by_id(params[:property_id])
+		@assignment = @property.assignments.find_by_service_id(@service)
 
 		respond_to do |format|
       		format.html
       		format.js
     	end
-
 	end
-
-	#def show
-	#	@master_request = MasterServiceRequest.find_by_id(params[:id])
-	#	@service = Service.find_by_id(@master_request.service_id)
-	#	@property = Property.find_by_id(@master_request.property_id)
-	#	render 'completed_request'
-	#end
 
 	def edit
 		@master_request = MasterServiceRequest.find_by_id(params[:id])

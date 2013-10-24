@@ -56,6 +56,7 @@ module ApplicationHelper
     	service_request.time_zone = master_request.time_zone
     	service_request.duration = master_request.duration
     	service_request.all_scheduled = master_request.all_scheduled
+    	service_request.charge = master_request.charge
 
     	return service_request
 	end

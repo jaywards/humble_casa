@@ -11,15 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131015204638) do
+ActiveRecord::Schema.define(:version => 20131024181334) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
     t.integer  "property_id"
     t.integer  "service_id"
-    t.datetime "created_at",  :null => false
-    t.datetime "updated_at",  :null => false
+    t.datetime "created_at",                                                   :null => false
+    t.datetime "updated_at",                                                   :null => false
     t.boolean  "interested"
+    t.boolean  "confirmed",                                 :default => false
+    t.string   "note"
+    t.decimal  "cost",        :precision => 5, :scale => 2, :default => 0.0
   end
 
   add_index "assignments", ["property_id"], :name => "index_associations_on_property_id"
@@ -56,15 +59,16 @@ ActiveRecord::Schema.define(:version => 20131015204638) do
     t.string   "service_week_day"
     t.integer  "service_month_day"
     t.datetime "first_scheduled"
-    t.datetime "created_at",                            :null => false
-    t.datetime "updated_at",                            :null => false
+    t.datetime "created_at",                                                          :null => false
+    t.datetime "updated_at",                                                          :null => false
     t.boolean  "all_assigned"
     t.integer  "active_request_id"
     t.boolean  "terms_agreement"
-    t.boolean  "paused",             :default => false
+    t.boolean  "paused",                                           :default => false
     t.string   "time_zone"
     t.integer  "duration"
     t.boolean  "all_scheduled"
+    t.decimal  "charge",             :precision => 5, :scale => 2, :default => 0.0
   end
 
   create_table "properties", :force => true do |t|
@@ -107,13 +111,13 @@ ActiveRecord::Schema.define(:version => 20131015204638) do
     t.datetime "service_start_date"
     t.datetime "service_end_date"
     t.text     "instructions"
-    t.datetime "created_at",                                                  :null => false
-    t.datetime "updated_at",                                                  :null => false
+    t.datetime "created_at",                                                                                :null => false
+    t.datetime "updated_at",                                                                                :null => false
     t.datetime "completed_date"
     t.string   "request_id"
-    t.boolean  "mailed_created",                           :default => false
-    t.boolean  "mailed_assigned",                          :default => false
-    t.boolean  "mailed_completed",                         :default => false
+    t.boolean  "mailed_created",                                                         :default => false
+    t.boolean  "mailed_assigned",                                                        :default => false
+    t.boolean  "mailed_completed",                                                       :default => false
     t.boolean  "onetime"
     t.string   "frequency"
     t.string   "service_week_day"
@@ -129,11 +133,13 @@ ActiveRecord::Schema.define(:version => 20131015204638) do
     t.boolean  "location_verified"
     t.boolean  "timestamp_verified"
     t.boolean  "paused"
-    t.boolean  "scheduled",                                :default => false
-    t.boolean  "mailed_scheduled",                         :default => false
+    t.boolean  "scheduled",                                                              :default => false
+    t.boolean  "mailed_scheduled",                                                       :default => false
     t.string   "time_zone"
     t.integer  "duration"
     t.boolean  "all_scheduled"
+    t.decimal  "charge",                                   :precision => 5, :scale => 2, :default => 0.0
+    t.string   "charge_notes"
   end
 
   create_table "service_zips", :force => true do |t|

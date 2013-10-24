@@ -8,6 +8,10 @@ Completion details:
   <% end %>
 	Completion date: <%= DateTime.parse(@service_request.completed_date.to_s).in_time_zone(@service_request.property.time_zone).strftime("%m/%d/%Y") %>
 	Completed by: <%= @service_request.user.full_name %>
+  Service charge: <% number_to_currency(@service_request.charge) %>
+  <% if !@service_request.charge_notes.blank? %>
+  Charge explanation: <%= @service_request.charge_notes %>
+  <% end %>
 	<% if !@service_request.completion_note.empty? %>
   Notes: <%= @service_request.completion_note %>
   <% end %>

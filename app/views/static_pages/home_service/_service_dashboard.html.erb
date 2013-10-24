@@ -1,12 +1,37 @@
 <div class="dashboard">
 	<h5>Current events needing action:</h5>
 	<ul>
+		<% @unfinalized = @business.assignments.find_all { |x| x.confirmed == false || x.cost == 0 } %>
 		<% @alluncompleted = @business.service_requests.find_all { |x| x.completed == false}.size %>
 		<% @unassigned = @business.service_requests.find_all { |x| x.assigned == false} %>
 		<% @unscheduled = @business.service_requests.find_all { |x| x.assigned == true && x.scheduled == false && x.completed == false } %>
 		<% @uncompleted = @business.service_requests.find_all { |x| x.completed == false && x.scheduled == true } %>
 		<% @newemployees = @business.employments.find_all { |x| x.approved == nil } %>
-		<% if @alluncompleted > 0 || @newemployees.size > 0 %>
+		
+		<% if @alluncompleted > 0 || @newemployees.size > 0 || @unfinalized.size > 0 %>
+			
+			<% if @unfinalized.size > 0 %>
+				<li>
+					<%= pluralize(@unfinalized.size, 'new customer') %>:
+					<ul>
+						<% @unfinalized.each do |assignment| %>
+							<li>
+								<%= assignment.property.name%> (<%= link_to "details", property_path(assignment.property) %>) - 
+								<% if assignment.confirmed == false %>
+									<% if assignment.cost != 0 %>
+										cost estimate provided, waiting for client to accept
+									<% else %>	
+										<%= link_to "provide cost estimate for client approval", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %>
+									<% end %>
+								<% else %>
+									<%= link_to "provide standard service cost (no approval necessary)", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %>
+								<% end %>
+							</li>
+						<% end %>
+					</ul>
+				</li>
+			<% end %>	
+
 			<% if @alluncompleted > 0 %>
 				<li>
 					<%= pluralize(@alluncompleted, 'open service request') %> for your business:
@@ -14,7 +39,7 @@
 						<% if @unassigned.size > 0 %>
 							<% @unassigned = @unassigned.sort_by {|x| x.first_scheduled } %>
 							<% @unassigned.each do |asr| %>
-								<li>Unassigned request for <%= link_to asr.property.name, show_property_property_path(asr.property) %> - <%= link_to "assign/schedule request", assign_to_employee_service_request_path(asr) %></li>
+								<li>Unassigned request for <%= link_to asr.property.name, property_path(asr.property) %> - <%= link_to "assign/schedule request", assign_to_employee_service_request_path(asr) %></li>
 							<% end %>
 						<% end %>
 						<% if @unscheduled.size > 0 %>
@@ -26,7 +51,7 @@
 						<% if @uncompleted.size > 0 %>
 							<% @uncompleted = @uncompleted.sort_by {|x| x.first_scheduled } %>
 							<% @uncompleted.each do |csr| %>
-								<li>Pending request for <%= link_to csr.property.name, show_property_property_path(csr.property) %>. Scheduled for <%= Time.zone.parse(csr.first_scheduled.to_s).in_time_zone(csr.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>. Assigned to <%= csr.user.full_name %> - 
+								<li>Pending request for <%= link_to csr.property.name, property_path(csr.property) %>. Scheduled for <%= Time.zone.parse(csr.first_scheduled.to_s).in_time_zone(csr.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>. Assigned to <%= csr.user.full_name %> - 
 									<% if csr.user == current_user %>
 										<%= link_to "complete request", complete_request_service_request_path(csr) %> or
 									<% end %>

@@ -3,21 +3,42 @@
 	<%= provide(:title, 'Complete service request') %>
 	<h2 class="complete-request-form">Complete Service Request</h2>
 	<%= render 'service_request_no_action' %>
+	<%= f.hidden_field :completed, value: true %>
 	<hr>
-	<%= f.input :completed, label: "Request completed?", input_html: {value: @service_request.completed},
-	    	collection: [[true, 'Yes'], [false, 'No']],
-	    	label_method: :last, value_method: :first, as: :radio_buttons %>
 	
+	<h4 class="complete-request-form">Service Charge</h4>
+	Standard charge for this property is <%= number_to_currency(@assignment.cost) %>
+	<br>
+	<br>
+	<div class="row-fluid">
+		<div class="span4">
+			<%= f.input :charge, label: "Service charge $" %>
+		</div>
+		<div class="span8">
+			<%= f.input :charge_notes, label: "Charge explanation (required if different than the standard charge)", as: :text %>
+		</div>
+	</div>
+	<hr>
+	
+	<h4>Service Notes and Photos</h4>
+	<br>
 	<%= f.input :completed_date, as: :fake, input_html: {id: "completed-date-picker", value: @service_request.try(:completed_date).try(:strftime,'%m/%d/%Y')}, label: "Date service was completed on:" %>
 	<%= f.input :completed_date, as: :hidden, input_html: { class: "completed_date"} %>
 	
 	Note: If you want your completed service requests to be marked as verified you must upload at least one photo taken <b>with a GPS enabled camera/phone</b> at the time of service. Completed requests with no photos or with photos taken without GPS data will not be tagged as verified.
 	<br>
 	<br>
-	<%= f.input :service_photo_1, as: :file, label: "Service photo 1:" %>
-	<%= f.input :service_photo_2, as: :file, label: "Service photo 2:" %>
-	<%= f.input :service_photo_3, as: :file, label: "Service photo 3:" %>
-
+	<div class="row-fluid">
+		<div class="span4">
+			<%= f.input :service_photo_1, as: :file, label: "Service photo 1:" %>
+		</div>
+		<div class="span4">
+			<%= f.input :service_photo_2, as: :file, label: "Service photo 2:" %>
+		</div>
+		<div class="span4">
+			<%= f.input :service_photo_3, as: :file, label: "Service photo 3:" %>
+		</div>
+	</div>
 	<%= f.input :completion_note, as: :text, label: "Notes", placeholder: "Any details or notes for the homeowner" %>
 	
 	<center>

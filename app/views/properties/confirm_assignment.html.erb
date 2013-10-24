@@ -1,0 +1,38 @@
+<%= provide(:title, 'Confirm Acceptance of Estimate') %>
+<h2>Confirm Acceptance of Estimate</h2>
+
+<%= simple_form_for(@property) do |f| %>	
+	<div class="row-fluid">
+		<div class="span3">  
+			<h5 class>Property:</h5> 
+			<%= render @property %>
+			<hr>
+			<h5>Service:</h5> 
+			<%= render @service %>
+		</div>
+		<div class="span9">
+			This service provider has provided the following estimate for a standard service at your property:
+			<hr>
+			<b>
+			Cost: <%= number_to_currency(@assignment.cost) %>
+			<% if !@assignment.note.blank? %>
+				<br>
+				Details for this estimate: <%= @assignment.note %>
+			<% end %>
+			</b>
+			<hr>
+			<p>Please remember that this is the charge for a standard service. If in the service request you request additional work, or if the service provider finds that additional work is necessary when he/she arrives at your property, the charge may be higher. If the service provider will be charging more than this amount they will be required to provide written details explaining the additional charges.</p>
+			<p>By checking "I approve", you agree to pay the service provider the above amount for standard service requests.</p>
+			<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
+				<%= assignment.input :confirmed, as: :boolean, inline_label: 'I approve', label: false %>
+			<% end %>
+		</div>
+		<center>
+			<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
+				<i class="icon-ok icon-white"></i> Save
+			</button>
+			&nbsp		
+			<%= link_to "Cancel", root_path, class: "btn" %>
+	</center>
+	</div>
+<% end %>

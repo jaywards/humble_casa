@@ -97,5 +97,10 @@ def create
 	    render action: "approve_employee"
 	end
 
-
+	
+	def provide_estimate
+		@service = Service.find_by_id(params[:id])
+		@property = Property.find_by_id(params[:property_id])
+		@assignment = Assignment.find_by_service_id_and_property_id(@service, @property)
+	end
 end

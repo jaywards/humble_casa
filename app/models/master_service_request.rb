@@ -1,7 +1,8 @@
 class MasterServiceRequest < ActiveRecord::Base
   attr_accessible :first_scheduled, :frequency, :instructions, :onetime, :property_id, :request_id, :service_end_date, 
   				:service_id, :service_month_day, :service_start_date, :service_week_day, :all_assigned, :terms_agreement,
-          :paused, :time_zone, :duration, :all_scheduled, :service_request_attributes, :work_assignments_attributes
+          :paused, :time_zone, :duration, :all_scheduled, :service_request_attributes, :work_assignments_attributes, 
+          :charge
 
   belongs_to :property
   belongs_to :service

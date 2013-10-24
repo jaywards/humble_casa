@@ -68,7 +68,7 @@
 	
 	<td>
 		<% if service_request.completed? %>
-			<%= link_to "view report", service_request_path(id: service_request.id), class: "btn btn-mini", remote: true %><br>
+			<%= link_to "view report", service_request_path(id: service_request.id), class: "btn btn-mini" %><br>
 		<% else %>
 			<% case current_user.role %> 
 				<% when "propertyowner" %>

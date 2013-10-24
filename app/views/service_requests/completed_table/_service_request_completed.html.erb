@@ -31,6 +31,7 @@
 	<td><%= @service_request.instructions %></td>
 	<td><%= @service_request.completed_date.strftime("%a %b %d, %Y") %></td>
 	<td><%= @service_request.user.last_name %>, <%= @service_request.user.first_name[0] %></td>
+	<td><center><%= number_to_currency(@service_request.charge) %></center></td>
 	<td><%= @service_request.completion_note %></td>
 	<td>	
 		<%= image_tag @service_request.service_photo_1_url if @service_request.service_photo_1? %>
