@@ -32,6 +32,10 @@
 				    				<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>
 				    			 		<%= assignment.hidden_field :category, value: category %>
 										<%= assignment.association :service, collection: @category_services_in_area, :as => :select, label: false, include_blank: true %>
+										<!--<z id=<%#="service-rating-" + @i.to_s%>>
+											Avg rating: <div class="star" id=<%#="star"+ @i.to_s%>></div>
+										</z>-->
+										<z id=<%="star"+ @i.to_s%> data-score="<%= @property.assignments[@i].service.reputation_for(:ratings) %>"></z>
 										<% @idstring = "service-description-" + @i.to_s %>
 										<p id=<%=@idstring %>>
 											<% if !@property.assignments[@i].service.nil? %>

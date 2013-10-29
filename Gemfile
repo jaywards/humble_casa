@@ -24,6 +24,7 @@ gem 'client_side_validations-simple_form'
 gem 'icalendar'
 gem 'dossier'
 gem 'masked_input-rails'
+gem 'activerecord-reputation-system', require: 'reputation_system'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

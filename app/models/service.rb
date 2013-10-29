@@ -32,6 +32,8 @@ class Service < ActiveRecord::Base
 
   has_one :location, dependent: :destroy
 
+  has_reputation :ratings, source: :user, aggregated_by: :average
+
 
   CATEGORIES = %w[landscaping pool/spa_cleaning housecleaning snow_removal handyman/general_maintenance]
     #also need to update Services form if changing categories

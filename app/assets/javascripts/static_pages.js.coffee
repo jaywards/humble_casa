@@ -16,7 +16,22 @@ $ ->
   $("a[href=\"" + lastTab + "\"]").click()  if lastTab
 
 $ ->
-	if $('body').hasClass("static_pages")
-		$('.carousel').carousel({
-  			interval: 3000
-		})
+  if $('body').hasClass("static_pages")
+    $('.carousel').carousel({
+      interval: 3000
+    })
+    $(".star").raty
+      path: "assets"
+      score: ->
+        $(this).attr "data-score"
+      click: (score, evt) ->
+        id = $(this).attr("id")
+        $.ajax
+          url: "/services/" + id + "/rate?rating=" + score
+          type: "POST"
+          success: (data) ->
+            if data is "record_not_found"
+              alert "Unable to process your rating at this time. Please try again later"
+            else
+              msgID = '.votemsg' + id
+              $(msgID).text "Thank you for your feedback!"

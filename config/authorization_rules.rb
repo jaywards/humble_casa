@@ -3,7 +3,7 @@ authorization do
     has_permission_on [:users, :user_sessions, :static_pages], :to => [:index, :show, :new, :create, :edit, 
       :update, :destroy]
     has_permission_on :services, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :approve_employee, 
-      :provide_estimate]
+      :provide_estimate, :rate]
     has_permission_on :properties, :to => [:index, :show, :new, :create, :edit, :update, :destroy, 
       :view_completed, :assign_services, :confirm_assignment]
     has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :assign_employment]
@@ -30,7 +30,7 @@ authorization do
     has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]
     has_permission_on :service_requests, :to => [:show, :edit, :update, :destroy, :pausem, :view_completed]
     has_permission_on :user_sessions, :to => [:destroy, :new, :create]
-    has_permission_on :services, :to => [:show]
+    has_permission_on :services, :to => [:show, :rate]
   end
   
   role :serviceowner do

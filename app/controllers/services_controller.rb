@@ -64,7 +64,7 @@ def create
 
 	def show
 		@service = Service.find_by_id(params[:id])
-		render :text => @service.biz_description
+		render :text => @service.reputation_for(:ratings).to_s + "|" + @service.biz_description
 	end
 
 	def update
@@ -96,11 +96,17 @@ def create
 	    @employments = @service.employments.find_all { |x| x.approved == nil } 
 	    render action: "approve_employee"
 	end
-
 	
 	def provide_estimate
 		@service = Service.find_by_id(params[:id])
 		@property = Property.find_by_id(params[:property_id])
 		@assignment = Assignment.find_by_service_id_and_property_id(@service, @property)
+	end
+
+	def rate
+		value = params[:rating]
+		@service = Service.find(params[:id])
+		@service.add_or_update_evaluation(:ratings, value, current_user)
+		redirect_to :back, notice: "Thank you for providing your feedback"
 	end
 end

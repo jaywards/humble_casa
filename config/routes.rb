@@ -17,6 +17,7 @@ HumbleCasa::Application.routes.draw do
   end
   
   resources :services do
+    member { post :rate }
     member do
       get 'approve_employee'
     end

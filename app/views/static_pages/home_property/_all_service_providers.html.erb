@@ -28,6 +28,16 @@
 					<% else %> 
 						<% @valid_service_row = true %>
 						<b><%= @selected_service.name %></b><br>
+
+						<% if @selected_service.evaluators_for(:ratings).find_all { |x| x.id == current_user.id }.empty? %>
+							<div class="star" id="<%=@selected_service.id%>"></div>
+							<z id="votemsg"+"<%=@selected_service.id%>">How is this provider doing?</z>
+						<% else %>
+							<div class="star" data-score="<%= @selected_service.reputation_for(:ratings) %>" id="<%=@selected_service.id%>"></div> 
+							<z class=<%= "votemsg"+ @selected_service.id.to_s %>>Avg rating. Click to change your rating.</z>
+						<% end %>
+						<br>
+						<br>
 						<% @assignment = property_listing.assignments.find_by_service_id(@selected_service) %>
 						<% if @assignment.confirmed && @assignment.cost != 0 %>
 							<p>
