@@ -1,10 +1,33 @@
 ---
+0.png: 0-16fbd16494d033113944faff9a1e2864.png
+1.png: 1-3b9ff5c4588c2ce7c2daedbca1c10752.png
+2.png: 2-bdba0c459432492d25fd6369cdfffde5.png
+3.png: 3-bc9f1b147c27fbec3f37bf8168bec100.png
+4.png: 4-0fa85c6128cf3e2b9c95bb228a0b7d83.png
+5.png: 5-98104fc02354054c0b9592ac3dfa328d.png
+cancel-custom-off.png: cancel-custom-off-698178d39530229dd51fb3dd4daab451.png
+cancel-custom-on.png: cancel-custom-on-26db0612b82462d153759726bfd9cda9.png
+cancel-off-big.png: cancel-off-big-d15d1151aaeb88f2880b11ca09de1d43.png
+cancel-off.png: cancel-off-87568b5f80c58be2bf14e40d63c42f3a.png
+cancel-on-big.png: cancel-on-big-09feecfd8f7187d9ca57b682cd1c69f8.png
+cancel-on.png: cancel-on-d30401242163129b017c98762921905d.png
+cookie-half.png: cookie-half-eff119d28021152845d1cff59ee926e7.png
+cookie-off.png: cookie-off-c3789115b51c1bf74208545b94f1a7f0.png
+cookie-on.png: cookie-on-637faa34031f8f0b0683ed3c32b47023.png
 housecleaning wfx.jpg: housecleaning wfx-4cbb647470987137679c7065501c55b1.jpg
 landscaping wfx.jpg: landscaping wfx-8d3b855b68fbd877aa829a1f71cecc25.jpg
 logo.jpg: logo-e6a6dc04757c48b9ec392e220b853990.jpg
+off.png: off-34aadddf6bdcb3345ff0973ca00db128.png
+on.png: on-344712e947c155966ee4869453c123e2.png
 poolcleaning wfx.jpg: poolcleaning wfx-8006f1c867fd522853f319419c94c8e2.jpg
 snowplow wfx.jpg: snowplow wfx-49391801947d81f5694829f0faea0507.jpg
-application.js: application-13f522c54315580bac904641888aea52.js
+star-half-big.png: star-half-big-27d6ccff9a4abcf2d8ff1f5bd40cca38.png
+star-half.png: star-half-d5dad255dbdffd7f3ecfc060ff16e854.png
+star-off-big.png: star-off-big-93a9eaf0327a926cfc73221dfa56a5ff.png
+star-off.png: star-off-76baf8734246aeb77ca05bb627625897.png
+star-on-big.png: star-on-big-2b1dd782871c4af21ade85a98fa10a7d.png
+star-on.png: star-on-81773c45911088dc5ddc91a1db091582.png
+application.js: application-636788557ad74a82fb6d0867a9c9a87e.js
 application.css: application-9e15fab5ebd225fd7b38b7572d30565d.css
 dossier/application.js: dossier/application-7f978c3838a5a9507f9040cc266af752.js
 dossier/application.css: dossier/application-7270767b2a9e9fff880aa5de378ca791.css
