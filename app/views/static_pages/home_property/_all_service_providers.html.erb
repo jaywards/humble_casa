@@ -34,7 +34,9 @@
 							<z id="votemsg"+"<%=@selected_service.id%>">How is this provider doing?</z>
 						<% else %>
 							<div class="star" data-score="<%= @selected_service.reputation_for(:ratings) %>" id="<%=@selected_service.id%>"></div> 
+							<x class="ratingmsg">
 							<z class=<%= "votemsg"+ @selected_service.id.to_s %>>Avg rating. Click to change your rating.</z>
+							</x>
 						<% end %>
 						<br>
 						<br>
