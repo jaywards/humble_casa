@@ -23,12 +23,7 @@
     <% case @role %>
         <% when "employee" %>
             <%= f.input :notify, inline_label: "Receive email notifications when service requests are assigned to you (recommended - you can always change this later)", label: false %>
-            <% if !(@services = Service.all).empty? %>
-                <% @sorted_services = @services.sort_by {|a| a.name } %>
-            <% end %>
-            <%= f.simple_fields_for :employments do |employment| %>
-                <%= employment.association :service, collection: @sorted_services, :as => :select, label: "Select employer (in alphabetic order)", include_blank: true %>
-            <% end %>
+            
         <% when "propertyowner" %>
             <%= f.input :notify, inline_label: "Receive email notifications when service requests are completed (recommended - you can always change this later)", label: false %>
         
@@ -38,18 +33,17 @@
     <% end %>
     <center>
     
-    <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
-        <i class="icon-ok icon-white"></i> <%= save_user_label %>
-    </button>
-    &nbsp       
-    <%= link_to "Cancel", root_path, class: "btn" %>
+        <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
+            <i class="icon-ok icon-white"></i> <%= save_user_label %>
+        </button>
+        &nbsp       
+        <%= link_to "Cancel", root_path, class: "btn" %>
 
-
-    <% if controller.action_name == "edit" %>     
-        &nbsp    
-        <%= link_to @user, class: "btn btn-warning", method: :delete, confirm: "Are you sure you want to delete your entire account?" do %>
-            <i class="icon-trash"></i> Delete user account
+        <% if controller.action_name == "edit" %>     
+            &nbsp    
+            <%= link_to @user, class: "btn btn-warning", method: :delete, confirm: "Are you sure you want to delete your entire account?" do %>
+                <i class="icon-trash"></i> Delete user account
+            <% end %>
         <% end %>
-    <% end %>
     </center>
 <% end %>

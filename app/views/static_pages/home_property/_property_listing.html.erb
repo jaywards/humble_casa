@@ -1,18 +1,15 @@
 <!-- Property details -->
-<%= render property_listing %><br>
-<z class="launch-assign-services">
-	<%= link_to assign_services_property_path(property_listing), class: "btn btn-mini btn-primary" do %>
-		<i class="icon-check icon-white"></i> Register or Change Services
-	<% end %>
-</z>
-&nbsp
-<span class="launch-property">
-	<%= link_to edit_property_path(property_listing), class: "btn btn-mini" do%>
-		<i class="icon-edit"></i> Edit Property
-	<% end %>
-</span>
-&nbsp
-<%= link_to property_listing, class: "btn btn-mini btn-inverse", method: :delete, confirm: "Are you sure?", title: property_listing.name do%>
-	<i class="icon-trash icon-white"></i> Delete Property
+<%= render property_listing %>
+
+<%= link_to "edit", edit_property_path(property_listing) %>
+| 
+<%= link_to "delete", property_listing, method: :delete, confirm: "Are you sure? This will delete any history of service requests, both active and completed, for this property. It cannot be undone.", title: property_listing.name %>
+<br>
+<br>
+Credit card on file for this property:<br>
+<% if property_listing.stripe_card_token.nil? || property_listing.stripe_card_token.empty? %>
+	 none
+<% else %>
+	<%= property_listing.card_type %> xxxx-xxxx-xxxx-<%= property_listing.last_four %><br>
 <% end %>
-<hr>
+<%= link_to "edit", edit_payment_info_property_path(property_listing) %>

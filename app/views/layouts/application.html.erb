@@ -8,8 +8,9 @@
   <!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>-->
   <!--script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.0-rc1/js/bootstrap.min.js"></script>-->
   <%= stylesheet_link_tag    :application, media: "all" %>
-  <%= javascript_include_tag :application %>
+  <%= javascript_include_tag "https://js.stripe.com/v2/", :application %>
   <%= csrf_meta_tags %>
+  <%= tag :meta, :name => "stripe-key", :content => ENV['STRIPE_PUBLIC_KEY'] %>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body class="<%= controller.controller_name %>">	

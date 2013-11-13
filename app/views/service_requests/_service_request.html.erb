@@ -82,22 +82,30 @@
 					<% end %>
 					<p><%= button_to("delete", service_request.master_service_request, {method: :delete, class: "btn btn-mini", confirm: "Are you sure?"}) %></p>
 				<% when "serviceowner" %>
-					<% if service_request.scheduled %>
-						<p><%= link_to "complete request", complete_request_service_request_path(service_request), class: "btn btn-mini" %></p>
-						<p><%= link_to "reassign or reschedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %></p>
+					<% if service_request.service.service_active %>
+						<% if service_request.scheduled %>
+							<p><%= link_to "complete request", complete_request_service_request_path(service_request), class: "btn btn-mini" %></p>
+							<p><%= link_to "reassign or reschedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %></p>
 
-					<% elsif service_request.assigned %>
-						<p><%= link_to "reassign or reschedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %></p>
+						<% elsif service_request.assigned %>
+							<p><%= link_to "reassign or reschedule", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %></p>
+						<% else %>
+							<p><%= link_to "assign/schedule request", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %></p>
+						<% end %>	
+							<p><%= button_to("delete", service_request, {method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?"}) %></p>
 					<% else %>
-						<p><%= link_to "assign/schedule request", assign_to_employee_service_request_path(service_request), class: "btn btn-mini" %></p>
-					<% end %>	
-						<p><%= button_to("delete", service_request, {method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?"}) %></p>
+						<z class="business-inactive">Service inactive - no actions available</z>
+					<% end %>
 				<% when "employee" %>
-					<p><% if service_request.scheduled %>
-						<%= link_to "complete request", complete_request_service_request_path(service_request), class: "btn btn-mini" %>
+					<% if service_request.service.service_active %>
+						<p><% if service_request.scheduled %>
+							<%= link_to "complete request", complete_request_service_request_path(service_request), class: "btn btn-mini" %>
+						<% else %>
+							<%= link_to "schedule request", schedule_request_service_request_path(service_request), class: "btn btn-mini" %>
+						<% end %></p>
 					<% else %>
-						<%= link_to "schedule request", schedule_request_service_request_path(service_request), class: "btn btn-mini" %>
-					<% end %></p>
+						<z class="business-inactive">Service inactive - no actions available</z>
+					<% end %>
 				<% when "admin" %>
 					<p><%= link_to "view/edit", edit_service_property_master_service_request_path(service_request.master_service_request.service, service_request.master_service_request.property, service_request.master_service_request), class: "btn btn-mini" %></p>  
 					<p><%= button_to("delete master sr", service_request.master_service_request, {method: :delete, class: "btn btn-mini", confirm: "Are you sure?"}) %></p>

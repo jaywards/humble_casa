@@ -1,6 +1,8 @@
 class Service < ActiveRecord::Base
   attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, :user_id, 
-  :biz_description,	:service_zips_attributes, :assignments_attributes, :time_zone, :employments_attributes
+  :biz_description,	:service_zips_attributes, :assignments_attributes, :time_zone, :employments_attributes,
+  :stripe_customer_token, :stripe_access_token, :stripe_refresh_token, :stripe_publishable_key, :stripe_user_id,
+  :stripe_card_token, :card_type, :last_four
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -37,14 +39,56 @@ class Service < ActiveRecord::Base
 
   CATEGORIES = %w[landscaping pool/spa_cleaning housecleaning snow_removal handyman/general_maintenance]
     #also need to update Services form if changing categories
-
-
+  
   def service_servicezips
     ServiceZip.where("service_id = ?", id)
   end
 
   def service_employees
     User.find(Employment.where("service_id = ?", id).map(&:user_id).uniq) 
+  end
+
+  def update_payment_info
+    if valid?
+      Stripe.api_key = ENV['STRIPE_API_KEY']
+      customer = Stripe::Customer.create(description: name, card: stripe_card_token, plan: 'service_monthly')
+      self.stripe_customer_token = customer.id
+      save!
+    end
+    rescue Stripe::InvalidRequestError => e
+    logger.error "Stripe error while creating customer: #{e.message}"
+    errors.add :base, "There was a problem with your credit card."
+    false
+  end
+
+  def service_employees
+    User.find(Employment.where("service_id = ?", id).map(&:user_id).uniq) 
+  end
+
+  def address_for_location
+    address1 + " " + address2 + ", " + city + ", " + state
+  end
+
+  def payment_ok
+    !stripe_card_token.nil? && !stripe_card_token.empty?
+  end
+
+  def stripe_ok
+    !stripe_access_token.nil? && !stripe_access_token.empty?
+  end
+
+  def check_status
+    if self.payment_ok && self.stripe_ok
+      if service_active == false
+        self.service_active = true
+        save!
+      end
+    else
+      if service_active == true
+        self.service_active = false
+        save!
+      end
+    end
   end
 
 end

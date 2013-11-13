@@ -1,89 +1,94 @@
 $ ->
-	if $('body').hasClass("properties")
-		
-		hideConfirmed()
- 		
-		$.fn.raty.defaults.path = "http://www.humblecasa.com/assets"
-		
-		initializeRatys()
+  if $('body').hasClass("properties") && $(".property-form").length > 0
+    $("#property_name").focus()
+    $("#new_property").enableClientSideValidations()
+    $("[id^=edit_property]").enableClientSideValidations()
 
-		$("#property_name").focus()
-		$("#new_property").enableClientSideValidations()
-		$("[id^=edit_property]").enableClientSideValidations()
-		
-		actOnSelect()
+$ ->
+  if $('body').hasClass("properties") && $(".property-payment-form").length > 0
+    Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content')) 
+    property.setupPaymentForm()
+    $('#card_number').mask("9999 9999 9999 9999")
+    $('#card_number').focus()
 
-hideConfirmed = ->
+property =
+  setupPaymentForm: ->
 
-     $('#confirmed0').hide()
-     $('#confirmed1').hide()
-     $('#confirmed2').hide()
-     $('#confirmed3').hide()
-     $('#confirmed4').hide()
+    $('[id^=edit_property]').submit ->
+      $('input[type=submit]').attr('disabled', true)
+      if $('#card_number').length
+        property.processCard()
+        false
+      else
+        true
+
+  processCard: ->
+    card =
+      number: $('#card_number').val()
+      cvc: $('#card_code').val()
+      expMonth: $('#card_month').val()
+      expYear: $('#card_year').val()
+    Stripe.createToken(card, property.handleStripeCardResponse)
+
+  handleStripeCardResponse: (status, response) ->
+    if status == 200
+      $('#property_stripe_card_token').val(response.id)
+      $('#property_card_type').val(response.card.type)
+      $('#property_last_four').val(response.card.last4)
+      $('[id^=edit_property]')[0].submit()
+    else
+      $('#stripe_error').text(response.error.message)
+      $('input[type=submit]').attr('disabled', false)
 
 
-initializeRatys = ->
-
-     $("#star0").raty
-          readOnly: true
-          score: ->
-               $(this).attr "data-score"
-
-     $("#star1").raty
-          readOnly: true
-          score: ->
-               $(this).attr "data-score"
+$ ->
+  if $('body').hasClass("properties") && $(".register-services").length
+    $.fn.raty.defaults.path = "http://www.humblecasa.com/assets"
+    initializeRegisterServiceForm()  
 
 
-     $("#star2").raty
-          readOnly: true
-          score: ->
-               $(this).attr "data-score"
-
-     $("#star3").raty
-          readOnly: true
-          score: ->
-               $(this).attr "data-score"
-
-     $("#star4").raty
-          readOnly: true
-          score: ->
-               $(this).attr "data-score"
-
-actOnSelect = ->
-	
-	$("#property_assignments_attributes_0_service_id").change ->
-		selectAction('0', $(this).val())
-	$("#property_assignments_attributes_1_service_id").change ->
-    	selectAction('1', $(this).val())
-    $("#property_assignments_attributes_2_service_id").change ->
-    	selectAction('2', $(this).val())
-    $("#property_assignments_attributes_3_service_id").change ->
-    	selectAction('3', $(this).val())
-   	$("#property_assignments_attributes_4_service_id").change ->
-   		selectAction('4', $(this).val())
-    
+initializeRegisterServiceForm = ->
+  id = 0
+  while id < 5
+    $('#confirmed' + id).hide()
+    $('#star' + id).raty
+      readOnly: true
+      score: ->
+        $(this).attr "data-score"
+    if $('#property_assignments_attributes_' + id + '_service_id').val() == ""
+      $('#star' + id).hide()
+    $('#property_assignments_attributes_' + id + '_service_id').change ->
+      selectAction(id, $(this).val())
+    id++
+   
 selectAction = (id, service) ->
-	if service == ""
-		sd = '#service-description-' + id
-		$('#service-description-' + id).text ""
-		cn = '#confirmed' + id
-		$(cn).hide(400)
-		st = '#star' + id
-		$(st).hide(400)  
-	else
-    	$('#confirmed' + id).show(400)
-    	$.ajax
-        	url: "/services/" + service
-        	type: "get"
-        	dataType: "html"
-        	processData: false
-        	success: (data) ->
+  if service == ""
+    $('#service-description-' + id).text ""
+    $('#confirmed' + id).hide(400)
+    $('#star' + id).hide(400) 
+  else
+      $('#confirmed' + id).show(400)
+      $.ajax
+          url: "/services/" + service
+          type: "get"
+          dataType: "html"
+          processData: false
+          success: (data) ->
                 if data is "record_not_found"
-                	alert "Service description not found"
+                  alert "Service description not found"
                 else
                     content = data.split("|")
                     $('#star' + id).raty "set",
-                    	score: content[0]
+                      score: content[0]
                     $('#star' + id).show(400)
                     $('#service-description-' + id).text content[1]
+               $.ajax
+                 url: "/services/" + service
+                 type: "get"
+                 dataType: "html"
+                 processData: false
+                 success: (data) ->
+                   if data is "record_not_found"
+                     alert "Service description not found"
+                   else
+                     $('#service-description-' + id).text data

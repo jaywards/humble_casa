@@ -1,54 +1,30 @@
 class ServicesController < ApplicationController
 	filter_resource_access
 
-def create
-		@user = current_user
-		@service.user_id = @user.id
+	def create
+		@user = current_user	
 		@service = @user.build_business(params[:service])
 		@service.build_location
-		@service.location.address = 
-			@service.address1 + " " + @service.address2 + ", " + @service.city + ", " + @service.state
-			
-		if @user.employments.empty?
-			@service.employments.build
-			@service.employments.first.user_id = current_user.id
-			@service.employments.first.service_id = @service.id
-			@service.employments.first.approved = true
-
-			if @service.save
-				@user.employments.first.update_attributes(:user_id => current_user.id, :service_id => @service.id, :approved => true)		
-				@time_zone = Timezone::Zone.new :latlon => [@service.location.latitude, @service.location.longitude]
-				if @service.update_attribute(:time_zone, @time_zone.zone)
-					flash[:success] = "Service created!"
-					redirect_to root_path(message: "welcome")
-				else
-					flash[:error] = "Service created but there was an issue finding the time zone."
-					render :action => 'new'
-				end
-			else
-				flash[:error] = "Service couldn't be created."
-				render :action => 'new'
-			end
+		@service.location.address = @service.address_for_location
+    	
+		@user.build_employment if @user.employment.nil?
+		
+		if @service.save
+			@time_zone = Timezone::Zone.new :latlon => [@service.location.latitude, @service.location.longitude]
+			@service.update_attribute(:time_zone, @time_zone.zone)
+			@user.employment.update_attributes(:user_id => @user.id, :service_id => @service.id, :approved => true)
+			@user.update_attribute(:new_account, false)
+			flash[:success] = "Business created!"
+			redirect_to add_payment_info_service_path(@service)
 		else
-			if @service.save
-				@user.employments.first.update_attributes(:user_id => current_user.id, :service_id => @service.id, :approved => true)		
-				@time_zone = Timezone::Zone.new :latlon => [@service.location.latitude, @service.location.longitude]
-				if @service.update_attribute(:time_zone, @time_zone.zone)
-					flash[:success] = "Service created!"
-					redirect_to root_path(message: "welcome")
-				else
-					flash[:error] = "Service created but there was an issue finding the time zone."
-					render :action => 'new'
-				end
-			else
-				flash[:error] = "Service couldn't be created."
-				render :action => 'new'
-			end
+			flash[:error] = "Business couldn't be created."
+			render :action => 'new'
 		end
 	end
 
 	def new
 		@service = Service.new
+		@user = current_user
 		@service.service_zips.build
 	end
 
@@ -66,6 +42,17 @@ def create
 		@service = Service.find_by_id(params[:id])
 		render :text => @service.reputation_for(:ratings).to_s + "|" + @service.biz_description
 	end
+
+	def update_with_card
+    	if @service.update_attributes(params[:service]) && @service.update_payment_info
+	    	flash[:success] = "Successfully updated payment details"	      
+			if @service.new_account			
+				redirect_to stripe_signup_path
+			else
+				redirect_to root_path
+			end
+    	end
+    end
 
 	def update
     	if @service.update_attributes(params[:service])
@@ -109,4 +96,12 @@ def create
 		@service.add_or_update_evaluation(:ratings, value, current_user)
 		redirect_to :back, notice: "Thank you for providing your feedback"
 	end
+
+	def add_payment_info
+		@user = current_user
+	end
+
+	def edit_payment_info
+	end
+
 end

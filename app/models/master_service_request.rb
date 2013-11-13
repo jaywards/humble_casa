@@ -23,8 +23,48 @@ class MasterServiceRequest < ActiveRecord::Base
   accepts_nested_attributes_for :work_assignment
   has_one :user, through: :work_assignment
   
-    def service_request_id
-  		@request_id = "00R" + id.to_s + "S" + service_id.to_s + "P" + property_id.to_s
+  def service_request_id
+  	@request_id = "00R" + id.to_s + "S" + service_id.to_s + "P" + property_id.to_s
 	end
+
+  def spawnServiceRequest(assignee)
+    
+    @service_request = ServiceRequest.new
+    @service_request.updateServiceRequest(self)
+    
+    if assignee.nil?
+      @service_request.build_work_assignment
+      @service_request.assigned = false
+    else
+      @service_request.build_work_assignment(user_id: assignee.id)
+      @service_request.assigned = true
+    end
+    @service_request.completed = false
+    @service_request.location_verified = false
+    @service_request.timestamp_verified = false
+    @service_request.build_location
+
+    if self.all_scheduled
+      @service_request.scheduled = true
+    end
+
+    return @service_request
+  end
+
+
+  def update_first_scheduled
+    case frequency
+      when "weekly"
+        @next_scheduled = first_scheduled + 1.week
+      when "every_other_week"
+        @next_scheduled = first_scheduled + 2.weeks
+      when "monthly"
+        @next_scheduled = first_scheduled + 1.month
+      when "every_other_month"
+        @next_scheduled = first_scheduled + 2.months
+    end
+    self.first_scheduled = @next_scheduled
+    save!
+  end 
 
 end

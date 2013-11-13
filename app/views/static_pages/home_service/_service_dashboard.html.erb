@@ -1,93 +1,103 @@
 <div class="dashboard">
-	<h5>Current events needing action:</h5>
-	<ul>
-		<% @unfinalized = @business.assignments.find_all { |x| x.confirmed == false || x.cost == 0 } %>
-		<% @alluncompleted = @business.service_requests.find_all { |x| x.completed == false}.size %>
-		<% @unassigned = @business.service_requests.find_all { |x| x.assigned == false} %>
-		<% @unscheduled = @business.service_requests.find_all { |x| x.assigned == true && x.scheduled == false && x.completed == false } %>
-		<% @uncompleted = @business.service_requests.find_all { |x| x.completed == false && x.scheduled == true } %>
-		<% @newemployees = @business.employments.find_all { |x| x.approved == nil } %>
-		
-		<% if @alluncompleted > 0 || @newemployees.size > 0 || @unfinalized.size > 0 %>
+	<% if !@business.service_active %>
+		<b>Your business is not active and cannot sign-up new customers or manage service requests until you resolve the following issues:</b>
+		<ul>
+			<% if !@business.stripe_ok %>
+				<li>You have not created a valid account with Stripe Connect to accept customer credit cards. <%= link_to "Register with Stripe", static_pages_stripe_signup_path %></li>
+			<% end %>
+			<% if !@business.payment_ok %>
+				<li>You do not have a valid credit card on file for HumbleCasa to bill you. <%= link_to "Edit Payment Info", edit_payment_info_service_path(@business) %></li> 
+			<% end %>
+		<ul>
+	<% else %>
+		<h5>Current events needing action:</h5>
+		<ul>
+			<% @unfinalized = @business.assignments.find_all { |x| x.confirmed == false || x.cost == 0 } %>
+			<% @alluncompleted = @business.service_requests.find_all { |x| x.completed == false}.size %>
+			<% @unassigned = @business.service_requests.find_all { |x| x.assigned == false} %>
+			<% @unscheduled = @business.service_requests.find_all { |x| x.assigned == true && x.scheduled == false && x.completed == false } %>
+			<% @uncompleted = @business.service_requests.find_all { |x| x.completed == false && x.scheduled == true } %>
+			<% @newemployees = @business.employments.find_all { |x| x.approved == nil } %>
 			
-			<% if @unfinalized.size > 0 %>
-				<li>
-					<%= pluralize(@unfinalized.size, 'new customer') %>:
-					<ul>
-						<% @unfinalized.each do |assignment| %>
-							<li>
-								<%= assignment.property.name%> (<%= link_to "details", property_path(assignment.property) %>) - 
-								<% if assignment.confirmed == false %>
-									<% if assignment.cost != 0 %>
-										cost estimate provided, waiting for client to accept
-									<% else %>	
-										<%= link_to "provide cost estimate for client approval", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %>
+			<% if @alluncompleted > 0 || @newemployees.size > 0 || @unfinalized.size > 0 %>
+				
+				<% if @unfinalized.size > 0 %>
+					<li>
+						<%= pluralize(@unfinalized.size, 'new customer') %>:
+						<ul>
+							<% @unfinalized.each do |assignment| %>
+								<li>
+									<%= assignment.property.name%> (<%= link_to "details", property_path(assignment.property) %>) - 
+									<% if assignment.confirmed == false %>
+										<% if assignment.cost != 0 %>
+											cost estimate provided, waiting for client to accept
+										<% else %>	
+											<%= link_to "provide cost estimate for client approval", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %>
+										<% end %>
+									<% else %>
+										<%= link_to "provide standard service cost (no approval necessary)", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %>
 									<% end %>
-								<% else %>
-									<%= link_to "provide standard service cost (no approval necessary)", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %>
-								<% end %>
-							</li>
-						<% end %>
-					</ul>
-				</li>
-			<% end %>	
+								</li>
+							<% end %>
+						</ul>
+					</li>
+				<% end %>	
 
-			<% if @alluncompleted > 0 %>
-				<li>
-					<%= pluralize(@alluncompleted, 'open service request') %> for your business:
-					<ul>
-						<% if @unassigned.size > 0 %>
-							<% @unassigned = @unassigned.sort_by {|x| x.first_scheduled } %>
-							<% @unassigned.each do |asr| %>
-								<li>Unassigned request for <%= link_to asr.property.name, property_path(asr.property) %> - <%= link_to "assign/schedule request", assign_to_employee_service_request_path(asr) %></li>
+				<% if @alluncompleted > 0 %>
+					<li>
+						<%= pluralize(@alluncompleted, 'open service request') %> for your business:
+						<ul>
+							<% if @unassigned.size > 0 %>
+								<% @unassigned = @unassigned.sort_by {|x| x.first_scheduled } %>
+								<% @unassigned.each do |asr| %>
+									<li>Unassigned request for <%= link_to asr.property.name, property_path(asr.property) %> - <%= link_to "assign/schedule request", assign_to_employee_service_request_path(asr) %></li>
+								<% end %>
 							<% end %>
-						<% end %>
-						<% if @unscheduled.size > 0 %>
-							<% @unscheduled = @unscheduled.sort_by {|x| x.first_scheduled } %>
-							<% @unscheduled.each do |ssr| %>
-								<li>Unscheduled request for <%= link_to ssr.property.name, show_property_property_path(ssr.property) %>. Assigned to <%= ssr.user.full_name %> - <%= link_to "schedule request", schedule_request_service_request_path(ssr) %></li>
+							<% if @unscheduled.size > 0 %>
+								<% @unscheduled = @unscheduled.sort_by {|x| x.first_scheduled } %>
+								<% @unscheduled.each do |ssr| %>
+									<li>Unscheduled request for <%= link_to ssr.property.name, show_property_property_path(ssr.property) %>. Assigned to <%= ssr.user.full_name %> - <%= link_to "schedule request", schedule_request_service_request_path(ssr) %></li>
+								<% end %>
 							<% end %>
-						<% end %>
-						<% if @uncompleted.size > 0 %>
-							<% @uncompleted = @uncompleted.sort_by {|x| x.first_scheduled } %>
-							<% @uncompleted.each do |csr| %>
-								<li>Pending request for <%= link_to csr.property.name, property_path(csr.property) %>. Scheduled for <%= Time.zone.parse(csr.first_scheduled.to_s).in_time_zone(csr.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>. Assigned to <%= csr.user.full_name %> - 
+							<% if @uncompleted.size > 0 %>
+								<% @uncompleted = @uncompleted.sort_by {|x| x.first_scheduled } %>
+								<% @uncompleted.each do |csr| %>
+									<li>Pending request for <%= link_to csr.property.name, property_path(csr.property) %>. Scheduled for <%= Time.zone.parse(csr.first_scheduled.to_s).in_time_zone(csr.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z")%>. Assigned to <%= csr.user.full_name %> - 
 									<% if csr.user == current_user %>
 										<%= link_to "complete request", complete_request_service_request_path(csr) %> or
 									<% end %>
-									<z class="launch-assign-service-request">
-										<%= link_to "reassign or reschedule", assign_to_employee_service_request_path(csr) %>
-									</z>
-								</li>
+									<%= link_to "reassign or reschedule", assign_to_employee_service_request_path(csr) %>
+									</li>
+								<% end %>
 							<% end %>
-						<% end %>
-					</ul>
-				</li>
+						</ul>
+					</li>
+				<% end %>
+				<% if @newemployees.size > 0 %>
+				 	<li>You have <%= pluralize(@newemployees.size, 'employee account') %> awaiting authorization - <%= link_to "approve or reject employee accounts", approve_employee_service_path(@business) %></li></li>
+				 		<ul><% @newemployees.each do |e| %>
+				 			<li>Name: <%= e.user.full_name %>, email: <%= e.user.email%> 
+				 		<% end %></ul>
+				 <% end %>
+			<% else %>
+				<li>no actions required at this time</li>
 			<% end %>
-			<% if @newemployees.size > 0 %>
-			 	<li>You have <%= pluralize(@newemployees.size, 'employee account') %> awaiting authorization - <%= link_to "approve or reject employee accounts", approve_employee_service_path(@business), remote: true %></li></li>
-			 		<ul><% @newemployees.each do |e| %>
-			 			<li>Name: <%= e.user.full_name %>, email: <%= e.user.email%> 
-			 		<% end %></ul>
-			 <% end %>
-		<% else %>
-			<li>no actions required at this time</li>
-		<% end %>
-	</ul>
-	<br>
-	<h5>Other account updates since your last visit:</h5>
-	<ul>
-		<% @newassignments = @business.assignments.find_all { |x| x.updated_at > current_user.last_login_at }.size %>
-		<% @newcompleted = @business.service_requests.find_all { |x| x.completed == true && x.updated_at > current_user.last_login_at }.size %>
-		<% if @newassignments > 0 || @newcompleted > 0 %>
-			<% if @newassignments > 0 %>
-				<li><%= pluralize(@newassignments, 'new customer') %> signed-up for your business</li>
+		</ul>
+		<br>
+		<h5>Other account updates since your last visit:</h5>
+		<ul>
+			<% @newassignments = @business.assignments.find_all { |x| x.updated_at > current_user.last_login_at }.size %>
+			<% @newcompleted = @business.service_requests.find_all { |x| x.completed == true && x.updated_at > current_user.last_login_at }.size %>
+			<% if @newassignments > 0 || @newcompleted > 0 %>
+				<% if @newassignments > 0 %>
+					<li><%= pluralize(@newassignments, 'new customer') %> signed-up for your business</li>
+				<% end %>
+				<% if @newcompleted > 0 %>
+					<li><%= pluralize(@newcompleted, 'service request') %> completed</li>
+				<% end %>
+			<% else %>
+				<li>no updates at this time</li>
 			<% end %>
-			<% if @newcompleted > 0 %>
-				<li><%= pluralize(@newcompleted, 'service request') %> completed</li>
-			<% end %>
-		<% else %>
-			<li>no updates at this time</li>
-		<% end %>
-	</ul>
+		</ul>
+	<% end %>
 </div>

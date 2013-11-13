@@ -19,3 +19,9 @@
 
 # Ignore .DS files
 app/DS_Store
+
+# Ignore sensitive stripe information
+app/config/initializers/stripe.rb
+
+# Ignore application configuration
+/config/application.yml

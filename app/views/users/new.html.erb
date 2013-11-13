@@ -1,18 +1,18 @@
-<%= provide(:title, 'Sign up') %>
+<%= provide(:title, 'New user account') %>
 	
 <% case params[:role] %>
 	<% when "propertyowner" %>
-    	<h2>Create a new Property Owner account</h2>
+    	<h2 class="user-form">Create a new Property Owner account (step 1 of 3)</h2>
 		<h6><center>(Need to create a service provider or employee account instead? Click over to our <%= link_to "Services", business_path %> page to create those accounts.)</center><h6>
     	<br>
     <% when "serviceowner" %>
-        <h2>Create a new Service Owner account</h2>
+        <h2 class="user-form">Create a new Service Owner account (step 1 of 4)</h2>
         <h6><center>(Need to create a property owner account instead? Click over to our <%= link_to "Homeowner", root_path %> page to create that account.)</center><h6>
     	<br>
     <% when "employee" %>
-        <h2>Create a new Employee account</h2>
+        <h2 class="user-form">Create a new Employee account (step 1 of 2)</h2>
        	<h6><center>(Need to create a property owner account instead? Click over to our <%= link_to "Homeowner", root_path %> page to create that account.)</center><h6>
     	<br>
 <% end %>
 
-<%= render partial: 'form', locals: {save_user_label: "Create account"}  %>
+<%= render partial: 'form', locals: {save_user_label: "Create user account"}  %>

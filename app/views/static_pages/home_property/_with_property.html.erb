@@ -26,8 +26,14 @@
 	            <% else %>
         			<div class="tab-pane" id=<%= "property-" + listing.id.to_s %>>
 	            <% end %>
-	            	<%= render 'static_pages/home_property/property_listing', property_listing: listing %> 
-					<%= render 'static_pages/home_property/all_service_providers', property_listing: listing %>
+	            	<div class="row-fluid">
+						<div class="span2">
+	            			<%= render 'static_pages/home_property/property_listing', property_listing: listing %> 
+	            		</div>
+	            		<div class="span10">
+							<%= render 'static_pages/home_property/all_service_providers', property_listing: listing %>
+						</div>
+					</div>
     	    	</div>
         	<% end %>
         	<% if @first %>

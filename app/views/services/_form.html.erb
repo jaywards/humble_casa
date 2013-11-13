@@ -1,19 +1,42 @@
 <%= simple_form_for @service, :validate => true do |f| %>
-	    <%= f.input :name, label: "Business name" %>
+
+<b>Business Details</b><br>
+<div class="row-fluid">
+	<div class="span3">
+		<p>To get started you need to register your business. You can only have one business per user account, so if you want to register a second business you'll need to create a another Service Owner user account.</p>
+
+		<p>While your personal user account info that you provided is private, the business details that you will be providing can be seen all of your current and potential customers! So don't enter your home phone number or personal email address, unless that is how you want your customers to contact you.</p>
+	</div>
+	<div class="span9">  
+	    <%= f.input :name, label: "Name & category" do %>
+	    	<%= f.input_field :name, placeholder: "business name" %>
+	    	<%= f.input_field :category, collection: [['landscaping', 'Landscaping'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['housecleaning', 'Housecleaning'], ['snow_removal', 'Snow removal'], ['handyman/general_maintenance', 'Handyman/General maintenance']], label_method: :last, value_method: :first %>
+	    <% end %>
+	    
 	    <%= f.input :address1 %>
 	    <%= f.input :address2 %>
-	    <%= f.input :city %>
-	    <%= f.input :state %>
-	    <%= f.input :zip, label: "Zip code" %>
-	   	<%= f.input :phone %>
-	   	<%= f.input :email, placeholder: "Email address for customer inquiries and notification of new service requests" %>
-		<%= f.input :biz_description, as: :text, :input_html => { :maxlength => 140 }, label: "Short company description (max 140 characters)", placeholder: "Example: XYZ, Inc. has been proudly serving the community since 1995" %>
-		<%= f.input :category, collection: [['landscaping', 'Landscaping'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['housecleaning', 'Housecleaning'], ['snow_removal', 'Snow removal'], ['handyman/general_maintenance', 'Handyman/General maintenance']], label_method: :last, value_method: :first %>
+
+	    <%= f.input :city, label: 'City/State/Zip' do %>
+	    	<%= f.input_field :city, placeholder: "city" %>
+	    	<%= f.input_field :state, collection: %w[AK AL AR AZ CA CO CT DC DE FL GA HI IA ID IL IN KS KY LA MA MD ME MI MN MO MS MT NC ND NE NH NJ NM NV NY OH OK OR PA RI SC SD TN TX UT VA VT WA WI WV WY] %>
+	    	<%= f.input_field :zip, placeholder: "zip code" %>
+	    <% end %>
+
+	   	<%= f.input :phone, label: "Business contact info" do %>
+	   		<%= f.input_field :phone, placeholder: "phone number" %>
+	   		<%= f.input_field :email, placeholder: "email address" %>
+	   	<% end %>
 		
-		<b>Service area zip codes</b><br>
-		These are the zip codes in which your business operates. When your customers register their properties on HumbleCasa, your business will only show up for them if their property is in one of your service area zip codes below.
-		<br>
-		<br>
+		<%= f.input :biz_description, as: :text, input_html: { maxlength: 140 }, label: "Short company description (max 140 characters)", placeholder: "Example: XYZ, Inc. has been proudly serving the community since 1995" %>
+	</div>
+</div>
+<hr>
+<b>Service Area Zip Codes</b><br>
+<div class="row-fluid">
+	<div class="span3">
+		<p>These are the zip codes in which your business operates. When your customers register their properties on HumbleCasa, your business will only show up for them if their property is in one of your service area zip codes below.</p>
+	</div>
+	<div class="span9">
 		<div id="nested-zip-codes">
 			<%= f.simple_fields_for :service_zips do |zip| %>
 				<%= render 'service_zip_fields', :f => zip %>
@@ -24,12 +47,14 @@
 			</div>
 			<br>
 		</div>
-		<center>
-			<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
-				<i class="icon-ok icon-white"></i> Save
-			</button>
-			&nbsp		
-			<%= link_to "Cancel", root_path, class: "btn" %>
-		</center>
-
+	</div>
+</div>
+<br>
+<center>
+	<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
+		<i class="icon-ok icon-white"></i> Save
+	</button>
+	&nbsp		
+	<%= link_to "Cancel", root_path, class: "btn" %>
+</center>
 <% end %>

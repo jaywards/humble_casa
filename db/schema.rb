@@ -11,18 +11,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131025184263) do
+ActiveRecord::Schema.define(:version => 20131113195547) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
     t.integer  "property_id"
     t.integer  "service_id"
-    t.datetime "created_at",                                                   :null => false
-    t.datetime "updated_at",                                                   :null => false
+    t.datetime "created_at",                                                             :null => false
+    t.datetime "updated_at",                                                             :null => false
     t.boolean  "interested"
-    t.boolean  "confirmed",                                 :default => false
+    t.boolean  "confirmed",                                           :default => false
     t.string   "note"
-    t.decimal  "cost",        :precision => 5, :scale => 2, :default => 0.0
+    t.decimal  "cost",                  :precision => 5, :scale => 2, :default => 0.0
+    t.datetime "last_invoice_date"
+    t.string   "stripe_customer_token"
   end
 
   add_index "assignments", ["property_id"], :name => "index_associations_on_property_id"
@@ -81,9 +83,15 @@ ActiveRecord::Schema.define(:version => 20131025184263) do
     t.string   "phone"
     t.string   "instructions"
     t.integer  "user_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",                               :null => false
+    t.datetime "updated_at",                               :null => false
     t.string   "time_zone"
+    t.boolean  "new_property",          :default => true
+    t.string   "stripe_customer_token"
+    t.string   "stripe_card_token"
+    t.string   "card_type"
+    t.string   "last_four"
+    t.boolean  "active",                :default => false
   end
 
   add_index "properties", ["user_id"], :name => "index_properties_on_user_id"
@@ -184,6 +192,7 @@ ActiveRecord::Schema.define(:version => 20131025184263) do
     t.boolean  "all_scheduled"
     t.decimal  "charge",                                   :precision => 5, :scale => 2, :default => 0.0
     t.string   "charge_notes"
+    t.string   "charge_id"
   end
 
   create_table "service_zips", :force => true do |t|
@@ -206,10 +215,20 @@ ActiveRecord::Schema.define(:version => 20131025184263) do
     t.string   "email"
     t.string   "category"
     t.integer  "user_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
+    t.datetime "created_at",                                :null => false
+    t.datetime "updated_at",                                :null => false
     t.text     "biz_description"
     t.string   "time_zone"
+    t.string   "stripe_customer_token"
+    t.boolean  "new_account",            :default => true
+    t.boolean  "service_active",         :default => false
+    t.string   "stripe_access_token"
+    t.string   "stripe_publishable_key"
+    t.string   "stripe_user_id"
+    t.string   "stripe_refresh_token"
+    t.string   "stripe_card_token"
+    t.string   "last_four"
+    t.string   "card_type"
   end
 
   add_index "services", ["user_id"], :name => "index_services_on_user_id"
@@ -237,6 +256,7 @@ ActiveRecord::Schema.define(:version => 20131025184263) do
     t.datetime "current_login_at"
     t.boolean  "notify",            :default => true
     t.string   "time_zone"
+    t.boolean  "new_account",       :default => true
   end
 
   create_table "work_assignments", :force => true do |t|

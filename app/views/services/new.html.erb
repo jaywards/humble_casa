@@ -1,3 +1,7 @@
 <%= provide(:title, 'Register Service Business') %>
-<h2 class="service-form">Register a business</h2>
+<% if @user.new_account %>
+	<h2 class="service-form">New Service Owner account: register your business (step 2 of 4)</h2>
+<% else %>
+	<h2 class="service-form">Register a business: business details (step 1 of 3)</h2>
+<% end %>
 <%= render partial: 'form', locals: {save_business_label: "Create business"} %>

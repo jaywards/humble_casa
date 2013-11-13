@@ -152,8 +152,15 @@ footer {
 	 margin-bottom: 5px;
 }
 
-.simple_form div.user_notify label.checkbox {
-	width: 100%;
+#employer_code {
+	width: 50%;
+}
+
+.simple_form div.user_employment_service div.controls {
+	margin-left: 0px;
+}
+.simple_form div.user_employment_service div.controls {
+	margin-left: 0px;
 }
 
 .simple_form div.property_assignments_interested div.controls{
@@ -199,6 +206,38 @@ footer {
 	vertical-align: top;
 }
 
+
+#service_name, 
+#property_name, 
+#service_city,
+#property_city {
+	width: 50%;
+}
+#service_category {
+	width: 30%;
+	margin-bottom: 5px;
+}
+
+#service_state, #property_state {
+	width: 15%;
+	margin-bottom: 5px;
+}
+#service_zip, #property_zip {
+	width: 25%;
+}
+#service_phone {
+	width: 40%
+}
+#service_email {
+	width: 40%;
+}
+#service_account_nickname {
+	width: 60%;
+}
+#service_account_type {
+	margin-bottom: 5px;
+}
+
 .simple_form div.service_service_zips_zip .control-label  {
 	text-align: center;
 	width: 100px;
@@ -241,6 +280,10 @@ footer {
 
 #service_biz_description {
 	height: 60px;
+}
+
+.business-inactive {
+	color: #f00;
 }
 
 #error_explanation {

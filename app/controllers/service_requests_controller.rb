@@ -19,8 +19,10 @@ class ServiceRequestsController < ApplicationController
 		@service = Service.find_by_id(params[:service_id])
 		@property = Property.find_by_id(params[:property_id])
 
-		@completed_requests = ServiceRequest.where(service_id: params[:service_id], property_id: params[:property_id], completed: true)
-		if !@completed_requests.empty?
+		if !(@completed_requests = ServiceRequest.where(
+			service_id: params[:service_id], 
+			property_id: params[:property_id], 
+			completed: true)).empty?
 			@completed_requests = @completed_requests.sort_by {|a| a.completed_date }
 		end
 		render action: "view_completed"
@@ -48,121 +50,49 @@ class ServiceRequestsController < ApplicationController
 		render action: "schedule_request"
 	end
 	
+	def save_with_completed
+		@service_request = ServiceRequest.find_by_id(params[:id])
+		
+		if @service_request.update_attributes(params[:service_request]) 
+			@service_request.process_photos if !@service_request.service_photo_1.current_path.nil?
+			@service_request.create_next if !@service_request.onetime
+		
+			if @service_request.create_charge
+				flash[:success] = "Successfully updated service request."
+				@service_request.mail_completed
+      		else
+				flash[:error] = "Unable to charge the customer at this time. HumbleCasa will notify you when this is corrected."
+			end
+			redirect_to root_path
+			
+   		else
+      		flash[:error] = "Couldn't complete this service request. Please try again."
+      		render :action => 'complete_request'
+	    end
+	end
+
 	def update
-		## SHOULD ONLY OCCUR WHEN ASSIGNING TO EMPLOYEE, SCHEDULING DATE, OR COMPLETING REQUEST 
-		## OTHERWISE ALL CHANGES ARE MADE IN MASTER_SERVICE_REQUEST AND PROPOGATE DOWN
-	    @service_request = ServiceRequest.find_by_id(params[:id])
-		@current_completed = @service_request.completed
+		@service_request = ServiceRequest.find_by_id(params[:id])
 		@master_request = MasterServiceRequest.find_by_id(@service_request.master_service_request_id)
-		@save_success = false
-
+		
 	    if @service_request.update_attributes(params[:service_request]) 
-	    	## If initial one-time assignment or scheduling, this takes care of everything
-	    	@save_success = true
-
-			## If assignment (initial or otherwise) is all_assigned
-		    if @master_request.all_assigned != @service_request.all_assigned
+	    	
+			if @master_request.all_assigned != @service_request.all_assigned
 		      	@master_request.update_attribute(:all_assigned, @service_request.all_assigned)
 			end
 
-			## If scheduled (initial or otherwise) is all_scheduled
 			if @master_request.all_scheduled != @service_request.all_scheduled
 				@master_request.update_attributes(:all_scheduled => @service_request.all_scheduled, 
 					:duration => @service_request.duration, :first_scheduled => @service_request.first_scheduled)
 			end
-
-		    ## If request was completed
-			if @current_completed != @service_request.completed
-
-				## If completed and first image has EXIF info
-				if !@service_request.service_photo_1.current_path.nil?
-					if EXIFR::JPEG.new(@service_request.service_photo_1.current_path).exif?
-						@a = EXIFR::JPEG.new(@service_request.service_photo_1.current_path)
-
-						@lat = @a.exif[0].gps_latitude[0].to_f + 
-								(@a.exif[0].gps_latitude[1].to_f / 60) + 
-									(@a.exif[0].gps_latitude[2].to_f / 3600)
-
-						@long = @a.exif[0].gps_longitude[0].to_f + 
-								(@a.exif[0].gps_longitude[1].to_f / 60) + 
-								(@a.exif[0].gps_longitude[2].to_f / 3600)
-
-						@long = @long * -1 if @a.exif[0].gps_longitude_ref == "W"
-						@lat = @lat * -1 if @a.exif[0].gps_latitude_ref == "S"
-
-						@service_request.location.update_attribute(:latitude, @lat)
-						@service_request.location.update_attribute(:longitude, @long)
-
-						if @long >= (@service_request.property.location.longitude - 1) &&
-								@long <= (@service_request.property.location.longitude + 1) &&
-								@lat >= (@service_request.property.location.latitude - 1) &&
-								@lat <= (@service_request.property.location.latitude + 1) &&
-							@service_request.update_attribute(:location_verified, true)
-						end
-
-						@ts = EXIFR::JPEG.new(@service_request.service_photo_1.current_path).date_time
-						@completed_date = @service_request.completed_date
-						if @ts >= (@completed_date - 24.hours) && @ts <= (@completed_date + 24.hours)
-							@service_request.update_attribute(:timestamp_verified, true)
-						end
-					end
-				end
-				## If marked as completed and a repeating request
-				if @service_request.completed && !@service_request.onetime
-
-					## If all_assigned copy the assignment to new request. Both cases will handle all_assigned within
-					## the spawn helper
-					if @master_request.all_assigned
-						@new_service_request = view_context.spawnServiceRequest(@master_request, @service_request.user)
-						view_context.linkRequests(@master_request, @new_service_request)
-					
-					## Not all_assigned
-					else
-						@new_service_request = view_context.spawnServiceRequest(@master_request, nil)
-						view_context.linkRequests(@master_request, @new_service_request)
-					end	
-
-					## Update next scheduled (will handle all_assigned - time of service carries over)
-					@next_scheduled = view_context.nextScheduled(@master_request.frequency, @master_request.first_scheduled)
-					@master_request.update_attribute(:first_scheduled, @next_scheduled)
-					@new_service_request.first_scheduled = @next_scheduled
-					@new_service_request.completed_date = @next_scheduled
-
-					## Handle if paused
-					if @master_request.paused?
-						@master_request.update_attribute(:paused, false)
-						@new_service_request.paused = false
-					end
-
-					if @new_service_request.save 
-						@save_success = true 
-					else
-						@save_success = false
-					end
-				end
-			end
-		else
-			@save_success = false
-		end
-
-		if @save_success == true
-	      	flash[:success] = "Successfully updated service request."
-	      	if @service_request.assigned && !@service_request.mailed_assigned 
-	      		ServiceMailer.service_assigned(@service_request).deliver
-	      		@service_request.update_attribute(:mailed_assigned, true) 
-	 	    end
-	 	    if @service_request.scheduled && !@service_request.mailed_scheduled
-	      		ServiceMailer.service_scheduled(@service_request).deliver
-	      		@service_request.update_attribute(:mailed_scheduled, true) 
-	 	    end
-	      	if @service_request.completed && !@service_request.mailed_completed
-		      	ServiceMailer.service_completed(@service_request).deliver
-		      	@service_request.update_attribute(:mailed_completed, true)
-		    end       
-		    redirect_to root_path
-	    else
-	      flash[:error] = "Couldn't update service request."
-	      render :action => 'edit'
+	
+			flash[:success] = "Successfully updated service request."
+	      	@service_request.mail_assigned if (@service_request.assigned && !@service_request.mailed_assigned) 
+	      	@service_request.mail_scheduled if (@service_request.scheduled && !@service_request.mailed_scheduled)	      		
+	        redirect_to root_path
+		else	      
+	      	flash[:error] = "Couldn't update service request."
+	      	render :action => 'edit'
 		end
 	end
 end

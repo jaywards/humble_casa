@@ -1,0 +1,7 @@
+<%= provide(:title, 'Register Service Business') %>
+<% if @user.new_account %>
+	<h2 class="service-payment-form">New Service Owner account:<br>Provide your billing details (step 3 of 4)</h2>
+<% else %>
+	<h2 class="service-payment-form">Register a business:<br>Provide your billing details (step 2 of 3)</h2>
+<% end %>
+<%= render 'services/service_payment_form' %>

@@ -3,19 +3,17 @@ class MasterServiceRequestsController < ApplicationController
 
 	def create
 		@master_request = MasterServiceRequest.new(params[:master_service_request])
-		
-		@service_request = view_context.spawnServiceRequest(@master_request, nil)
+		@service_request = @master_request.spawnServiceRequest(nil)
 
 		if @master_request.save && @service_request.save
 			flash[:success] = "Service request created!"
-			view_context.linkRequests(@master_request, @service_request)
-			ServiceMailer.service_created(@master_request).deliver
-			@service_request.update_attribute(:mailed_created, true)
+			@service_request.link_to_master(@master_request)
+			@service_request.mail_created
 			redirect_to root_path
 		else
 			@service = Service.find_by_id(@master_request.service_id)
 			@property = Property.find_by_id(@master_request.property_id)
-			flash[:error] = "Service request couldn't be created."
+			flash[:error] = "Service request couldn't be created at this time. Please try again."
 			render :action => 'new'
 		end
 
@@ -26,11 +24,6 @@ class MasterServiceRequestsController < ApplicationController
 		@service = Service.find_by_id(params[:service_id])
 		@property = Property.find_by_id(params[:property_id])
 		@assignment = @property.assignments.find_by_service_id(@service)
-
-		respond_to do |format|
-      		format.html
-      		format.js
-    	end
 	end
 
 	def edit
@@ -43,27 +36,21 @@ class MasterServiceRequestsController < ApplicationController
 	def update
 	    @master_request = MasterServiceRequest.find_by_id(params[:id])
  		@service_request = ServiceRequest.find_by_id(@master_request.active_request_id)
- 		@service_request = view_context.updateServiceRequest(@service_request, @master_request)
-	     
+ 		 
 	    if @master_request.update_attributes(params[:master_service_request]) 
-	    	@service_request = view_context.updateServiceRequest(@service_request, @master_request)
+	    	@service_request.updateServiceRequest(@master_request)
 	    	if @service_request.save
 	      		flash[:success] = "Successfully updated service request."	      
-	      
-		      	if @service_request.assigned && !@mailed_assigned 
-			      	ServiceMailer.service_assigned(@master_request).deliver
-			      	@service_request.update_attribute(:mailed_assigned, true)
-		      	end
-			      
-		      	if @service_request.completed && !@mailed_completed
-			      	ServiceMailer.service_completed(@master_request).deliver
-			      	@service_request.update_attribute(:mailed_completed, true)
-		      	end       
+		      	@service_request.mail_assigned if (@service_request.assigned && !@mailed_assigned) 
+			  	@service_request.mail_completed if (@service_request.completed && !@mailed_completed)
 		      	redirect_to root_path
-		      end
+		    else
+		    	flash[:error] = "Couldn't update your service request at this time. Please try again"
+		    	render :action => 'edit'
+		    end
 	    else
-	      flash[:error] = "Couldn't update service request."
-	      render :action => 'edit'
+	    	flash[:error] = "Couldn't update your service request at this time. Please try again"
+		    render :action => 'edit'
 	    end
 	end
 

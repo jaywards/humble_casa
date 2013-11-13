@@ -1,6 +1,6 @@
 <%= simple_form_for @property, :validate => true do |f| %>
     <div class="row-fluid">
-		<div class="span2">
+		<div class="span3">
 			<% if !@property.user.nil? %>
 				<h5>Owner:</h5>
 				<%= render @property.user %>
@@ -10,11 +10,21 @@
 			<ul>
 				<li>You can have more than one property per user account. Once you've created this property, you'll see a link on your homepage to add more properties.</li>
 				<br>
-				<li>If you  keep info like your home alarm code up-to-date here, all service providers for this property will see it.</li>
+				<li>If you  keep info like your home alarm code up-to-date in the "Instructions for the property", all service providers for this property will see it. <b>Only your selected service providers can see these details</b> but we understand if you don't want to enter it now - you can always contact your providers over the phone or in person to give them this info.</li>
+				<br>
 			</ul>
 		</div>
-		<div class="span10">
-    		<%= render 'property_fields', field: f %>
+		<div class="span9">
+    		<%= f.input :name, label: 'Property name', placeholder: "A nickname for this property"%>
+			<%= f.input :address1 %>
+			<%= f.input :address2 %>
+			<%= f.input :city, label: 'City/State/Zip' do %>
+	    		<%= f.input_field :city, placeholder: "city" %>
+	    		<%= f.input_field :state, collection: %w[AK AL AR AZ CA CO CT DC DE FL GA HI IA ID IL IN KS KY LA MA MD ME MI MN MO MS MT NC ND NE NH NJ NM NV NY OH OK OR PA RI SC SD TN TX UT VA VT WA WI WV WY] %>
+	    		<%= f.input_field :zip, placeholder: "zip code" %>
+    		<% end %>
+
+			<%= f.input :instructions, label: 'Instructions for the property', placeholder: 'These instructions are only seen by the service providers you select.  Examples: lock box code, security disarm code, preferred entry door, etc.', as: :text %>
     	</div>
 	    <center>
 			<button class="btn btn-primary" type="submit" data-disable-with="Saving...">

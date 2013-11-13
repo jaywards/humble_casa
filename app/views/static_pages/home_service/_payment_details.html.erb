@@ -1,0 +1,24 @@
+<h5>Payment and billing details:</h5>
+<div>
+	<% if !@business.nil? %>
+		<ul>
+			<li>
+				<% if @business.payment_ok %>
+					Credit card on file for this service:<br><%= @business.card_type %> ending in <%= @business.last_four %><br>		
+				<% else %>
+					No credit card on file for billing. Your service is not active and will not be able to sign-up new customers or accept service requests from existing customers 
+				<% end %>
+				<%= link_to "(edit)", edit_payment_info_service_path(@business) %>
+			</li>
+			<li>
+				Customer credit card payments through Stripe are 
+					<% if @business.stripe_ok %>
+						enabled. 
+					<% else %>
+						not enabled. Your service is not active and will not be able to sign-up new customers or accept service requests from existing customers.
+					<% end %>
+				</b>
+				<%= link_to "(edit)", static_pages_stripe_signup_path %>
+			</li>
+	<% end %>
+</div>

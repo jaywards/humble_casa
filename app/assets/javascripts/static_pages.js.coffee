@@ -34,4 +34,4 @@ $ ->
               alert "Unable to process your rating at this time. Please try again later"
             else
               msgID = '.votemsg' + id
-              $(msgID).text "Thank you for your feedback!"
+              $(msgID).text "Thank you for your feedback!"   

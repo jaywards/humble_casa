@@ -16,13 +16,22 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    @user.employments.build
+    @user.build_employment
     if @user.save
       flash[:success] = "Successfully created user."
-      redirect_to root_path
+      case @user.role
+        when "serviceowner"
+          redirect_to new_user_service_path(@user)
+        when "propertyowner"
+          redirect_to new_user_property_path(@user)
+        when "employee"
+          redirect_to select_employer_user_path(@user)
+        else
+          redirect_to root_path
+      end
     else
       flash[:error] = "Couldn't create user."
-      render :action => 'new' #NEED TO MAINTAIN ROLE PARAMS HERE
+      render :action => 'new'
     end
   end
 
@@ -35,13 +44,23 @@ class UsersController < ApplicationController
 
 
   def update
-    #@user = current_user
     if @user.update_attributes(params[:user])
       flash[:success] = "Successfully updated user."
       redirect_to root_path
     else
       flash[:error] = "Couldn't update user."
       render :action => 'edit'
+    end
+  end
+
+  def update_employer
+    if @user.update_attributes(params[:user])
+      flash[:success] = "Successfully updated your employer."
+      @user.update_attribute(:new_account, false) if @user.new_account == true
+      redirect_to root_path
+    else
+      flash[:error] = "Couldn't update your employer. Please try again."
+      render :action => 'select_employer'
     end
   end
 
@@ -56,6 +75,7 @@ class UsersController < ApplicationController
     redirect_to root_path
   end
 
-
+  def select_employer
+  end
 
 end

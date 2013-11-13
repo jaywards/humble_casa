@@ -79,7 +79,7 @@ HumbleCasa::Application.configure do
     domain: 'humblecasa.com',
     authentication: 'plain',
     enable_starttls_auto: true,
-    user_name: 'jason@humblecasa.com',
-    password: '4INFO4life'
+    user_name: ENV["MAILER_USER_NAME"],
+    password: ENV["MAILER_PASSWORD"]
   }
 end

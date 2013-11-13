@@ -14,7 +14,7 @@ class PropertiesController < ApplicationController
 			@time_zone = Timezone::Zone.new :latlon => [@property.location.latitude, @property.location.longitude]
 			if @property.update_attribute(:time_zone, @time_zone.zone)
 				flash[:success] = "Property created."
-				redirect_to root_path(message: "welcome")
+				redirect_to add_payment_info_property_path(@property)
 			else
 				flash[:error] = "Property created but there was an issue finding the time zone."
 			end
@@ -27,6 +27,7 @@ class PropertiesController < ApplicationController
 
 	def new
 		@property = Property.new
+		@user = current_user
 	end
 
 	def destroy
@@ -41,6 +42,32 @@ class PropertiesController < ApplicationController
       		format.html 
       		format.js
       	end
+	end
+
+	def update_with_card
+     	if @property.update_attributes(params[:property]) && @property.update_payment_info && @property.create_assignments_customers
+	   		flash[:success] = "Successfully updated payment details"	      
+			if @property.new_property
+				@property.user.update_attribute(:new_account, false)
+				@property.update_attribute(:new_property, false)
+				redirect_to root_path(message: "welcome")
+			else
+		    	redirect_to root_path	    
+	    	end
+    	else
+    		flash[:error] = "Couldn't update your payment info at this time. Please try again."
+  			render :action => 'edit_payment_info'
+  		end
+    end
+
+    def update_with_assignments
+    	if @property.update_attributes(params[:property]) && @property.create_assignments_customers
+			flash[:success] = "Successfully updated registered service providers."	      
+	    	redirect_to root_path	    
+		else
+			flash[:error] = "Couldn't update your service providers. Please try again."
+  			render :action => 'assign_services'
+		end
 	end
 
 	def update
@@ -76,11 +103,6 @@ class PropertiesController < ApplicationController
 	end
 
 	def assign_services
-		#render action: "assign_services"
-		respond_to do |format|
-      		format.html 
-      		format.js
-      	end
 	end
 
 
@@ -92,6 +114,12 @@ class PropertiesController < ApplicationController
 	
 	def show
 		@property = Property.find_by_id(params[:id])
+	end
+
+	def add_payment_info
+	end
+
+	def edit_payment_info
 	end
 
 end

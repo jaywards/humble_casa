@@ -1,13 +1,22 @@
 HumbleCasa::Application.routes.draw do
-  resources :user_sessions
   
+  resources :user_sessions
+  resources :charges
   resources :users do
+    member { put :update_employer }
+    member do
+      get 'select_employer'
+    end
     resources :properties, :services, :service_zips
   end
   
   resources :properties do
+    member { put :update_with_card }
+    member { put :update_with_assignments }
     member do
       get 'assign_services'
+      get 'add_payment_info'
+      get 'edit_payment_info'
     end
     resources :services do 
       member do 
@@ -18,8 +27,14 @@ HumbleCasa::Application.routes.draw do
   
   resources :services do
     member { post :rate }
+    member { put :update_with_card }
+    member { put :save_with_account }
     member do
       get 'approve_employee'
+      get 'add_payment_info'
+      get 'edit_payment_info'
+      get 'add_bank_account'
+      get 'edit_bank_account'
     end
     resources :properties do
       member do
@@ -41,6 +56,7 @@ HumbleCasa::Application.routes.draw do
   end
 
   resources :service_requests do
+    member { put :save_with_completed}
     member do
       get 'assign_to_employee'
       get 'complete_request'
@@ -54,6 +70,7 @@ HumbleCasa::Application.routes.draw do
   match '/business', to: 'static_pages#business', :as => :business
   match '/pricing_plans', to: 'static_pages#pricing_plans', :as => :pricing_plans
   match '/feature_tour', to: 'static_pages#feature_tour', :as => :feature_tour
+  match '/stripe_signup', to: 'static_pages#stripe_signup', :as => :stripe_signup
 
   root to: 'static_pages#home'
 
@@ -65,6 +82,10 @@ HumbleCasa::Application.routes.draw do
   get "static_pages/contact_us"
   get "static_pages/careers"
   get "static_pages/business"
+  get "static_pages/stripe_signup"
+
+  mount StripeEvent::Engine => '/stripehandler'
+
   
   # The priority is based upon order of creation:
   # first created -> highest priority.

@@ -1,0 +1,7 @@
+<%= provide(:title, 'Register Property') %>
+<% if @property.user.new_account %>
+	<h2 class="property-payment-form">New Property Owner account:<br>Provide your billing details (step 3 of 3)</h2>
+<% else %>
+	<h2 class="property-payment-form">Register a property:<br>Provide your billing details (step 2 of 2)</h2>
+<% end %>
+<%= render 'properties/property_payment_form' %>

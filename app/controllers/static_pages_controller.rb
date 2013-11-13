@@ -9,12 +9,16 @@ class StaticPagesController < ApplicationController
       
       if @user.role == "propertyowner"
 
-        @property = @user.properties.build
-        @property_listings = @user.user_properties.sort_by { |listing| listing.created_at}
-    
+        #@property = @user.properties.build
+        @property_listings = @user.properties.sort_by { |listing| listing.created_at}
+        @property_listings.each do |l|
+          l.check_status
+        end
+        
       elsif @user.role == "serviceowner"
     
         @business = @user.business
+        @business.check_status
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
         #@customers_report = CustomersReport.new(service_id: @business.id)
@@ -39,7 +43,7 @@ class StaticPagesController < ApplicationController
 
       elsif @user.role == "employee"
         
-        @employer = @user.services.first
+        @employer = @user.employer
         if !@employer.nil?
           if !(@service_request_listings = @user.service_requests).empty?
             @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
@@ -75,6 +79,20 @@ class StaticPagesController < ApplicationController
   end
 
   def careers
+  end
+
+  def stripe_signup
+    @service = current_user.business
+    @user = current_user
+    if params[:state] == "1234"
+      code = params[:code]
+      customer = ActiveSupport::JSON.decode(`curl -X POST https://connect.stripe.com/oauth/token -d client_secret=#{ENV['STRIPE_API_KEY']} -d code=#{code} -d grant_type=authorization_code`)
+      @service.update_attributes(
+        :stripe_access_token => customer['access_token'], 
+        :stripe_refresh_token => customer['refresh_token'],
+        :stripe_publishable_key => customer['stripe_publishable_key'],
+        :stripe_user_id => customer['stripe_user_id'])
+    end
   end
 
   #private

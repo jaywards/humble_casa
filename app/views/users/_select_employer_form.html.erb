@@ -1,0 +1,35 @@
+<%= simple_form_for @user, :url => {:action => "update_employer"} do |f| %>
+	<% if !(@services = Service.all).empty? %>
+        <%= content_tag "div", id: "services", data: {services: Service.all.sort_by {|a| a.name }} do %><% end %>
+	<% end %> 
+    <div class="row-fluid">
+		<div class="span2"></div> 
+		<div class="span2"><center>
+		    <%= label_tag :employer_code, "Employer code" %>
+		    <%= text_field_tag :employer_code %>
+    	</center></div>
+    	<div class="span3"><center><br><b> - or - </b></center></div>
+   		<div class="span5">
+		   	<div>
+			   	<%= label_tag :employer_state, "Employer state" %>
+			    <%= select_tag(:employer_state, options_for_select(@user.us_states), include_blank: true) %>
+		    </div>
+			<div>
+				<%= label_tag :employer_state, "Select your employer" %>
+			    
+			    <%= f.simple_fields_for :employment do |employment| %>
+			        <%= employment.association :service, collection: @sorted_services, as: :select, label: false, include_blank: true %>
+			    <% end %>
+			</div>
+		</div>
+	</div>
+	<br>
+	<br>
+	<div><center>
+	    <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
+	        Save employer
+		</button>
+	    &nbsp       
+	    <%= link_to "Cancel", root_path, class: "btn" %>
+	</center></div>
+<% end %>

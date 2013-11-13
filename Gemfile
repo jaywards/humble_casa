@@ -25,6 +25,10 @@ gem 'icalendar'
 gem 'dossier'
 gem 'masked_input-rails'
 gem 'activerecord-reputation-system', require: 'reputation_system'
+gem 'stripe'
+gem 'stripe_event'
+gem 'ultrahook'
+gem 'figaro'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

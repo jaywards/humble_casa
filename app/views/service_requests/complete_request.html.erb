@@ -1,4 +1,4 @@
-<%= simple_form_for @service_request, html: {multipart: true} do |f| %>
+<%= simple_form_for @service_request, :url => {:action => "save_with_completed"}, html: {multipart: true} do |f| %>
 	<% Time.zone = @service_request.time_zone %>
 	<%= provide(:title, 'Complete service request') %>
 	<h2 class="complete-request-form">Complete Service Request</h2>

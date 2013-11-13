@@ -6,7 +6,7 @@
 				<th>Employee Name</th>
 				<th>Employee Email</th>
 				<th>Employee Phone</th>
-				<th></th>
+				<th>Status</th>
 			</tr>
 		</thead>		
 		<tbody>
@@ -23,8 +23,12 @@
 					</td>
 					
 					<td>
-						<% if current_user != employee %>
-							<%= link_to "delete", employee, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+						<% if @business.service_active %>
+							<% if current_user != employee %>
+								<%= link_to "delete", employee, method: :delete, class: "btn btn-mini btn-warn", confirm: "Are you sure?" %>
+							<% end %>
+						<% else %>
+							<z class="business-inactive">Service inactive - no actions available</z>
 						<% end %>
 					</td>
 				</tr>

@@ -18,4 +18,5 @@ module ServiceRequestsHelper
 		User.find_by_id(WorkAssignment.where(service_request_id: service_request.id).first.user_id) 
 	end
 
+
 end
