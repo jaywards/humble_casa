@@ -69,7 +69,7 @@ module HumbleCasa
         c.username = 'jaywards'
     end
 
-    config.middleware.use Rack::SslEnforcer, :only => ['/stripe_signup', %r{^/edit_payment_info, %r{^/add_payment_info}]
+    config.middleware.use Rack::SslEnforcer, :only => ['/stripe_signup', %r{^/edit_payment_info}, %r{^/add_payment_info}]
 
   end
 end
