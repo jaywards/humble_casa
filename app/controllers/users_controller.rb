@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  ffilter_resource_access
+  filter_resource_access
   force_ssl
 
   def new
