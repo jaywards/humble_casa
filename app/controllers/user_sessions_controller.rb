@@ -1,5 +1,6 @@
 class UserSessionsController < ApplicationController
   filter_resource_access
+  force_ssl
   
   def new
     @user_session = UserSession.new

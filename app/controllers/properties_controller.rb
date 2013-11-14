@@ -1,5 +1,6 @@
 class PropertiesController < ApplicationController
 	filter_resource_access
+	force_ssl
 	
 	def create
 		@property = current_user.properties.build(params[:property])

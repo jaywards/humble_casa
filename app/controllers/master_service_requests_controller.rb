@@ -1,5 +1,6 @@
 class MasterServiceRequestsController < ApplicationController
 	filter_resource_access
+	force_ssl
 
 	def create
 		@master_request = MasterServiceRequest.new(params[:master_service_request])

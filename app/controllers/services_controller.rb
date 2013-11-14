@@ -1,6 +1,7 @@
 class ServicesController < ApplicationController
 	filter_resource_access
-
+	force_ssl
+	
 	def create
 		@user = current_user	
 		@service = @user.build_business(params[:service])

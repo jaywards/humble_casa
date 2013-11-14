@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
-  filter_resource_access
+  ffilter_resource_access
+  force_ssl
 
   def new
     if !current_user.nil?

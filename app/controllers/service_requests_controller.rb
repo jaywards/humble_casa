@@ -1,5 +1,6 @@
 class ServiceRequestsController < ApplicationController
-
+	filter_resource_access
+	force_ssl
 
 	def show
 		@service_request = ServiceRequest.find_by_id(params[:id])
