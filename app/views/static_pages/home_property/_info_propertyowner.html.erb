@@ -15,7 +15,7 @@
 			<%= simple_form_for @user_session, :validate => true do |f| %>
 			  	<%= f.input :email %>
 				<%= f.input :password %>
-				<button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
+				<button class="btn btn-small btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
 					<i class="icon-ok-sign icon-white"></i> Login
 				</button>
 			<% end %>
@@ -23,22 +23,31 @@
 	</div>
 </div>
 
-<div class="row-fluid">
-	<div class="span12" id="new-to-site">
-		<center>
-			<h5>
-				New to the site? It's completely free for homeowners! Sign-up for a new property owner account:
-			</h5>
-			<%= link_to new_user_path(role: "propertyowner"), class: "btn btn-primary" do %>
-				<i class="icon-user icon-white"></i> New Property Owner Account
-			<% end %>
-			<h5>Or do you own a company that provides home maintainence services?
-				We can help you to connect with your customers, manage your workforce, and simplify both invoicing and payroll. Visit our <%= link_to "Service Provider page", business_path %> to get more details and sign up.
-			</h5>
-		</center>
+<hr>
+
+<center>
+	<div class="row-fluid">
+		<div class="span6">
+			<p>New to the site? It's completely free for homeowners! Manage all your home services in one place - schedule, review, and pay online. Sign-up for a new property owner account:&nbsp
+			</p>
+		</div>
+		<div class="span6">	
+			<p>Or do you own a company that provides home maintainence services? We can help you to connect with your customers, manage your workforce, and streamline invoicing and payments. Visit our <%= link_to "Service Provider page", business_path %> to get more details or create your business acount:
+			</p>
+		</div>
 	</div>
-</div>
-<br>
+	<div class="row-fluid">
+		<div class="span6">
+			<%= link_to "Create Property Account", new_user_path(role: "propertyowner"), class: "btn btn-mini btn-warning" %>
+		</div>
+		<div class="span6">
+			<%= link_to "Create Service Account", new_user_path(role: "serviceowner"), class: "btn btn-mini btn-warning" %>
+		</div>
+	</div>
+</center>
+
+<hr>
+
 <div class="row-fluid">
 	<div class="span12">
 		<p>

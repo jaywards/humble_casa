@@ -29,6 +29,7 @@ gem 'stripe'
 gem 'stripe_event'
 gem 'ultrahook'
 gem 'figaro'
+gem 'rack-ssl-enforcer'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
