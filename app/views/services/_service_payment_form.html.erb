@@ -5,15 +5,26 @@
 			<p>Your account will need a credit card for HumbleCasa to bill you. This billing information is required since we only accept payment via credit card. We will bill you on a monthly basis.</p>
 		</div>
 		<div class="span9">		
-			<div class="field">
+			
+			<% if !@service.last_four.nil? && !@service.last_four.empty? %>
+				<h5>Current Card on File for Business</h5>
+				<p>Card on file for <%= @service.name %>: <%= @service.card_type %> xxxx-xxxx-xxxx-<%= @service.last_four %></p>
+				<hr>
+			<% end %>		
+						
+			<h5>Register a New Card for Property</h5>
+
+
+
+			<div>
 			    <%= label_tag :card_number, "Credit Card Number" %>
 			    <%= text_field_tag :card_number, nil, name: nil %>
 			</div>
-			<div class="field">
+			<div>
 			    <%= label_tag :card_code, "Security Code on Card (CVV)" %>
 				<%= text_field_tag :card_code, nil, name: nil %>
 			</div>
-			<div class="field">
+			<div>
 			    <%= label_tag :card_month, "Card Expiration" %>
 			    <%= select_month nil, {add_month_numbers: true}, {name: nil, id: "card_month"} %>
 			    <%= select_year nil, {start_year: Date.today.year, end_year: Date.today.year+15}, {name: nil, id: "card_year"} %>

@@ -91,4 +91,54 @@ class Service < ActiveRecord::Base
     end
   end
 
+  def unfinalized
+    self.assignments.find_all {|x| x.confirmed == false || x.cost == 0}
+  end
+
+  def uncompleted_count
+    self.service_requests.find_all { |x| x.completed == false}.size
+  end
+
+  def unassigned
+    @requests = self.service_requests.find_all {|x| x.assigned == false}
+    @requests.sort_by {|x| x.first_scheduled }
+    return @requests 
+  end
+
+  def unscheduled
+    @requests = self.service_requests.find_all {|x| x.assigned == true && x.scheduled == false && x.completed == false}
+    @requests.sort_by {|x| x.first_scheduled}
+    return @requests
+  end
+
+  def uncompleted
+    @requests = self.service_requests.find_all {|x| x.completed == false && x.scheduled == true}
+    @requests.sort_by {|x| x.first_scheduled}
+    return @requests
+  end
+
+  def new_employees
+    self.employments.find_all {|x| x.approved == nil}
+  end
+
+  def new_assignments(user)
+    self.assignments.find_all {|x| x.updated_at > user.last_login_at} 
+  end
+
+  def new_completed(user)
+    self.service_requests.find_all {|x| x.completed == true && x.updated_at > user.last_login_at} 
+  end
+
+  def today_jobs
+    @requests = self.service_requests.find_all {|x| x.completed == false && x.scheduled == true && x.assigned == true && x.first_scheduled == Date.today}
+    @requests.sort_by {|x| x.first_scheduled}
+    return @requests
+  end
+
+  def charged_srs
+    @charged = self.service_requests.find_all {|x| x.charge_date != nil && x.charge_date > Date.today - 7.days }
+    @charged.sort_by {|x| x.charge_date}
+    return @charged
+  end
+
 end

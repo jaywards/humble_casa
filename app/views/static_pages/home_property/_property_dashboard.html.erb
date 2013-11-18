@@ -1,3 +1,4 @@
+<div class="dashboard-outside">
 <div class="dashboard">
 	<center><h4>Property Dashboard</h4></center>
 	<% @property_listings.sort_by { |listing| listing.created_at}.each do |listing| %>
@@ -88,4 +89,5 @@
 	<% if @property_listings.size == 0 %>
 		No properties registered.
 	<% end %>
+</div>
 </div>

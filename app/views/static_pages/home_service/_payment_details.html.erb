@@ -1,10 +1,10 @@
-<h5>Payment and billing details:</h5>
+<b>Payment and billing details:</b>
 <div>
 	<% if !@business.nil? %>
 		<ul>
 			<li>
 				<% if @business.payment_ok %>
-					Credit card on file for this service:<br><%= @business.card_type %> ending in <%= @business.last_four %><br>		
+					Credit card on file for this service: <%= @business.card_type %> ending in <%= @business.last_four %>		
 				<% else %>
 					No credit card on file for billing. Your service is not active and will not be able to sign-up new customers or accept service requests from existing customers 
 				<% end %>
@@ -18,7 +18,7 @@
 						not enabled. Your service is not active and will not be able to sign-up new customers or accept service requests from existing customers.
 					<% end %>
 				</b>
-				<%= link_to "(edit)", stripe_signup_path %>
+				<%= link_to "(edit)", edit_stripe_path %>
 			</li>
 	<% end %>
 </div>

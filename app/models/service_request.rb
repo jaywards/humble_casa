@@ -35,11 +35,13 @@ class ServiceRequest < ActiveRecord::Base
           'property_id' => self.property.id.to_s, 'service_request_id' => self.id}
       )
       self.charge_id = charge.id
+      self.charge_date = Date.today
       save!
     end
     rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while charging for this service request: #{e.message}"
-    errors.add :base, "There was a problem with the creating the charge for this service request. HumbleCasa will resolve it and update you on the status."
+    errors.add :base, "There was a problem with the creating the charge for this service request. HumbleCasa will 
+    resolve it and update you on the status."
     false
   end
           

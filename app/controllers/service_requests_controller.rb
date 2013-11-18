@@ -1,5 +1,4 @@
 class ServiceRequestsController < ApplicationController
-	filter_resource_access
 	force_ssl
 
 	def show

@@ -1,0 +1,26 @@
+<% if params[:state] == "1234" %>
+	Great, now you are all setup with Stripe! You can always return to the Stripe website to view your data and charge details, although we have most of the important invoicing and billing information you need in the HumbleCasa Reporting section of your Business Dashboard. Click continue to return to your Business Dashboard and take your next steps.
+	<br>
+	<br>
+	<center>
+	<%= link_to root_path, class: "btn btn-primary" do%>
+		Continue
+	<% end %>
+	</center>
+<% elsif params[:error] == "access_denied" %>
+	Sorry, if you don't sign-up with Stripe to process credit card payments we can't include you on HumbleCasa. The ability to pay via credit card is one of the key selling points for property owners who join HumbleCasa. Until you create a Stripe Connect account, your business will be left in status "inactive" and you will not able to sign-up new customers or schedule service requests for existing customers.
+	<br>
+	<center><%= link_to "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_2uAqWx6ZePRpbLimKp5dTYBo0FzyaQNj&scope=read_write&state=1234&stripe_user[email]=" + @service.email do %>
+		<%= image_tag("blue.png", :alt => "Connect with Stripe") %>
+	<% end %></center>
+<% else %>
+	<p>HumbleCasa requires all service providers to accept credit card payments and we ultilize a service called Stripe Connect to manage this.</p>
+	<p>Stripe Connect allows you to create your own account with Stripe (the sign-up process is simple) and immediately begin accepting credit card payments through HumbleCasa. Stripe is 100% secure, has reasonable card processing fees, and from your customer's perspective, runs entirely in the background.</p>
+	<p>After you sign-up for a Stripe account, your customers will be able to pay you directly via credit card. Each time you complete the work and submit a charge for a service request, we will charge your customer's credit card.  Stripe will process the payment and within 7 days transfer the funds into your bank account. HumbleCasa does not take a cut of your payments, although Stripe charges 2.9% plus $.55 per transaction.</p>
+	<br>
+	<p>Click the button below to sign-up. It will take you to Stripe's secure website to create your account and then send you back to HumbleCasa to start managing your business!</p>
+	<center><%= link_to "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_2uAqWx6ZePRpbLimKp5dTYBo0FzyaQNj&scope=read_write&state=1234&stripe_user[email]=" + @service.email  do %>
+		<%= image_tag("blue.png", :alt => "Connect with Stripe") %>
+	<% end %></center>
+
+<% end %>

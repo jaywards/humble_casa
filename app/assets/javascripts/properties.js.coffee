@@ -44,51 +44,40 @@ property =
 $ ->
   if $('body').hasClass("properties") && $(".register-services").length
     $.fn.raty.defaults.path = "http://www.humblecasa.com/assets"
-    initializeRegisterServiceForm()  
+    initializeRegisterServiceForm()
 
 
 initializeRegisterServiceForm = ->
-  id = 0
-  while id < 5
-    $('#confirmed' + id).hide()
-    $('#star' + id).raty
+  counter = 0
+  while counter < 5
+    $('#confirmed' + counter).hide()
+    $('#star' + counter).raty
       readOnly: true
       score: ->
         $(this).attr "data-score"
-    if $('#property_assignments_attributes_' + id + '_service_id').val() == ""
-      $('#star' + id).hide()
-    $('#property_assignments_attributes_' + id + '_service_id').change ->
-      selectAction(id, $(this).val())
-    id++
-   
-selectAction = (id, service) ->
-  if service == ""
-    $('#service-description-' + id).text ""
-    $('#confirmed' + id).hide(400)
-    $('#star' + id).hide(400) 
-  else
-      $('#confirmed' + id).show(400)
-      $.ajax
+    if $('#property_assignments_attributes_' + counter + '_service_id').val() == ""
+      $('#star' + counter).hide()
+    $('#property_assignments_attributes_' + counter + '_service_id').change ->
+      service = $(this).val()
+      id = $(this).attr('id').match(/[0-9]+/)
+      if service == ""
+        $('#service-description-' + id).text ""
+        $('#confirmed' + id).hide(400)
+        $('#star' + id).hide(400) 
+      else
+        $('#confirmed' + id).show(400)
+        $.ajax
           url: "/services/" + service
           type: "get"
           dataType: "html"
           processData: false
           success: (data) ->
-                if data is "record_not_found"
-                  alert "Service description not found"
-                else
-                    content = data.split("|")
-                    $('#star' + id).raty "set",
-                      score: content[0]
-                    $('#star' + id).show(400)
-                    $('#service-description-' + id).text content[1]
-               $.ajax
-                 url: "/services/" + service
-                 type: "get"
-                 dataType: "html"
-                 processData: false
-                 success: (data) ->
-                   if data is "record_not_found"
-                     alert "Service description not found"
-                   else
-                     $('#service-description-' + id).text data
+            if data is "record_not_found"
+              alert "Service description not found"
+            else
+              content = data.split("|")
+              $('#star' + id).raty "set",
+                score: content[0]
+              $('#star' + id).show(400)
+              $('#service-description-' + id).text content[1]
+    counter++

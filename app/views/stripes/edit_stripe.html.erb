@@ -1,0 +1,8 @@
+<%= provide(:title, 'Register with Stripe') %>
+<h2 class="static-stripe">Register with Stripe</h2>
+
+<% if !@service.stripe_access_token.nil? && !@service.stripe_access_token.empty? %>
+	<b>Note:</b> You are already registered with Stripe. You should make sure Stripe has you logged in to your current account and make updates on that account. Click "Connect with Stripe" below to contine.
+	<hr>
+<% end %>
+<%= render "stripe_content" %>

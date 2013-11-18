@@ -12,7 +12,7 @@ authorization do
       :select_employer, :update_employer]
     has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]
     has_permission_on :service_requests, :to => [:show, :destroy, :view_completed, :index, :complete_request, 
-      :assign_to_employee, :update]
+      :assign_to_employee, :update, :show]
   end
   
   role :guest do
@@ -44,7 +44,7 @@ authorization do
       :provide_estimate, :add_payment_info, :edit_payment_info, :update_with_card, :add_bank_account, 
       :edit_bank_account, :save_with_account]
     has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]
-    has_permission_on :service_requests, :to => [:complete_request, :assign_to_employee, :update]
+    has_permission_on :service_requests, :to => [:complete_request, :assign_to_employee, :update, :show]
     has_permission_on :properties, :to => [:new, :create, :show]
   end
 

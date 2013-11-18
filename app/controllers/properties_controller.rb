@@ -62,7 +62,7 @@ class PropertiesController < ApplicationController
     end
 
     def update_with_assignments
-    	if @property.update_attributes(params[:property]) && @property.create_assignments_customers
+    	if @property.update_attributes(params[:property]) && @property.create_assignments_customers && @property.remove_invalid_srs
 			flash[:success] = "Successfully updated registered service providers."	      
 	    	redirect_to root_path	    
 		else

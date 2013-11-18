@@ -1,0 +1,15 @@
+<h4>Client and Property details:</h4>
+<%= @property.user.first_name %> <%= @property.user.last_name %><br>
+<%= @property.user.primary_phone %><br>
+<%= @property.user.email %><br>
+<br>
+<%= @property.name %><br>
+<%= @property.address1 %><br>
+<% if !@property.address2.empty? %>
+  <%= @property.address2 %><br>
+<% end %>
+<%= @property.city %>, <%= @property.state %> <%= @property.zip %><br>
+<%= @property.phone %>
+<% if !@property.instructions.empty? %>
+  <br>Special instructions for this property: <%= @property.instructions %>
+<% end %>

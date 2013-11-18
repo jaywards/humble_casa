@@ -118,4 +118,12 @@ class Property < ActiveRecord::Base
     end
   end
 
+  def remove_invalid_srs
+    self.assignments.each do |a|
+      @invalid_srs = self.service_requests.find_all {|x| x.completed == false && x.service_id != a.service_id}
+      @invalid_srs.each do |sr|
+        sr.destroy
+      end
+    end   
+  end
 end

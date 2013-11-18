@@ -9,16 +9,15 @@ class StaticPagesController < ApplicationController
       
       if @user.role == "propertyowner"
 
-        #@property = @user.properties.build
         @property_listings = @user.properties.sort_by { |listing| listing.created_at}
         @property_listings.each do |l|
-          l.check_status
+          l.check_status if !l.nil?
         end
         
       elsif @user.role == "serviceowner"
     
         @business = @user.business
-        @business.check_status
+        @business.check_status if !@business.nil?
         @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
         #@customers_report = CustomersReport.new(service_id: @business.id)
@@ -43,8 +42,7 @@ class StaticPagesController < ApplicationController
 
       elsif @user.role == "employee"
         
-        @employer = @user.employer
-        if !@employer.nil?
+        if !(@employer = @user.employer).nil?
           if !(@service_request_listings = @user.service_requests).empty?
             @sorted_service_requests = @service_request_listings.sort_by {|a| a.created_at }
           end

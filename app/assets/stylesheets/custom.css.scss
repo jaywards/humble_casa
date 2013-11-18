@@ -28,7 +28,7 @@ textarea {
 }
 
 /* typography */
-h1, h2, h3, h4, h6 {
+h1, h2, h3, h6 {
 	line-height: 1;
 }
 h1 {
@@ -44,6 +44,9 @@ h2 {
 	text-align: center;
 	font-weight: normal;
 	color: rgb(0,97,152);
+}
+h4 {
+	line-height: 1.1;
 }
 h5 {
 	line-height: 1.3;
@@ -201,12 +204,6 @@ footer {
 	line-height: 38px;
 }
 
-.simple_form div.service_service_zips_zip input.string.optional {
-	width: 200px;
-	vertical-align: top;
-}
-
-
 #service_name, 
 #property_name, 
 #service_city,
@@ -241,6 +238,10 @@ footer {
 .simple_form div.service_service_zips_zip .control-label  {
 	text-align: center;
 	width: 100px;
+}
+
+.simple_form div.service_service_zips_zip {
+	margin-bottom: 0px;
 }
 
 .simple_form div.service_request_work_assignment_user label.select.optional.control-label  {
@@ -326,6 +327,29 @@ footer {
 	color: black;
 	position: relative;
 }
+#service-tabs li {
+	float: left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#service-tabs a {
+	display: block;
+	text-decoration: none;
+	padding: 3px 5px;
+	background-color: rgb(241,167,16);
+	color: black;
+	margin-right: 10px;
+	border: 1px solid rgb(153,153,153);
+	margin-bottom: -1px;
+	color: white;
+}
+#service-tabs li.active a {
+	border-bottom: 1px solid white;
+	background-color: white;
+	color: black;
+	position: relative;
+}
 .tab-pane.active {
 	clear: both;
 	margin-bottom: 25px;	
@@ -340,11 +364,35 @@ footer {
 	text-align: right;
 }
 
-.dashboard {
-	border: 1px solid rgb(0,97,152);
+.dashboard-inside {
+	border: 1px solid lightgrey;
 	padding: 5px;
-	background: lightgrey;
+	background-color: #F9F9F9;
+	background-image: linear-gradient(#FFFFFF,​ #F2F2F2);
+	background-repeat: repeat-x;
 }
+
+.dashboard-outside {
+	background-color: #EEEEEE;
+	padding: 15px;
+}
+
+.panel-inside {
+	border: 1px solid rgb(241,167,16);
+	padding: 8px;
+	background-color: #F9F9F9;
+	background-image: linear-gradient(#FFFFFF,​ #F2F2F2);
+	background-repeat: repeat-x;
+}
+
+.panel-outside {
+	background-color: #EEEEEE;
+	padding: 8px;
+	margin: 2px;
+}
+
+
+
 
 #completed-service-request-table {
 	font-size: .9em;

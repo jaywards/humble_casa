@@ -72,6 +72,7 @@ HumbleCasa::Application.routes.draw do
   match '/feature_tour', to: 'static_pages#feature_tour', :as => :feature_tour
   
   match '/stripe_signup', to: 'stripes#stripe_signup', :as => :stripe_signup
+  match '/edit_stripe', to: 'stripes#edit_stripe', :as => :edit_stripe
 
   root to: 'static_pages#home'
 
@@ -84,6 +85,7 @@ HumbleCasa::Application.routes.draw do
   get "static_pages/careers"
   get "static_pages/business"
   get "stripes/stripe_signup"
+  get "stripes/edit_stripe"
 
   mount StripeEvent::Engine => '/stripehandler'
 

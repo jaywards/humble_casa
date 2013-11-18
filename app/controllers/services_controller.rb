@@ -14,7 +14,6 @@ class ServicesController < ApplicationController
 			@time_zone = Timezone::Zone.new :latlon => [@service.location.latitude, @service.location.longitude]
 			@service.update_attribute(:time_zone, @time_zone.zone)
 			@user.employment.update_attributes(:user_id => @user.id, :service_id => @service.id, :approved => true)
-			@user.update_attribute(:new_account, false)
 			flash[:success] = "Business created!"
 			redirect_to add_payment_info_service_path(@service)
 		else

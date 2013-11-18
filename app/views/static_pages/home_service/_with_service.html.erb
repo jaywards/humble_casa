@@ -1,7 +1,6 @@
 <h2><%= @business.name %>: Business Dashboard</h2>
 
 <%= render 'static_pages/home_service/service_welcome_message' %>
-<hr>
 
 <%= render 'static_pages/home_service/service_dashboard' %>
 
@@ -9,7 +8,7 @@
 
 <div class="tabcontainer"> 
 	<div id="content">
-    	<ul id="tabs" class="nav nav-tabs" data-tabs="tabs">	
+    	<ul id="service-tabs" class="nav nav-tabs" data-tabs="tabs">	
 	    	<li class="active"><a href="#calendar-tab" data-toggle="tab">Calendar View</a></li>
 	    	<li><a href="#customers-tab" data-toggle="tab">Customers</a></li>
 	    	<li><a href="#business-tab" data-toggle="tab">Business Details</a></li>
@@ -28,29 +27,31 @@
 	    	</li>
 	    </ul>
  
-	    <div id="my-tab-content" class="tab-content">
+	    <div id="service-tab-content" class="tab-content">
 	    	<div class="tab-pane active" id="calendar-tab">
 				<%= render 'static_pages/home_service/service_calendar_view' %>
 			</div>
 			<div class="tab-pane" id="business-tab">
-				<%= render @business %>
-				<br>
-				Status: 
-				<% if @business.service_active %>
-					Active
-				<% else %>
-					<b><z class="business-inactive">Inactive</z></b> - please see Payment and Billing details below.
-				<% end %></b>
-				<%= render 'static_pages/home_service/service_zips' %>
-				<%= link_to edit_service_path(@business), class: "btn btn-mini" do%>
-					<i class="icon-edit"></i> Edit Business
-				<% end %>
-				&nbsp
-				<%= link_to @business, class: "btn btn-mini", method: :delete, confirm: "Are you sure? This will delete your association with all of your existing customers.", title: @business.name do%>
-					<i class="icon-trash"></i> Delete Service
-				<% end %>
-				<hr>
-				<%= render 'static_pages/home_service/payment_details' %>
+				<div class="row-fluid">
+					<div class="span6"%>
+						<%= render @business %>
+						<br>
+						Status: 
+						<% if @business.service_active %>
+							Active
+						<% else %>
+							<b><z class="business-inactive">Inactive</z></b> - please see Payment and Billing details below.
+						<% end %></b>
+						<%= render 'static_pages/home_service/service_zips' %>
+						<%= link_to "edit", edit_service_path(@business)%>
+						 | 
+						<%= link_to "delete", @business, method: :delete, confirm: "Are you sure? This will delete your association with all of your existing customers.", title: @business.name %>
+					
+					</div>
+					<div class="span6">
+						<%= render 'static_pages/home_service/payment_details' %>
+					</div>
+				</div>
 			</div>
 			<div class="tab-pane" id="customers-tab">
 				<%= render 'static_pages/home_service/all_customers' %>
