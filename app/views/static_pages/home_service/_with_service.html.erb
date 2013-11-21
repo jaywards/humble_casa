@@ -35,6 +35,9 @@
 				<div class="row-fluid">
 					<div class="span6"%>
 						<%= render @business %>
+						<% if !@business.business_code.nil? %>
+							<br>Business code: <%= @business.business_code %>
+						<% end %>
 						<br>
 						Status: 
 						<% if @business.service_active %>

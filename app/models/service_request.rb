@@ -44,7 +44,30 @@ class ServiceRequest < ActiveRecord::Base
     resolve it and update you on the status."
     false
   end
-          
+  
+  def add_charge_to_service_invoice
+    if valid?
+      Stripe.api_key = ENV['STRIPE_API_KEY']
+      item = Stripe::InvoiceItem::create(
+        customer: self.service.stripe_customer_token,
+        amount: 150,
+        currency: "usd",
+        description:  "Service on " + 
+          DateTime.parse(self.completed_date.to_s).in_time_zone(self.property.time_zone).strftime("%m/%d/%Y") +
+          " by " + self.service.name, 
+        metadata: {'type' => 'service_request', 'service_id' => self.service.id.to_s, 
+          'property_id' => self.property.id.to_s, 'service_request_id' => self.id}
+      )
+      self.invoice_id = item.id
+      self.invoice_date = Date.today
+      save!
+    end
+    rescue Stripe::InvalidRequestError => e
+    logger.error "Stripe error while charging the service for this service request: #{e.message}"
+    errors.add :base, "There was a problem with creating the invoice for this service request. HumbleCasa will 
+    resolve it and update you on the status."
+    false
+  end        
 
   def process_photos  
     if EXIFR::JPEG.new(self.service_photo_1.current_path).exif?
@@ -131,9 +154,26 @@ class ServiceRequest < ActiveRecord::Base
     master_request.update_attribute(:active_request_id, id)
   end
 
-  def mail_completed
-    ServiceMailer.service_completed(self).deliver
+  def mail_completed(charge_success)
+    if charge_success
+      ServiceMailer.service_completed(self).deliver
+    else
+      ServiceMailer.service_completed_charge_issue(self).deliver
+    end  
     self.update_attribute(:mailed_completed, true)
+    
+    if self.all_assigned || self.all_scheduled
+      @newSR_id = MasterServiceRequest.find_by_id(self.master_service_request_id).active_request_id
+      @newSR = ServiceRequest.find_by_id(@newSR_id)
+      if self.all_assigned
+        ServiceMailer.service_assigned(@newSR).deliver
+        @newSR.update_attribute(:mailed_assigned, true)
+      end
+      if self.all_scheduled
+        ServiceMailer.service_scheduled(@newSR).deliver
+        @newSR.update_attribute(:mailed_scheduled, true)
+      end
+    end
   end
 
   def mail_assigned
@@ -153,6 +193,18 @@ class ServiceRequest < ActiveRecord::Base
     self.mailed_created = true
     save!
   end 
+
+  def assignment
+    Assignment.find_by_service_id_and_property_id(self.service, self.property)
+  end
+
+  def reschedule(mr)
+    self.mailed_scheduled = false
+    self.scheduled = false
+
+    ServiceMailer.service_rescheduled(self, mr).deliver
+    
+  end
 
  WEEKDAYS = %w[Monday Tuesday Wednesday Thursday Friday]
 

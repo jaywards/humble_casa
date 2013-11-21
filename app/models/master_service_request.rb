@@ -65,6 +65,17 @@ class MasterServiceRequest < ActiveRecord::Base
     end
     self.first_scheduled = @next_scheduled
     save!
-  end 
+  end
+
+  def schedule_change_requiring_email(sr)
+    if sr.mailed_scheduled && sr.mailed_assigned
+      if self.onetime != sr.onetime || self.frequency != sr.frequency || self.service_end_date != sr.service_end_date || 
+        self.service_start_date != sr.service_start_date || self.service_month_day != sr.service_month_day || 
+        self.service_week_day != sr.service_week_day
+        return true
+      end
+    end
+    return false
+  end
 
 end

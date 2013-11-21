@@ -15,6 +15,7 @@ class ServicesController < ApplicationController
 			@service.update_attribute(:time_zone, @time_zone.zone)
 			@user.employment.update_attributes(:user_id => @user.id, :service_id => @service.id, :approved => true)
 			flash[:success] = "Business created!"
+			@service.mail_notification
 			redirect_to add_payment_info_service_path(@service)
 		else
 			flash[:error] = "Business couldn't be created."

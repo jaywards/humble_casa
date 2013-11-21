@@ -1,5 +1,5 @@
 class ServiceMailer < ActionMailer::Base
-  default from: "jason@humblecasa.com"
+  default from: "support@humblecasa.com"
   require 'icalendar'
   require 'date'
   include Icalendar
@@ -10,8 +10,8 @@ class ServiceMailer < ActionMailer::Base
     @service = @service_request.service
     @property = @service_request.property
 
-    if User.find_by_id(@service.user_id).notify?
-      mail to: @service.email, subject: "New service request"
+    if @service.user.notify?
+      mail to: @service.email, subject: @service.name + ": new service request"
     end
   end
  
@@ -21,10 +21,10 @@ class ServiceMailer < ActionMailer::Base
     @property = @service_request.property
     
     if @service_request.user.notify?
-      if @service_request.user == User.find_by_id(@service.user_id)
-        mail to: @service_request.service.email, subject: "Service request assigned"
+      if @service_request.user == @service.user
+        mail to: @service_request.service.email, subject: @service.name + ": service request assigned"
       else          
-        mail to: @service_request.user.email, subject: "Service request assigned"
+        mail to: @service_request.user.email, subject: @service.name + ": service request assigned"
       end
     end
   end
@@ -36,14 +36,44 @@ class ServiceMailer < ActionMailer::Base
     end
   end
 
+  def service_rescheduled(old_request, new_request)
+    @old_request = old_request
+    @service_request = new_request
+    @service = @old_request.service
+    @property = @old_request.property
+
+    if @old_request.user.notify?
+      mail to: @old_request.user.email, subject: old_request.service.name + ": service request rescheduled"
+    end
+  end
+
 
   def service_completed(service_request)
     @service_request = service_request
     @service = @service_request.service
     @property = @service_request.property
 
-    if @property.user.notify?
-       mail to: @property.user.email, subject: "Service request completed"
+    if @property.user.notify?  
+       mail to: @property.user.email, subject: @property.name + ": service request completed"
+    end
+  end
+
+  def service_completed_charge_issue(service_request)
+    @service_request = service_request
+    @service = @service_request.service
+    @property = @service_request.property
+
+    if @property.user.notify?  
+       mail to: @property.user.email, subject: @property.name + ": service request completed but unable to charge credit card"
+    end
+  end
+
+  def new_customer(assignment)
+    @service = assignment.service
+    @property = assignment.property
+
+    if service.user.notify?
+      mail to: @service.email, subject: @service.name + ": new client on HumbleCasa"
     end
   end
 

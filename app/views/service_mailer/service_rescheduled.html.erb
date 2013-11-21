@@ -1,0 +1,18 @@
+<%= render 'service_mailer/email_header', title: "HumbleCasa: Service Request Scheduled"%>
+
+<h2>A service request assigned to you for <%= @property.name %> has been edited by the property owner and may need to be rescheduled.</h2>
+<p>
+	<h4>Old schedule details:</h4>
+  	Scheduled date: <%= DateTime.parse(@old_request.first_scheduled.to_s).in_time_zone(@old_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %><br>
+</p>
+<p>
+	<h4>New request details</h4>
+  	<%= render 'service_mailer/request_details' %>
+</p>
+<p>
+  	<%= render 'service_mailer/service_details' %>
+</p>
+<br>
+<br>
+<%= render 'service_mailer/closing_to_service' %>
+<%= render 'service_mailer/email_footer' %>

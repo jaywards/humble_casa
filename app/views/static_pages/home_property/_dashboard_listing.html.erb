@@ -1,0 +1,18 @@
+<center><h5><%= listing.name %></h5></center>	
+<% if !listing.active %>
+	<hr>
+	This property is not currently active. <%= link_to "Update payment details", edit_payment_info_property_path(listing) %>
+<% else %>
+	<% if !listing.any_services %>
+		<hr>
+		No services available in your area. <%= link_to "Show my interest", assign_services_property_path(listing), class: "btn btn-mini" %>
+	<% elsif listing.services.size == 0 %>
+		<hr>
+		Not yet signed up for any services for this property. <%= link_to "sign up", assign_services_property_path(listing) %>
+	<% else %>
+		<% listing.services.each do |s| %>
+			<hr>
+			<%= render 'static_pages/home_property/dashboard_service', s: s, listing: listing %>
+		<% end %>
+	<% end %>
+<% end %>

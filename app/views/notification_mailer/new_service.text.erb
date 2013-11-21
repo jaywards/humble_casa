@@ -1,0 +1,11 @@
+A new service has signed up for HumbleCasa!
+
+	<%= @service.name %>
+	<%= @service.address1 %>
+	<% if !@service.address2.empty? %>
+	<%= @service.address2 %>
+	<% end %>
+	<%= @service.city %> 
+	<%= @service.state %>
+	<%= @service.zip %>
+	<%= @service.phone %>

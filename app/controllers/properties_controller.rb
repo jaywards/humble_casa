@@ -62,7 +62,24 @@ class PropertiesController < ApplicationController
     end
 
     def update_with_assignments
-    	if @property.update_attributes(params[:property]) && @property.create_assignments_customers && @property.remove_invalid_srs
+    	@new_assignments = params[:property][:assignments_attributes]
+    	@categories_to_mail = []
+    	@new_assignments.each do |new_assignment|
+    		@cat = new_assignment[1][:category]
+    		if (@old_assignment = @property.assignments.find_by_category(@cat)).nil? || 
+    								new_assignment[1][:service_id] != @old_assignment.service_id.to_s
+    			@categories_to_mail << @cat
+    		end
+    	end
+
+    	@property.update_attributes(params[:property])
+
+    	@categories_to_mail.each do |cat|
+    		@a = @property.assignments.find_by_category(cat)
+    		ServiceMailer.new_customer(@a).deliver if !@a.service.nil?
+    	end
+    	
+    	if @property.create_assignments_customers && @property.remove_invalid_srs
 			flash[:success] = "Successfully updated registered service providers."	      
 	    	redirect_to root_path	    
 		else

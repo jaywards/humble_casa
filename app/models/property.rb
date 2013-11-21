@@ -126,4 +126,32 @@ class Property < ActiveRecord::Base
       end
     end   
   end
+
+  def completed_requests(service)
+    @completed_requests = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == true}
+    if !@completed_requests.nil?
+      @completed_requests.sort_by {|a| a.completed_date }
+    end
+    return @completed_requests
+  end
+
+  def new_completed(service, user)
+    @new_completed = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == true && x.updated_at > user.last_login_at}
+    if !@new_requests.nil? 
+      @new_requests.sort_by {|a| a.completed_date }
+    end
+    return @new_completed
+  end
+
+  def open_requests(service)
+    @open_requests = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == false}
+    if !@open_requests.nil?
+      @open_requests.sort_by {|a| a.first_scheduled }
+    end
+    return @open_requests
+  end
+
+  def has_serviced(service)
+    return self.service_requests.find_all {|x| x.service_id == service.id}.size > 0
+  end
 end

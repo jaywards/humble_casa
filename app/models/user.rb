@@ -46,16 +46,8 @@ class User < ActiveRecord::Base
     "#{last_name}, #{first_name[0]}"
   end
 
-  def properties_with_cards
-    if role == "propertyowner"
-      properties = []
-      self.properties.each do |p|
-        if p.payment_ok
-          properties << p
-        end
-      end
-      return properties
-    end
+  def mail_notification
+    NotificationMailer.new_user(self).deliver if Rails.env.production?
   end
 
   def us_states

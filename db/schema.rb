@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131118201918) do
+ActiveRecord::Schema.define(:version => 20131120215204) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -194,6 +194,8 @@ ActiveRecord::Schema.define(:version => 20131118201918) do
     t.string   "charge_notes"
     t.string   "charge_id"
     t.datetime "charge_date"
+    t.string   "invoice_id"
+    t.datetime "invoice_date"
   end
 
   create_table "service_zips", :force => true do |t|
@@ -230,6 +232,7 @@ ActiveRecord::Schema.define(:version => 20131118201918) do
     t.string   "stripe_card_token"
     t.string   "last_four"
     t.string   "card_type"
+    t.string   "business_code"
   end
 
   add_index "services", ["user_id"], :name => "index_services_on_user_id"

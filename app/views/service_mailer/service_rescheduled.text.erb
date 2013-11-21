@@ -1,0 +1,14 @@
+A service request assigned to you for <%= @property.name %> has been edited by the property owner and may need to be rescheduled.
+
+Old scheduled date:
+	Schedule date: <%= DateTime.parse(@old_request.first_scheduled.to_s).in_time_zone(@old_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
+
+<%= render 'service_mailer/request_details' %>
+	
+<%= render 'service_mailer/service_details' %>
+
+
+If you have any questions, please don't hesitate to contact your service provider.
+
+Thank you,
+The HumbleCasa Team

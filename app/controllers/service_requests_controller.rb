@@ -58,11 +58,14 @@ class ServiceRequestsController < ApplicationController
 			@service_request.create_next if !@service_request.onetime
 		
 			if @service_request.create_charge
-				flash[:success] = "Successfully updated service request."
-				@service_request.mail_completed
+				flash[:success] = "Successfully updated service request."	
+      			@service_request.mail_completed(true)
       		else
 				flash[:error] = "Unable to charge the customer at this time. HumbleCasa will notify you when this is corrected."
+				@service_request.mail_completed(false)
 			end
+			@service_request.assignment.check_invoice
+			@service_request.add_charge_to_service_invoice
 			redirect_to root_path
 			
    		else

@@ -13,9 +13,12 @@
 			<tr>
 				<td>
 					<%= category.titleize %>
+					<% if !(@selected_service = property_listing.services.find_by_category(category)).nil? %>
+						<br><%= link_to "change provider", assign_services_property_path(property_listing) %>
+					<% end %>
 				</td>
 				<td>	
-					<% if (@selected_service = property_listing.services.find_by_category(category)).nil? %>
+					<% if @selected_service.nil? %>
 						<% if property_listing.area_category_services(category).size > 0 %>			
 							<%= link_to assign_services_property_path(property_listing), class: "btn btn-mini btn-primary" do %>
 								<i class="icon-check icon-white"></i> Services available! Sign-up
@@ -29,28 +32,30 @@
 						<% @valid_service_row = true %>
 						<b><%= @selected_service.name %></b><br>
 						<% if @selected_service.service_active %>
-							<x class="ratingmsg">	
-								<% if @selected_service.evaluators_for(:ratings).find_all { |x| x.id == current_user.id }.empty? %>
-									<div class="star" id="<%=@selected_service.id%>"></div>
-									<z class=<%= "votemsg"+ @selected_service.id.to_s %>>How is this provider doing?</z>
-								<% else %>
-									<div class="star" data-score="<%= @selected_service.reputation_for(:ratings) %>" id="<%=@selected_service.id%>"></div> 
-									<z class=<%= "votemsg"+ @selected_service.id.to_s %>>Avg rating. Click to change your rating.</z>			
-								<% end %>
-							</x>
-							<br>
-							<br>
+							<% if property_listing.has_serviced(@selected_service) %>
+								<x class="ratingmsg">	
+									<% if @selected_service.evaluators_for(:ratings).find_all { |x| x.id == current_user.id }.empty? %>
+										<div class="star" id="<%=@selected_service.id%>"></div>
+										<z class=<%= "votemsg"+ @selected_service.id.to_s %>>How is this provider doing?</z>
+									<% else %>
+										<div class="star" data-score="<%= @selected_service.reputation_for(:ratings) %>" id="<%=@selected_service.id%>"></div> 
+										<z class=<%= "votemsg"+ @selected_service.id.to_s %>>Avg rating. Click to change your rating.</z>			
+									<% end %>
+								</x>
+								<br>
+								<br>
+							<% end %>
 							<% @assignment = property_listing.assignments.find_by_service_id(@selected_service) %>
 						
 							<% if @assignment.confirmed && @assignment.cost != 0 %>
+								<% @need_estimate = false %>
 								<p>
 									<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success"  %>
 								</p>
 								<p>
 									<br>
-									<% if !(@open_SRs = open_requests(@selected_service, property_listing)).nil? %>	
+									<% if (@open_SRs = property_listing.open_requests(@selected_service)).size > 0 %>	
 										<h5>Next scheduled service:</h5>
-										<% @open_SRs = @open_SRs.sort_by {|a| a.first_scheduled} %>
 										<% if !(@scheduled_SRs = @open_SRs.find_all { |x| x.scheduled == true }).empty? %> 	
 											<%= Time.zone.parse(@scheduled_SRs.first.first_scheduled.to_s).in_time_zone(@scheduled_SRs.first.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
 										<% else %>
@@ -59,7 +64,7 @@
 									<% end %>
 								</p>
 							<% else %>
-								Pending estimate by service provider.
+								<% @need_estimate = true %>
 							<% end %>
 						<% end %>
 					<% end %>
@@ -67,7 +72,9 @@
 					
 				<% if @valid_service_row %>
 					<td>
-						<% if @selected_service.service_active %>									
+						<% if @need_estimate %>
+							Pending estimate by service provider.
+						<% elsif @selected_service.service_active %>									
 							<% if !@open_SRs.nil? %>										
 								<%= render 'shared/service_request_table_head' %>
 								<% @open_SRs.each do |request| %>
@@ -75,7 +82,7 @@
 								<% end %>
 								<%= render 'shared/service_request_table_foot' %>						
 							<% end %>
-							<% if !(@completed_SRs = completed_requests(@selected_service, property_listing)).nil? %>	
+							<% if (@completed_SRs = property_listing.completed_requests(@selected_service)).size > 0 %>	
 					
 								<%= link_to "View all completed service requests", view_completed_service_property_service_request_path(service_id: @selected_service.id, property_id: property_listing.id, id: 1) %>
 							<% end %>

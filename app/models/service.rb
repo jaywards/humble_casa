@@ -2,7 +2,7 @@ class Service < ActiveRecord::Base
   attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, :user_id, 
   :biz_description,	:service_zips_attributes, :assignments_attributes, :time_zone, :employments_attributes,
   :stripe_customer_token, :stripe_access_token, :stripe_refresh_token, :stripe_publishable_key, :stripe_user_id,
-  :stripe_card_token, :card_type, :last_four
+  :stripe_card_token, :card_type, :last_four, :business_code
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -58,6 +58,30 @@ class Service < ActiveRecord::Base
     rescue Stripe::InvalidRequestError => e
     logger.error "Stripe error while creating customer: #{e.message}"
     errors.add :base, "There was a problem with your credit card."
+    false
+  end
+
+  def create_monthly_charge_invoice(property)
+    if valid?
+      Stripe.api_key = ENV['STRIPE_API_KEY']
+      item = Stripe::InvoiceItem::create(
+        customer: self.stripe_customer_token,
+        amount: 300,
+        currency: "usd",
+        description:  "Active customer (" + property.name + " / " +  
+              property.user.full_name + ") charge for " + Date::MONTHNAMES[Date.today.month], 
+        metadata: {
+          'type' => 'monthly_fee', 
+          'service_id' => self.id.to_s, 
+          'property_id' => property.id.to_s, 
+          'month' => Date.today.month.to_s,
+          }
+        )
+    end
+    rescue Stripe::InvalidRequestError => e
+    logger.error "Stripe error while charging the service the monthly subscription fee: #{e.message}"
+    errors.add :base, "There was a problem with creating the monthly fee for this customer. HumbleCasa will 
+    resolve it and update you on the status."
     false
   end
 
@@ -130,7 +154,7 @@ class Service < ActiveRecord::Base
   end
 
   def today_jobs
-    @requests = self.service_requests.find_all {|x| x.completed == false && x.scheduled == true && x.assigned == true && x.first_scheduled == Date.today}
+    @requests = self.service_requests.find_all {|x| x.completed == false && x.first_scheduled.day == Date.today.day && x.first_scheduled.month == Date.today.month && x.first_scheduled.year == Date.today.year}
     @requests.sort_by {|x| x.first_scheduled}
     return @requests
   end
@@ -139,6 +163,10 @@ class Service < ActiveRecord::Base
     @charged = self.service_requests.find_all {|x| x.charge_date != nil && x.charge_date > Date.today - 7.days }
     @charged.sort_by {|x| x.charge_date}
     return @charged
+  end
+
+  def mail_notification
+    NotificationMailer.new_service(self).deliver if Rails.env.production?
   end
 
 end

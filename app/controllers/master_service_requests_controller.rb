@@ -31,6 +31,7 @@ class MasterServiceRequestsController < ApplicationController
 		@master_request = MasterServiceRequest.find_by_id(params[:id])
 		@service = Service.find_by_id(params[:service_id])
 		@property = Property.find_by_id(params[:property_id])
+		@assignment = @property.assignments.find_by_service_id(@service)
 	end
 
 	
@@ -39,11 +40,12 @@ class MasterServiceRequestsController < ApplicationController
  		@service_request = ServiceRequest.find_by_id(@master_request.active_request_id)
  		 
 	    if @master_request.update_attributes(params[:master_service_request]) 
+	    	@service_request.reschedule(@master_request) if @master_request.schedule_change_requiring_email(@service_request)
 	    	@service_request.updateServiceRequest(@master_request)
 	    	if @service_request.save
 	      		flash[:success] = "Successfully updated service request."	      
-		      	@service_request.mail_assigned if (@service_request.assigned && !@mailed_assigned) 
-			  	@service_request.mail_completed if (@service_request.completed && !@mailed_completed)
+		      	@service_request.mail_assigned if (@service_request.assigned && !@service_request.mailed_assigned) 
+			  	@service_request.mail_completed if (@service_request.completed && !@service_request.mailed_completed)
 		      	redirect_to root_path
 		    else
 		    	flash[:error] = "Couldn't update your service request at this time. Please try again"

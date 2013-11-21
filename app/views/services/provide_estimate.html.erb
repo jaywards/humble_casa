@@ -15,6 +15,7 @@
 		<div class="span9">
 			<p>This new client has requested that you provide an estimated standard service cost. This will be the amount charged to this client for each standard service request that you complete at their home.</p>
 			<p>You will always have the option to adjust the price for each service request (i.e. there is more or less work required than usual, or the client has requested additional services for a particular request). You will be required to provide an explanation to the property owner if/when you are charging an amount different from this standard cost.</p>
+			<p>You may want to incorporate the HumbleCasa and credit card processor fees in your estimate. HumbleCasa charges $3/month per active customer and $1.50 per service request. The credit card processor fees are 2.9% of the total charge plus $.55 per transaction. So including an additional $5 in your estimate should cover most of these fees.</p>
 			<br>
 			<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
 				<%= assignment.input :cost, label: 'Standard service cost $' %>

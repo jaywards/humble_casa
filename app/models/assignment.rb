@@ -4,12 +4,12 @@ class Assignment < ActiveRecord::Base
   belongs_to :service
   belongs_to :property
 
-  def invoiced_this_month
-  	if !self.last_invoice_date.nil? && self.last_invoice_date >= Date.today.beginning_of_month && self.last_invoice_date <= Date.today.end_of_month
-  		true
-  	else
-  		false
-  	end
+  def check_invoice
+    if self.last_invoice_date.nil? || self.last_invoice_date < Date.today.beginning_of_month
+        self.service.create_monthly_charge_invoice(self.property)
+        self.last_invoice_date = Date.today
+        save!
+    end
   end
 
   def create_customer(card_token)

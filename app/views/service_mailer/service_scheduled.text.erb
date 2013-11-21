@@ -8,11 +8,7 @@ Schedule details:
 
 <%= render 'service_mailer/request_details' %>
 	
-Service details:
- 	<%= @service.name %>
-  	Owner: <%= User.find_by_id(@service.user_id).full_name %>
-  	<%= @service.phone %>
-  	<%= @service.email %>
+<%= render 'service_mailer/service_details' %>
 
 
 If you have any questions, please don't hesitate to contact your service provider.
