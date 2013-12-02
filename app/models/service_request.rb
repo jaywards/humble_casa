@@ -25,7 +25,7 @@ class ServiceRequest < ActiveRecord::Base
     if valid?
       Stripe.api_key = self.service.stripe_access_token
       charge = Stripe::Charge::create(
-        amount: BigDecimal(self.charge * 100).round,
+        amount: (self.charge * 100).round,
         currency: "usd",
         customer: Assignment.find_by_service_id_and_property_id(self.service.id, self.property.id).stripe_customer_token,
         description:  "Service on " + 
