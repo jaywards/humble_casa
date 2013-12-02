@@ -10,7 +10,7 @@
 <% elsif params[:error] == "access_denied" %>
 	Sorry, if you don't sign-up with Stripe to process credit card payments we can't include you on HumbleCasa. The ability to pay via credit card is one of the key selling points for property owners who join HumbleCasa. Until you create a Stripe Connect account, your business will be left in status "inactive" and you will not able to sign-up new customers or schedule service requests for existing customers.
 	<br>
-	<center><%= link_to "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_2uAqWx6ZePRpbLimKp5dTYBo0FzyaQNj&scope=read_write&state=1234&stripe_user[email]=" + @service.email do %>
+	<center><%= link_to "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + ENV["STRIPE_CLIENT_ID"] + "&scope=read_write&state=1234&stripe_user[email]=" + @service.email do %>
 		<%= image_tag("blue.png", :alt => "Connect with Stripe") %>
 	<% end %></center>
 <% else %>
@@ -19,7 +19,7 @@
 	<p>After you sign-up for a Stripe account, your customers will be able to pay you directly via credit card. Each time you complete the work and submit a charge for a service request, we will charge your customer's credit card.  Stripe will process the payment and within 7 days transfer the funds into your bank account. HumbleCasa does not take a cut of your payments, although Stripe charges 2.9% plus $.55 per transaction.</p>
 	<br>
 	<p>Click the button below to sign-up. It will take you to Stripe's secure website to create your account and then send you back to HumbleCasa to start managing your business!</p>
-	<center><%= link_to "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=ca_2uAqWx6ZePRpbLimKp5dTYBo0FzyaQNj&scope=read_write&state=1234&stripe_user[email]=" + @service.email  do %>
+	<center><%= link_to "https://connect.stripe.com/oauth/authorize?response_type=code&client_id=" + ENV["STRIPE_CLIENT_ID"] + "&scope=read_write&state=1234&stripe_user[email]=" + @service.email  do %>
 		<%= image_tag("blue.png", :alt => "Connect with Stripe") %>
 	<% end %></center>
 
