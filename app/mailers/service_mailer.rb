@@ -10,7 +10,7 @@ class ServiceMailer < ActionMailer::Base
     @service = @service_request.service
     @property = @service_request.property
 
-    if @service.user.notify?
+    if @service.owner.notify?
       mail to: @service.email, subject: @service.name + ": new service request"
     end
   end

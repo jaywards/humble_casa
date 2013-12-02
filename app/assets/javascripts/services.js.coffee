@@ -43,5 +43,5 @@ service =
 
 $ ->
 	if $('body').hasClass("services") && $(".provide-estimate").length > 0
-		$("#service_assignments_attributes_0_cost").mask("9?99")
+		$("#service_assignments_attributes_0_cost").maskMoney()
 		$("#service_assignments_attributes_0_cost").focus()
