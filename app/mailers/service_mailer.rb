@@ -21,7 +21,7 @@ class ServiceMailer < ActionMailer::Base
     @property = @service_request.property
     
     if @service_request.user.notify?
-      if @service_request.user == @service.user
+      if @service_request.user == @service.owner
         mail to: @service_request.service.email, subject: @service.name + ": service request assigned"
       else          
         mail to: @service_request.user.email, subject: @service.name + ": service request assigned"

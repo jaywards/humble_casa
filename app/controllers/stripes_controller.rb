@@ -2,8 +2,8 @@ class StripesController < ApplicationController
 	force_ssl
 
 	def stripe_signup
-		@service = current_user.business
-	    @user = current_user
+		@user = current_user
+		@service = @user.business
 	    if params[:state] == "1234"
 	      code = params[:code]
 	      customer = ActiveSupport::JSON.decode(`curl -X POST https://connect.stripe.com/oauth/token -d client_secret=#{ENV['STRIPE_API_KEY']} -d code=#{code} -d grant_type=authorization_code`)
@@ -17,8 +17,8 @@ class StripesController < ApplicationController
 	end
 
 	def edit_stripe
-		@service = current_user.business
-	    @user = current_user
+		@user = current_user
+		@service = @user.business
 	    if params[:state] == "1234"
 	      code = params[:code]
 	      customer = ActiveSupport::JSON.decode(`curl -X POST https://connect.stripe.com/oauth/token -d client_secret=#{ENV['STRIPE_API_KEY']} -d code=#{code} -d grant_type=authorization_code`)
