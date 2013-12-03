@@ -124,21 +124,15 @@ class Service < ActiveRecord::Base
   end
 
   def unassigned
-    @requests = self.service_requests.find_all {|x| x.assigned == false}
-    @requests.sort_by {|x| x.first_scheduled }
-    return @requests 
+    self.service_requests.find_all {|x| x.assigned == false}
   end
 
   def unscheduled
-    @requests = self.service_requests.find_all {|x| x.assigned == true && x.scheduled == false && x.completed == false}
-    @requests.sort_by {|x| x.first_scheduled}
-    return @requests
+    self.service_requests.find_all {|x| x.assigned == true && x.scheduled == false && x.completed == false}
   end
 
   def uncompleted
-    @requests = self.service_requests.find_all {|x| x.completed == false && x.scheduled == true}
-    @requests.sort_by {|x| x.first_scheduled}
-    return @requests
+    self.service_requests.find_all {|x| x.completed == false && x.scheduled == true}
   end
 
   def new_employees
@@ -154,15 +148,11 @@ class Service < ActiveRecord::Base
   end
 
   def today_jobs
-    @requests = self.service_requests.find_all {|x| x.completed == false && x.first_scheduled.day == Date.today.day && x.first_scheduled.month == Date.today.month && x.first_scheduled.year == Date.today.year}
-    @requests.sort_by {|x| x.first_scheduled}
-    return @requests
+    self.service_requests.find_all {|x| x.completed == false && x.first_scheduled.day == Date.today.day && x.first_scheduled.month == Date.today.month && x.first_scheduled.year == Date.today.year}
   end
 
   def charged_srs
-    @charged = self.service_requests.find_all {|x| x.charge_date != nil && x.charge_date > Date.today - 7.days }
-    @charged.sort_by {|x| x.charge_date}
-    return @charged
+    self.service_requests.find_all {|x| x.charge_date != nil && x.charge_date > Date.today - 7.days }
   end
 
   def mail_notification

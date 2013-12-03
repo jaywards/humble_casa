@@ -16,14 +16,18 @@
 				<center><h4>Today's Activities</h4></center>
 				<% if(@todayjobs = @business.today_jobs).size > 0 %>		
 					<ul>
-						<% @todayjobs.each do |csr| %>
+						<% @todayjobs.sort_by(&:first_scheduled).each do |csr| %>
 							<li><%= Time.zone.parse(csr.first_scheduled.to_s).in_time_zone(csr.time_zone).strftime("%I:%M%p")%> - 
 								<%= link_to csr.service_request_id, service_request_path(csr)%> -
-								<%= csr.user.last_firstInitial %> - 
-								<% if csr.user == current_user %>
-									<%= link_to "complete", complete_request_service_request_path(csr) %> |
-								<% end %>
-								<%= link_to "reassign/reschedule", assign_to_employee_service_request_path(csr) %>
+								<% if csr.assigned? %>
+									<%= csr.user.last_firstInitial %> - 
+									<% if csr.user == current_user %>
+										<%= link_to "complete", complete_request_service_request_path(csr) %> |
+									<% end %>
+									<%= link_to "reassign/reschedule", assign_to_employee_service_request_path(csr) %>
+								<% else %>
+									<%= link_to "assign/schedule", assign_to_employee_service_request_path(csr) %>
+								<% end %> 
 							</li>
 						<% end %>	
 					</ul>
@@ -45,7 +49,7 @@
 						</thead>
 						<tbody>
 							<% if (@unassigned = @business.unassigned).size > 0 %>
-								<% @unassigned.each do |asr| %>
+								<% @unassigned.sort_by(&:first_scheduled).each do |asr| %>
 									<tr>
 										<td><%= link_to asr.service_request_id, service_request_path(asr) %></td>
 										<td><%= link_to asr.property.name, property_path(asr.property) %></td>
@@ -55,7 +59,7 @@
 							<% end %>
 					
 							<% if (@unscheduled = @business.unscheduled).size > 0 %>
-								<% @unscheduled.each do |ssr| %>
+								<% @unscheduled.sort_by(&:first_scheduled).each do |ssr| %>
 									<tr>
 										<td><%= link_to ssr.service_request_id, service_request_path(ssr) %></td>
 										<td><%= link_to ssr.property.name, property_path(ssr.property) %></td>
@@ -66,7 +70,7 @@
 							<% end %>
 					
 							<% if (@uncompleted = @business.uncompleted).size > 0 %>
-								<% @uncompleted.each do |csr| %>
+								<% @uncompleted.sort_by(&:first_scheduled).each do |csr| %>
 									<tr>
 										<td><%= link_to csr.service_request_id, service_request_path(csr) %></td>
 										<td><%= link_to csr.property.name, property_path(csr.property) %></td>
@@ -159,7 +163,7 @@
 				<center><h4>Payments: Last 7 Days</h4></center>
 				<% if (@charged = @business.charged_srs).size > 0 %>
 					<ul>
-						<% @charged.each do |csr| %>
+						<% @charged.sort_by(&:charge_date).each do |csr| %>
 							<li><%= link_to csr.property.name, property_path(csr.property) %> was charged <%= number_to_currency(csr.charge) %> on <%= DateTime.parse(csr.charge_date.to_s).in_time_zone(csr.property.time_zone).strftime("%m/%d/%Y") %>
 							</li>
 						<% end %>
