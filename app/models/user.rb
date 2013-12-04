@@ -50,6 +50,10 @@ class User < ActiveRecord::Base
     NotificationMailer.new_user(self).deliver if Rails.env.production?
   end
 
+  def mail_new_employee
+    NotificationMailer.new_employee(self).deliver
+  end
+
   def us_states
     [
       ['AK', 'AK'],

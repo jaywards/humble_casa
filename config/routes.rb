@@ -1,12 +1,8 @@
 HumbleCasa::Application.routes.draw do
   
   resources :user_sessions
-  resources :charges
+
   resources :users do
-    member { put :update_employer }
-    member do
-      get 'select_employer'
-    end
     resources :properties, :services, :service_zips
   end
   
@@ -29,8 +25,9 @@ HumbleCasa::Application.routes.draw do
     member { post :rate }
     member { put :update_with_card }
     member { put :save_with_account }
+    member { put :create_employee }
     member do
-      get 'approve_employee'
+      get 'add_employee'
       get 'add_payment_info'
       get 'edit_payment_info'
       get 'add_bank_account'

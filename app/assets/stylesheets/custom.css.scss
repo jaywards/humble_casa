@@ -235,6 +235,15 @@ footer {
 	margin-bottom: 5px;
 }
 
+#service_user_first_name,
+#service_user_last_name,
+#service_user_primary_phone,
+#service_user_email,
+#service_user_password,
+#service_user_password_confirmation {
+	width: 40%;
+}
+
 .simple_form div.service_service_zips_zip .control-label  {
 	text-align: center;
 	width: 100px;

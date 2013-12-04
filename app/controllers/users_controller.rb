@@ -21,15 +21,10 @@ class UsersController < ApplicationController
     if @user.save
       @user.mail_notification
       flash[:success] = "Successfully created user."
-      case @user.role
-        when "serviceowner"
-          redirect_to new_user_service_path(@user)
-        when "propertyowner"
-          redirect_to new_user_property_path(@user)
-        when "employee"
-          redirect_to select_employer_user_path(@user)
-        else
-          redirect_to root_path
+      if @user.role == "serviceowner"
+        redirect_to new_user_service_path(@user)
+      else
+        redirect_to new_user_property_path(@user)
       end
     else
       flash[:error] = "Couldn't create user."
@@ -55,30 +50,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def update_employer
-    if !(@supplied_code = params[:employer_code]).nil?
-      if (@service = Service.find_by_business_code(@supplied_code)).nil?  
-        flash[:error] = "We didn't recognize the provided employer code. 
-            Please try again or use the state/service drop-downs to find your employer."
-        render :action => 'select_employer'
-      else
-        @user.update_attribute(:employer_id, @service.id)
-        @user.employment.update_attributes(:approved => true, :service_id => @service.id)
-        flash[:success] = "Successfully updated your employer and verified the employee code. Your account is active."
-        @user.update_attribute(:new_account, false) if @user.new_account == true
-        redirect_to root_path
-      end
-    elsif @user.update_attributes(params[:user])
-        flash[:success] = "Successfully updated your employer. Your employer will be notified of your pending account 
-        status and activate your account shortly."      
-        @user.update_attribute(:new_account, false) if @user.new_account == true
-        redirect_to root_path
-    else
-      flash[:error] = "Couldn't update your employer. Please try again."
-      render :action => 'select_employer'
-    end
-  end
-
   def index
     @users = User.all  
   end
@@ -88,9 +59,6 @@ class UsersController < ApplicationController
     @user.destroy
     flash[:success] = "Account deleted."
     redirect_to root_path
-  end
-
-  def select_employer
   end
 
 end

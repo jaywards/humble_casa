@@ -4,6 +4,11 @@ $ ->
 		$("#new_service").enableClientSideValidations()
 		$("[id^=edit_service]").enableClientSideValidations()
 		$("#service_phone").mask("(999) 999-9999")
+
+$ ->
+	if $('body').hasClass("services") && $(".add-employee").length
+		$("#service_user_primary_phone").mask("(999) 999-9999")
+		$("#service_user_first_name").focus()
 		
 $ ->
 	if $('body').hasClass("services") && $(".service-payment-form").length > 0

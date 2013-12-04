@@ -10,4 +10,10 @@ class NotificationMailer < ActionMailer::Base
 		@user = user
 		mail to: "jason@humblecasa.com", subject: "New " + @user.role + " user signed-up"
 	end
+
+	def new_employee(user)
+		@user = user
+		@service = @user.employer
+		mail to: @user.email, subject: @service.name + " has created an account for you on HumbleCasa.com!"
+	end
 end

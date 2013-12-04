@@ -1,0 +1,44 @@
+<%= provide(:title, 'Add Employee') %>
+<h2 class="add-employee">Add Employee</h2>
+
+<div class="row-fluid">
+	<div class="span3">
+		<h5>Employee Accounts</h5>
+		Create a new employee account linked to your service. You, as the business owner, are already listed as an employee so that you can assign service requests to yourself. Employee account allow you to assign work to your employees, have them complete service requests, and track their work completed.
+	</div>
+	<div class="span9">
+
+		<%= simple_form_for @service, :validate => true, :url => {:action => "create_employee"} do |f| %>
+			
+			<%= f.simple_fields_for @user, :validate => true do |user| %>
+
+				<%= user.input :first_name, label: "Name" do %> 
+			    	<%= user.input_field :first_name, placeholder: "first name" %>
+			    	<%= user.input_field :last_name, placeholder: "last name" %>
+			    <% end %>
+
+				<%= user.input :primary_phone, label: "Contact info" do %>
+	   				<%= user.input_field :primary_phone, placeholder: "phone number" %>
+	   				<%= user.input_field :email, placeholder: "email address - also employee sign-in" %>
+	   			<% end %>
+
+			    <%= user.input :password, label: "Password" do %>
+				    <%= user.input_field :password, placeholder: "must be at least 6 characters" %>
+				    <%= user.input_field :password_confirmation, placeholder: "confirm password" %>
+				<% end %>
+			    
+			    <%= user.hidden_field :role, value: "employee" %>
+
+			    <%= user.input :notify, inline_label: "Send email notifications when service requests are assigned to this employee (recommended - they can always change this later)", label: false %>
+			<% end %>
+		 
+		 	<center>    
+		        <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
+		            Create Employee
+		        </button>
+		        &nbsp       
+		        <%= link_to "Cancel", root_path, class: "btn" %>
+		    </center>
+        <% end %>
+	</div>
+</div>

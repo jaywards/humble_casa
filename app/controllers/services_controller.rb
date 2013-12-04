@@ -79,10 +79,26 @@ class ServicesController < ApplicationController
 	    end
   	end
 
-	def approve_employee
+	def add_employee
 	    @service = Service.find(params[:id])
-	    @employments = @service.employments.find_all { |x| x.approved == nil } 
-	    render action: "approve_employee"
+	    @user = User.new
+	end
+
+	def create_employee
+		@user = User.new(params[:service][:user])
+    	@user.build_employment
+    	if @user.save
+			@user.update_attribute(:employer_id, @service.id)
+        	@user.employment.update_attributes(:approved => true, :service_id => @service.id)
+        	flash[:success] = "Successfully created your employee account. An email has been sent to them with their login details. You can begin assigning them work requests immediately."
+        	@user.update_attribute(:new_account, false) if @user.new_account == true
+        	@user.mail_new_employee
+        	@user.mail_notification
+        	redirect_to root_path
+        else
+        	flash[:error] = "Couldn't create your employee. Please try again."
+      		render :action => 'add_employee'
+        end
 	end
 	
 	def provide_estimate

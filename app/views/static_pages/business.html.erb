@@ -44,21 +44,16 @@
 <center>
 	<div class="row-fluid">
 		<div class="span12">
-			<p>Create a new Service account and get your business registered on HumbleCasa! It costs nothing to register, your 1st month is free, and you can cancel at anytime. If you already have a Service account created, Employee accounts help you manage your business and invoicing.</p>
+			<p>Create a new Service account and get your business registered on HumbleCasa! It costs nothing to register, your 1st month is free, and you can cancel at anytime.</p>
 		</div>
 	</div>
 
 	<% if current_user.nil? %>		
 		<div class="row-fluid">
-			<div class="span6">
-				<%= link_to new_user_path(role: "serviceowner"), class: "btn btn-small btn-warning" do %>
-						<i class="icon-user icon-white"></i> New Service Account
+			<div class="span12">
+				<%= link_to new_user_path(role: "serviceowner"), class: "btn btn-success" do %>
+						New Business Account
 				<% end %>	
-			</div>
-			<div class="span6">
-				<%= link_to new_user_path(role: "employee"), class: "btn btn-small btn-warning" do %>
-					<i class="icon-user icon-white"></i> New Employee Account
-				<% end %>
 			</div>
 		</div>
 	<% else %>
@@ -88,7 +83,7 @@
 <br>
 <p><h5>How it works:</h5>
 	<ol>
-		<li>You <b>create a profile for your business</b> on HumbleCasa. If you want to use our workforce management tools, have your employees create accounts too.</li>
+		<li>You <b>create a profile for your business</b> on HumbleCasa. If you want to use our workforce management tools, have create employee accounts too.</li>
 		<li>Your <b>customers create their accounts</b> on HumbleCasa and they use our site tools to <b>schedule service requests</b>.</li>
 		<li><b>Email notifications are sent</b> and you can <b>assign each request to one of your employees</b>.</li>
 		<li>Your employee goes to the property, completes the service, and marks that it is done. <b>Your customer gets notified via email</b> that their property has been serviced and their <b>credit card is charged</b>.</li>

@@ -20,19 +20,13 @@
         <% @role = @user.role %>
     <% end %>
 
-    <% case @role %>
-        <% when "employee" %>
-            <%= f.input :notify, inline_label: "Receive email notifications when service requests are assigned to you (recommended - you can always change this later)", label: false %>
-            
-        <% when "propertyowner" %>
-            <%= f.input :notify, inline_label: "Receive email notifications when service requests are completed (recommended - you can always change this later)", label: false %>
-        
-        <% when "serviceowner" %>
-            <%= f.input :notify, inline_label: "Receive email notifications when new service requests are created by your clients (recommended - you can always change this later)", label: false %>
-
+    <% if @role == "propertyowner" %>   
+        <%= f.input :notify, inline_label: "Receive email notifications when service requests are completed (recommended - you can always change this later)", label: false %>
+    <% else %>
+        <%= f.input :notify, inline_label: "Receive email notifications when new service requests are created by your clients (recommended - you can always change this later)", label: false %>
     <% end %>
-    <center>
     
+    <center>
         <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
             <i class="icon-ok icon-white"></i> <%= save_user_label %>
         </button>
