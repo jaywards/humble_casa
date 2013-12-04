@@ -1,4 +1,5 @@
-<p>If you have any questions, please don't hesitate to contact your service provider.</p>
+<% @email = "mailto:" + @service.email %>
+<p>If you have any questions, please don't hesitate to contact your service provider at <%= @service.email%>.</p>
 <br>
 <p>
   Thank you,<br>

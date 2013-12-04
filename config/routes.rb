@@ -70,6 +70,11 @@ HumbleCasa::Application.routes.draw do
   match '/business', to: 'static_pages#business', :as => :business
   match '/pricing_plans', to: 'static_pages#pricing_plans', :as => :pricing_plans
   match '/feature_tour', to: 'static_pages#feature_tour', :as => :feature_tour
+  match '/terms_of_use', to: 'static_pages#terms_of_use', :as => :terms_of_use
+  match '/privacy_policy', to: 'static_pages#privacy_policy', :as => :privacy_policy
+  match '/about', to: 'static_pages#about', :as => :about
+  match '/contact_us', to: 'static_pages#contact_us', :as => :contact_us
+  match '/careers', to: 'static_pages#careers', :as => :careers
   
   match '/stripe_signup', to: 'stripes#stripe_signup', :as => :stripe_signup
   match '/edit_stripe', to: 'stripes#edit_stripe', :as => :edit_stripe
@@ -84,6 +89,7 @@ HumbleCasa::Application.routes.draw do
   get "static_pages/contact_us"
   get "static_pages/careers"
   get "static_pages/business"
+  get "static_pages/terms_of_use"
   get "stripes/stripe_signup"
   get "stripes/edit_stripe"
 

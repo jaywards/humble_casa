@@ -59,9 +59,9 @@
     	
 			<p id="terms-agreeement-details">  
 		    	<b>Terms and Conditions:</b>
-		    	Clicking 'Create service request' will automatically schedule and alert your service provider for this service request. By creating this service request you agree to pay your service provider the agreed upon amount upon the completion of the work. We highly recommend that you contact your service provider before scheduling your first service to determine payment terms and rates.
+		    	Clicking 'Save' will automatically create your service request and alert your service provider. By creating this service request you agree to pay your service provider the agreed upon amount upon the completion of the work and all <%= link_to "terms and conditions", terms_of_use_path %> of HumbleCasa.com.
 		    </p>
-    		<%= f.input :terms_agreement, as: :boolean, inline_label: "I agree to the Terms and Conditions", label: false %>
+    		<%= f.input :terms_agreement, as: :boolean, inline_label: "I agree to the Terms of Use", label: false %>
 			<br>
 		</div>
 	</div>
