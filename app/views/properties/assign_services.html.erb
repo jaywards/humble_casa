@@ -1,6 +1,10 @@
 <%= provide(:title, 'Register Services') %>
 <h2 class="register-services">Register Services</h2>
 
+<%= javascript_tag do %>
+  window.catCount = "<%= Service::CATEGORIES.count %>";
+<% end %>
+
 <%= simple_form_for @property, :url => {:action => "update_with_assignments"} do |f| %>
 	<div class="row-fluid">
 		<div class="span3">

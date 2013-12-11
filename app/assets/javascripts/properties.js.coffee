@@ -49,7 +49,7 @@ $ ->
 
 initializeRegisterServiceForm = ->
   counter = 0
-  while counter < 5
+  while counter < catCount
     $('#confirmed' + counter).hide()
     $('#star' + counter).raty
       readOnly: true

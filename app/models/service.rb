@@ -37,7 +37,7 @@ class Service < ActiveRecord::Base
   has_reputation :ratings, source: :user, aggregated_by: :average
 
 
-  CATEGORIES = %w[landscaping pool/spa_cleaning housecleaning snow_removal handyman/general_maintenance]
+  CATEGORIES = %w[chimney_services handyman/general_maintenance housecleaning landscaping pest_control pool/spa_cleaning snow_removal ]
     #also need to update Services form if changing categories
   
   def service_servicezips

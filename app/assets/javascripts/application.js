@@ -10,14 +10,15 @@
 // WARNING: THE FIRST BLANK LINE MARKS THE END OF WHAT'S TO BE PROCESSED, ANY BLANK LINE SHOULD
 // GO AFTER THE REQUIRES BELOW.
 //
+//= require_self
 //= require jquery
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require bootstrap
 //= require jquery.maskedinput
 //= require jquery.timepicker
-//= require_tree .
 //= require cocoon
 //= require rails.validations
 //= require rails.validations.simple_form
 //= require jquery.raty
+//= require_tree .

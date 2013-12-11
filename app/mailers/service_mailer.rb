@@ -73,7 +73,7 @@ class ServiceMailer < ActionMailer::Base
     @service = assignment.service
     @property = assignment.property
 
-    if service.user.notify?
+    if @service.user.notify?
       mail to: @service.email, subject: @service.name + ": new client on HumbleCasa"
     end
   end
