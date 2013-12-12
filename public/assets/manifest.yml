@@ -35,20 +35,16 @@ cookie-on.png: cookie-on-7c8b3e9b411267a37501c7be2baf0590.png
 cookie-on/index.png: cookie-on-7c8b3e9b411267a37501c7be2baf0590.png
 favicon.ico: favicon-d9491803e33618fe07dab8fc7b2a47b5.ico
 favicon/index.ico: favicon-d9491803e33618fe07dab8fc7b2a47b5.ico
-housecleaning wfx.jpg: housecleaning wfx-c72b36964acf7a44ca9b2796e443a865.jpg
-housecleaning wfx/index.jpg: housecleaning wfx-c72b36964acf7a44ca9b2796e443a865.jpg
-landscaping wfx.jpg: landscaping wfx-041ef36958a0fbdb0b8d579dae39c1be.jpg
-landscaping wfx/index.jpg: landscaping wfx-041ef36958a0fbdb0b8d579dae39c1be.jpg
+housecleaning.jpg: housecleaning-1125f4b96cf385dcbb83af5288f8d5ba.jpg
+housecleaning/index.jpg: housecleaning-1125f4b96cf385dcbb83af5288f8d5ba.jpg
+iStock_000011931107Large.jpg: iStock_000011931107Large-e4f1599903805c8aa23e379cb60c667e.jpg
+iStock_000011931107Large/index.jpg: iStock_000011931107Large-e4f1599903805c8aa23e379cb60c667e.jpg
 logo.jpg: logo-545d0a4958597e18d39d2f2917137c52.jpg
 logo/index.jpg: logo-545d0a4958597e18d39d2f2917137c52.jpg
 off.png: off-98d5c3482ae78a63b9f128360ead3b2f.png
 off/index.png: off-98d5c3482ae78a63b9f128360ead3b2f.png
 on.png: on-7162a7b56b11a4d725e47febf1345bf6.png
 on/index.png: on-7162a7b56b11a4d725e47febf1345bf6.png
-poolcleaning wfx.jpg: poolcleaning wfx-a57dedf8b3da4c4eac3f1956de82e152.jpg
-poolcleaning wfx/index.jpg: poolcleaning wfx-a57dedf8b3da4c4eac3f1956de82e152.jpg
-snowplow wfx.jpg: snowplow wfx-c3be614de4f757965548b65346d7315f.jpg
-snowplow wfx/index.jpg: snowplow wfx-c3be614de4f757965548b65346d7315f.jpg
 solid.eps: solid-d254f34796e4eb7b8d1e67f125fa0229.eps
 solid/index.eps: solid-d254f34796e4eb7b8d1e67f125fa0229.eps
 solid.png: solid-fc915dcc76a63ef0aaa940af5b0e8571.png
@@ -67,10 +63,14 @@ star-on-big.png: star-on-big-2fbd1004c0493a70f8daec31ca3a8309.png
 star-on-big/index.png: star-on-big-2fbd1004c0493a70f8daec31ca3a8309.png
 star-on.png: star-on-5f1bbca2093b22e1d0a6f907600c106b.png
 star-on/index.png: star-on-5f1bbca2093b22e1d0a6f907600c106b.png
-application.js: application-38940b2ecb09875479d334bae72cd333.js
-application/index.js: application-38940b2ecb09875479d334bae72cd333.js
-application.css: application-327692c52ee00729e263c241a4c783a4.css
-application/index.css: application-327692c52ee00729e263c241a4c783a4.css
+street-scenic.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
+street-scenic/index.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
+white-minimalist-interior.jpg: white-minimalist-interior-014927ac8da881e8c9a63f3cab84bb4a.jpg
+white-minimalist-interior/index.jpg: white-minimalist-interior-014927ac8da881e8c9a63f3cab84bb4a.jpg
+application.js: application-61efa0a32d3f447a346b27292c88e73e.js
+application/index.js: application-61efa0a32d3f447a346b27292c88e73e.js
+application.css: application-aa1a5cf8c7d1aaa1fc0aeb8b902bcf8d.css
+application/index.css: application-aa1a5cf8c7d1aaa1fc0aeb8b902bcf8d.css
 dossier/application.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application/index.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application.css: dossier/application-1b13569e9620782f423d4cd3ce931750.css
