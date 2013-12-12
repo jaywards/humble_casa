@@ -7,3 +7,33 @@
 .master_service_request_restart_date  {
   display: none;
 }
+
+
+.simple_form div.master_service_request_onetime label.radio {
+	line-height: 20px;
+}
+.simple_form div.master_service_request_onetime label.radio_buttons.optional.control-label {
+	line-height: 38px;
+}
+.simple_form div.master_service_request_terms_agreement label.checkbox {
+	width: 400px;
+	padding-right: 100px;
+	line-height: 24px;
+}
+#terms-agreeement-details {
+	font-size: .8em;
+}
+
+
+.simple_form div.master_service_request_paused label.radio {
+	line-height: 20px;
+	width: 350px;
+}
+.simple_form div.master_service_request_paused label.radio_buttons.optional.control-label {
+	line-height: 38px;
+}
+
+#master_service_request_instructions {
+	height: 80px;
+}
+

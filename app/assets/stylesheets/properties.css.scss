@@ -1,6 +1,54 @@
-// Place all the styles related to the Properties controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+.simple_form div.property_assignments_interested div.controls{
+	margin-left: 0px;
+}
+.simple_form div.property_assignments_interested label.checkbox {
+	line-height: 24px;
+}
+.simple_form div.property_assignments_service div.controls {
+	margin-left: 0px;
+}
+.simple_form div.property_assignments_service .select.optional {
+	width: 100%
+}
 
+#property_city,
+#property_name {
+	width: 50%;
+}
 
+#property_state {
+	width: 15%;
+	margin-bottom: 5px;
+}
 
+#property_zip {
+	width: 25%;
+}
+
+#property_instructions {
+	height: 80px;
+}
+
+#property-tabs li {
+	float: left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#property-tabs a {
+	display: block;
+	text-decoration: none;
+	padding: 3px 5px;
+	background-color: rgb(241,167,16);
+	color: black;
+	margin-right: 10px;
+	border: 1px solid rgb(153,153,153);
+	margin-bottom: -1px;
+	color: white;
+}
+#property-tabs li.active a {
+	border-bottom: 1px solid white;
+	background-color: white;
+	color: black;
+	position: relative;
+}

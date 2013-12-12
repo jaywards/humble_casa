@@ -6,3 +6,86 @@
 	color: red;
 	text-align: center;
 }
+
+#service_name, 
+#service_city {
+	width: 50%;
+}
+
+#service_state {
+	width: 15%;
+	margin-bottom: 5px;
+}
+
+#service_category {
+	width: 30%;
+	margin-bottom: 5px;
+}
+
+#service_zip, #service_business_code {
+	width: 25%;
+}
+#service_phone, 
+#service_email {
+	width: 40%
+}
+#service_account_nickname {
+	width: 60%;
+}
+#service_account_type {
+	margin-bottom: 5px;
+}
+
+#service_user_first_name,
+#service_user_last_name,
+#service_user_primary_phone,
+#service_user_email,
+#service_user_password,
+#service_user_password_confirmation {
+	width: 40%;
+}
+
+.simple_form div.service_service_zips_zip .control-label  {
+	text-align: center;
+	width: 100px;
+}
+
+.simple_form div.service_service_zips_zip {
+	margin-bottom: 0px;
+}
+
+#service_assignments_attributes_0_note {
+	height: 80px;
+}
+
+#service_biz_description {
+	height: 60px;
+}
+
+#service-tabs li {
+	float: left;
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+#service-tabs a {
+	display: block;
+	text-decoration: none;
+	padding: 3px 5px;
+	background-color: rgb(241,167,16);
+	color: black;
+	margin-right: 10px;
+	border: 1px solid rgb(153,153,153);
+	margin-bottom: -1px;
+	color: white;
+}
+#service-tabs li.active a {
+	border-bottom: 1px solid white;
+	background-color: white;
+	color: black;
+	position: relative;
+}
+
+#nested-zip-codes {
+	text-align: right;
+}

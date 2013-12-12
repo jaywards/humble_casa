@@ -1,7 +1,7 @@
 <header class ="navbar navbar-fixed-top">
-	<div class="navbar-inner">
-		<div class="container">	
+	<div class="navbar-inner" style="padding-left:1%; padding-right:1%">
 			<%= link_to "HumbleCasa", root_path, class: "logo" %><z class="beta">beta</z>
+			&nbsp&nbsp<z class="tag-line">...simplify your home maintenance</z>
 			<nav>
 				<ul class="nav pull-right">
 					<% if current_user %>
@@ -9,14 +9,15 @@
 						&nbsp
 						&nbsp
 						&nbsp
+						<%= link_to "About", about_path %> | 
 						<%= link_to "User Account", edit_user_path(current_user) %> | 
 						<%= link_to "Logout", logout_path %>
 					<% else %>
-						<%#= link_to "Register", new_user_path(role: "propertyowner"), class: "launch-user-form" %> <!--| --> 
-						<%#= link_to "Login", login_path, remote: true, class: "launch-login-form" %>
+						<%= link_to "About", about_path %> | 
+						<%= link_to "Sign Up", new_user_path(role: "propertyowner") %> | 
+						<%= link_to "Login", login_path %>
 					<% end %>
 				</ul>
 			</nav>
-		</div>
 	</div>
 </header>

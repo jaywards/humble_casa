@@ -1,0 +1,11 @@
+<div class="row-fluid">
+	<div class="content">
+    	<div class="span8"></div>
+		<div class="span3" id="login-span">
+	    	<% if !@user_session.nil? %>
+		    	<%= render 'shared/login_main_page' %>
+    		<% end %>
+    	</div>
+		<div class="span1"></div>
+	</div>
+</div>

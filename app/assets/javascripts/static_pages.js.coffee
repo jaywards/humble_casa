@@ -3,6 +3,11 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 $ ->
+  $('#home-tabs > li > a').hover ->
+      $(this).tab 'show'
+
+
+$ ->
   
   #for bootstrap 3 use 'shown.bs.tab' instead of 'shown' in the next line
   $("a[data-toggle=\"tab\"]").on "click", (e) ->

@@ -2,6 +2,73 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
+div.content {
+	background-image: url("street-scenic.jpg");
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+	height: 350px;
+}
+
 .ratingmsg {
 	font-size: .8em;
 }
+
+.main-title {
+	text-align: center;	
+	color: rgb(0,97,152);
+	h2 {
+		font-size: 1.7em;
+		letter-spacing: -1px;
+		font-weight: bold;
+	}
+	h3 {
+		font-size: 1.2em;
+		font-weight: normal;
+	}
+}
+
+.service-notification {
+	border: 2px solid rgb(241,167,16);
+	padding: 5px;
+}
+
+.home-buttons {
+	border: 1px solid rgb(0,97,152);
+	padding: 5px;
+}
+
+#homepage-login {
+	background: rgba(255,255,255,0.8);
+	
+	.controls {
+		margin-left: 10px;
+		margin-right: 10px;
+		width: 80%;
+	}
+}
+
+#login-span {
+	padding-top: 2%
+}
+
+#home-tabs {
+	li {
+		text-align: center;
+		font-weight: bold;
+	}
+	li.active a {
+		color: rgb(0,97,152)
+	}
+	a:hover,
+	a:focus {
+  		color: rgb(0,97,152);
+  	}
+	a {
+		color: white
+	}
+}
+
+#completed-service-request-table {
+	font-size: .9em;
+}
+

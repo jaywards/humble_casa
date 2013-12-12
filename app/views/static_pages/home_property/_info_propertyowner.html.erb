@@ -1,69 +1,101 @@
-<div class="row-fluid">
-	<div class="span6">
-    	<%= render :partial => 'static_pages/intro_carousel', :locals => { :property_carousel => true } %>
-	</div>
-	<div class="span6" id="logo-and-buttons">
-		<center class="homepage">
-			<br>
-			<%= image_tag("logo.jpg", alt: "HumbleCasa logo", size: "135x43") %>
-			<z id="main-title">
-				<h1>Welcome to HumbleCasa!</h1>
-				<h2>...simplify your home maintenance</h2>
-			</z>
-						
-			<h5>Already have an acount?</h5>
-			<%= simple_form_for @user_session, :validate => true do |f| %>
-			  	<%= f.input :email %>
-				<%= f.input :password %>
-				<button class="btn btn-small btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
-					<i class="icon-ok-sign icon-white"></i> Login
-				</button>
-			<% end %>
-		</center>
-	</div>
-</div>
+<%= render 'shared/hero_image' %>
 
-<hr>
+<ul class="nav nav-tabs nav-justified navbar-inverse" id="home-tabs">
+  <li><a href="#homeowners" data-toggle="tab">Homeowners</a></li>
+  <li><a href="#serviceproviders" data-toggle="tab">Service Providers</a></li>
+  <li><a href="#propertymanagers" data-toggle="tab">Property Managers</a></li>
+</ul>
 
+<!-- Tab panes -->
 <center>
-	<div class="row-fluid">
-		<div class="span6">
-			<p>New to the site? It's completely free for homeowners! Manage all your home services in one place - schedule, review, and pay online. Sign-up for a new property owner account:&nbsp
-			</p>
+<div class="tab-content" style="padding:1%">
+  	<div class="tab-pane active" id="homeowners">
+		<div class="row-fluid"><div class="span12">
+			<div class="main-title">
+				<h3>HumbleCasa is completely free for homeowners! Manage all your home services in one place - schedule, review, and pay online.</h3>
+			</div>
+		</div></div>
+		<hr>
+		<div class="row-fluid">
+			<div class="span3">
+				<h5>How it works</h5>
+				<ol style="text-align:left">
+					<li>Create an account with a credit card on file</li>
+					<li>Select from our professional servicers in your area</li>
+					<li>Schedule services when you need them</li>
+					<li>Review emailed service reports and pay online</li>
+				</ol>
+			</div>
+			<div class="span5">
+				<h5>Features</h5>
+				<ul style="text-align:left">
+					<li>Remotely manage your home services - no more phone calls or mailing checks</li>
+					<li>Track all services (landscaping, housecleaning, handyman, etc.) in one place</li>
+					<li>Simple and secure online payments</li>
+					<li>Schedule services as you need them - ideal for 2nd home owners who rent occasionally</li>
+					<li>Emailed service reports with pictures to verify that services have been completed</li>
+				</ul>
+			</div>
+			<div class="span3">
+				<h5>Sign up</h5>
+				Create your free property owner account.
+				<div style="padding-top:2%">
+					<%= link_to "Create Property Account", new_user_path(role: "propertyowner"), class: "btn btn-small btn-success" %>
+				</div>
+			</div>
 		</div>
-		<div class="span6">	
-			<p>Or do you own a company that provides home maintainence services? We can help you to connect with your customers, manage your workforce, and streamline invoicing and payments. Visit our <%= link_to "Service Provider page", business_path %> to get more details or create your business acount:
-			</p>
+  	</div>
+  	
+  	<div class="tab-pane" id="serviceproviders">
+  		<div class="row-fluid"><div class="span12">
+			<div class="main-title">
+				<h3>Do you own a company that provides home maintainence services? We can help you to connect with your customers, manage your workforce, and streamline invoicing and payments.</h3>
+			</div>
+		</div></div>
+		<hr>
+		<div class="row-fluid">
+			<div class="span4">
+				<h5>How it works</h5>
+				<ol style="text-align:left">
+					<li>Create a profile for your business on HumbleCasa</li>
+					<li>Property owners use the site to schedule work requests</li>
+					<li>Complete the work yourself, or assign it to Employee accounts linked to your service</li>
+					<li>Fill out the completed service report and get paid within 7 days</li>
+				</ol>
+			</div>
+			<div class="span5">
+				<h5>Features</h5>
+				<ul style="text-align:left">
+					<li>Free for your customers</li>
+					<li>Confirm scheduling with customers online or via email</li>
+					<li>Secure credit card payment processing and funds available within 7 days</li>
+					<li>Workforce management - assign work request, track scheduling, and simplify payroll</li>
+					<li>Find new customers - we market to property owners to get them on the site for you</li>
+					<li>No cost to create an account, no set fees - we only get paid if you're making money</li>
+				</ul>
+			</div>
+			<div class="span2">
+				<h5>Sign up</h5>
+				Create your free business account.
+				<div style="padding-top:2%">
+					<%= link_to "Create Business Account", new_user_path(role: "serviceowner"), class: "btn btn-small btn-success" %>
+				</div>
+			</div>
 		</div>
 	</div>
-	<div class="row-fluid">
-		<div class="span6">
-			<%= link_to "Create Property Account", new_user_path(role: "propertyowner"), class: "btn btn-success" %>
-		</div>
-		<div class="span6">
-			<%= link_to "Create Service Account", new_user_path(role: "serviceowner"), class: "btn btn-success" %>
-		</div>
-	</div>
+  	
+  	<div class="tab-pane" id="propertymanagers">
+		<div class="row-fluid"><div class="span12">
+			<div class="main-title">
+				<h3>We know you've got a lot to manage - let HumbleCasa help you keep on top of all your properties and their services.</h3>
+			</div>
+		</div></div>
+		<hr>
+		<div class="row-fluid"><div class="span12">
+			<p>We're still building out the Property Manager features, but we'd love to work with you to make sure we fit your needs!</p>
+			<p>Drop us a line at <a href="mailto:contact@humblecasa.com">contact@humblecasa.com</a></p>
+		</div></div>
+  	</div>
+</div>
 </center>
-
-<hr>
-
-<div class="row-fluid">
-	<div class="span12">
-		<p>
-			HumbleCasa is the <b>free</b> and easy way to <b>schedule</b> and <b>track</b> home maintenance requests. See all of your maintenance requests in one place (house cleaners, landscapers, pool cleaners, etc.) and receive <b>verification</b> that the requested home services have been completed!
-		</p>
-		<ul>
-			<li>
-				Receive email notifications with pictures from your service provider when each service request is complete 
-			</li>
-			<li>
-				HumbleCasa will verify the accuracy of these reports, giving you confidence that your home is in top shape
-			</li>
-			<li>
-				Ideal for 2nd home owners who need to remotely turn properties around for future rentals or visitors, or anybody with a busy lifestyle that isn't always home to check up on their home service providers
-			</li>
-		</ul>
-		<p>Create an account, register with your service providers, and manage your house from your computer or smartphone <b>all for free!</b></p>
-	</div>
 </div>

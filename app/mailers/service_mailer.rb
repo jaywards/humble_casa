@@ -72,8 +72,9 @@ class ServiceMailer < ActionMailer::Base
   def new_customer(assignment)
     @service = assignment.service
     @property = assignment.property
-
-    if @service.user.notify?
+    @owner = User.find_by_id(@service.user_id)
+    
+    if @owner.notify?
       mail to: @service.email, subject: @service.name + ": new client on HumbleCasa"
     end
   end

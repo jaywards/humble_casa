@@ -2,3 +2,37 @@
 .hidden-fields  {
   display: none;
 }
+
+
+.simple_form div.service_request_work_assignment_user label.select.optional.control-label  {
+	width: 200px;
+	padding-right: 20px;
+}
+
+.simple_form div.service_request_first_scheduled_date label.fake.optional.control-label  {
+	line-height: 28px;
+}
+
+.simple_form div.service_request_scheduled_date label.fake.optional.control-label  {
+	line-height: 30px;
+}
+
+.simple_form div.service_request_start_timepicker {
+	.fake.optional.ui-timepicker-input {
+		width: 100px;
+	}
+}
+
+.simple_form div.service_request_end_timepicker {
+	.fake.optional.ui-timepicker-input {
+		width: 100px;
+	}
+}
+
+.simple_form div.service_request_completed label.radio_buttons.optional.control-label {
+	line-height: 38px;
+}
+
+#service_request_charge_notes, #service_request_completion_note {
+	height: 80px;
+}

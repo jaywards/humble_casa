@@ -27,6 +27,12 @@ textarea {
 	}
 }
 
+#site-content {
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+
 /* typography */
 h1, h2, h3, h6 {
 	line-height: 1;
@@ -55,24 +61,7 @@ p {
 	font-size: 1em;
 	line-height: 1.7em;
 }
-#main-title {
-	font-weight: bold;
-	color: black;
-	line-height: 1;
-	h1 {
-		font-size: 2em;
-		margin-bottom: 5px;
-		margin-top: -15px;
-		text-align: center;
-	}
-	h2 {
-		font-size: 1.2em;
-		margin-bottom: 20px;
-		text-align: center;
-		font-weight: normal;
-		color: rgb(0,97,152);
-	}
-}
+
 /* Set link color and hover */
 a:hover,
 a:focus {
@@ -84,6 +73,17 @@ a {
 }
 
 /* header */
+nav {
+	display: inline;
+	line-height: 45px;
+	vertical-align: bottom;
+}
+.navbar .nav {
+	display: inline;
+	line-height: 45px;
+	vertical-align: bottom;
+}
+
 .logo {
 	float: left;
 	margin-right: 1px;
@@ -92,7 +92,6 @@ a {
 	color: rgb(0,97,152);
 	letter-spacing: -1px;
 	padding-top: 9px;
-	line-height: 1;
 	&:hover {
 		color: rgb(0,176,223);
 		text-decoration: none;
@@ -102,6 +101,15 @@ a {
 	color: rgb(241,167,16);
 	letter-spacing: -1px;
 	font-weight: bold;
+	vertical-align: top;
+}
+
+.tag-line {
+	font-size: 1.1em;
+	vertical-align: bottom;
+	font-weight: normal;
+	color: rgb(0,97,152);
+	line-height: 45px;
 }
 
 /* footer */
@@ -155,142 +163,6 @@ footer {
 	 margin-bottom: 5px;
 }
 
-#employer_code {
-	width: 60%;
-}
-
-.simple_form div.user_employment_service div.controls {
-	margin-left: 0px;
-}
-.simple_form div.user_employment_service div.controls {
-	margin-left: 0px;
-}
-
-.simple_form div.property_assignments_interested div.controls{
-	margin-left: 0px;
-}
-.simple_form div.property_assignments_interested label.checkbox {
-	line-height: 24px;
-}
-.simple_form div.property_assignments_service div.controls {
-	margin-left: 0px;
-}
-.simple_form div.property_assignments_service .select.optional {
-	width: 100%
-}
-
-
-.simple_form div.master_service_request_onetime label.radio {
-	line-height: 20px;
-}
-.simple_form div.master_service_request_onetime label.radio_buttons.optional.control-label {
-	line-height: 38px;
-}
-.simple_form div.master_service_request_terms_agreement label.checkbox {
-	width: 400px;
-	padding-right: 100px;
-	line-height: 24px;
-}
-#terms-agreeement-details {
-	font-size: .8em;
-}
-
-
-.simple_form div.master_service_request_paused label.radio {
-	line-height: 20px;
-	width: 350px;
-}
-.simple_form div.master_service_request_paused label.radio_buttons.optional.control-label {
-	line-height: 38px;
-}
-
-#service_name, 
-#property_name, 
-#service_city,
-#property_city {
-	width: 50%;
-}
-#service_category {
-	width: 30%;
-	margin-bottom: 5px;
-}
-
-#service_state, #property_state {
-	width: 15%;
-	margin-bottom: 5px;
-}
-#service_zip, #property_zip, #service_business_code {
-	width: 25%;
-}
-#service_phone {
-	width: 40%
-}
-#service_email {
-	width: 40%;
-}
-#service_account_nickname {
-	width: 60%;
-}
-#service_account_type {
-	margin-bottom: 5px;
-}
-
-#service_user_first_name,
-#service_user_last_name,
-#service_user_primary_phone,
-#service_user_email,
-#service_user_password,
-#service_user_password_confirmation {
-	width: 40%;
-}
-
-.simple_form div.service_service_zips_zip .control-label  {
-	text-align: center;
-	width: 100px;
-}
-
-.simple_form div.service_service_zips_zip {
-	margin-bottom: 0px;
-}
-
-.simple_form div.service_request_work_assignment_user label.select.optional.control-label  {
-	width: 200px;
-	padding-right: 20px;
-}
-
-.simple_form div.service_request_first_scheduled_date label.fake.optional.control-label  {
-	line-height: 28px;
-}
-
-.simple_form div.service_request_scheduled_date label.fake.optional.control-label  {
-	line-height: 30px;
-}
-
-.simple_form div.service_request_start_timepicker {
-	.fake.optional.ui-timepicker-input {
-		width: 100px;
-	}
-}
-
-.simple_form div.service_request_end_timepicker {
-	.fake.optional.ui-timepicker-input {
-		width: 100px;
-	}
-}
-
-.simple_form div.service_request_completed label.radio_buttons.optional.control-label {
-	line-height: 38px;
-}
-
-
-#property_instructions, #master_service_request_instructions, #service_assignments_attributes_0_note, #service_request_charge_notes, #service_request_completion_note {
-	height: 80px;
-}
-
-
-#service_biz_description {
-	height: 60px;
-}
 
 .business-inactive {
 	color: #f00;
@@ -313,52 +185,7 @@ footer {
 	margin: 0;
 	padding: 0;	
 }
-#property-tabs li {
-	float: left;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-#property-tabs a {
-	display: block;
-	text-decoration: none;
-	padding: 3px 5px;
-	background-color: rgb(241,167,16);
-	color: black;
-	margin-right: 10px;
-	border: 1px solid rgb(153,153,153);
-	margin-bottom: -1px;
-	color: white;
-}
-#property-tabs li.active a {
-	border-bottom: 1px solid white;
-	background-color: white;
-	color: black;
-	position: relative;
-}
-#service-tabs li {
-	float: left;
-	list-style: none;
-	padding: 0;
-	margin: 0;
-}
-#service-tabs a {
-	display: block;
-	text-decoration: none;
-	padding: 3px 5px;
-	background-color: rgb(241,167,16);
-	color: black;
-	margin-right: 10px;
-	border: 1px solid rgb(153,153,153);
-	margin-bottom: -1px;
-	color: white;
-}
-#service-tabs li.active a {
-	border-bottom: 1px solid white;
-	background-color: white;
-	color: black;
-	position: relative;
-}
+
 .tab-pane.active {
 	clear: both;
 	margin-bottom: 25px;	
@@ -369,10 +196,7 @@ footer {
 	color: black;	
 }
 
-#nested-zip-codes {
-	text-align: right;
-}
-
+/* Dashboards */
 .dashboard-inside {
 	border: 1px solid lightgrey;
 	padding: 5px;
@@ -398,150 +222,4 @@ footer {
 	background-color: #EEEEEE;
 	padding: 8px;
 	margin: 2px;
-}
-
-
-
-
-#completed-service-request-table {
-	font-size: .9em;
-}
-
-.service-notification {
-	border: 2px solid rgb(241,167,16);
-	padding: 5px;
-}
-
-.home-buttons {
-	border: 1px solid rgb(0,97,152);
-	padding: 5px;
-}
-
-.carousel-caption {
-      margin-bottom: 20px;
-      background-color: transparent;
-}
-
-.pool-caption {
-	font-size: 1.4em;
-	font-weight: bold;
-	color: white;
-	background: transparent;
-}
-
-.pool-caption-minor {
-	font-size: 1.1em;
-	color: white;
-	font-weight: bold;
-	a:hover,
-	a:focus {
-  		color: black;
-  		text-decoration: underline;
-	}
-	a {
-		color: rgb(241,167,16);
-		text-decoration: underline;
-	}
-}
-
-.landscape div.carousel-caption {
-	text-align: center;
-}
-
-.landscape-caption {
-	font-size: 1.4em;
-	font-weight: bold;
-	color: white;
-	background: transparent;
-}
-
-.landscape-caption-minor {
-	font-size: 1.1em;
-	color: white;
-	font-weight: bold;
-	a:hover,
-	a:focus {
-  		color: rgb(241,167,16);
-  		text-decoration: underline;
-	}
-	a {
-		color: white;
-		text-decoration: underline;
-	}
-
-}
-
-.housecleaner div.carousel-caption {
-	text-align: center;
-}
-
-.housecleaner-caption {
-	font-size: 1.4em;
-	font-weight: bold;
-	color: white;
-	background: transparent;
-}
-
-.housecleaner-caption-minor {
-	font-size: 1.1em;
-	color: white;
-	font-weight: bold;
-	a:hover,
-	a:focus {
-  		color: black;
-  		text-decoration: underline;
-	}
-	a {
-		color: rgb(241,167,16);
-		text-decoration: underline;
-	}
-}
-
-.snowplow div.carousel-caption {
-	margin-bottom: 10px;
-}
-
-p.snowplow-caption {
-	font-size: 1.4em;
-	font-weight: bold;
-	color: rgb(241,167,16);
-	background: transparent;
-}
-
-p.snowplow-caption-minor {
-	font-size: 1.1em;
-	color: black;
-	font-weight: bold;
-	a:hover,
-	a:focus {
-  		color: black;
-  		text-decoration: underline;
-	}
-	a {
-		color: rgb(241,167,16);
-		text-decoration: underline;
-	}
-}
-
-.homepage .simple_form {
-	div.user_session_email {
-		margin-bottom: 6px;
-		label.email.required.control-label {
-			width: 100px;
-		}
-		.controls {
-			margin-left: 140px;
-			margin-right: 80px;
-		}
-	}
-	div.user_session_password {
-		margin-bottom: 6px;
-		label.password.required.control-label {
-			width: 100px;
-		}
-		.controls {
-			margin-left: 140px;
-			margin-right: 80px;
-		}
-	}
 }

@@ -1,14 +1,4 @@
 <footer class="footer">
-	<%# if !current_user.nil? %>
-	 	<%# if !@user.nil? && @user.role.to_s != "propertyowner" %>
-			<%#= render 'shared/homeowner_footer_tag' %>
-		<%# else %>
-			<%#= render 'shared/default_footer_tag' %>
-		<%# end %>
-	<%# else %>
-		<%= render 'shared/default_footer_tag' %>
-	<%# end %>
-	<br>
 	<center>
 		<ul>
 			<li><%= link_to "About", about_path %></li>
