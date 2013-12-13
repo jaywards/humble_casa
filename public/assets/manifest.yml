@@ -63,8 +63,8 @@ street-scenic.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
 street-scenic/index.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
 application.js: application-61efa0a32d3f447a346b27292c88e73e.js
 application/index.js: application-61efa0a32d3f447a346b27292c88e73e.js
-application.css: application-aa1a5cf8c7d1aaa1fc0aeb8b902bcf8d.css
-application/index.css: application-aa1a5cf8c7d1aaa1fc0aeb8b902bcf8d.css
+application.css: application-fd63f187c32d72ac284bd6eeca20f818.css
+application/index.css: application-fd63f187c32d72ac284bd6eeca20f818.css
 dossier/application.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application/index.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application.css: dossier/application-1b13569e9620782f423d4cd3ce931750.css
