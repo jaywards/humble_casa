@@ -35,12 +35,11 @@
 				<div class="row-fluid">
 					<div class="span6"%>
 						<%= render @business %>
-						<% if !@business.business_code.nil? %>
-							<br>Business code: <%= @business.business_code %>
-						<% end %>
 						<br>
 						Status: 
-						<% if @business.service_active %>
+						<% if !@business.verified %>
+							<b><z class="business-inactive">Not yet verified</z></b>
+						<% elsif @business.service_active %>
 							Active
 						<% else %>
 							<b><z class="business-inactive">Inactive</z></b> - please see Payment and Billing details below.

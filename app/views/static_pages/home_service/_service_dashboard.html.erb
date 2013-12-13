@@ -1,5 +1,7 @@
 <div class="dashboard-outside"><div class="dashboard-inside">
-<% if !@business.service_active %>
+<% if !@business.verified %>
+	<b>We haven't verified your business yet. When verification is complete, or if we have any questions, we'll notify you directly via the email and phone number you provided.</b>
+<% elsif !@business.service_active %>
 	<b>Your business is not active and cannot sign-up new customers or manage service requests until you resolve the following issues:</b>
 	<ul>
 		<% if !@business.stripe_ok %>

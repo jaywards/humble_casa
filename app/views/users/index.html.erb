@@ -25,8 +25,8 @@
 				<% end %>
 			<% when "employee" %>
 				Employee account<br><br>
-				<% if !u.services.first.nil? %>
-					<%= render u.services.first %>
+				<% if !u.employer.nil? %>
+					<%= render u.employer %>
 				<% else %>
 					not registered with employer
 				<% end %>

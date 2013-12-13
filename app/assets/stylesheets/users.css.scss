@@ -4,3 +4,21 @@
 .simple_form div.user_employment_service div.controls {
 	margin-left: 0px;
 }
+
+#user_first_name, 
+#user_last_name,
+
+#user_password,
+#user_password_confirmation {
+	width: 30%;
+}
+
+#user_primary_phone {
+	width: 20%;
+}
+
+#user_password,
+#user_password_confirmation,
+#user_email, {
+	width: 40%;
+}

@@ -8,7 +8,8 @@
 }
 
 #service_name, 
-#service_city {
+#service_city, 
+#service_license {
 	width: 50%;
 }
 
@@ -22,11 +23,15 @@
 	margin-bottom: 5px;
 }
 
-#service_zip, #service_business_code {
+.simple_form div.service_experience .controls {
+	line-height: 60px;
+}
+
+#service_zip {
 	width: 25%;
 }
 #service_phone, 
-#service_email {
+#service_email, #service_insurance_company, #service_insurance_id {
 	width: 40%
 }
 #service_account_nickname {
@@ -58,7 +63,7 @@
 	height: 80px;
 }
 
-#service_biz_description {
+#service_biz_description, #service_verify_details {
 	height: 60px;
 }
 

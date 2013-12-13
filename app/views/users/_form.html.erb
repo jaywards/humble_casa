@@ -1,31 +1,52 @@
 <%= simple_form_for @user, :validate => true do |f| %>
+    <div class="row-fluid">
+        <div class="span3">
+            <h5>Tips</h5>
+            <p>First create a user account on HumbleCasa. We have a strict <%= link_to "privacy policy", privacy_policy_path %> and will never sell your personal information.</p>
+            <% case params[:role] %>
+                <% when "propertyowner" %>
+                    <p>Your name, phone number, and email are only shown to the services that your have selected for your property. You will not be called or emailed by servicers trying to sell to you.</p>
+                <% when "serviceowner" %>
+                    <p>The email and phone number that you are providing here is not shown to property owners on the site. You will have a chance in the next step to provide a contact email and phone number for your business.</p>
+                <% when "employee" %>
+                    <p>Employee's first and last name will be shown to property owners in the completed service reports. The email and phone number for employees are private and only visible to the employee and service owner.</p>
+                <% else %>
+                    <p>No recognized user role. Please start over.</p>
+            <% end %>
+        </div>
+        
+        <div class="span9">
+            <%= f.input :first_name, label: "Name" do %> 
+                <%= f.input_field :first_name, placeholder: "first name" %>
+                <%= f.input_field :last_name, placeholder: "last name" %>
+            <% end %>
+
+            <%= f.input :primary_phone, label: "Contact info" do %>
+                <%= f.input_field :primary_phone, placeholder: "phone number" %>
+                <%= f.input_field :email, placeholder: "email - also your sign in name" %>
+            <% end %>
+
+            <%= f.input :password, label: "Password" do %>
+                <%= f.input_field :password, placeholder: "password - must be at least 6 characters" %>
+                <%= f.input_field :password_confirmation, placeholder: "confirm password" %>
+            <% end %>
+         
+            <% if @user.role.nil? %>
+                <%= f.hidden_field :role, value: params[:role] %>    
+                <% @role = params[:role] %>
+            <% else %>
+                <%= f.hidden_field :role, value: @user.role %>
+                <% @role = @user.role %>
+            <% end %>
+        </div>
+    </div>
     
-    <%= f.input :first_name %> 
-
-    <%= f.input :last_name %>
-
-    <%= f.input :primary_phone %>
-
-    <%= f.input :email, placeholder: "This will also your be your sign in name" %>
-
-    <%= f.input :password, placeholder: "Must be at least 6 characters" %>
-
-    <%= f.input :password_confirmation %>
- 
-    <% if @user.role.nil? %>
-        <%= f.hidden_field :role, value: params[:role] %>    
-        <% @role = params[:role] %>
-    <% else %>
-        <%= f.hidden_field :role, value: @user.role %>
-        <% @role = @user.role %>
-    <% end %>
-
     <% if @role == "propertyowner" %>   
         <%= f.input :notify, inline_label: "Receive email notifications when service requests are completed (recommended - you can always change this later)", label: false %>
     <% else %>
         <%= f.input :notify, inline_label: "Receive email notifications when new service requests are created by your clients (recommended - you can always change this later)", label: false %>
     <% end %>
-    
+
     <center>
         <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
             <i class="icon-ok icon-white"></i> <%= save_user_label %>

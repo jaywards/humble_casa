@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131120215204) do
+ActiveRecord::Schema.define(:version => 20131213203510) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -232,7 +232,12 @@ ActiveRecord::Schema.define(:version => 20131120215204) do
     t.string   "stripe_card_token"
     t.string   "last_four"
     t.string   "card_type"
-    t.string   "business_code"
+    t.boolean  "verified",               :default => false
+    t.string   "license"
+    t.string   "insurance_company"
+    t.string   "insurance_id"
+    t.integer  "experience"
+    t.string   "verify_details"
   end
 
   add_index "services", ["user_id"], :name => "index_services_on_user_id"
