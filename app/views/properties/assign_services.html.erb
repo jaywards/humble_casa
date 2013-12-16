@@ -33,31 +33,32 @@
 				    			<%= category.titleize %>
 				    		</td> 	
 				    		<td>
+								<% @assignment = @property.assignments.find_by_category(category) %>
 				    			<% if !(@category_services_in_area = @property.area_category_services(category)).empty? %>
-				    				<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>
+				    				<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
 				    			 		<%= assignment.hidden_field :category, value: category %>
 										<%= assignment.association :service, collection: @category_services_in_area, label: false, include_blank: true %>										
-										<% if !(@this_service = @property.assignments[@i].service).nil? %>
+										<% if !(@this_service = @assignment.service).nil? %>
 											<z id=<%="star"+ @i.to_s%> data-score="<%= @this_service.reputation_for(:ratings) %>"></z>
 										<% else %>
 											<z id=<%="star"+ @i.to_s%>></z>
 										<% end %>
 										<% @idstring = "service-description-" + @i.to_s %>
 										<p id=<%=@idstring %>>
-											<% if !@property.assignments[@i].service.nil? %>
-												<%= @property.assignments[@i].service.biz_description %>
+											<% if !@assignment.service.nil? %>
+												<%= @assignment.service.biz_description %>
 											<% end %>
 										</p>
 										<z id=<%="confirmed" + @i.to_s%>>
 											<hr>
 											Do you need this provider to give you an estimate before starting services on your house? This is typical unless you've already worked with this company and know what they will charge you.
-											<%= assignment.input :confirmed, label: false, input_html: {value: @property.assignments[@i].confirmed}, collection: [[false, 'Yes, I need an estimate'], [true, 'No, I know what I will be charged for a standard service already']],
+											<%= assignment.input :confirmed, label: false, input_html: {value: @assignment.confirmed}, collection: [[false, 'Yes, I need an estimate'], [true, 'No, I know what I will be charged for a standard service already']],
 	 		   									label_method: :last, value_method: :first, as: :radio_buttons %>
 	 		   							</z>
 				    				<% end %>	
 				    			<% else %>
 									None available yet for your area.
-									<%= f.simple_fields_for :assignments, @property.assignments[@i] do |assignment| %>
+									<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
 					    			 	<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
 										<%= assignment.hidden_field :category, value: category %>
 					    			<% end %>

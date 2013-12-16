@@ -154,4 +154,25 @@ class Property < ActiveRecord::Base
   def has_serviced(service)
     return self.service_requests.find_all {|x| x.service_id == service.id}.size > 0
   end
+
+  def add_categories
+    if (@diff = Service::CATEGORIES.count - self.assignments.count) > 0
+      @diff.times do 
+        self.assignments.build
+        save!
+      end
+    end
+  end
+
+  def label_categories
+    Service::CATEGORIES.each do |category|
+      if self.assignments.find_by_category(category).nil?
+        @assignment = self.assignments.where("category IS NULL").limit(1)
+        puts @assignment.first.id
+        @assignment.first.category = category
+        @assignment.first.save
+        #@assignment.update_attribute(:category, category)
+      end
+    end
+  end
 end

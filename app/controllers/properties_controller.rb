@@ -121,6 +121,8 @@ class PropertiesController < ApplicationController
 	end
 
 	def assign_services
+		@property.add_categories
+		@property.label_categories
 	end
 
 
