@@ -20,8 +20,10 @@
 				<td>	
 					<% if @selected_service.nil? %>
 						<% if property_listing.area_category_services(category).size > 0 %>			
-							<%= link_to assign_services_property_path(property_listing), class: "btn btn-mini btn-primary" do %>
-								<i class="icon-check icon-white"></i> Services available! Sign-up
+							<% if property_listing.active %>
+								<%= link_to "Services available - sign-up",assign_services_property_path(property_listing), class: "btn btn-mini btn-primary" %>
+							<% else %>
+								<strong>Services available in your area but you need to provide <%= link_to "billing details", edit_payment_info_property_path(property_listing) %> first.</strong>
 							<% end %>
 						<% else %>
 							No service providers for your area.
