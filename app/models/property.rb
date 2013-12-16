@@ -82,7 +82,7 @@ class Property < ActiveRecord::Base
   end
 
   def area_category_services(category)
-    Service.where(:category => category, :zip => zip, :service_active => true)
+    Service.includes(:service_zips).where(:category => category, :service_active => true, "service_zips.zip" => self.zip)
   end
 
   def area_services
