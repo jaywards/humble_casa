@@ -82,4 +82,8 @@ HumbleCasa::Application.configure do
     user_name: ENV["MAILER_USER_NAME"],
     password: ENV["MAILER_PASSWORD"]
   }
+
+  # Google Analytics code
+  config.gem 'rack-google-analytics', :lib => 'rack/google-analytics'
+  config.middleware.use Rack::GoogleAnalytics, :tracker => 'UA-36908901-4'
 end
