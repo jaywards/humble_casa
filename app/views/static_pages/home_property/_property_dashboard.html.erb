@@ -2,7 +2,7 @@
 	<div class="dashboard-inside">
 		<center><h4>Property Dashboard</h4></center>
 
-		<% @prop_count = @property_listings.size + 1 %>
+		<% @prop_count = @property_listings.size %>
 		<% @span_size = (12 / @prop_count).floor %>
 		<% @extra = 12 % @prop_count %>
 
@@ -16,17 +16,9 @@
 					</div>
 				</div>
 			<% end %>
-			<div class=<%= "span" + (@span_size + @extra).to_s %>>	
-				<div class="panel-outside">
-					<div class="panel-inside">
-						<center>
-							<hr>
-							<%= link_to "+ Add a property", new_user_property_path(current_user) %>
-							<hr>
-						</center>
-					</div>
-				</div>
-			</div>
 		</div>
+		<center>
+			<%= link_to "+ Add a property", new_user_property_path(current_user) %>	
+		</center>
 	</div>
 </div>

@@ -22,11 +22,9 @@
     <% if controller.controller_name == 'static_pages' && current_user.nil? %>
         <%= yield %>
     <% else %>
-      <div id="site-content">
-        <%= yield %>
-  	 </div>
-     <% end %>
-
-<%= render 'layouts/footer' %>
+      <div id="site-content"><%= yield %></div>
+    <% end %>
+  
+  <%= render 'layouts/footer' %>
 </body>
 </html>

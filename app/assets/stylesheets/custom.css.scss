@@ -78,15 +78,23 @@ nav {
 	line-height: 45px;
 	vertical-align: bottom;
 }
-.navbar .nav {
-	display: inline;
-	line-height: 45px;
-	vertical-align: bottom;
+.navbar {
+	padding-left: 0px;
+	padding-right: 0px;
+
+	.nav {
+		display: inline;
+		line-height: 45px;
+		vertical-align: bottom;
+	}
+	.navbar-inner {
+		padding-left: 1%;
+		padding-right: 1%;
+	}
 }
 
 .logo {
 	float: left;
-	margin-right: 1px;
 	font-size: 1.6em;
 	font-weight: bold;
 	color: rgb(0,97,152);
@@ -105,19 +113,19 @@ nav {
 }
 
 .tag-line {
-	font-size: 1.1em;
+	font-size: 1em;
 	vertical-align: bottom;
-	font-weight: normal;
+	font-weight: bold;
 	color: rgb(0,97,152);
 	line-height: 45px;
 }
 
 /* footer */
 footer {
-	margin-top: 100px;
+	margin-top: 50px;
 	font-size: .9em;
-	padding-left: 5px;
-	padding-top: 5px;
+	padding-left: 1%;
+	padding-top: 1%;
 	border-top: 1px solid $grayMediumLight;
 	color: $grayLight;
 	text-align: center;
@@ -136,6 +144,11 @@ footer {
 			&:hover {
 				color: $grayDarker;
 			}
+		}
+		li .social {
+			float: left;
+			margin-right: 10px;
+		
 		}
 	}
 }

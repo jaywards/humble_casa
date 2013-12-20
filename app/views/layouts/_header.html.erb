@@ -1,7 +1,10 @@
 <header class ="navbar navbar-fixed-top">
-	<div class="navbar-inner" style="padding-left:1%; padding-right:1%">
-			<%= link_to "HumbleCasa", root_path, class: "logo" %><z class="beta">beta</z>
-			&nbsp&nbsp<z class="tag-line">...simplify your home maintenance</z>
+	<div class="navbar-inner">
+			<ul class="nav pull-left">
+				<li style="padding-top:5px;"><img src="assets/logo_for_web.png" alt="HumbleCasa logo" height="33" width="40"></li>
+				<li><%= link_to "HumbleCasa", root_path, class: "logo" %></li>
+				<li>&nbsp&nbsp<z class="tag-line">...simplify your home maintenance</z></li>
+			</ul>
 			<nav>
 				<ul class="nav pull-right">
 					<% if current_user %>
