@@ -60,5 +60,5 @@ class UsersController < ApplicationController
     flash[:success] = "Account deleted."
     redirect_to root_path
   end
-
+  
 end

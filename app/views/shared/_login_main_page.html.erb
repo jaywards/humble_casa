@@ -3,7 +3,7 @@
 	<div class="main-title">
 		<h2>Welcome to HumbleCasa!</h2>
 	</div>
-	<%= simple_form_for @user_session, :validate => true do |f| %>
+	<%= simple_form_for @user_session, url: user_session_path, :validate => true do |f| %>
 	  	<center>
 	  		<%= f.input :email, placeholder: "email", label: false %>
 			<%= f.input :password, placeholder: "password", label: false %>

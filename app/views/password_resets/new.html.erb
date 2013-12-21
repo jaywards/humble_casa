@@ -1,0 +1,13 @@
+<%= provide(:title, 'Reset Password') %>
+<h2>Reset Password</h2>
+<center>
+	<p>Please enter your email address below. You will be emailed a link to reset your password.</p>
+	<%= form_tag password_resets_path do %>
+  		<%= text_field_tag :email %>
+  		<br>
+  		<br>
+  		<button class="btn btn-small btn-primary" type="submit" data-disable-with="Submitting...">Submit</button>
+		&nbsp			
+		<%= link_to "Cancel", root_path, class: "btn btn-small" %>
+	<% end %>
+</center>

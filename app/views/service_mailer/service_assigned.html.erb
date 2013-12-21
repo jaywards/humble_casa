@@ -1,15 +1,15 @@
-<%= render 'service_mailer/email_header', title: "HumbleCasa: Service Request Assigned"%>
+<%= render 'mailer_shared/email_header', title: "HumbleCasa: Service Request Assigned"%>
 
 <h2>New service request assigned to you</h2>
 <p>
-  <%= render 'service_mailer/request_details' %>
+  <%= render 'mailer_shared/request_details' %>
 </p>
 <p>
-  <%= render 'service_mailer/client_and_property_details' %>
+  <%= render 'mailer_shared/client_and_property_details' %>
 </p>
 <br>
 <br>
 <p>Please log on to <a href="http://humblecasa.com/">HumbleCasa</a> to complete this request.</p>
 <br>
- <%= render 'service_mailer/closing_to_service' %>
-<%= render 'service_mailer/email_footer' %>
+ <%= render 'mailer_shared/closing_to_service' %>
+<%= render 'mailer_shared/email_footer' %>

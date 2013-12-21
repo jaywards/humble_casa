@@ -38,15 +38,14 @@
                 <%= f.hidden_field :role, value: @user.role %>
                 <% @role = @user.role %>
             <% end %>
+    
+            <% if @role == "propertyowner" %>   
+                <%= f.input :notify, inline_label: "Receive email notifications when service requests are completed (recommended - you can always change this later)", label: false %>
+            <% else %>
+                <%= f.input :notify, inline_label: "Receive email notifications when new service requests are created by your clients (recommended - you can always change this later)", label: false %>
+            <% end %>
         </div>
     </div>
-    
-    <% if @role == "propertyowner" %>   
-        <%= f.input :notify, inline_label: "Receive email notifications when service requests are completed (recommended - you can always change this later)", label: false %>
-    <% else %>
-        <%= f.input :notify, inline_label: "Receive email notifications when new service requests are created by your clients (recommended - you can always change this later)", label: false %>
-    <% end %>
-
     <center>
         <button class="btn btn-primary" id="save-btn" type="submit" data-disable-with="Saving...">
             <i class="icon-ok icon-white"></i> <%= save_user_label %>

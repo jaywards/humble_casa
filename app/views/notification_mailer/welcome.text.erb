@@ -1,0 +1,14 @@
+Thank you for creating your account on HumbleCasa!
+
+This email address is your login name. If you ever forget your password, please click the link on the Login page (found in the top right corner of the website) to reset your password. We will email a link to reset the password.
+
+<% case @user.role %>
+<% when "propertyowner" %>
+If you haven't already, make sure to add your home or property to the site. And if you want to see what service providers are available in your area, put a credit card on file and start managing your home service online!
+<% when "serviceowner" %>
+If you haven't already, make sure to add your business details to the site. Once we've screened your business, and you've provided the necessary payment and billing details, your business will be active on the site and able to sign up new customers!
+<% when "employee" %>
+You are now active on the site and your employer can start assigning you work requests.
+<% end %>
+
+<%= render 'mailer_shared/closing_to_service' %>

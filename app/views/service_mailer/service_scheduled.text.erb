@@ -6,9 +6,9 @@ Schedule details:
 	Schedule date: <%= DateTime.parse(@service_request.first_scheduled.to_s).in_time_zone(@service_request.property.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
 	Assigned to: <%= @service_request.user.full_name %>
 
-<%= render 'service_mailer/request_details' %>
+<%= render 'mailer_shared/request_details' %>
 	
-<%= render 'service_mailer/service_details' %>
+<%= render 'mailer_shared/service_details' %>
 
 
 If you have any questions, please don't hesitate to contact your service provider.

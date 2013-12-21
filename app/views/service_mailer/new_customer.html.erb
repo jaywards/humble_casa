@@ -1,14 +1,14 @@
-<%= render 'service_mailer/email_header', title: "HumbleCasa: New Customer"%>
+<%= render 'mailer_shared/email_header', title: "HumbleCasa: New Customer"%>
 
 <h2>A new customer signed up for your service on HumbleCasa!</h2>
 <p>
-  <%= render 'service_mailer/client_and_property_details' %>
+  <%= render 'mailer_shared/client_and_property_details' %>
 </p>
 <br>
 <br>
 <p>Please log on to <a href="http://humblecasa.com/">HumbleCasa</a> to provide a standard work request cost or arrange to meet with the client at their property to build your estimate.</p>
 <br>
 <p>
-  <%= render 'service_mailer/closing_to_service' %>
+  <%= render 'mailer_shared/closing_to_service' %>
 </p>
- <%= render 'service_mailer/email_footer' %>
+ <%= render 'mailer_shared/email_footer' %>

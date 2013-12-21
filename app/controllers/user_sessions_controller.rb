@@ -1,6 +1,5 @@
 class UserSessionsController < ApplicationController
   filter_resource_access
-  force_ssl
   
   def new
     @user_session = UserSession.new
@@ -22,4 +21,6 @@ class UserSessionsController < ApplicationController
     @user_session.destroy
     redirect_to root_path
   end
+
+
 end

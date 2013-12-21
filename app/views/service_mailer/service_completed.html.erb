@@ -1,14 +1,14 @@
-<%= render 'service_mailer/email_header', title: "HumbleCasa: Service Completed"%>
+<%= render 'mailer_shared/email_header', title: "HumbleCasa: Service Completed"%>
 
 <h2>Your service request for <%= @property.name %> has been completed!</h2>
 <p>
- <%= render 'service_mailer/completion_details' %>
+ <%= render 'mailer_shared/completion_details' %>
 </p>           
 <p>
-  <%= render 'service_mailer/request_details' %>
+  <%= render 'mailer_shared/request_details' %>
 </p>
 <p>
-  <%= render 'service_mailer/service_details' %>
+  <%= render 'mailer_shared/service_details' %>
 </p>
-<%= render 'service_mailer/closing_to_property' %>
-<%= render 'service_mailer/email_footer' %>
+<%= render 'mailer_shared/closing_to_property' %>
+<%= render 'mailer_shared/email_footer' %>

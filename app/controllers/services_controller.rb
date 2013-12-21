@@ -82,6 +82,7 @@ class ServicesController < ApplicationController
 	def add_employee
 	    @service = Service.find(params[:id])
 	    @user = User.new
+	    @password = (0...8).map { (65 + rand(26)).chr }.join
 	end
 
 	def create_employee

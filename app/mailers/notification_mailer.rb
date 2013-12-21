@@ -11,9 +11,20 @@ class NotificationMailer < ActionMailer::Base
 		mail to: "jason@humblecasa.com", subject: "New " + @user.role + " user signed-up"
 	end
 
+	def welcome(user)
+		@user = user
+		mail to: @user.email, subject: "Welcome to HumbleCasa!"
+	end
+
 	def new_employee(user)
 		@user = user
 		@service = @user.employer
 		mail to: @user.email, subject: @service.name + " has created an account for you on HumbleCasa.com!"
 	end
+
+	def password_reset(user)
+		@user = user
+		mail to: @user.email, subject: "Reset password for HumbleCasa.com"
+	end
+
 end

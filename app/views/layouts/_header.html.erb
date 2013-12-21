@@ -1,26 +1,26 @@
 <header class ="navbar navbar-fixed-top">
 	<div class="navbar-inner">
-			<ul class="nav pull-left">
-				<li style="padding-top:5px;"><img src="assets/logo_for_web.png" alt="HumbleCasa logo" height="33" width="40"></li>
-				<li><%= link_to "HumbleCasa", root_path, class: "logo" %></li>
-				<li>&nbsp&nbsp<z class="tag-line">...simplify your home maintenance</z></li>
+		<ul class="nav pull-left">
+			<li style="padding-top:5px;"><img src="http://www.humblecasa.com/assets/logo_for_web.png" alt="HumbleCasa logo" height="33" width="40"></li>
+			<li><%= link_to "HumbleCasa", root_path, class: "logo" %></li>
+			<li>&nbsp&nbsp<z class="tag-line">...simplify your home maintenance</z></li>
+		</ul>
+		<nav>
+			<ul class="nav pull-right">
+				<% if current_user %>
+					Welcome, <%= current_user.first_name %>
+					&nbsp
+					&nbsp
+					&nbsp
+					<%= link_to "About", about_path %> | 
+					<%= link_to "User Account", edit_user_path(current_user) %> | 
+					<%= link_to "Logout", logout_path %>
+				<% else %>
+					<%= link_to "About", about_path %> | 
+					<%= link_to "Sign Up", new_user_path(role: "propertyowner") %> | 
+					<%= link_to "Login", login_path %>
+				<% end %>
 			</ul>
-			<nav>
-				<ul class="nav pull-right">
-					<% if current_user %>
-						Welcome, <%= current_user.first_name %>
-						&nbsp
-						&nbsp
-						&nbsp
-						<%= link_to "About", about_path %> | 
-						<%= link_to "User Account", edit_user_path(current_user) %> | 
-						<%= link_to "Logout", logout_path %>
-					<% else %>
-						<%= link_to "About", about_path %> | 
-						<%= link_to "Sign Up", new_user_path(role: "propertyowner") %> | 
-						<%= link_to "Login", login_path %>
-					<% end %>
-				</ul>
-			</nav>
+		</nav>
 	</div>
 </header>

@@ -1,0 +1,5 @@
+Service details:
+ 	<%= @service.name %>
+  	Owner: <%= User.find_by_id(@service.user_id).full_name %>
+  	<%= @service.phone %>
+  	<%= @service.email %>

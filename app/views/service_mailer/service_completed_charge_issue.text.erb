@@ -2,11 +2,11 @@ Hello <%= @property.user.full_name %>,
 
 Your service request has been completed by <%= @service.name %>! However, there was an issue with your credit card. Please login to your account on HumbleCasa to update your credit card info. 
 
-<%= render 'service_mailer/completion_details' %>
+<%= render 'mailer_shared/completion_details' %>
 
-<%= render 'service_mailer/request_details' %>
+<%= render 'mailer_shared/request_details' %>
 	
-<%= render 'service_mailer/service_details' %>
+<%= render 'mailer_shared/service_details' %>
   
 
-<%= render 'service_mailer/closing_to_property' %>
+<%= render 'mailer_shared/closing_to_property' %>

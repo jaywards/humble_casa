@@ -1,6 +1,6 @@
 HumbleCasa::Application.routes.draw do
   
-  resources :user_sessions
+  resource :user_session
 
   resources :users do
     resources :properties, :services, :service_zips
@@ -61,6 +61,8 @@ HumbleCasa::Application.routes.draw do
     end
   end
   
+  resources :password_resets, :only => [ :new, :create, :edit, :update ]
+
   match '/login', to: 'user_sessions#new', :as => :login
   match '/logout', to: 'user_sessions#destroy', :as => :logout
   match '/new_user', to: 'users#new', :as => :new_user

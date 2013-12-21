@@ -28,7 +28,9 @@ HumbleCasa::Application.configure do
   enable_starttls_auto: true,
   user_name: ENV["MAILER_USER_NAME"],
   password: ENV["MAILER_PASSWORD"]
-}
+  }
+
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

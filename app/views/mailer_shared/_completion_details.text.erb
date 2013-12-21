@@ -1,0 +1,19 @@
+Completion details:
+<% if @service_request.location_verified && @service_request.timestamp_verified %>
+Verified completed by HumbleCasa
+<% end %>
+Completion date: <%= DateTime.parse(@service_request.completed_date.to_s).in_time_zone(@service_request.property.time_zone).strftime("%m/%d/%Y") %>
+Completed by: <%= @service_request.user.full_name %>
+Service charge: <%= number_to_currency(@service_request.charge) %>. Your credit card on file will be charged for this amount.
+<% if !@service_request.charge_notes.blank? %>
+Charge explanation: <%= @service_request.charge_notes %>
+<% end %>
+<% if !@service_request.completion_note.empty? %>
+Notes: <%= @service_request.completion_note %>
+<% end %>
+<% if @service_request.service_photo_1? || @service_request.service_photo_2? || @service_request.service_photo_3? %>
+Service photos:
+<%= image_tag @service_request.service_photo_1_url if @service_request.service_photo_1? %>
+<%= image_tag @service_request.service_photo_2_url if @service_request.service_photo_2? %>
+<%= image_tag @service_request.service_photo_3_url if @service_request.service_photo_3? %>
+<% end %> 

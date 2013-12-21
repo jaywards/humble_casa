@@ -83,6 +83,9 @@ HumbleCasa::Application.configure do
     password: ENV["MAILER_PASSWORD"]
   }
 
+  Rails.application.routes.default_url_options[:host] = 'localhost:3000'
+
+
   # Google Analytics code
   config.gem 'rack-google-analytics', :lib => 'rack/google-analytics'
   config.middleware.use Rack::GoogleAnalytics, :tracker => 'UA-36908901-4'

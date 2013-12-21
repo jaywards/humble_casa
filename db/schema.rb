@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131213203510) do
+ActiveRecord::Schema.define(:version => 20131220214538) do
 
   create_table "assignments", :force => true do |t|
     t.string   "category"
@@ -266,7 +266,10 @@ ActiveRecord::Schema.define(:version => 20131213203510) do
     t.boolean  "notify",            :default => true
     t.string   "time_zone"
     t.boolean  "new_account",       :default => true
+    t.string   "perishable_token",  :default => "",   :null => false
   end
+
+  add_index "users", ["perishable_token"], :name => "index_users_on_perishable_token"
 
   create_table "work_assignments", :force => true do |t|
     t.integer  "user_id"

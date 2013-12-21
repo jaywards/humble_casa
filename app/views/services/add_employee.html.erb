@@ -13,21 +13,23 @@
 			<%= f.simple_fields_for @user, :validate => true do |user| %>
 
 				<%= user.input :first_name, label: "Name" do %> 
-			    	<%= user.input_field :first_name, placeholder: "first name" %>
-			    	<%= user.input_field :last_name, placeholder: "last name" %>
+			    	<%= user.input_field :first_name, placeholder: "employee first name" %>
+			    	<%= user.input_field :last_name, placeholder: "employee last name" %>
 			    <% end %>
 
 				<%= user.input :primary_phone, label: "Contact info" do %>
-	   				<%= user.input_field :primary_phone, placeholder: "phone number" %>
-	   				<%= user.input_field :email, placeholder: "email address - also employee sign-in" %>
+	   				<%= user.input_field :primary_phone, placeholder: "employee phone number" %>
+	   				<%= user.input_field :email, placeholder: "employee email address - also their sign-in" %>
 	   			<% end %>
 
-			    <%= user.input :password, label: "Password" do %>
-				    <%= user.input_field :password, placeholder: "must be at least 6 characters" %>
-				    <%= user.input_field :password_confirmation, placeholder: "confirm password" %>
-				<% end %>
-			    
+			    <%#= user.input :password, label: "Password" do %>
+				    <%#= user.input_field :password, placeholder: "must be at least 6 characters" %>
+				    <%#= user.input_field :password_confirmation, placeholder: "confirm password" %>
+				<%# end %>
+
 			    <%= user.hidden_field :role, value: "employee" %>
+			    <%= user.hidden_field :password, value: @password %>
+			    <%= user.hidden_field :password_confirmation, value: @password %>
 
 			    <%= user.input :notify, inline_label: "Send email notifications when service requests are assigned to this employee (recommended - they can always change this later)", label: false %>
 			<% end %>

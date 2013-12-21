@@ -1,0 +1,14 @@
+<%= provide(:title, 'Update Password') %>
+<h2>Update your password</h2>
+<center>
+	<p>Please enter a new password below. Your password must be at least 6 characters.</p>
+	<%= form_tag password_reset_path, :method => :put do %>
+  		<%= label_tag :password, "Password" %>
+  		<%= password_field_tag :password %>
+  		<%= label_tag :password_confirmation, "Confirm password" %>
+  		<%= password_field_tag :password_confirmation %>
+  		<br>
+  		<br>
+  		<button class="btn btn-small btn-primary" type="submit" data-disable-with="Submitting...">Submit</button>
+	<% end %>
+</center>

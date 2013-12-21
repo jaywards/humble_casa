@@ -1,0 +1,7 @@
+Instructions for setting a password at HumbleCasa
+	
+<%=@service.name%> has created a new account for you on HumbleCasa.com. This email address (<%= @user.email %>) is your login name. Please follow the link below to set your password.
+
+<%= link_to "Set Password", edit_password_reset_url(@user.perishable_token) %>
+
+<%= render 'mailer_shared/closing_to_service' %>

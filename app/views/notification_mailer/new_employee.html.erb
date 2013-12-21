@@ -1,0 +1,11 @@
+<%= render 'mailer_shared/email_header', title: "Your new account at HumbleCasa"%>
+
+<h2>Instructions for setting a password at HumbleCasa</h2>
+<p>
+	<%=@service.name%> has created a new account for you on HumbleCasa.com. This email address (<%= @user.email %>) is your login name. Please follow the link below to set your password.
+</p>
+<center><%= link_to "Set Password", edit_password_reset_url(@user.perishable_token) %></center>
+<br>
+<br>
+<%= render 'mailer_shared/closing_to_service' %>
+<%= render 'mailer_shared/email_footer' %>
