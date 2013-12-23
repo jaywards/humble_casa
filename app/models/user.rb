@@ -47,18 +47,18 @@ class User < ActiveRecord::Base
   end
 
   def mail_notification
-    NotificationMailer.welcome(self).deliver if Rails.env.production?
-    NotificationMailer.new_user(self).deliver if Rails.env.production?
+    NotificationMailer.delay.welcome(self) if Rails.env.production?
+    NotificationMailer.delay.new_user(self) if Rails.env.production?
   end
 
   def mail_new_employee
     reset_perishable_token!
-    NotificationMailer.new_employee(self).deliver
+    NotificationMailer.delay.new_employee(self)
   end
 
   def mail_password_reset
     reset_perishable_token!
-    NotificationMailer.password_reset(self).deliver
+    NotificationMailer.delay.password_reset(self)
   end
 
 

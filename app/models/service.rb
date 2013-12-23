@@ -157,7 +157,7 @@ class Service < ActiveRecord::Base
   end
 
   def mail_notification
-    NotificationMailer.new_service(self).deliver if Rails.env.production?
+    NotificationMailer.delay.new_service(self) if Rails.env.production?
   end
 
 end

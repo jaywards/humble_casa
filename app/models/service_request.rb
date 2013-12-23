@@ -156,9 +156,9 @@ class ServiceRequest < ActiveRecord::Base
 
   def mail_completed(charge_success)
     if charge_success
-      ServiceMailer.service_completed(self).deliver
+      ServiceMailer.delay.service_completed(self)
     else
-      ServiceMailer.service_completed_charge_issue(self).deliver
+      ServiceMailer.delay.service_completed_charge_issue(self)
     end  
     self.update_attribute(:mailed_completed, true)
     
@@ -166,30 +166,30 @@ class ServiceRequest < ActiveRecord::Base
       @newSR_id = MasterServiceRequest.find_by_id(self.master_service_request_id).active_request_id
       @newSR = ServiceRequest.find_by_id(@newSR_id)
       if self.all_assigned
-        ServiceMailer.service_assigned(@newSR).deliver
+        ServiceMailer.delay.service_assigned(@newSR)
         @newSR.update_attribute(:mailed_assigned, true)
       end
       if self.all_scheduled
-        ServiceMailer.service_scheduled(@newSR).deliver
+        ServiceMailer.delay.service_scheduled(@newSR)
         @newSR.update_attribute(:mailed_scheduled, true)
       end
     end
   end
 
   def mail_assigned
-    ServiceMailer.service_assigned(self).deliver
+    ServiceMailer.delay.service_assigned(self)
     self.mailed_assigned = true
     save!
   end
 
   def mail_scheduled
-    ServiceMailer.service_scheduled(self).deliver
+    ServiceMailer.delay.service_scheduled(self)
     self.mailed_scheduled = true
     save! 
   end
 
   def mail_created
-    ServiceMailer.service_created(self).deliver
+    ServiceMailer.delay.service_created(self)
     self.mailed_created = true
     save!
   end 
@@ -202,7 +202,7 @@ class ServiceRequest < ActiveRecord::Base
     self.mailed_scheduled = false
     self.scheduled = false
 
-    ServiceMailer.service_rescheduled(self, mr).deliver
+    ServiceMailer.delay.service_rescheduled(self, mr)
     
   end
 

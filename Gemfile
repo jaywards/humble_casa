@@ -31,6 +31,8 @@ gem 'ultrahook'
 gem 'figaro'
 gem 'sprockets'
 gem 'dynamic_form'
+gem 'daemons'
+gem 'delayed_job_active_record'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'

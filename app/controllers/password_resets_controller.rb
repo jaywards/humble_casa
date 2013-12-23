@@ -26,8 +26,7 @@ class PasswordResetsController < ApplicationController
 
     	if @user.save
       		flash[:success] = "Your password was successfully updated"
-      		#redirect_to @user
-    		redirect_to root_path
+    		  redirect_to root_path
     	else
       		flash[:error] = "The password you submitted was not accepted. Your password must be at least 6 characters and the password confirmation must match."
           render :action => :edit
