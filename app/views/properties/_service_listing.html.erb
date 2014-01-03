@@ -7,7 +7,7 @@
 <% end %>
 	<z class="list-group-item-heading"><%= check_box_tag 'selected' + s.id.to_s,'yes', @selectedService, class: 'selected' %>
 		&nbsp&nbsp<strong><%=s.name%></strong></z>
-		<%= s.city %>, <%=s.state%> &nbsp&nbsp|&nbsp&nbsp <%= s.email %> 
+		&nbsp&nbsp <%= s.city %>, <%=s.state%> &nbsp&nbsp|&nbsp&nbsp <%= s.email %> 
 		&nbsp&nbsp|&nbsp&nbsp <%= s.phone %>
 		<span class="badge"><z class="raty" data-score=<%=s.reputation_for(:ratings)%>></z></span>
 	<p class="list-group-item-text">

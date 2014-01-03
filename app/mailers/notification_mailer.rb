@@ -27,4 +27,11 @@ class NotificationMailer < ActionMailer::Base
 		mail to: @user.email, subject: "Reset password for HumbleCasa.com"
 	end
 
+	def signup(assignment)
+		@service = assignment.service
+    	@property = assignment.property
+    	
+    	mail to: @service.email, subject: @service.name + ": You have a new customer waiting on HumbleCasa.com!"
+  	end
+
 end

@@ -61,10 +61,10 @@ star-on.png: star-on-5f1bbca2093b22e1d0a6f907600c106b.png
 star-on/index.png: star-on-5f1bbca2093b22e1d0a6f907600c106b.png
 street-scenic.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
 street-scenic/index.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
-application.js: application-e5f83bbececaa8b5462966635c30d2fc.js
-application/index.js: application-e5f83bbececaa8b5462966635c30d2fc.js
-application.css: application-be9a245e91b145722c44053605301038.css
-application/index.css: application-be9a245e91b145722c44053605301038.css
+application.js: application-00acd058e2beb82398047e662d26054e.js
+application/index.js: application-00acd058e2beb82398047e662d26054e.js
+application.css: application-0f1d885a6a4a83541092c0f4b73500c6.css
+application/index.css: application-0f1d885a6a4a83541092c0f4b73500c6.css
 dossier/application.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application/index.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application.css: dossier/application-1b13569e9620782f423d4cd3ce931750.css

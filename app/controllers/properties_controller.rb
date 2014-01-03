@@ -76,7 +76,13 @@ class PropertiesController < ApplicationController
 
     	@categories_to_mail.each do |cat|
     		@a = @property.assignments.find_by_category(cat)
-    		ServiceMailer.delay.new_customer(@a) if !@a.service.nil?
+    		if !@a.service.nil? 
+    			if @a.service.area_service
+    				NotificationMailer.delay.signup(@a)
+    			else
+    				ServiceMailer.delay.new_customer(@a)
+    			end
+    		end
     	end
     	
     	if @property.create_assignments_customers && @property.remove_invalid_srs
