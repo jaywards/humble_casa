@@ -1,8 +1,11 @@
 .simple_form div.property_assignments_interested div.controls{
 	margin-left: 0px;
 }
-.simple_form div.property_assignments_interested label.checkbox {
-	line-height: 24px;
+.simple_form div.property_assignments_interested {
+	margin-bottom: 0px;
+	label.checkbox {
+		line-height: 24px;
+	}
 }
 .simple_form div.property_assignments_service div.controls {
 	margin-left: 0px;
@@ -51,4 +54,21 @@
 	background-color: white;
 	color: black;
 	position: relative;
+}
+
+.panel-heading {
+	margin-bottom: 0px;
+}
+
+.panel .list-group {
+	margin-top: 0px;
+}
+
+.list-group-item-heading .selected {
+	margin-bottom: 3px;
+	margin-top: 0px;
+}
+
+.confirmation-message {
+	display: none;
 }

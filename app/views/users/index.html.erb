@@ -1,44 +1,64 @@
 <% @users.each do |u| %>
 	<%= render u %>
-	<br>
-	<ul>
-		<% case u.role %>
-			<% when "propertyowner" %>
-				Property owner account<br><br>
-				<% @props = u.properties %>
-				<% @props.each do |p| %>
-					<%= render p %>
-					<%= link_to "edit", edit_property_path(p) %>
-					&nbsp
-					<%= link_to "delete", p, method: :delete, confirm: "Are you sure?" %>
-				<% end %>
-			<% when "serviceowner" %>
-				Service owner account<br><br>
-				<% if !(@service = u.business).nil? %>
-					<%= render @service %><br>
-					<%= @service.email %>
-					<%= link_to "edit", edit_service_path(@service) %>
-						&nbsp
-					<%= link_to "delete", @service, method: :delete, confirm: "Are you sure?" %>
-				<% else %>
-					no service registered
-				<% end %>
-			<% when "employee" %>
-				Employee account<br><br>
-				<% if !u.employer.nil? %>
-					<%= render u.employer %>
-				<% else %>
-					not registered with employer
-				<% end %>
-			<% when "admin" %>
-				Admin account<br>
-			<% else %>
-				No recognized user role
-		<% end %>
-	</ul>
 	<%= link_to "edit", edit_user_path(u) %>
 	&nbsp
 	<%= link_to "delete", u, method: :delete, confirm: "Are you sure?" %>
+	<br>
+	
+	<% case u.role %>
+		<% when "propertyowner" %>
+			Property owner account<br><br>
+			<% @props = u.properties %>
+			<ol>
+				<% @props.each do |p| %>
+					<li>
+						<%= render p %>
+						<%= link_to "edit", edit_property_path(p) %>
+						&nbsp
+						<%= link_to "delete", p, method: :delete, confirm: "Are you sure?" %>
+					</li>
+				<% end %>
+			</ol>
+		<% when "admin" %>
+			Admin account<br><br>
+			<% @services = u.services %>
+			<ol>
+				<% @services.each do |s| %>
+					<li>	
+						<%= render s %>
+						<%= link_to "edit", edit_service_path(s) %>
+						&nbsp
+						<%= link_to "delete", p, method: :delete, confirm: "Are you sure?" %>
+					</li>
+				<% end %>
+			</ol>
+		<% when "serviceowner" %>
+			Service owner account<br><br>
+			<ol>	
+				<% if !(@service = u.business).nil? %>
+					<li>	
+						<%= render @service %><br>
+						<%= @service.email %>
+						<%= link_to "edit", edit_service_path(@service) %>
+							&nbsp
+						<%= link_to "delete", @service, method: :delete, confirm: "Are you sure?" %>
+					</li>
+				<% else %>
+					no service registered
+				<% end %>
+			</ol>
+		<% when "employee" %>
+			Employee account<br><br>
+			<ol>
+				<% if !u.employer.nil? %>
+					<li><%= render u.employer %></li>
+				<% else %>
+					not registered with employer
+				<% end %>
+			</ol>
+		<% else %>
+			No recognized user role
+	<% end %>
 	<hr>
 <% end %>
 

@@ -43,41 +43,47 @@ property =
 
 $ ->
   if $('body').hasClass("properties") && $(".register-services").length
-    $.fn.raty.defaults.path = "http://www.humblecasa.com/assets"
-    initializeRegisterServiceForm()
+    initializeRaty()
+    initializeListGroup()
+    
+    
+        
+initializeRaty = ->
+  $.fn.raty.defaults.path = "http://www.humblecasa.com/assets"
+  $(".raty").raty 
+    readOnly: true,
+    score: ->
+      $(this).attr "data-score"
 
-
-initializeRegisterServiceForm = ->
-  counter = 0
-  while counter < catCount
-    $('#confirmed' + counter).hide()
-    $('#star' + counter).raty
-      readOnly: true
-      score: ->
-        $(this).attr "data-score"
-    if $('#property_assignments_attributes_' + counter + '_service_id').val() == ""
-      $('#star' + counter).hide()
-    $('#property_assignments_attributes_' + counter + '_service_id').change ->
-      service = $(this).val()
-      id = $(this).attr('id').match(/[0-9]+/)
-      if service == ""
-        $('#service-description-' + id).text ""
-        $('#confirmed' + id).hide(400)
-        $('#star' + id).hide(400) 
+initializeListGroup = ->
+  $(".list-group-item").click (event) ->
+    serviceListing = $(this)
+    assignID = serviceListing.attr "assignid"
+    serviceID = serviceListing.attr "serviceid"
+    if $(event.target).hasClass("selected")
+      if serviceListing.hasClass("active")
+        deactivate(serviceListing, assignID, serviceID)          
       else
-        $('#confirmed' + id).show(400)
-        $.ajax
-          url: "/services/" + service
-          type: "get"
-          dataType: "html"
-          processData: false
-          success: (data) ->
-            if data is "record_not_found"
-              alert "Service description not found"
-            else
-              content = data.split("|")
-              $('#star' + id).raty "set",
-                score: content[0]
-              $('#star' + id).show(400)
-              $('#service-description-' + id).text content[1]
-    counter++
+        activate(serviceListing, assignID, serviceID)      
+    else
+      if !serviceListing.hasClass("active")
+        activate(serviceListing, assignID, serviceID)      
+  
+activate = (serviceListing, assignID, serviceID) ->
+  current = serviceListing.attr "current"
+  currentActive = serviceListing.closest(".list-group").children(".active")
+  CAServiceID = currentActive.attr "serviceid"
+  currentActive.removeClass "active"
+  $('#selected' + CAServiceID).prop("checked", false)
+  $('#confirmed' + CAServiceID).hide(400)
+  serviceListing.addClass "active"
+  $('#property_assignments_attributes_' + assignID + '_service_id').val(serviceID)
+  $('#selected' + serviceID).prop("checked", true)
+  if current == "false"
+    $('#confirmed' + serviceID).show(400)  
+
+deactivate = (serviceListing, assignID, serviceID) ->
+  serviceListing.removeClass "active"
+  $('#property_assignments_attributes_' + assignID + '_service_id').val("")
+  $('#selected' + serviceID).prop("checked", false)
+  $('#confirmed' + serviceID).hide(400)

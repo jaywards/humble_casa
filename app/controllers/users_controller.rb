@@ -17,7 +17,10 @@ class UsersController < ApplicationController
 
   def create
     @user = User.new(params[:user])
-    @user.build_employment
+    if @user.role == "serviceowner" || @user.role == "employee"
+      @user.build_employment
+    end
+ 
     if @user.save
       @user.mail_notification
       flash[:success] = "Successfully created user."

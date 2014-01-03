@@ -1,6 +1,8 @@
 <strong><%= s.name %></strong><br>
 <% if !s.service_active %>
 	 - this service is not currently active.
+<% elsif s.area_service %>
+	Pending activation of service
 <% else %>
 	<% @assignment = listing.assignments.find_by_service_id(s) %>
 	<% if !@assignment.confirmed %>

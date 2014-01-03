@@ -74,7 +74,9 @@
 					
 				<% if @valid_service_row %>
 					<td>
-						<% if @need_estimate %>
+						<% if @selected_service.area_service %>
+							Pending activation of service
+						<% elsif @need_estimate %>
 							Pending estimate by service provider.
 						<% elsif @selected_service.service_active %>									
 							<% if !@open_SRs.nil? %>										

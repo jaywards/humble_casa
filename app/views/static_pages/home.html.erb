@@ -25,6 +25,11 @@
 			<%= link_to "all users/properties/services", users_path %><br>
 			<%= link_to "all master service requests", master_service_requests_path %><br>
 			<%= link_to "all service requests", service_requests_path %>
+			<hr>
+			<%= link_to "add property owner account", new_user_path(role: "propertyowner") %><br>
+			<%= link_to "add service owner account", new_user_path(role: "serviceowner") %>
+			<hr>
+			<%= link_to "add service", new_service_path %>
 		<% else %>
 			No recognized user role - please contact HumbleCasa support for help.
 	<% end %>

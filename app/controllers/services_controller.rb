@@ -4,19 +4,27 @@ class ServicesController < ApplicationController
 	
 	def create
 		@user = current_user	
-		@service = @user.build_business(params[:service])
+		if @user.role == "admin"
+			@service = @user.services.build(params[:service])
+		else
+			@service = @user.build_business(params[:service])
+			@user.build_employment if @user.employment.nil?
+		end
 		@service.build_location
 		@service.location.address = @service.address_for_location
     	
-		@user.build_employment if @user.employment.nil?
 		
 		if @service.save
 			@time_zone = Timezone::Zone.new :latlon => [@service.location.latitude, @service.location.longitude]
 			@service.update_attribute(:time_zone, @time_zone.zone)
-			@user.employment.update_attributes(:user_id => @user.id, :service_id => @service.id, :approved => true)
 			flash[:success] = "Business created!"
-			@service.mail_notification
-			redirect_to add_payment_info_service_path(@service)
+			if @service.area_service
+				redirect_to root_path
+			else
+				@user.employment.update_attributes(:user_id => @user.id, :service_id => @service.id, :approved => true)
+				@service.mail_notification
+				redirect_to add_payment_info_service_path(@service)
+			end
 		else
 			flash[:error] = "Business couldn't be created."
 			render :action => 'new'

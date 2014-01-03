@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   
   has_many :properties, dependent: :destroy
   
+  has_many :services, dependent: :destroy
   has_one :business, class_name: "Service", dependent: :destroy
   
   has_one :employment, dependent: :destroy
@@ -60,7 +61,6 @@ class User < ActiveRecord::Base
     reset_perishable_token!
     NotificationMailer.delay.password_reset(self)
   end
-
 
   def us_states
     [

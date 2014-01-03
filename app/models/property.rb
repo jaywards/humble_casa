@@ -71,7 +71,7 @@ class Property < ActiveRecord::Base
 
   def create_assignments_customers
     self.assignments.each do |a|
-      if !a.service_id.nil? && (a.stripe_customer_token.nil? || a.stripe_customer_token.empty?)
+      if !a.service_id.nil? && !a.service.area_service && (a.stripe_customer_token.nil? || a.stripe_customer_token.empty?)
         @card_token = Stripe::Token.create(
           {customer: stripe_customer_token},
           a.service.stripe_access_token
@@ -171,8 +171,11 @@ class Property < ActiveRecord::Base
         puts @assignment.first.id
         @assignment.first.category = category
         @assignment.first.save
-        #@assignment.update_attribute(:category, category)
       end
     end
+  end
+
+  def service_assigned(service)
+    return self.services.find_by_id(service.id)
   end
 end

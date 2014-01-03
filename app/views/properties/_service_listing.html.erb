@@ -1,0 +1,28 @@
+<% if @property.service_assigned(s) %>
+	<% @selectedService = true %>
+	<a class="list-group-item active" assignid=<%=@i.to_s%> serviceid=<%=s.id.to_s%> current="true" >
+<% else %>
+	<% @selectedService = false %>
+	<a class="list-group-item" assignid=<%=@i.to_s%> serviceid=<%=s.id.to_s%> current="false" >
+<% end %>
+	<z class="list-group-item-heading"><%= check_box_tag 'selected' + s.id.to_s,'yes', @selectedService, class: 'selected' %>
+		&nbsp&nbsp<strong><%=s.name%></strong></z>
+		<%= s.city %>, <%=s.state%> &nbsp&nbsp|&nbsp&nbsp <%= s.email %> 
+		&nbsp&nbsp|&nbsp&nbsp <%= s.phone %>
+		<span class="badge"><z class="raty" data-score=<%=s.reputation_for(:ratings)%>></z></span>
+	<p class="list-group-item-text">
+		<br>
+		<%= s.biz_description %>
+	</p>
+	<z class="confirmation-message" id=<%="confirmed" + s.id.to_s%>>
+		<hr>
+		<% if s.area_service %>
+			This service provider is pending activation on HumbleCasa. We'll let them know that you've requested their services and will notify you as soon as they are ready to start accepting customers.
+			<br><br>
+			<z style="font-size:.8em">Is this your business? Send us an email at contact@humblecasa.com and we'll get you signed up on the site! You've got new customers waiting for you...</z>
+		<% else %>
+			Do you need this provider to give you an estimate before starting services on your house? This is typical unless you've already worked with this company and know what they will charge you.
+			<%= assignment.input :confirmed, label: false, input_html: {value: @assignment.confirmed}, collection: [[false, 'Yes, I need an estimate'], [true, 'No, I know what I will be charged for a standard service already']], label_method: :last, value_method: :first, as: :radio_buttons %>
+		<% end %>
+	</z>
+</a>

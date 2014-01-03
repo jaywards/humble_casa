@@ -1,76 +1,49 @@
 <%= provide(:title, 'Register Services') %>
 <h2 class="register-services">Register Services</h2>
 
-<%= javascript_tag do %>
-  window.catCount = "<%= Service::CATEGORIES.count %>";
-<% end %>
-
 <%= simple_form_for @property, :url => {:action => "update_with_assignments"} do |f| %>
-	<div class="row-fluid">
-		<div class="span3">
-			<h5>Owner:</h5>
-			<%= render @property.user %>
-			<hr>
-			<h5>Property:</h5>
-			<%= render @property %>
-			<hr>
-			<h5>No Services?</h5>
-			We're a young but growing site, so you might not see any service providers available yet in your area. If you wish we had a service available for you to select, please check the "I'm interested" box! This will help us to convince service providers that there are potential customers waiting for them to join the site.  Thanks!
-		</div>
-		<div class="span9">	
-			<table class="table table-condensed table-striped">			
-				<thead>
-					<tr>
-						<th>Category</th>
-						<th>Select a Provider</th>
-					</tr>
-				</thead>
-				<tbody>
-					<% @i = 0 %>
-					<% Service::CATEGORIES.each do |category| %>	
-				    	<tr>
-				    		<td>
-				    			<%= category.titleize %>
-				    		</td> 	
-				    		<td>
-								<% @assignment = @property.assignments.find_by_category(category) %>
-				    			<% if !(@category_services_in_area = @property.area_category_services(category)).empty? %>
-				    				<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
-				    			 		<%= assignment.hidden_field :category, value: category %>
-										<%= assignment.association :service, collection: @category_services_in_area, label: false, include_blank: true %>										
-										<% if !(@this_service = @assignment.service).nil? %>
-											<z id=<%="star"+ @i.to_s%> data-score="<%= @this_service.reputation_for(:ratings) %>"></z>
-										<% else %>
-											<z id=<%="star"+ @i.to_s%>></z>
-										<% end %>
-										<% @idstring = "service-description-" + @i.to_s %>
-										<p id=<%=@idstring %>>
-											<% if !@assignment.service.nil? %>
-												<%= @assignment.service.biz_description %>
-											<% end %>
-										</p>
-										<z id=<%="confirmed" + @i.to_s%>>
-											<hr>
-											Do you need this provider to give you an estimate before starting services on your house? This is typical unless you've already worked with this company and know what they will charge you.
-											<%= assignment.input :confirmed, label: false, input_html: {value: @assignment.confirmed}, collection: [[false, 'Yes, I need an estimate'], [true, 'No, I know what I will be charged for a standard service already']],
-	 		   									label_method: :last, value_method: :first, as: :radio_buttons %>
-	 		   							</z>
-				    				<% end %>	
-				    			<% else %>
-									None available yet for your area.
-									<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
-					    			 	<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
-										<%= assignment.hidden_field :category, value: category %>
-					    			<% end %>
-								<% end %>
-							</td>
-							<% @i += 1 %>
-						</tr>	   		
-				   	<% end %>
-				</tbody>
-			</table>
-		</div>
-	</div>
+<div class="row-fluid">
+<div class="span3">
+	<h5>Owner:</h5>
+	<%= render @property.user %>
+	<hr>
+	<h5>Property:</h5>
+	<%= render @property %>
+	<hr>
+	<h5>No Services?</h5>
+	We're a young but growing site, so you might not see any service providers available yet in your area. If you wish we had a service available for you to select, please check the "I'm interested" box! This will help us to convince service providers that there are potential customers waiting for them to join the site.  Thanks!
+</div>
+<div class="span9">	
+	<% @i = 0 %>
+	<% Service::CATEGORIES.each do |category| %>	
+		<div class="panel panel-info">
+			<div class="panel-heading"><h3 class="panel-title"><%= category.titleize %></h3></div>
+			<div class="panel-body">
+				<% @assignment = @property.assignments.find_by_category(category) %>
+    			<% if !(@category_services_in_area = @property.area_category_services(category)).empty? %>
+    				<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
+    			 		<%= assignment.hidden_field :category, value: category %>				
+	    				<div class="list-group">
+							<% @category_services_in_area.each do |s| %>
+								<%= render "service_listing", :s => s, :assignment => assignment %>
+					  		<% end %>
+							<%= assignment.hidden_field :service_id %>			
+						</div>
+			    	<% end %>			
+			    <% else %>
+					<br>
+					<div>
+						None available yet for your area.
+						<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
+				    		<%= assignment.input :interested, as: :boolean, inline_label: "I'm interested in this category when available.", label: false %>
+							<%= assignment.hidden_field :category, value: category %>
+				    	<% end %>
+				    </div>
+				<% end %>
+				<% @i += 1 %>	   		
+			</div>
+		</div>	
+	<% end %>
 	<center>
 		<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
 			<i class="icon-ok icon-white"></i> Save
@@ -78,5 +51,6 @@
 		&nbsp		
 		<%= link_to "Cancel", root_path, class: "btn" %>
 	</center>
-
+</div>
+</div>
 <% end %>

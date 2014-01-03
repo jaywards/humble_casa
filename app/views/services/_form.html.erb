@@ -28,10 +28,9 @@
 	   		<%= f.input_field :email, placeholder: "email address" %>
 	   	<% end %>
 		
-		<%= f.input :biz_description, as: :text, input_html: { maxlength: 140 }, label: "Short company description", placeholder: "Shown to property owners when they view your company on the site. Max 140 characters. Example: XYZ, Inc. has been proudly serving the community since 1995. " %>
+		<%= f.input :biz_description, as: :text, input_html: { maxlength: 256 }, label: "Short company description", placeholder: "Shown to property owners when they view your company on the site. Max 256 characters. Example: XYZ, Inc. has been proudly serving the community since 1995. " %>
 
-		<%#= label_tag :business_code,  "Code to provide employees so that their accounts are automatically linked to your business (max 8 characters)" %>
-		<%#= f.input :business_code, input_html: {maxlength: 8}, label: false, placeholder: "ABCD1234" %>
+		
 	</div>
 </div>
 <hr>
@@ -48,9 +47,6 @@
 	    <% end %>
 	    <%= f.input :experience, collection: 0...21, label: "How many years of experience do you have in this industry?" %>
 	    <%= f.input :verify_details, as: :text, input_html: { maxlength: 300 }, label: "Other relevant details", placeholder: "Yelp profile link, other sources of reference" %>
-	    <% if current_user.role == "admin" %>
-	    	<%= f.input :verified %>
-	    <% end %>
 	</div>
 </div>
 <hr>
@@ -72,6 +68,20 @@
 		</div>
 	</div>
 </div>
+
+<% if current_user.role == "admin" %>
+	<hr>
+	<b>Admin Section Only</b><br>
+	<div class="row-fluid">
+		<div class="span12">
+			<%= f.input :verified %>
+			<%= f.input :area_service %>
+		</div>
+	</div>
+<% end %>
+
+
+
 <br>
 <center>
 	<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
