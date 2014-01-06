@@ -33,7 +33,7 @@
 					<% else %> 
 						<% @valid_service_row = true %>
 						<b><%= @selected_service.name %></b><br>
-						<% if @selected_service.service_active %>
+						<% if !@selected_service.area_service && @selected_service.service_active %>
 							<% if property_listing.has_serviced(@selected_service) %>
 								<x class="ratingmsg">	
 									<% if @selected_service.evaluators_for(:ratings).find_all { |x| x.id == current_user.id }.empty? %>
