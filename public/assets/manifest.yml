@@ -11,6 +11,10 @@
 4/index.png: 4-0cb84036ea95dba8c6c3656e52017860.png
 5.png: 5-14f9536cc3abf35e3c0899e9334a5bc8.png
 5/index.png: 5-14f9536cc3abf35e3c0899e9334a5bc8.png
+HClogo.jpg: HClogo-b25a00f5a9909f58f17e2ef7ee50c980.jpg
+HClogo/index.jpg: HClogo-b25a00f5a9909f58f17e2ef7ee50c980.jpg
+SmallLogo.jpg: SmallLogo-63fcca7ec9a10a02481b7386940ce95e.jpg
+SmallLogo/index.jpg: SmallLogo-63fcca7ec9a10a02481b7386940ce95e.jpg
 blue.png: blue-22ab5114dcc0d6a4dcf0b59925670ae7.png
 blue/index.png: blue-22ab5114dcc0d6a4dcf0b59925670ae7.png
 blue@2x.png: blue@2x-766235cb43c08659e691558d928a3afb.png
@@ -35,12 +39,30 @@ cookie-on.png: cookie-on-7c8b3e9b411267a37501c7be2baf0590.png
 cookie-on/index.png: cookie-on-7c8b3e9b411267a37501c7be2baf0590.png
 favicon.ico: favicon-d9491803e33618fe07dab8fc7b2a47b5.ico
 favicon/index.ico: favicon-d9491803e33618fe07dab8fc7b2a47b5.ico
+housecleaning wfx.jpg: housecleaning wfx-c72b36964acf7a44ca9b2796e443a865.jpg
+housecleaning wfx/index.jpg: housecleaning wfx-c72b36964acf7a44ca9b2796e443a865.jpg
+housecleaning.jpg: housecleaning-1125f4b96cf385dcbb83af5288f8d5ba.jpg
+housecleaning/index.jpg: housecleaning-1125f4b96cf385dcbb83af5288f8d5ba.jpg
+humble_casa_logo.jpg: humble_casa_logo-a00be1bc4b3ef8dd01805b0971368bc3.jpg
+humble_casa_logo/index.jpg: humble_casa_logo-a00be1bc4b3ef8dd01805b0971368bc3.jpg
+iStock_000011931107Large.jpg: iStock_000011931107Large-e4f1599903805c8aa23e379cb60c667e.jpg
+iStock_000011931107Large/index.jpg: iStock_000011931107Large-e4f1599903805c8aa23e379cb60c667e.jpg
+landscaping wfx.jpg: landscaping wfx-041ef36958a0fbdb0b8d579dae39c1be.jpg
+landscaping wfx/index.jpg: landscaping wfx-041ef36958a0fbdb0b8d579dae39c1be.jpg
+logo.jpg: logo-545d0a4958597e18d39d2f2917137c52.jpg
+logo/index.jpg: logo-545d0a4958597e18d39d2f2917137c52.jpg
 logo_for_web.png: logo_for_web-328029e1a1b33a15160d082b83c3c560.png
 logo_for_web/index.png: logo_for_web-328029e1a1b33a15160d082b83c3c560.png
 off.png: off-98d5c3482ae78a63b9f128360ead3b2f.png
 off/index.png: off-98d5c3482ae78a63b9f128360ead3b2f.png
 on.png: on-7162a7b56b11a4d725e47febf1345bf6.png
 on/index.png: on-7162a7b56b11a4d725e47febf1345bf6.png
+poolcleaning wfx.jpg: poolcleaning wfx-a57dedf8b3da4c4eac3f1956de82e152.jpg
+poolcleaning wfx/index.jpg: poolcleaning wfx-a57dedf8b3da4c4eac3f1956de82e152.jpg
+rails.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
+rails/index.png: rails-a3386665c05a2d82f711a4aaa72d247c.png
+snowplow wfx.jpg: snowplow wfx-c3be614de4f757965548b65346d7315f.jpg
+snowplow wfx/index.jpg: snowplow wfx-c3be614de4f757965548b65346d7315f.jpg
 solid.eps: solid-d254f34796e4eb7b8d1e67f125fa0229.eps
 solid/index.eps: solid-d254f34796e4eb7b8d1e67f125fa0229.eps
 solid.png: solid-fc915dcc76a63ef0aaa940af5b0e8571.png
@@ -61,10 +83,12 @@ star-on.png: star-on-5f1bbca2093b22e1d0a6f907600c106b.png
 star-on/index.png: star-on-5f1bbca2093b22e1d0a6f907600c106b.png
 street-scenic.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
 street-scenic/index.jpg: street-scenic-9fe6fd84ddea0510338729a6e2152f04.jpg
-application.js: application-00acd058e2beb82398047e662d26054e.js
-application/index.js: application-00acd058e2beb82398047e662d26054e.js
-application.css: application-0f1d885a6a4a83541092c0f4b73500c6.css
-application/index.css: application-0f1d885a6a4a83541092c0f4b73500c6.css
+white-minimalist-interior.jpg: white-minimalist-interior-014927ac8da881e8c9a63f3cab84bb4a.jpg
+white-minimalist-interior/index.jpg: white-minimalist-interior-014927ac8da881e8c9a63f3cab84bb4a.jpg
+application.js: application-0d7b8c030d84c7cb6cef4b7e192645ad.js
+application/index.js: application-0d7b8c030d84c7cb6cef4b7e192645ad.js
+application.css: application-943cdf3bbfe38c2e24583d50870faa04.css
+application/index.css: application-943cdf3bbfe38c2e24583d50870faa04.css
 dossier/application.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application/index.js: dossier/application-959e9d03e6f395dff15ba1d13dc9c750.js
 dossier/application.css: dossier/application-1b13569e9620782f423d4cd3ce931750.css

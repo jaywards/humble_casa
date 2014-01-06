@@ -13,7 +13,7 @@
 					&nbsp
 					&nbsp
 					<%= link_to "About", about_path %> | 
-					<%= link_to "User Account", edit_user_path(current_user) %> | 
+					<%= link_to "User Account", edit_user_path(current_user, role: current_user.role) %> | 
 					<%= link_to "Logout", logout_path %>
 				<% else %>
 					<%= link_to "About", about_path %> | 

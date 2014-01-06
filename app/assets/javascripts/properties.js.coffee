@@ -57,20 +57,16 @@ initializeRaty = ->
 
 initializeListGroup = ->
   $(".list-group-item").click (event) ->
-    #alert("hello")
-    #serviceListing = $(this)
-    #assignID = serviceListing.attr "assignid"
-    #serviceID = serviceListing.attr "serviceid"
-    #if !serviceListing.hasClass("active")
-    #  alert("inactive")
-    #  activate(serviceListing, assignID, serviceID)          
-    #else    
-    #  if $(event.target).hasClass("selected")
-    #    alert("checkbox")
-    #    deactivate(serviceListing, assignID, serviceID)          
+    serviceListing = $(this)
+    assignID = serviceListing.attr "assignid"
+    serviceID = serviceListing.attr "serviceid"
+    if !serviceListing.hasClass("active")
+      activate(serviceListing, assignID, serviceID)          
+    else    
+      if $(event.target).hasClass("selected")
+        deactivate(serviceListing, assignID, serviceID)          
   
 activate = (serviceListing, assignID, serviceID) ->
-  alert('activate')
   current = serviceListing.attr "current"
   currentActive = serviceListing.closest(".list-group").children(".active")
   CAServiceID = currentActive.attr "serviceid"
@@ -84,7 +80,6 @@ activate = (serviceListing, assignID, serviceID) ->
     $('#confirmed' + serviceID).show(400)  
 
 deactivate = (serviceListing, assignID, serviceID) ->
-  alert('deactivate')
   serviceListing.removeClass "active"
   $('#property_assignments_attributes_' + assignID + '_service_id').val("")
   $('#selected' + serviceID).prop("checked", false)
