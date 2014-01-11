@@ -1,4 +1,6 @@
 <% @properties = @business.properties %>
+<% @categories = @business.categories %>
+<% @assignments = @business.assignments %>
 <% if @properties.size == 0 %>
 	No customers have signed up yet for your business.
 <% else %>
@@ -6,6 +8,9 @@
 		<table class="table table-condensed">			
 			<thead>
 				<tr>
+					<% if @categories.size > 1 %>
+						<th>Service</th>
+					<% end %>
 					<th>Owner Name</th>
 					<th>Owner Email</th>
 					<th>Owner Phone</th>
@@ -15,36 +20,41 @@
 				</tr>
 			</thead>		
 			<tbody>			
-				<% @properties.each do |property| %>
-					<tr>
-						<td>
-							<%= property.user.full_name %>
-						</td>
-						<td>
-							<%= property.user.email %>
-						</td>
-						<td>
-							<%= property.user.primary_phone %>
-						</td>
-						<td>
-							<%= property.name %>
-						</td>
-						<td>
-							<%= property.full_address %>
-						</td>
-						<td>
-							<% if @business.service_active %>
-								<% @assignment = Assignment.find_by_service_id_and_property_id(@business, property) %>
-								<% if @assignment.confirmed && @assignment.cost != 0 %>
-									<%= link_to "create service request for this customer", new_service_property_master_service_request_path(service_id: @business.id, property_id: property.id), class: "btn btn-mini" %>
-								<% else %>
-									pending acceptance of estimate
-								<% end %>
-							<% else %>
-								<z class="business-inactive">Service inactive - no actions available</z>
+				<% @assignments.each do |assignment| %>
+					<% if !assignment.service_id.nil? %>
+						<% @property = assignment.property %>
+						<tr>
+							<% if @categories.size > 1 %>
+									<td><%= assignment.category.humanize %></td>
 							<% end %>
-						</td>
-					</tr>
+							<td>
+								<%= @property.user.full_name %>
+							</td>
+							<td>
+								<%= @property.user.email %>
+							</td>
+							<td>
+								<%= @property.user.primary_phone %>
+							</td>
+							<td>
+								<%= @property.name %>
+							</td>
+							<td>
+								<%= @property.full_address %>
+							</td>
+							<td>
+								<% if @business.service_active %>
+									<% if assignment.confirmed && assignment.cost != 0 %>
+										<%= link_to "create service request for this customer", new_service_property_master_service_request_path(service_id: @business.id, property_id: @property.id, assignment_id: assignment.id), class: "btn btn-mini" %>
+									<% else %>
+										pending acceptance of estimate
+									<% end %>
+								<% else %>
+									<z class="business-inactive">Service inactive - no actions available</z>
+								<% end %>
+							</td>
+						</tr>
+					<% end %>
 				<% end %>
 			</tbody>
 		</table>

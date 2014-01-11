@@ -1,14 +1,14 @@
 class Service < ActiveRecord::Base
-  attr_accessible :address1, :address2, :category, :city, :email, :name, :phone, :state, :zip, :user_id, 
+  attr_accessible :address1, :address2, :city, :email, :name, :phone, :state, :zip, :user_id, 
   :biz_description,	:service_zips_attributes, :assignments_attributes, :time_zone, :employments_attributes,
   :stripe_customer_token, :stripe_access_token, :stripe_refresh_token, :stripe_publishable_key, :stripe_user_id,
   :stripe_card_token, :card_type, :last_four, :license, :insurance_company, :insurance_id, :experience, 
-  :verify_details, :verified, :area_service
+  :verify_details, :verified, :area_service, :category_ids
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
   validates :user_id, presence: true
-  validates :category, presence: true
+  validates :categories, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX}
   validates :name, presence: true, length: {maximum: 150}
   validates :phone, presence: true, length: {maximum: 15}
@@ -18,7 +18,7 @@ class Service < ActiveRecord::Base
   validates :state, presence: true, length: {maximum: 2}
   validates :zip, presence: true, length: {maximum: 10}
   validates :biz_description, presence: true
-
+  
   belongs_to :owner, class_name: "User"
 
   has_many :assignments, dependent: :destroy
@@ -34,14 +34,12 @@ class Service < ActiveRecord::Base
 
   has_many :service_requests
 
+  has_and_belongs_to_many :categories
+
   has_one :location, dependent: :destroy
 
   has_reputation :ratings, source: :user, aggregated_by: :average
 
-
-  CATEGORIES = %w[chimney_services handyman/general_maintenance housecleaning landscaping pest_control pool/spa_cleaning snow_removal ]
-    #also need to update Services form if changing categories
-  
   def service_servicezips
     ServiceZip.where("service_id = ?", id)
   end

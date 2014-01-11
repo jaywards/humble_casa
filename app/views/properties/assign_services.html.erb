@@ -15,7 +15,7 @@
 </div>
 <div class="span9">	
 	<% @i = 0 %>
-	<% Service::CATEGORIES.each do |category| %>	
+	<% Category::CATEGORIES.each do |category| %>	
 		<div class="panel panel-info">
 			<div class="panel-heading"><h3 class="panel-title"><%= category.titleize %></h3></div>
 			<div class="panel-body">
@@ -25,7 +25,7 @@
     			 		<%= assignment.hidden_field :category, value: category %>				
 	    				<div class="list-group">
 							<% @category_services_in_area.each do |s| %>
-								<%= render "service_listing", :s => s, :assignment => assignment %>
+								<%= render "service_listing", :s => s, :assignment => assignment, :category => category %>
 					  		<% end %>
 							<%= assignment.hidden_field :service_id %>			
 						</div>

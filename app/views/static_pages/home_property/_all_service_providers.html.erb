@@ -9,11 +9,13 @@
 	</thead>
 	<tbody>
 
-		<% Service::CATEGORIES.each do |category| %>		
+		<% Category::CATEGORIES.each do |category| %>		
 			<tr>
 				<td>
 					<%= category.titleize %>
-					<% if !(@selected_service = property_listing.services.find_by_category(category)).nil? %>
+					<% @selected_service = property_listing.assigned_category_service(category) %>
+					<% @assignment = Assignment.find_by_service_id_and_category(@selected_service, category) %>
+					<% if !@selected_service.nil? %>
 						<br><%= link_to "change provider", assign_services_property_path(property_listing) %>
 					<% end %>
 				</td>
@@ -47,16 +49,15 @@
 								<br>
 								<br>
 							<% end %>
-							<% @assignment = property_listing.assignments.find_by_service_id(@selected_service) %>
 						
 							<% if @assignment.confirmed && @assignment.cost != 0 %>
 								<% @need_estimate = false %>
 								<p>
-									<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id), class: "btn btn-mini btn-success"  %>
+									<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id, assignment_id: Assignment.find_by_service_id_and_category(@selected_service.id, category)), class: "btn btn-mini btn-success"  %>
 								</p>
 								<p>
 									<br>
-									<% if (@open_SRs = property_listing.open_requests(@selected_service)).size > 0 %>	
+									<% if (@open_SRs = property_listing.open_requests(@selected_service, @assignment)).size > 0 %>	
 										<h5>Next scheduled service:</h5>
 										<% if !(@scheduled_SRs = @open_SRs.find_all { |x| x.scheduled == true }).empty? %> 	
 											<%= Time.zone.parse(@scheduled_SRs.first.first_scheduled.to_s).in_time_zone(@scheduled_SRs.first.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
@@ -86,7 +87,7 @@
 								<% end %>
 								<%= render 'shared/service_request_table_foot' %>						
 							<% end %>
-							<% if (@completed_SRs = property_listing.completed_requests(@selected_service)).size > 0 %>	
+							<% if (@completed_SRs = property_listing.completed_requests(@selected_service, @assignment)).size > 0 %>	
 					
 								<%= link_to "View all completed service requests", view_completed_service_property_service_request_path(service_id: @selected_service.id, property_id: property_listing.id, id: 1) %>
 							<% end %>

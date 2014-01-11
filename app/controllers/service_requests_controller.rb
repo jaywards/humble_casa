@@ -1,5 +1,5 @@
 class ServiceRequestsController < ApplicationController
-	force_ssl
+	force_ssl if Rails.env.production?
 
 	def show
 		@service_request = ServiceRequest.find_by_id(params[:id])
@@ -41,7 +41,7 @@ class ServiceRequestsController < ApplicationController
 
 	def complete_request
 		@service_request = ServiceRequest.find_by_id(params[:id])
-		@assignment = @service_request.property.assignments.find_by_service_id(@service_request.service)
+		@assignment = Assignment.find_by_id(@service_request.assignment_id)
 		render action: "complete_request"
 	end
 

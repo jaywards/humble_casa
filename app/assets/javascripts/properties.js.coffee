@@ -60,13 +60,23 @@ initializeListGroup = ->
     serviceListing = $(this)
     assignID = serviceListing.attr "assignid"
     serviceID = serviceListing.attr "serviceid"
-    if !serviceListing.hasClass("active")
-      activate(serviceListing, assignID, serviceID)          
-    else    
-      if $(event.target).hasClass("selected")
-        deactivate(serviceListing, assignID, serviceID)          
+    checkboxID = '#selected' + serviceID + '-' + assignID
+    assignmentField = '#property_assignments_attributes_' + assignID + '_service_id'
+    checkedField = '#checkedField' + serviceID + '-' + assignID 
+
+    if $(event.target).hasClass("selected")
+      if $(checkedField).val() == 'true'
+        #alert("clicked on checked box - deactivate")
+        deactivate(serviceListing, assignID, serviceID, checkedField)
+      else
+        #alert("clicked on unchecked box - activate")
+        activate(serviceListing, assignID, serviceID, checkedField)
+    else
+      if $(checkedField).val() == 'false'
+        #alert("clicked on unselected service - activate")
+        activate(serviceListing, assignID, serviceID, checkedField)
   
-activate = (serviceListing, assignID, serviceID) ->
+activate = (serviceListing, assignID, serviceID, checkedField) ->
   current = serviceListing.attr "current"
   currentActive = serviceListing.closest(".list-group").children(".active")
   CAServiceID = currentActive.attr "serviceid"
@@ -75,12 +85,14 @@ activate = (serviceListing, assignID, serviceID) ->
   $('#confirmed' + CAServiceID).hide(400)
   serviceListing.addClass "active"
   $('#property_assignments_attributes_' + assignID + '_service_id').val(serviceID)
-  $('#selected' + serviceID).prop("checked", true)
+  $('#selected' + serviceID + '-' + assignID).prop("checked", true)
+  $(checkedField).val(true)
   if current == "false"
-    $('#confirmed' + serviceID).show(400)  
+    $('#confirmed' + serviceID + '-' + assignID).show(400)  
 
-deactivate = (serviceListing, assignID, serviceID) ->
+deactivate = (serviceListing, assignID, serviceID, checkedField) ->
   serviceListing.removeClass "active"
   $('#property_assignments_attributes_' + assignID + '_service_id').val("")
-  $('#selected' + serviceID).prop("checked", false)
-  $('#confirmed' + serviceID).hide(400)
+  $('#selected' + serviceID + '-' + assignID).prop("checked", false)
+  $('#confirmed' + serviceID + '-' + assignID).hide(400)
+  $(checkedField).val(false)

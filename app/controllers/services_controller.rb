@@ -1,6 +1,6 @@
 class ServicesController < ApplicationController
 	filter_resource_access
-	force_ssl
+	force_ssl if Rails.env.production?
 	
 	def create
 		@user = current_user	
@@ -8,7 +8,6 @@ class ServicesController < ApplicationController
 			@service = @user.services.build(params[:service])
 		else
 			@service = @user.build_business(params[:service])
-			@user.build_employment if @user.employment.nil?
 		end
 		@service.build_location
 		@service.location.address = @service.address_for_location
@@ -39,8 +38,12 @@ class ServicesController < ApplicationController
 
 	def destroy
 		@service = Service.find_by_id(params[:id])
+		@user = @service.owner
 		@service.destroy
 		flash[:success] = "Business deleted"
+		if @user.role == "serviceowner" || @user.role == "employee"
+      		@user.build_employment
+    	end
 		redirect_to root_path
 	end
 
@@ -108,12 +111,6 @@ class ServicesController < ApplicationController
         	flash[:error] = "Couldn't create your employee. Please try again."
       		render :action => 'add_employee'
         end
-	end
-	
-	def provide_estimate
-		@service = Service.find_by_id(params[:id])
-		@property = Property.find_by_id(params[:property_id])
-		@assignment = Assignment.find_by_service_id_and_property_id(@service, @property)
 	end
 
 	def rate

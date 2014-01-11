@@ -6,6 +6,7 @@
 			<h5>Service:</h5> <%= render @service%>
 			<%= f.hidden_field :property_id, value: @property.id %>
 			<%= f.hidden_field :service_id, value: @service.id %>
+			<%= f.hidden_field :assignment_id, value: @assignment.id %>
 			<%= f.hidden_field :time_zone, value: @property.time_zone %>
 			<% Time.zone = @property.time_zone %>
 			<%= f.hidden_field :duration, value: 1 %> 

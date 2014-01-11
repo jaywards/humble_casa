@@ -9,10 +9,11 @@
 		<p>While your personal user account info that you provided is private, the business details that you will be providing can be seen all of your current and potential customers! So don't enter your home phone number or personal email address, unless that is how you want your customers to contact you.</p>
 	</div>
 	<div class="span9">  
-	    <%= f.input :name, label: "Name & category" do %>
-	    	<%= f.input_field :name, placeholder: "business name" %>
-	    	<%= f.input_field :category, collection: [['chimney_services', 'Chimney Services'], ['handyman/general_maintenance', 'Handyman/General Maintenance'], ['housecleaning', 'Housecleaning'], ['landscaping', 'Landscaping'], ['pest_control', 'Pest Control'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['snow_removal', 'Snow Removal']], label_method: :last, value_method: :first %>
-	    <% end %>
+	    <%= f.input :name, label: "Business name" %>
+	    	
+		<%= f.association :categories %>
+		<%#= f.input :categories, collection: [['chimney_services', 'Chimney Services'], ['handyman/general_maintenance', 'Handyman/General Maintenance'], ['housecleaning', 'Housecleaning'], ['landscaping', 'Landscaping'], ['pest_control', 'Pest Control'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['snow_removal', 'Snow Removal']], value_method: :first, label_method: :last, label: "Service category (hold down 'Command' or 'Ctrl' to select multiple)", :include_hidden => false, :input_html => {multiple: true} %>
+    	<%#= f.input_field :category, collection: [['chimney_services', 'Chimney Services'], ['handyman/general_maintenance', 'Handyman/General Maintenance'], ['housecleaning', 'Housecleaning'], ['landscaping', 'Landscaping'], ['pest_control', 'Pest Control'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['snow_removal', 'Snow Removal']], label_method: :last, value_method: :first %>
 	    
 	    <%= f.input :address1 %>
 	    <%= f.input :address2 %>

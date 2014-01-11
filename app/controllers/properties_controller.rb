@@ -1,10 +1,10 @@
 class PropertiesController < ApplicationController
 	filter_resource_access
-	force_ssl
+	force_ssl if Rails.env.production?
 	
 	def create
 		@property = current_user.properties.build(params[:property])
-		Service::CATEGORIES.count.times do 
+		Category::CATEGORIES.count.times do 
 			@property.assignments.build
 		end
 		@property.build_location
@@ -129,13 +129,6 @@ class PropertiesController < ApplicationController
 	def assign_services
 		@property.add_categories
 		@property.label_categories
-	end
-
-
-	def confirm_assignment
-		@service = Service.find_by_id(params[:service_id])
-		@property = Property.find_by_id(params[:id])
-		@assignment = Assignment.find_by_service_id_and_property_id(@service, @property)
 	end
 	
 	def show

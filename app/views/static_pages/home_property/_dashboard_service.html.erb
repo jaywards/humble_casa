@@ -1,23 +1,22 @@
-<strong><%= s.name %></strong><br>
-<% if !s.service_active %>
+<strong><%= service.name %></strong> - <%= category.humanize.downcase %><br>
+<% if !service.service_active %>
 	 - this service is not currently active.
-<% elsif s.area_service %>
+<% elsif service.area_service %>
 	Pending activation of service
 <% else %>
-	<% @assignment = listing.assignments.find_by_service_id(s) %>
-	<% if !@assignment.confirmed %>
-		<% if @assignment.cost == 0 %>
+	<% if !assignment.confirmed %>
+		<% if assignment.cost == 0 %>
 			Waiting for estimate from service provider
 		<% else %>
-			Estimate provided - <%= link_to "review and approve", confirm_assignment_service_property_path(s, listing) %>
+			Estimate provided - <%= link_to "review and approve", confirm_assignment_assignment_path(assignment) %>
 		<% end %>
-	<% elsif @assignment.cost == 0 %>
+	<% elsif assignment.cost == 0 %>
 			Waiting for service provider to define standard service charge
 	<% else %>	
 		<ul>
 			<li>
-				<% if (@completed = listing.completed_requests(s)).size > 0 %>
-					<% if (@newcompleted = listing.new_completed(s, current_user)).size > 0 %>
+				<% if (@completed = listing.completed_requests(service, assignment)).size > 0 %>
+					<% if (@newcompleted = listing.new_completed(service, current_user, assignment)).size > 0 %>
 						<%= pluralize(@newcompleted.size, 'service request') %> completed since your last login
 						<ul>
 							<% @newcompleted.each do |nc| %>
@@ -35,7 +34,7 @@
 				<% end %>
 			</li>
 			<li>
-				<% if (@open_SRs = listing.open_requests(s)).size > 0 %>	
+				<% if (@open_SRs = listing.open_requests(service, assignment)).size > 0 %>	
 					Next service
 					<% if @open_SRs.first.scheduled %>
 						 scheduled for <%= Time.zone.parse(@open_SRs.first.first_scheduled.to_s).in_time_zone(listing.time_zone).strftime("%a %m/%d/%y %I:%M%p %Z") %>
@@ -51,7 +50,7 @@
 							<% end %>
 						<% end %>
 						<% if @open_SRs.first.scheduled %>			
-							Pending scheduling by <%= s.name %>
+							Pending scheduling by <%= service.name %>
 						<% end %>
 					<% end %>									
 				<% else %>

@@ -44,6 +44,13 @@ class Property < ActiveRecord::Base
     end
   end
 
+  def active_service(category)
+    self.services.each do |service|
+      return service if service.categories.include? category
+    end
+    return nil
+  end
+
   def update_payment_info
    if valid?  
       Stripe.api_key = ENV['STRIPE_API_KEY']
@@ -82,11 +89,11 @@ class Property < ActiveRecord::Base
   end
 
   def area_category_services(category)
-    Service.includes(:service_zips).where(:category => category, :service_active => true, "service_zips.zip" => self.zip)
+    Service.includes(:service_zips, :categories).where(:service_active => true, "service_zips.zip" => self.zip, "categories.name" => category)
   end
 
   def area_services
-    Service.find(ServiceZip.where(:zip => zip).map(&:service_id).uniq)
+    Service.find(ServiceZip.where(:zip => zip, :service_active => true).map(&:service_id).uniq)
   end
 
 
@@ -127,24 +134,24 @@ class Property < ActiveRecord::Base
     end   
   end
 
-  def completed_requests(service)
-    @completed_requests = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == true}
+  def completed_requests(service, assignment)
+    @completed_requests = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == true && x.assignment_id == assignment.id}
     if !@completed_requests.nil?
       @completed_requests.sort_by {|a| a.completed_date }
     end
     return @completed_requests
   end
 
-  def new_completed(service, user)
-    @new_completed = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == true && x.updated_at > user.last_login_at}
+  def new_completed(service, user, assignment)
+    @new_completed = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == true && x.assignment_id == assignment.id && x.updated_at > user.last_login_at}
     if !@new_requests.nil? 
       @new_requests.sort_by {|a| a.completed_date }
     end
     return @new_completed
   end
 
-  def open_requests(service)
-    @open_requests = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == false}
+  def open_requests(service, assignment)
+    @open_requests = self.service_requests.find_all {|x| x.service_id == service.id && x.completed == false && x.assignment_id == assignment.id}
     if !@open_requests.nil?
       @open_requests.sort_by {|a| a.first_scheduled }
     end
@@ -156,7 +163,7 @@ class Property < ActiveRecord::Base
   end
 
   def add_categories
-    if (@diff = Service::CATEGORIES.count - self.assignments.count) > 0
+    if (@diff = Category::CATEGORIES.count - self.assignments.count) > 0
       @diff.times do 
         self.assignments.build
         save!
@@ -165,7 +172,7 @@ class Property < ActiveRecord::Base
   end
 
   def label_categories
-    Service::CATEGORIES.each do |category|
+    Category::CATEGORIES.each do |category|
       if self.assignments.find_by_category(category).nil?
         @assignment = self.assignments.where("category IS NULL").limit(1)
         puts @assignment.first.id
@@ -175,7 +182,16 @@ class Property < ActiveRecord::Base
     end
   end
 
-  def service_assigned(service)
-    return self.services.find_by_id(service.id)
+  def service_assigned(service, category)
+    self.assignments.find_by_service_id_and_category(service.id, category)
+  end
+
+  def assigned_category_service(category)
+    @a = self.assignments.find_by_category(category)
+    if @a.service_id.nil?
+      return nil
+    else
+      Service.find_by_id(@a.service_id)
+    end
   end
 end

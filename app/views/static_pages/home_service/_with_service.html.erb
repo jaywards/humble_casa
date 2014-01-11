@@ -36,6 +36,19 @@
 					<div class="span6"%>
 						<%= render @business %>
 						<br>
+						<br>
+						<% @cats = @business.categories %>
+						<%= "Category".pluralize(@numCats) %>:
+						<% @i = 0 %>
+						<% while @i < @cats.size %>
+							<%= @cats[@i].name.humanize %>
+							<% if @i != (@cats.size - 1) %>
+								 | 
+							<% end %>
+							<% @i += 1 %>
+						<% end %>
+						<br>
+						<br>
 						Status: 
 						<% if !@business.verified %>
 							<b><z class="business-inactive">Not yet verified</z></b>

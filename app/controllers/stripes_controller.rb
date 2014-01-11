@@ -1,5 +1,5 @@
 class StripesController < ApplicationController
-	force_ssl
+	force_ssl if Rails.env.production?
 
 	def stripe_signup
 		@user = current_user

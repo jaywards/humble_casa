@@ -7,25 +7,27 @@ HumbleCasa::Application.routes.draw do
   end
   
   resources :properties do
-    member { put :update_with_card }
-    member { put :update_with_assignments }
+    member { patch :update_with_card }
+    member { patch :update_with_assignments }
     member do
       get 'assign_services'
       get 'add_payment_info'
       get 'edit_payment_info'
     end
-    resources :services do 
-      member do 
-        get 'provide_estimate'
-      end
+  end
+
+  resources :assignments do
+    member do 
+      get 'provide_estimate'
+      get 'confirm_assignment'
     end
   end
   
   resources :services do
     member { post :rate }
-    member { put :update_with_card }
-    member { put :save_with_account }
-    member { put :create_employee }
+    member { patch :update_with_card }
+    member { patch :save_with_account }
+    member { patch :create_employee }
     member do
       get 'add_employee'
       get 'add_payment_info'
@@ -34,9 +36,6 @@ HumbleCasa::Application.routes.draw do
       get 'edit_bank_account'
     end
     resources :properties do
-      member do
-        get 'confirm_assignment'
-      end
       resources :master_service_requests, only: [:new, :edit]
       resources :service_requests do
         member do
@@ -53,7 +52,7 @@ HumbleCasa::Application.routes.draw do
   end
 
   resources :service_requests do
-    member { put :save_with_completed}
+    member { patch :save_with_completed}
     member do
       get 'assign_to_employee'
       get 'complete_request'
@@ -63,20 +62,19 @@ HumbleCasa::Application.routes.draw do
   
   resources :password_resets, :only => [ :new, :create, :edit, :update ]
 
-  match '/login', to: 'user_sessions#new', :as => :login
-  match '/logout', to: 'user_sessions#destroy', :as => :logout
-  match '/new_user', to: 'users#new', :as => :new_user
-  match '/business', to: 'static_pages#business', :as => :business
-  match '/pricing_plans', to: 'static_pages#pricing_plans', :as => :pricing_plans
-  match '/feature_tour', to: 'static_pages#feature_tour', :as => :feature_tour
-  match '/terms_of_use', to: 'static_pages#terms_of_use', :as => :terms_of_use
-  match '/privacy_policy', to: 'static_pages#privacy_policy', :as => :privacy_policy
-  match '/about', to: 'static_pages#about', :as => :about
-  match '/contact_us', to: 'static_pages#contact_us', :as => :contact_us
-  match '/careers', to: 'static_pages#careers', :as => :careers
+  get '/login', to: 'user_sessions#new', :as => :login
+  get '/logout', to: 'user_sessions#destroy', :as => :logout
+  get '/business', to: 'static_pages#business', :as => :business
+  get '/pricing_plans', to: 'static_pages#pricing_plans', :as => :pricing_plans
+  get '/feature_tour', to: 'static_pages#feature_tour', :as => :feature_tour
+  get '/terms_of_use', to: 'static_pages#terms_of_use', :as => :terms_of_use
+  get '/privacy_policy', to: 'static_pages#privacy_policy', :as => :privacy_policy
+  get '/about', to: 'static_pages#about', :as => :about
+  get '/contact_us', to: 'static_pages#contact_us', :as => :contact_us
+  get '/careers', to: 'static_pages#careers', :as => :careers
   
-  match '/stripe_signup', to: 'stripes#stripe_signup', :as => :stripe_signup
-  match '/edit_stripe', to: 'stripes#edit_stripe', :as => :edit_stripe
+  get '/stripe_signup', to: 'stripes#stripe_signup', :as => :stripe_signup
+  get '/edit_stripe', to: 'stripes#edit_stripe', :as => :edit_stripe
 
   root to: 'static_pages#home'
 

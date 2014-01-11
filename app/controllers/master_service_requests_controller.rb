@@ -1,6 +1,6 @@
 class MasterServiceRequestsController < ApplicationController
 	filter_resource_access
-	force_ssl
+	force_ssl if Rails.env.production?
 
 	def create
 		@master_request = MasterServiceRequest.new(params[:master_service_request])
@@ -24,7 +24,7 @@ class MasterServiceRequestsController < ApplicationController
 		@master_request = MasterServiceRequest.new
 		@service = Service.find_by_id(params[:service_id])
 		@property = Property.find_by_id(params[:property_id])
-		@assignment = @property.assignments.find_by_service_id(@service)
+		@assignment = Assignment.find_by_id(params[:assignment_id])
 	end
 
 	def edit

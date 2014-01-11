@@ -1,16 +1,17 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.13'
+gem 'rails', '4.0.2'
+gem 'protected_attributes'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'bootstrap-sass'
-gem 'bcrypt-ruby', '3.0.1'
-gem 'will_paginate', '3.0.3'
-gem 'bootstrap-will_paginate', '0.0.6'
+gem 'bootstrap-sass', '2.3.2.0'
+gem 'bcrypt-ruby'
+gem 'will_paginate'
+gem 'bootstrap-will_paginate'
 gem 'authlogic'
 gem 'dynamic_form'
 gem 'declarative_authorization'
-gem 'simple_form'
+gem 'simple_form', '~> 3.0.0.rc'
 gem 'cocoon'
 gem 'mini_magick'
 gem 'carrierwave'
@@ -19,11 +20,11 @@ gem 'exifr'
 gem 'roadie'
 gem 'jquery-timepicker-rails'
 gem 'timezone'
-gem 'client_side_validations'
-gem 'client_side_validations-simple_form'
+gem 'client_side_validations', github: "bcardarella/client_side_validations", :branch => "4-0-beta"
+gem 'client_side_validations-simple_form', git: 'git://github.com/saveritemedical/client_side_validations-simple_form.git'
 gem 'icalendar'
 gem 'dossier'
-gem 'masked_input-rails'
+gem 'masked_input-rails', '~> 1.2.0.pre'
 gem 'activerecord-reputation-system', require: 'reputation_system'
 gem 'stripe'
 gem 'stripe_event'
@@ -33,14 +34,15 @@ gem 'sprockets'
 gem 'dynamic_form'
 gem 'daemons'
 gem 'delayed_job_active_record'
+gem 'pg', '0.15.1'
+
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 group :development, :test do
-	gem 'sqlite3', '1.3.5'
-	gem 'annotate', '~> 2.4.1.beta'
-	gem 'nifty-generators', '~> 0.4.2'
+	gem 'annotate'
+	gem 'nifty-generators'
 	gem 'debugger'
 end
 
@@ -48,24 +50,23 @@ end
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '3.2.4'
-  gem 'coffee-rails', '3.2.2'
-  gem 'uglifier', '1.2.3'
+  gem 'sass-rails'
+  gem 'coffee-rails'
+  gem 'uglifier'
 end
 
 
 group :test do
-	gem 'rb-fsevent', '~>0.9', :require => false
-	gem 'growl', '1.0.3'
-	gem 'factory_girl_rails', '1.4.0'
-	gem 'cucumber-rails', '1.2.1', require: false
-	gem 'database_cleaner', '0.7.0'
+	gem 'rb-fsevent', :require => false
+	gem 'growl'
+	gem 'factory_girl_rails'
+	gem 'cucumber-rails', require: false
+	gem 'database_cleaner'
 	gem 'test-unit'
 	gem 'mocha'
 end
 
 group :production do
-	gem 'pg', '0.12.2'
 	gem 'rack-google-analytics', :require => 'rack/google-analytics'
 end
 

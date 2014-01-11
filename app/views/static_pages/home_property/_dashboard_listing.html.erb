@@ -10,9 +10,11 @@
 		<hr>
 		Not yet signed up for any services for this property. <%= link_to "sign up", assign_services_property_path(listing) %>
 	<% else %>
-		<% listing.services.each do |s| %>
-			<hr>
-			<%= render 'static_pages/home_property/dashboard_service', s: s, listing: listing %>
+		<% listing.assignments.each do |a| %>
+			<% if !a.service_id.nil? %>
+				<hr>
+				<%= render 'static_pages/home_property/dashboard_service', assignment: a, service: a.service, listing: listing, category: a.category %>
+			<% end %>
 		<% end %>
 	<% end %>
 <% end %>

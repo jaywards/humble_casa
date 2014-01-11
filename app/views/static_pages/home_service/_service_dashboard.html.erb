@@ -149,10 +149,10 @@
 										<% if assignment.cost != 0 %>
 											<td>estimate provided, waiting for client to accept</td>
 										<% else %>	
-											<td><%= link_to "provide estimate for client approval", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %></td>
+											<td><%= link_to "provide " + assignment.category.humanize.downcase + " estimate for client approval", provide_estimate_assignment_path(assignment) %></td>
 										<% end %>
 									<% else %>
-										<td><%= link_to "provide standard service cost (no approval necessary)", provide_estimate_property_service_path(assignment.property_id, assignment.service_id) %></td>
+										<td><%= link_to "provide " + assignment.category.humanize.downcase + "  standard service cost (no approval necessary)", provide_estimate_assignment_path(assignment) %></td>
 									<% end %>
 								</tr>
 							<% end %>

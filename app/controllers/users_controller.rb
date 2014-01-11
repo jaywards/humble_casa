@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   filter_resource_access
-  force_ssl
+  force_ssl if Rails.env.production?
 
   def new
     if !current_user.nil?
