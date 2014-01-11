@@ -11,10 +11,7 @@
 	<div class="span9">  
 	    <%= f.input :name, label: "Business name" %>
 	    	
-		<%= f.association :categories %>
-		<%#= f.input :categories, collection: [['chimney_services', 'Chimney Services'], ['handyman/general_maintenance', 'Handyman/General Maintenance'], ['housecleaning', 'Housecleaning'], ['landscaping', 'Landscaping'], ['pest_control', 'Pest Control'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['snow_removal', 'Snow Removal']], value_method: :first, label_method: :last, label: "Service category (hold down 'Command' or 'Ctrl' to select multiple)", :include_hidden => false, :input_html => {multiple: true} %>
-    	<%#= f.input_field :category, collection: [['chimney_services', 'Chimney Services'], ['handyman/general_maintenance', 'Handyman/General Maintenance'], ['housecleaning', 'Housecleaning'], ['landscaping', 'Landscaping'], ['pest_control', 'Pest Control'], ['pool/spa_cleaning', 'Pool/Spa Cleaning'], ['snow_removal', 'Snow Removal']], label_method: :last, value_method: :first %>
-	    
+		<%= f.association :categories, label_method: lambda { |cat| cat.name.humanize }, label: "Service category (Ctrl or Command key for multiple)" %>
 	    <%= f.input :address1 %>
 	    <%= f.input :address2 %>
 
