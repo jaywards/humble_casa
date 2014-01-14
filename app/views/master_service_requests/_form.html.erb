@@ -3,7 +3,8 @@
 		<div class="span2">  
 			<h5 class="sr-form">Property:</h5> <%= render @property %>
 			<hr>
-			<h5>Service:</h5> <%= render @service%>
+			<b>Service: <%= @assignment.category.humanize %></b><br>
+			<%= render @service%>
 			<%= f.hidden_field :property_id, value: @property.id %>
 			<%= f.hidden_field :service_id, value: @service.id %>
 			<%= f.hidden_field :assignment_id, value: @assignment.id %>

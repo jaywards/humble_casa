@@ -74,6 +74,7 @@ class ServicesController < ApplicationController
 		   	 	@time_zone = Timezone::Zone.new :latlon => [@service.location.latitude, @service.location.longitude]
 				if @service.update_attribute(:time_zone, @time_zone.zone)	
 			      	flash[:success] = "Successfully updated service."	      
+		    	  	@service.check_status
 		    	  	redirect_to root_path	    
 	    		else
 					flash[:error] = "Couldn't update service. There was an issue with identifying the correct time zone."

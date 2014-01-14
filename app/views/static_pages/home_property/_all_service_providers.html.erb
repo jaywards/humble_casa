@@ -9,7 +9,7 @@
 	</thead>
 	<tbody>
 
-		<% Category::CATEGORIES.each do |category| %>		
+		<% Category::CATEGORIES.sort_by{|c| c.downcase}.each do |category| %>		
 			<tr>
 				<td>
 					<%= category.titleize %>

@@ -1,4 +1,3 @@
-<%= provide(:title, 'Edit Service Request') %>
-<h2>Edit Service Request</h2>
+<%= provide(:title, 'Edit ' + @assignment.category.titleize + ' Service Request') %>
+<h2><%= 'Edit ' + @assignment.category.titleize + ' Service Request' %></h2>
 <%= render partial: 'form', locals: {save_service_label: "Update service request"} %>
-

@@ -188,6 +188,10 @@ class Property < ActiveRecord::Base
 
   def assigned_category_service(category)
     @a = self.assignments.find_by_category(category)
+    if @a.nil?
+      self.add_categories
+      self.label_categories
+    end
     if @a.service_id.nil?
       return nil
     else

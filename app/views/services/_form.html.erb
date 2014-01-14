@@ -11,7 +11,7 @@
 	<div class="span9">  
 	    <%= f.input :name, label: "Business name" %>
 	    	
-		<%= f.association :categories, label_method: lambda { |cat| cat.name.humanize }, label: "Service category (Ctrl or Command key for multiple)" %>
+		<%= f.association :categories, collection: Category.all(order: 'name'), label_method: lambda { |cat| cat.name.humanize }, label: "Service category (Ctrl or Command key for multiple)" %>
 	    <%= f.input :address1 %>
 	    <%= f.input :address2 %>
 

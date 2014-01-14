@@ -15,19 +15,26 @@
 </div>
 <div class="span9">	
 	<% @i = 0 %>
-	<% Category::CATEGORIES.each do |category| %>	
+	<% Category::CATEGORIES.sort_by{|c| c.downcase}.each do |category| %>	
 		<div class="panel panel-info">
-			<div class="panel-heading"><h3 class="panel-title"><%= category.titleize %></h3></div>
+			<div class="panel-heading">
+				<h3 class="panel-title">
+					<%= category.titleize %>
+				</h3>
+				<%= Category::CATEGORY_DESCRIPTIONS.rassoc(category)[0] %>
+			</div>
 			<div class="panel-body">
 				<% @assignment = @property.assignments.find_by_category(category) %>
-    			<% if !(@category_services_in_area = @property.area_category_services(category)).empty? %>
+				<% @category_services_in_area = @property.area_category_services(category) %>
+				<% if !(@category_services_in_area = @property.area_category_services(category)).empty? %>
     				<%= f.simple_fields_for :assignments, @assignment do |assignment| %>
     			 		<%= assignment.hidden_field :category, value: category %>				
 	    				<div class="list-group">
 							<% @category_services_in_area.each do |s| %>
 								<%= render "service_listing", :s => s, :assignment => assignment, :category => category %>
 					  		<% end %>
-							<%= assignment.hidden_field :service_id %>			
+							<%= assignment.hidden_field :service_id %>
+							<%= hidden_field_tag "current_service" + @i.to_s, @assignment.service_id %>			
 						</div>
 			    	<% end %>			
 			    <% else %>
