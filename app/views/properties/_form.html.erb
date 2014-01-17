@@ -15,23 +15,30 @@
 			</ul>
 		</div>
 		<div class="span9">
-    		<%= f.input :name, label: 'Property name', placeholder: "A nickname for this property"%>
+    		<%= f.input :name, label: 'Property name', placeholder: 'A nickname for this property'%>
 			<%= f.input :address1 %>
 			<%= f.input :address2 %>
 			<%= f.input :city, label: 'City/State/Zip' do %>
-	    		<%= f.input_field :city, placeholder: "city" %>
+	    		<%= f.input_field :city, placeholder: 'city' %>
 	    		<%= f.input_field :state, collection: %w[AK AL AR AZ CA CO CT DC DE FL GA HI IA ID IL IN KS KY LA MA MD ME MI MN MO MS MT NC ND NE NH NJ NM NV NY OH OK OR PA RI SC SD TN TX UT VA VT WA WI WV WY] %>
-	    		<%= f.input_field :zip, placeholder: "zip code" %>
+	    		<%= f.input_field :zip, placeholder: 'zip code' %>
     		<% end %>
 
-			<%= f.input :instructions, label: 'Instructions for the property', placeholder: 'These instructions are only seen by the service providers you select.  Examples: lock box code, security disarm code, preferred entry door, etc.', as: :text %>
+			<%= f.input :house_closing, label: '* Opening/Closing instructions', placeholder: 'Exact instructions for gaining entry and closing up the house. Do you have an alarm that must be deactivated/armed? Do you have pets that should not be let out or must be confined to part of the house? What temp should the thermostat be left at? In cold weather climes, do you require the water to be shut off and how is that done?' %>
+			<center>- or -</center>
+			<%= f.input :house_closing_none, as: :boolean, inline_label: "I have no Opening/Closing instructions or I will provide them to the service provider in person", label: false %>
+
+			<%= f.input :instructions, label: 'Other details for the property', placeholder: 'These instructions are only seen by the service providers you select.  Examples: preferred entry door, etc.', as: :text %>
+
+    		<%= f.input :terms_agreement, as: :boolean, inline_label: ("I agree to the HumbleCasa #{link_to 'terms and conditions', terms_of_use_path}.").html_safe, label: false %>
+			<br>
     	</div>
 	    <center>
-			<button class="btn btn-primary" type="submit" data-disable-with="Saving...">
+			<button class="btn btn-primary btn-small" type="submit" id="save-btn" data-disable-with="Saving...">
 				<i class="icon-ok icon-white"></i> Save
 			</button>
 			&nbsp		
-			<%= link_to "Cancel", root_path, class: "btn" %>
+			<%= link_to "Cancel", root_path, class: "btn btn-small" %>
 		</center>
 	</div>
 <% end %>

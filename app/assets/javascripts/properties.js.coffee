@@ -1,8 +1,16 @@
 $ ->
   if $('body').hasClass("properties") && $(".property-form").length > 0
     $("#property_name").focus()
+    $("#save-btn").click ->
+      validateForm()
     $("#new_property").enableClientSideValidations()
     $("[id^=edit_property]").enableClientSideValidations()
+
+validateForm = ->
+  instructions = $('#property_house_closing').val()
+  if instructions == "" && !$("#property_house_closing_none").prop('checked')
+    alert("You must either provide property Opening/Closing Instructions or check the 'no instructions' box.")
+    false
 
 $ ->
   if $('body').hasClass("properties") && $(".property-payment-form").length > 0
@@ -78,23 +86,27 @@ initializeListGroup = ->
         activate(serviceListing, assignID, serviceID, checkedField, currentServiceID)
   
 activate = (serviceListing, assignID, serviceID, checkedField, currentServiceID) ->
+  #alert("old checkbox: " + '#selected' + currentServiceID + '-' + assignID)
   $('#selected' + currentServiceID + '-' + assignID).each -> 
     @checked = false
   $('#checkedField' + currentServiceID + '-' + assignID).val('false')
-  $('#confirmed' + currentServiceID).hide(400)
+  $('#confirmed' + assignID).hide(400)
   
   $('#property_assignments_attributes_' + assignID + '_service_id').val(serviceID)
+  #alert("new checkbox: " + '#selected' + serviceID + '-' + assignID)
   $('#selected' + serviceID + '-' + assignID).each -> 
     @checked = true
   $(checkedField).val('true')
+  $('#current_service' + assignID).val(serviceID)
 
   current = serviceListing.attr "current"
   if current == "false"
-    $('#confirmed' + serviceID + '-' + assignID).show(400)  
+    $('#confirmed' + assignID).show(400)  
 
 deactivate = (serviceListing, assignID, serviceID, checkedField) ->
   $('#property_assignments_attributes_' + assignID + '_service_id').val("")
   $('#selected' + serviceID + '-' + assignID).each -> 
     @checked = false
-  $('#confirmed' + serviceID + '-' + assignID).hide(400)
+  $('#confirmed' + assignID).hide(400)
   $(checkedField).val('false')
+  $('#current_service' + assignID).val('nil')

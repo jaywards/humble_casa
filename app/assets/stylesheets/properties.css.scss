@@ -28,8 +28,13 @@
 	width: 25%;
 }
 
-#property_instructions {
+#property_instructions, 
+#property_house_closing {
 	height: 80px;
+}
+
+div.control-group.property_house_closing {
+	margin-bottom: 0px;
 }
 
 #property-tabs li {

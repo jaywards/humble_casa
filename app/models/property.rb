@@ -1,6 +1,7 @@
 class Property < ActiveRecord::Base
   attr_accessible :address1, :address2, :city, :instructions, :name, :phone, :state, :zip, :time_zone, 
-  :assignments_attributes, :stripe_customer_token, :stripe_card_token, :card_type, :last_four;
+  :assignments_attributes, :stripe_customer_token, :stripe_card_token, :card_type, :last_four, :house_closing, 
+  :house_closing_none, :terms_agreement
 
   belongs_to :user
   
@@ -20,6 +21,7 @@ class Property < ActiveRecord::Base
   validates :city, presence: true, length: {maximum: 150}
   validates :state, presence: true, length: {maximum: 2}
   validates :zip, presence: true, length: {maximum: 10}
+  validates :terms_agreement, presence: true
 
   default_scope order: 'properties.created_at DESC'
 
@@ -191,6 +193,7 @@ class Property < ActiveRecord::Base
     if @a.nil?
       self.add_categories
       self.label_categories
+      return nil
     end
     if @a.service_id.nil?
       return nil

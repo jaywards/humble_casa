@@ -1,0 +1,16 @@
+A new assignment has been created on HumbleCasa!
+
+	<%= @assignment.category %>
+
+	<%= @service.name %>
+	<%= @service.address1 %>
+	<% if !@service.address2.empty? %>
+	<%= @service.address2 %>
+	<% end %>
+	<%= @service.city %> 
+	<%= @service.state %>
+	<%= @service.zip %>
+	<%= @service.phone %>
+
+	<%= @property.name %>
+	<%= @property.user.full_name %>

@@ -69,5 +69,7 @@ module HumbleCasa
         c.username = 'jaywards'
     end
 
+    config.i18n.enforce_available_locales = false
+
   end
 end

@@ -3,12 +3,12 @@ class NotificationMailer < ActionMailer::Base
   
   	def new_service(service)
 		@service = service
-		mail to: "jason@humblecasa.com", subject: "New service signed-up: " + @service.name
+		mail to: "notifications@humblecasa.com", subject: "New service signed-up: " + @service.name
 	end
 
 	def new_user(user)
 		@user = user
-		mail to: "jason@humblecasa.com", subject: "New " + @user.role + " user signed-up"
+		mail to: "notifications@humblecasa.com", subject: "New " + @user.role + " user signed-up"
 	end
 
 	def welcome(user)
@@ -34,4 +34,15 @@ class NotificationMailer < ActionMailer::Base
     	mail to: @service.email, subject: @service.name + ": You have a new customer waiting on HumbleCasa.com!"
   	end
 
+  	def new_assignment(assignment, area_service)
+  		@service = assignment.service
+    	@property = assignment.property
+    	@assignment = assignment
+    	
+    	if area_service
+    		mail to: "notifications@humblecasa.com", subject: "New AREA SERVICE assignment between " + @service.name + " and " + @property.name
+    	else
+    		mail to: "notifications@humblecasa.com", subject: "New REAL assignment between " + @service.name + " and " + @property.name
+    	end
+    end
 end

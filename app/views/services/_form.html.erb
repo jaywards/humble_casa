@@ -35,7 +35,7 @@
 <b>Business Verification Details</b><br>
 <div class="row-fluid">
 	<div class="span3">
-		<p>HumbleCasa ensures that only experienced, professional services are listed on our site. You don't necessarily need a business licensee number or proof of insurance/bond (although it certainly helps!) - if you've been running your business for a while and have good reviews on Yelp we can work with that. If you have questions or want to provide additional details, please email us at <a href="mailto:support@humblecasa.com">support@humblecasa.com</a></p>
+		<p>HumbleCasa ensures that only experienced, professional services are listed on our site. We require a business licensee number, and would like to have proof of insurance/bond for every business. We verify every license number provided to ensure that it matches the business details provided above. If you have questions or want to provide additional details, please email us at <a href="mailto:support@humblecasa.com">support@humblecasa.com</a></p>
 	</div>
 	<div class="span9">
 		<%= f.input :license, label: "Business licensee ID" %>
@@ -50,21 +50,21 @@
 <hr>
 <b>Service Area Zip Codes</b><br>
 <div class="row-fluid">
-	<div class="span3">
-		<p>These are the zip codes in which you are willing to take new customers. When property owners register their homes on HumbleCasa, your business will only show up for them if their property is in one of your service area zip codes below.</p>
-	</div>
-	<div class="span9">
-		<div id="nested-zip-codes">
-			<%= f.simple_fields_for :service_zips do |zip| %>
-				<%= render 'service_zip_fields', :f => zip %>
-			<% end %>
-		
-			<div class="links">
-				<%= link_to_add_association('+ add another zip code', f, :service_zips) %>
-			</div>
-			<br>
-		</div>
-	</div>
+    <div class="span3">
+            <p>These are the zip codes in which you are willing to take new customers. When property owners register their homes on HumbleCasa, your business will only show up for them if their property is in one of your service area zip codes below.</p>
+    </div>
+    <div class="span9">
+            <div id="nested-zip-codes">
+                    <%= f.simple_fields_for :service_zips do |zip| %>
+                            <%= render 'service_zip_fields', :f => zip %>
+                    <% end %>
+            
+                    <div class="links">
+                            <%= link_to_add_association('+ add another zip code', f, :service_zips) %>
+                    </div>
+                    <br>
+            </div>
+    </div>
 </div>
 
 <% if current_user.role == "admin" %>
@@ -78,14 +78,17 @@
 	</div>
 <% end %>
 
+<div class="row-fluid">
+   	<div class="span3"></div>
+    <div class="span9"><%= f.input :terms_agreement, as: :boolean, inline_label: ("I agree to the HumbleCasa #{link_to 'terms and conditions', terms_of_use_path}.").html_safe, label: false %>
+    </div>
+</div>
 
-
-<br>
-<center>
-	<button class="btn btn-primary" type="submit" id="save-btn" data-disable-with="Saving...">
+<center>	
+	<button class="btn btn-primary btn-small" type="submit" id="save-btn" data-disable-with="Saving...">
 		<i class="icon-ok icon-white"></i> Save
 	</button>
 	&nbsp		
-	<%= link_to "Cancel", root_path, class: "btn" %>
+	<%= link_to "Cancel", root_path, class: "btn btn-small" %>
 </center>
 <% end %>

@@ -79,8 +79,10 @@ class PropertiesController < ApplicationController
     		if !@a.service.nil? 
     			if @a.service.area_service
     				NotificationMailer.delay.signup(@a)
+    				NotificationMailer.delay.new_assignment(@a, true)
     			else
     				ServiceMailer.delay.new_customer(@a)
+    				NotificationMailer.delay.new_assignment(@a, false)
     			end
     		end
     	end
