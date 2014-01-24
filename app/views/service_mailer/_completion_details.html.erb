@@ -14,10 +14,17 @@ Service charge: <%= number_to_currency(@service_request.charge) %>. Your credit 
 <% if @service_request.service_photo_1? || @service_request.service_photo_2? || @service_request.service_photo_3? %>
   Service photos:
   <div>
-    <%= image_tag @service_request.service_photo_1 if @service_request.service_photo_1? %>
-     
-    <%= image_tag @service_request.service_photo_2 if @service_request.service_photo_2? %>
-     
-    <%= image_tag @service_request.service_photo_3 if @service_request.service_photo_3? %>
+  	<% if @service_request.service_photo_1? %>
+    	<%= image_tag @service_request.service_photo_1 %>
+    	<hr>
+    <% end %> 
+    <% if @service_request.service_photo_2? %>
+      <%= image_tag @service_request.service_photo_2 %>
+      <hr>
+    <% end %>
+    <% if @service_request.service_photo_3? %>
+    	<%= image_tag @service_request.service_photo_3 %>
+    	<hr>
+    <% end %>
   </div>
 <% end %>

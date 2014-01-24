@@ -49,9 +49,7 @@ class PropertiesController < ApplicationController
      	if @property.update_attributes(params[:property]) && @property.update_payment_info && @property.create_assignments_customers
 	   		flash[:success] = "Successfully updated payment details"	      
 			if @property.new_property
-				@property.user.update_attribute(:new_account, false)
-				@property.update_attribute(:new_property, false)
-				redirect_to root_path(message: "welcome")
+				redirect_to assign_services_property_path(@property)
 			else
 		    	redirect_to root_path	    
 	    	end
@@ -87,10 +85,12 @@ class PropertiesController < ApplicationController
     		end
     	end
     	
-    	if @property.create_assignments_customers && @property.remove_invalid_srs
+		if @property.new_property && @property.create_assignments_customers && @property.remove_invalid_srs
+			@property.user.update_attribute(:new_account, false)
+			@property.update_attribute(:new_property, false)
 			flash[:success] = "Successfully updated registered service providers."	      
-	    	redirect_to root_path	    
-		else
+			redirect_to root_path(message: "welcome")
+    	else
 			flash[:error] = "Couldn't update your service providers. Please try again."
   			render :action => 'assign_services'
 		end

@@ -8,7 +8,7 @@ class ServiceMailer < ActionMailer::Base
   def service_created(service_request)
     @service_request = service_request
     @service = @service_request.service
-    @owner = User.find_by_id(@service.user_id)
+    @owner = @service.owner
     @property = @service_request.property
 
     if @owner.notify?

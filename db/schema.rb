@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140117193156) do
+ActiveRecord::Schema.define(version: 20140121200010) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -254,7 +254,7 @@ ActiveRecord::Schema.define(version: 20140117193156) do
     t.string   "phone"
     t.string   "email"
     t.string   "category"
-    t.integer  "user_id"
+    t.integer  "owner_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "biz_description"
@@ -281,7 +281,7 @@ ActiveRecord::Schema.define(version: 20140117193156) do
     t.boolean  "terms_agreement",        default: true
   end
 
-  add_index "services", ["user_id"], name: "index_services_on_user_id", using: :btree
+  add_index "services", ["owner_id"], name: "index_services_on_owner_id", using: :btree
 
   create_table "services_categories", force: true do |t|
     t.integer "service_id"

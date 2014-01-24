@@ -1,5 +1,5 @@
 <h4>Service details:</h4>
 <%= @service.name %><br>
-Owner: <%= User.find_by_id(@service.user_id).full_name %><br>
+Owner: <%= @service.owner.full_name %><br>
 <%= @service.phone %><br>
 <%= @service.email %><br>

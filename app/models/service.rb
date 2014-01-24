@@ -1,5 +1,5 @@
 class Service < ActiveRecord::Base
-  attr_accessible :address1, :address2, :city, :email, :name, :phone, :state, :zip, :user_id, 
+  attr_accessible :address1, :address2, :city, :email, :name, :phone, :state, :zip, :owner_id, 
   :biz_description,	:service_zips_attributes, :assignments_attributes, :time_zone, :employments_attributes,
   :stripe_customer_token, :stripe_access_token, :stripe_refresh_token, :stripe_publishable_key, :stripe_user_id,
   :stripe_card_token, :card_type, :last_four, :license, :insurance_company, :insurance_id, :experience, 
@@ -7,7 +7,7 @@ class Service < ActiveRecord::Base
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
-  validates :user_id, presence: true
+  validates :owner_id, presence: true
   validates :categories, presence: true
   validates :email, presence: true, format: { with: VALID_EMAIL_REGEX}
   validates :name, presence: true, length: {maximum: 150}

@@ -16,7 +16,7 @@ class StaticPagesController < ApplicationController
           end
         
         when "serviceowner" 
-          @business = @user.business
+          @business = Service.find_by_owner_id(@user)
           @date = params[:date] ? Date.parse(params[:date]) : Date.today
 
           if !@business.nil?

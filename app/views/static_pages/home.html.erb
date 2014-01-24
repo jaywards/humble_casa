@@ -10,7 +10,7 @@
 				<%= render 'static_pages/home_property/with_property' %>
 			<% end %>
 		<% when "serviceowner" %>
-			<% if @user.business.nil? %>
+			<% if Service.find_by_owner_id(@user).nil? %>
 				<%= render 'static_pages/home_service/no_service' %>		
 			<% else %>	
 				<%= render 'static_pages/home_service/with_service' %>

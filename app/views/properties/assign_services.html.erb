@@ -1,5 +1,13 @@
 <%= provide(:title, 'Register Services') %>
-<h2 class="register-services">Register Services</h2>
+<% if @property.new_property %>
+	<% if @property.user.new_account %>
+		<h2 class="register-services">New Property Owner account:<br>Select services (step 4 of 4)</h2>
+	<% else %>
+		<h2 class="register-services">Register a property:<br>Select services (step 3 of 3)</h2>		
+	<% end %>
+<% else %>
+	<h2 class="register-services">Register Services</h2>
+<% end %>
 
 <%= simple_form_for @property, :url => {:action => "update_with_assignments"} do |f| %>
 <div class="row-fluid">

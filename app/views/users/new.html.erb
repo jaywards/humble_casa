@@ -1,7 +1,7 @@
 <%= provide(:title, 'New user account') %>
 	
 <% if params[:role] == "propertyowner" %>
-	<h2 class="user-form">Create a new Property Owner account (step 1 of 3)</h2>
+	<h2 class="user-form">Create a new Property Owner account (step 1 of 4)</h2>
 	<h6><center>(Need to create a business account instead? Click over to our <%= link_to "Business signup", new_user_path(role: "serviceowner") %> page to create those accounts.)</center></h6>
 <% else %>
     <h2 class="user-form">Create a new Service Owner account (step 1 of 4)</h2>
