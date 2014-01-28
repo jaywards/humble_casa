@@ -9,22 +9,12 @@
 <div class="tabcontainer"> 
 	<div id="content">
     	<ul id="service-tabs" class="nav nav-tabs" data-tabs="tabs">	
-	    	<li class="active"><a href="#calendar-tab" data-toggle="tab">Calendar View</a></li>
-	    	<li><a href="#customers-tab" data-toggle="tab">Customers</a></li>
-	    	<li><a href="#business-tab" data-toggle="tab">Business Details</a></li>
-	    	<li><a href="#employees-tab" data-toggle="tab">Employees</a></li>
-	    	<li><a href="#service-requests-tab" data-toggle="tab">List View</a></li>
-	    	<li class="dropdown">
-	    		<a href="#" id="reports-tab-drop" class="dropdown-toggle" data-toggle="dropdown">
-	    			Reports
-	    			<b class="caret"></b>
-	    		</a>
-	    		<ul class="dropdown-menu" role="menu" aria-labelledby="reports-tab-drop">
-	    			<li class><a href="#customers-report" tabindex="-1" data-toggle="tab">Customers</a></li>
-	    			<li class><a href="#services-by-customer" tabindex="-1" data-toggle="tab">MTD Services (Customer)</a>	</li>
-	    			<li class><a href="#services-by-employee" tabindex="-1" data-toggle="tab">MTD Services (Employee)</a>	</li>
-	    		</ul>
-	    	</li>
+	    	<li class="active"><a href="#calendar-tab" data-toggle="tab" class="service-tab">Calendar View</a></li>
+	    	<li><a href="#customers-tab" data-toggle="tab" class="service-tab">Customers</a></li>
+	    	<li><a href="#business-tab" data-toggle="tab" class="service-tab">Business Details</a></li>
+	    	<li><a href="#employees-tab" data-toggle="tab" class="service-tab">Employees</a></li>
+	    	<li><a href="#service-requests-tab" data-toggle="tab" class="service-tab">List View</a></li>
+	    	<li><a href="#reports-tab" data-toggle="tab" class="service-tab">Reports</a></li>
 	    </ul>
  
 	    <div id="service-tab-content" class="tab-content">
@@ -32,41 +22,7 @@
 				<%= render 'static_pages/home_service/service_calendar_view' %>
 			</div>
 			<div class="tab-pane" id="business-tab">
-				<div class="row-fluid">
-					<div class="span6"%>
-						<%= render @business %>
-						<br>
-						<br>
-						<% @cats = @business.categories %>
-						<%= "Category".pluralize(@numCats) %>:
-						<% @i = 0 %>
-						<% while @i < @cats.size %>
-							<%= @cats[@i].name.humanize %>
-							<% if @i != (@cats.size - 1) %>
-								 | 
-							<% end %>
-							<% @i += 1 %>
-						<% end %>
-						<br>
-						<br>
-						Status: 
-						<% if !@business.verified %>
-							<b><z class="business-inactive">Not yet verified</z></b>
-						<% elsif @business.service_active %>
-							Active
-						<% else %>
-							<b><z class="business-inactive">Inactive</z></b> - please see Payment and Billing details below.
-						<% end %></b>
-						<%= render 'static_pages/home_service/service_zips' %>
-						<%= link_to "edit", edit_service_path(@business)%>
-						 | 
-						<%= link_to "delete", @business, method: :delete, confirm: "Are you sure? This will delete your association with all of your existing customers.", title: @business.name %>
-					
-					</div>
-					<div class="span6">
-						<%= render 'static_pages/home_service/payment_details' %>
-					</div>
-				</div>
+				<%= render 'static_pages/home_service/business_details' %>
 			</div>
 			<div class="tab-pane" id="customers-tab">
 				<%= render 'static_pages/home_service/all_customers' %>
@@ -77,116 +33,24 @@
 			<div class="tab-pane" id="service-requests-tab">
 				<%= render 'static_pages/home_service/all_service_requests' %>
 			</div>
-			<div class="tab-pane" id="customers-report">
-				<%#= render template: 'dossier/reports/show', locals: {report: @customers_report.run } %>
-				<center>
-				<h4>All Customers for <%=@business.name %></h4>
-					<% @link = "data:application/csv;charset=utf-8,OwnerName%2COwnerEmail%2COwnerPhone%2CPropertyName%2CPropertyAddress%0A" %>
-					<% @customers_report.each do |property| %>						
-						<% @link = @link + property.user.full_name + "%2C" + property.user.email + "%2C" + property.user.primary_phone + "%2C" + property.name + "%2C" + property.address1 + property.address2 + property.city + property.state + property.zip + "%0A"%>
-					<% end %>
-					<a download="allcustomers.csv" href="<%= @link %>">export to csv/excel</a>
-				</center>
-				<br>
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th></th>
-							<th>Owner Name</th>
-							<th>Owner Email</th>
-							<th>Owner Phone</th>
-							<th>Property Name</th>
-							<th>Property Address</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% @i = 1 %>
-						<% @customers_report.each do |property| %>
-							<tr>
-								<td><%= @i %>.</td>
-								<td><%= property.user.full_name %></td>
-								<td><%= property.user.email %></td>
-								<td><%= property.user.primary_phone %></td>
-								<td><%= property.name %></td>
-								<td><%= property.full_address %></td>
-							</tr>
-							<% @i += 1 %>
-						<% end %>
-					</tbody>
-				</table>
-			</div>
-			<div class="tab-pane" id="services-by-customer">
-				<%#= render template: 'dossier/reports/show', locals: {report: @mtd_services_customer_report.run } %>
-				<center>
-					<h4><%= @business.name %>: Month-to-Date Completed Service Requests by Customer</h4>
-					<% @link = "data:application/csv;charset=utf-8,Property%2CCustomer%2CServiceRequestID%2CCompletedDate%0A" %>
-					<% @mtd_service_customer_report.each do |sr| %>						
-						<% @link = @link + sr.property.name + sr.property.address1 + sr.property.address2 + sr.property.city + sr.property.state + sr.property.zip + "%2C" + sr.property.user.full_name + sr.property.user.email + sr.property.user.primary_phone + "%2C" + sr.service_request_id + "%2C" + sr.completed_date.strftime("%a %m/%d/%y") + "%0A"%>
-					<% end %>
-					<a download="completedrequestsbycustomer.csv" href="<%= @link %>">export to csv/excel</a>
-				</center>
-				<br>
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th></th>
-							<th>Property</th>
-							<th>Customer</th>
-							<th>Service Request ID</th>
-							<th>Completed Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% @i = 1 %>
-						<% @mtd_service_customer_report.each do |sr| %>
-						<tr>
-							<td><%= @i %>.</td>
-							<td><%= render sr.property %></td>
-							<td><%= render sr.property.user %></td>
-							<td><%= sr.service_request_id %></td>
-							<td><%= sr.completed_date.strftime("%a %m/%d/%y") %></td>
-						</tr>
-						<% @i += 1 %>
-						<% end %>
-					</tbody>
-				</table>
-			</div>
-			<div class="tab-pane" id="services-by-employee">
-				<center>
-					<h4><%= @business.name %>: Month-to-Date Completed Service Requests by Employee</h4>
-					<% @link = "data:application/csv;charset=utf-8,Employee%2CProperty%2CCustomer%2CServiceRequestID%2CCompletedDate%0A" %>
-					<% @mtd_service_employee_report.each do |sr| %>						
-						<% @link = @link + sr.user.full_name + "%2C" + sr.property.name + sr.property.address1 + sr.property.address2 + sr.property.city + sr.property.state + sr.property.zip + "%2C" + sr.property.user.full_name + sr.property.user.email + sr.property.user.primary_phone + "%2C" + sr.service_request_id + "%2C" + sr.completed_date.strftime("%a %m/%d/%y") + "%0A"%>
-					<% end %>
-					<a download="completedrequestsbycustomer.csv" href="<%= @link %>">export to csv/excel</a>
-				</center>
-				<br>
-				<table class="table table-condensed">
-					<thead>
-						<tr>
-							<th></th>
-							<th>Employee</th>
-							<th>Property</th>
-							<th>Customer</th>
-							<th>Service Request ID</th>
-							<th>Completed Date</th>
-						</tr>
-					</thead>
-					<tbody>
-						<% @i = 1 %>
-						<% @mtd_service_employee_report.each do |sr| %>
-						<tr>
-							<td><%= @i %>.</td>
-							<td><%= sr.user.to_label %></td>
-							<td><%= render sr.property %></td>
-							<td><%= render sr.property.user %></td>
-							<td><%= sr.service_request_id %></td>
-							<td><%= sr.completed_date.strftime("%a %m/%d/%y") %></td>
-						</tr>
-						<% @i += 1 %>
-						<% end %>
-					</tbody>
-				</table>
+			<div class="tab-pane" id="reports-tab">
+				<div class="tabcontainer"> 
+					<div id="content">
+    					<ul id="report-tabs" class="nav nav-tabs" data-tabs="tabs">	
+	    					<li class="active"><a href="#customer-reports-tab" data-toggle="tab" class="report-tab">Customer Reports</a></li>
+	    					<li><a href="#service-reports-tab" data-toggle="tab" class="report-tab">Service Request Reports</a></li>
+	    					<li><a href="#payment-reports-tab" data-toggle="tab" class="report-tab">Payment Reports</a></li>
+	    				</ul>
+						<div id="report-tab-content" class="tab-content">
+			    			<div class="tab-pane active" id="customer-reports-tab">
+								<%= render template: 'dossier/reports/customers', locals: {report: @customers_report.run } %></div>
+							<div class="tab-pane" id="service-reports-tab">
+								<%= render template: 'dossier/reports/service_requests', locals: {report: @service_requests_report.run } %></div>
+							<div class="tab-pane" id="payment-reports-tab">
+								<%= render template: 'dossier/reports/payments', locals: {report: @payments_report.run } %></div>	
+						</div>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>

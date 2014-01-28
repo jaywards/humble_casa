@@ -1,0 +1,11 @@
+<%= simple_form_for report, as: :options, url: url_for, html: {method: :get} do |f| %>
+	<%= f.input :report_start_date, label: 'Report start/end dates' do %>
+		<%= f.input_field :report_start_date %>
+		&nbsp to &nbsp 
+		<%= f.input_field :report_end_date %>
+	<% end %>
+	<button class="btn btn-small" type="submit" id="save-btn" data-disable-with="updating...">
+		update report
+	</button>
+<% end %>
+<%= render template: 'dossier/reports/show', locals: {report: report} %>

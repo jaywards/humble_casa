@@ -1,0 +1,34 @@
+<div class="row-fluid">
+	<div class="span6"%>
+		<%= render @business %>
+		<br>
+		<br>
+		<% @cats = @business.categories %>
+		<%= "Category".pluralize(@numCats) %>:
+		<% @i = 0 %>
+		<% while @i < @cats.size %>
+			<%= @cats[@i].name.humanize %>
+			<% if @i != (@cats.size - 1) %>
+				 | 
+			<% end %>
+			<% @i += 1 %>
+		<% end %>
+		<br>
+		<br>
+		Status: 
+		<% if !@business.verified %>
+			<b><z class="business-inactive">Not yet verified</z></b>
+		<% elsif @business.service_active %>
+			Active
+		<% else %>
+			<b><z class="business-inactive">Inactive</z></b> - please see Payment and Billing details below.
+		<% end %></b>
+		<%= render 'static_pages/home_service/service_zips' %>
+		<%= link_to "edit", edit_service_path(@business)%>
+		 | 
+		<%= link_to "delete", @business, method: :delete, confirm: "Are you sure? This will delete your association with all of your existing customers.", title: @business.name %>	
+	</div>
+	<div class="span6">
+		<%= render 'static_pages/home_service/payment_details' %>
+	</div>
+</div>

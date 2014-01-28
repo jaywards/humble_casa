@@ -161,4 +161,35 @@ class Service < ActiveRecord::Base
     NotificationMailer.delay.new_service(self) if Rails.env.production?
   end
 
+  def service_requests_report(options)
+    if options.nil? || 
+        (@start_date = options[:report_start_date]).nil? || 
+        (@end_date = options[:report_end_date]).nil? ||
+        (@completed = options[:completed_requests]).nil? 
+      @start_date = Date.today.at_beginning_of_month
+      @end_date = Date.today.at_end_of_month
+      @completed = true
+    end
+    ServiceRequestsReport.new(
+      service_id: self.id, 
+      report_start_date: @start_date, 
+      report_end_date: @end_date, 
+      completed_requests: @completed
+    ) 
+  end
+
+  def payments_report(options)
+    if options.nil? || 
+        (@start_date = options[:report_start_date]).nil? || 
+        (@end_date = options[:report_end_date]).nil? 
+      @start_date = Date.today.at_beginning_of_month
+      @end_date = Date.today.at_end_of_month
+    end
+    PaymentsReport.new(
+      service_id: self.id, 
+      report_start_date: @start_date, 
+      report_end_date: @end_date, 
+    ) 
+  end
+
 end

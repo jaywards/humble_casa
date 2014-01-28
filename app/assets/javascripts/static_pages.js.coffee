@@ -6,19 +6,25 @@ $ ->
   $('#home-tabs > li > a').hover ->
       $(this).tab 'show'
 
+$ ->
+  if $('body').hasClass("static_pages")
+    $('#options_report_start_date').datepicker({ dateFormat: 'MM-dd-yy' })
+    $('#options_report_end_date').datepicker({ dateFormat: 'MM-dd-yy' })
 
 $ ->
   
   #for bootstrap 3 use 'shown.bs.tab' instead of 'shown' in the next line
-  $("a[data-toggle=\"tab\"]").on "click", (e) ->
-    
-    #save the latest tab; use cookies if you like 'em better:
-    localStorage.setItem "lastTab", $(e.target).attr("href")
-
   
-  #go to the latest tab, if it exists:
+  $("a[data-toggle=\"tab\"]").on "click", (e) ->
+    if $(e.target).hasClass('service-tab')
+      localStorage.setItem "lastTab", $(e.target).attr("href")
+    else
+      localStorage.setItem "reportLastTab", $(e.target).attr("href")
+  
   lastTab = localStorage.getItem("lastTab")
-  $("a[href=\"" + lastTab + "\"]").click()  if lastTab
+  $("a[href=\"" + lastTab + "\"]").click()  if lastTab  
+  reportLastTab = localStorage.getItem("reportLastTab")
+  $("a[href=\"" + reportLastTab + "\"]").click()  if reportLastTab
 
 $ ->
   if $('body').hasClass("static_pages")

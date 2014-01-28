@@ -21,9 +21,10 @@ class StaticPagesController < ApplicationController
 
           if !@business.nil?
             @business.check_status 
-            #@customers_report = CustomersReport.new(service_id: @business.id)
-            #@mtd_services_customer_report = MTDServicesCustomerReport.new(service_id: @business.id)
-            @customers_report = @business.properties
+            @customers_report = CustomersReport.new(service_id: @business.id)
+            @service_requests_report = @business.service_requests_report(params[:options])
+            @payments_report = @business.payments_report(params[:options])
+            
             @completed_requests = ServiceRequest.where(:service_id => @business.id, :completed => true)
             @mtd_service_customer_report = @completed_requests.where(["completed_date > ?", Date.today.at_beginning_of_month]).sort_by {|a| a.completed_date}
             @mtd_service_employee_report = @mtd_service_customer_report.sort_by { |b| b.user.last_name }

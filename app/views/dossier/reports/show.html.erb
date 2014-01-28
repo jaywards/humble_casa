@@ -1,0 +1,34 @@
+<h2><%= report.formatted_title %></h2>
+
+<%= render_options(report) %>
+
+<table class="table table-striped table-bordered table-condensed table-responsive">
+  <thead>
+    <tr>
+      <% report.results.headers.each do |header| %>
+        <th><%= report.format_header(header) %></th>
+      <% end %>
+  </thead>
+  <tbody>
+    <% report.results.body.each do |row| %>
+      <tr>
+        <% row.each do |value| %>
+          <td><%= value %> </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+
+  <% if report.results.footers.any? %>
+    <tfoot>
+      <% report.results.footers.each do |row| %>
+        <tr>
+          <% row.each do |value| %>
+            <th><%= value %> </th>
+          <% end %>
+        </tr>
+      <% end %>
+    </tfoot>
+  <% end %>
+</table %>
+<center><%= link_to 'Download CSV', formatted_dossier_report_path('csv', report), class: 'download-csv' %></center>
