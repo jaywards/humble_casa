@@ -2,9 +2,11 @@
 <% if params[:state] == "1234" %>
 	<h2 class="static-stripe">Stripe Sign-up Confirmation</h2>
 <% elsif @user.new_account %>
-	<h2 class="static-stripe">New Service Owner account:<br>Accept credit card payments through Stripe (step 4 of 4)</h2>
+	<h2 class="static-stripe">New Service Owner Account:</h2>
+	<h2>Accept credit card payments through Stripe (step 4 of 4)</h2>
 <% else %>
-	<h2 class="static-stripe">Register a business:<br>Accept credit card payments through Stripe (step 3 of 3)</h2>
+	<h2 class="static-stripe">Register a business:</h2>
+	<h2>Accept credit card payments through Stripe (step 3 of 3)</h2>
 <% end %>
 
 <%= render "stripe_content" %>

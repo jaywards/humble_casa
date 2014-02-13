@@ -2,7 +2,7 @@
 	<div class="row-fluid">
 		<div class="span3">
 			<b>Billing Information</b><br><br>
-			<p>Your account will need a credit card for HumbleCasa to bill you. This billing information is required since we only accept payment via credit card. We will bill you on a monthly basis.</p>
+			<p>We will charge you on the 1st of each month. You can either place a credit card on file for HumbleCasa to bill you or opt for an emailed invoice which can be paid via check or credit card. If you put a card on file we will still email you an invoice before we charge your card.</p>
 			<hr>
 			<b>Our Fees</b><br><br>
 			<p>We charge you $3/month per active customer and $1.50 per completed service request. An "active customer" is a property that has a requested a service at least once that month. So if you provide a service on a property twice a month, your total fees to HumbleCasa are $6 for that customer for the month.</p>
@@ -15,9 +15,7 @@
 				<hr>
 			<% end %>		
 						
-			<h5>Register a New Card for Your Business</h5>
-
-
+			<h5>Place a credit card on file for your business</h5>
 
 			<div>
 			    <%= label_tag :card_number, "Credit Card Number" %>
@@ -35,6 +33,11 @@
 			<%= f.hidden_field :stripe_card_token %>
 			<%= f.hidden_field :last_four %>
 			<%= f.hidden_field :card_type %>
+
+			<hr>
+
+			<h5>Email me a monthly invoice for payment via check or credit card</h5>
+			<%= f.input :invoice_me, as: :boolean, inline_label: "Yes, send me a monthly invoice", label: false %>
 		</div>
 	</div>
 		

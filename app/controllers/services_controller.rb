@@ -56,8 +56,15 @@ class ServicesController < ApplicationController
 	end
 
 	def update_with_card
-    	if @service.update_attributes(params[:service]) && @service.update_payment_info
-	    	flash[:success] = "Successfully updated payment details"	      
+    	if @service.update_attributes(params[:service]) 
+    		if params[:service][:invoice_me]
+    			flash[:success] = "Successfully enrolled in monthly invoicing."	      
+			elsif @service.update_payment_info
+	    		flash[:success] = "Successfully registered credit card for payments"	      
+			else
+				flash[:error] = "Couldn't register your credit card. Please try again"
+				redirect_to add_payment_info_service_path(@service)
+			end
 			if @service.new_account			
 				redirect_to stripe_signup_path
 			else

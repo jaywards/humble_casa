@@ -14,7 +14,7 @@
 				<td>
 					<%= category.titleize %>
 					<% @selected_service = property_listing.assigned_category_service(category) %>
-					<% @assignment = Assignment.find_by_service_id_and_category(@selected_service, category) %>
+					<% @assignment = Assignment.find_by_service_id_and_category_and_property_id(@selected_service, category, property_listing) %>
 					<% if !@selected_service.nil? %>
 						<br><%= link_to "change provider", assign_services_property_path(property_listing) %>
 					<% end %>
@@ -22,11 +22,7 @@
 				<td>	
 					<% if @selected_service.nil? %>
 						<% if property_listing.area_category_services(category).size > 0 %>			
-							<% if property_listing.active %>
-								<%= link_to "Services available - sign-up",assign_services_property_path(property_listing), class: "btn btn-mini btn-primary" %>
-							<% else %>
-								<strong>Services available in your area but you need to provide <%= link_to "billing details", edit_payment_info_property_path(property_listing) %> first.</strong>
-							<% end %>
+							<%= link_to "Services available - sign-up",assign_services_property_path(property_listing), class: "btn btn-mini btn-primary" %>
 						<% else %>
 							No service providers for your area.
 						<% end %>
@@ -50,10 +46,15 @@
 								<br>
 							<% end %>
 						
-							<% if @assignment.confirmed && @assignment.cost != 0 %>
+							<% if @assignment.confirmed && @assignment.cost != 0.00 %>
 								<% @need_estimate = false %>
 								<p>
-									<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id, assignment_id: Assignment.find_by_service_id_and_category(@selected_service.id, category)), class: "btn btn-mini btn-success"  %>
+									Standard service charge: <%= number_to_currency(@assignment.cost) %><br>
+									<% if property_listing.active %>
+										<%= link_to "create a new service request", new_service_property_master_service_request_path(service_id: @selected_service.id, property_id: property_listing.id, assignment_id: Assignment.find_by_service_id_and_category(@selected_service.id, category)), class: "btn btn-mini btn-success"  %>
+									<% else %>
+										This property doesn't have a credit card on file so you can't create service requests. <%= link_to "update payment details", edit_payment_info_property_path(property_listing), class: "btn btn-mini btn-warning"  %>
+									<% end %>
 								</p>
 								<p>
 									<br>

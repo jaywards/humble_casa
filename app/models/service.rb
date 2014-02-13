@@ -3,7 +3,7 @@ class Service < ActiveRecord::Base
   :biz_description,	:service_zips_attributes, :assignments_attributes, :time_zone, :employments_attributes,
   :stripe_customer_token, :stripe_access_token, :stripe_refresh_token, :stripe_publishable_key, :stripe_user_id,
   :stripe_card_token, :card_type, :last_four, :license, :insurance_company, :insurance_id, :experience, 
-  :verify_details, :verified, :area_service, :category_ids, :terms_agreement
+  :verify_details, :verified, :area_service, :category_ids, :terms_agreement, :invoice_me
 
   VALID_EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i
 
@@ -21,7 +21,7 @@ class Service < ActiveRecord::Base
   validates :license, presence: true
   validates :terms_agreement, presence: true
   
-  belongs_to :owner, class_name: "User"
+  belongs_to :owner, class_name: "User", foreign_key: "owner_id"
 
   has_many :assignments, dependent: :destroy
   has_many :properties, through: :assignments
@@ -104,7 +104,7 @@ class Service < ActiveRecord::Base
   end
 
   def check_status
-    if (self.payment_ok && self.stripe_ok && self.verified) || self.area_service
+    if (self.stripe_ok && self.verified) || self.area_service
       if service_active == false
         self.service_active = true
         save!

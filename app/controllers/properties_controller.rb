@@ -15,7 +15,8 @@ class PropertiesController < ApplicationController
 			@time_zone = Timezone::Zone.new :latlon => [@property.location.latitude, @property.location.longitude]
 			if @property.update_attribute(:time_zone, @time_zone.zone)
 				flash[:success] = "Property created."
-				redirect_to add_payment_info_property_path(@property)
+				# redirect_to add_payment_info_property_path(@property)
+				redirect_to assign_services_property_path(@property)
 			else
 				flash[:error] = "Property created but there was an issue finding the time zone."
 			end
@@ -70,7 +71,10 @@ class PropertiesController < ApplicationController
     		end
     	end
 
-    	@property.update_attributes(params[:property])
+    	if !@property.update_attributes(params[:property])
+			flash[:error] = "Couldn't update your service providers. Please try again."
+  			render :action => 'assign_services'
+		end
 
     	@categories_to_mail.each do |cat|
     		@a = @property.assignments.find_by_category(cat)
@@ -85,15 +89,16 @@ class PropertiesController < ApplicationController
     		end
     	end
     	
-		if @property.new_property && @property.create_assignments_customers && @property.remove_invalid_srs
-			@property.user.update_attribute(:new_account, false)
-			@property.update_attribute(:new_property, false)
-			flash[:success] = "Successfully updated registered service providers."	      
+		@property.remove_invalid_srs 
+		@property.create_assignments_customers
+		@property.user.update_attribute(:new_account, false) if @property.user.new_account				
+		flash[:success] = "Successfully updated registered service providers."
+		if @property.new_property 
+			@property.update_attribute(:new_property, false) 
 			redirect_to root_path(message: "welcome")
     	else
-			flash[:error] = "Couldn't update your service providers. Please try again."
-  			render :action => 'assign_services'
-		end
+			redirect_to root_path
+		end	
 	end
 
 	def update

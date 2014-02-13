@@ -1,20 +1,19 @@
 <center><h5><%= listing.name %></h5></center>	
-<% if !listing.active %>
+<% if !listing.any_services %>
 	<hr>
-	This property is not currently active. <%= link_to "Update payment details", edit_payment_info_property_path(listing) %>
+	No services available in your area. <%= link_to "Show my interest", assign_services_property_path(listing), class: "btn btn-mini" %>
+<% elsif listing.services.size == 0 %>
+	<hr>
+	Not yet signed up for any services for this property. <%= link_to "sign up", assign_services_property_path(listing) %>
 <% else %>
-	<% if !listing.any_services %>
-		<hr>
-		No services available in your area. <%= link_to "Show my interest", assign_services_property_path(listing), class: "btn btn-mini" %>
-	<% elsif listing.services.size == 0 %>
-		<hr>
-		Not yet signed up for any services for this property. <%= link_to "sign up", assign_services_property_path(listing) %>
-	<% else %>
-		<% listing.assignments.each do |a| %>
-			<% if !a.service_id.nil? %>
-				<hr>
-				<%= render 'static_pages/home_property/dashboard_service', assignment: a, service: a.service, listing: listing, category: a.category %>
-			<% end %>
+	<% listing.assignments.each do |a| %>
+		<% if !a.service_id.nil? %>
+			<hr>
+			<%= render 'static_pages/home_property/dashboard_service', assignment: a, service: a.service, listing: listing, category: a.category %>
 		<% end %>
 	<% end %>
+<% end %>
+<% if !listing.active %>
+	<hr>
+	<center>This property doesn't have a credit card on file. <%= link_to "Update payment details", edit_payment_info_property_path(listing) %> to put a card on file and enable service requests.</center>
 <% end %>

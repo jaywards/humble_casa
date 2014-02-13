@@ -13,6 +13,25 @@ $ ->
 $ ->
 	if $('body').hasClass("services") && $(".service-payment-form").length > 0
 		Stripe.setPublishableKey($('meta[name="stripe-key"]').attr('content')) 
+		$('#service_invoice_me').change ->
+			if $(this).prop('checked')
+				$('#card_number').prop('disabled', true)
+				$('#card_number').val("")
+				
+				$('#card_code').prop('disabled', true)
+				$('#card_code').val("")
+				
+				$('#card_month').prop('disabled', true)
+				$('#card_month').val("")
+				
+				$('#card_year').prop('disabled', true)
+				$('#card_year').val("")
+				
+			else
+				$('#card_number').prop('disabled', false)
+				$('#card_code').prop('disabled', false)
+				$('#card_month').prop('disabled', false)
+				$('#card_year').prop('disabled', false) 
 		service.setupPaymentForm()
 		$('#card_number').mask("9999 9999 9999 9999")
 		$('#card_number').focus()
@@ -21,7 +40,7 @@ service =
 	setupPaymentForm: ->
 		$('[id^=edit_service]').submit ->
 			$('input[type=submit]').attr('disabled', true)
-			if $('#card_number').length
+			if $('#service_invoice_me').prop('checked') == false && $('#card_number').length
 				service.processCard()
 				false
 			else

@@ -64,8 +64,10 @@ class ServiceRequestsController < ApplicationController
 				flash[:error] = "Unable to charge the customer at this time. HumbleCasa will notify you when this is corrected."
 				@service_request.mail_completed(false)
 			end
-			@service_request.assignment.check_invoice
-			@service_request.add_charge_to_service_invoice
+			if @service_request.service.payment_ok
+				@service_request.assignment.check_invoice
+				@service_request.add_charge_to_service_invoice
+			end
 			redirect_to root_path
 			
    		else

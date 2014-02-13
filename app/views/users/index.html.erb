@@ -21,7 +21,7 @@
 			</ol>
 		<% when "admin" %>
 			Admin account<br><br>
-			<% @services = u.services %>
+			<% @services = Service.where(:owner_id => u) %>
 			<ol>
 				<% @services.each do |s| %>
 					<li>	

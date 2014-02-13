@@ -17,8 +17,7 @@ class User < ActiveRecord::Base
   
   has_many :properties, dependent: :destroy
   
-  has_many :services, dependent: :destroy
-  has_one :business, class_name: "Service", dependent: :destroy
+  has_one :business, class_name: "Service", foreign_key: "owner_id", dependent: :destroy
   
   has_one :employment, dependent: :destroy
   has_one :employer, class_name: "Service", through: :employment, source: :service

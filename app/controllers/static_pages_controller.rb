@@ -46,7 +46,8 @@ class StaticPagesController < ApplicationController
           end
       
         when "admin"
-          @user.services.each do |s|
+          @services = Service.where(:owner_id => @user)
+          @services.each do |s|
             s.check_status if !s.nil?
           end
       end

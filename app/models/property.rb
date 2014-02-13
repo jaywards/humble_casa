@@ -79,13 +79,15 @@ class Property < ActiveRecord::Base
   end
 
   def create_assignments_customers
-    self.assignments.each do |a|
-      if !a.service_id.nil? && !a.service.area_service && (a.stripe_customer_token.nil? || a.stripe_customer_token.empty?)
-        @card_token = Stripe::Token.create(
-          {customer: stripe_customer_token},
-          a.service.stripe_access_token
-          )
-        a.create_customer(@card_token.id)
+    if !stripe_customer_token.nil?
+      self.assignments.each do |a|
+        if !a.service_id.nil? && !a.service.area_service && (a.stripe_customer_token.nil? || a.stripe_customer_token.empty?)
+          @card_token = Stripe::Token.create(
+            {customer: stripe_customer_token},
+            a.service.stripe_access_token
+            )
+          a.create_customer(@card_token.id)
+        end
       end
     end
   end
