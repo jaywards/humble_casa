@@ -1,7 +1,7 @@
 class Property < ActiveRecord::Base
   attr_accessible :address1, :address2, :city, :instructions, :name, :phone, :state, :zip, :time_zone, 
   :assignments_attributes, :stripe_customer_token, :stripe_card_token, :card_type, :last_four, :house_closing, 
-  :house_closing_none, :terms_agreement
+  :house_closing_none, :terms_agreement, :referral_service
 
   belongs_to :user
   

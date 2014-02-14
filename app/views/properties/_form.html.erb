@@ -29,7 +29,10 @@
 			<%= f.input :house_closing_none, as: :boolean, inline_label: "I have no Opening/Closing instructions or I will provide them to the service provider in person", label: false %>
 
 			<%= f.input :instructions, label: 'Other details for the property', placeholder: 'These instructions are only seen by the service providers you select.  Examples: preferred entry door, etc.', as: :text %>
-
+			
+			<%#= f.input :user_id, as: :hidden, input_html: {value: @user.id, id: "user_id"} %>
+    		<%= f.input :referral_service, collection: Service.all, label_method: :name, value_method: :id, label: "Were you referred by one of our service partners?" %>
+    		
     		<%= f.input :terms_agreement, as: :boolean, inline_label: ("I agree to the HumbleCasa #{link_to 'terms and conditions', terms_of_use_path}.").html_safe, label: false %>
 			<br>
     	</div>

@@ -8,7 +8,7 @@ authorization do
     has_permission_on :properties, :to => [:index, :show, :new, :create, :edit, :update, :destroy, 
       :view_completed, :assign_services, :confirm_assignment, :add_payment_info, :edit_payment_info, :update_with_card,
       :update_with_assignments]
-    has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy]
+    has_permission_on :users, :to => [:index, :show, :new, :create, :edit, :update, :destroy, :update_referral_list]
     has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]
     has_permission_on :service_requests, :to => [:show, :destroy, :view_completed, :index, :complete_request, 
       :assign_to_employee, :update, :show]
@@ -26,7 +26,7 @@ authorization do
 
   role :propertyowner do
     includes :guest
-    has_permission_on :users, :to => [:show, :edit, :update]
+    has_permission_on :users, :to => [:show, :edit, :update, :update_referral_list]
     has_permission_on :properties, :to => [:new, :create, :show, :edit, :update, :destroy, :assign_services, 
       :confirm_assignment, :add_payment_info, :edit_payment_info, :update_with_card, :update_with_assignments]
     has_permission_on :master_service_requests, :to => [:new, :create, :show, :edit, :update, :destroy, :pause]

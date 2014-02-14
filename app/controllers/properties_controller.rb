@@ -148,4 +148,5 @@ class PropertiesController < ApplicationController
 	def edit_payment_info
 	end
 
+
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213204009) do
+ActiveRecord::Schema.define(version: 20140214174520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 20140213204009) do
     t.text     "house_closing"
     t.boolean  "house_closing_none",    default: false
     t.boolean  "terms_agreement",       default: true
+    t.integer  "referral_service"
   end
 
   add_index "properties", ["user_id"], name: "index_properties_on_user_id", using: :btree

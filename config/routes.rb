@@ -3,6 +3,9 @@ HumbleCasa::Application.routes.draw do
   resource :user_session
 
   resources :users do
+    member do      
+      get 'update_referral_list'
+    end
     resources :properties, :services, :service_zips
   end
   

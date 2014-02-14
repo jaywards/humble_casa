@@ -63,5 +63,14 @@ class UsersController < ApplicationController
     flash[:success] = "Account deleted."
     redirect_to root_path
   end
+
+  #def update_referral_list
+  #  @zip = params[:zip]
+  #  @referral_list = Service.includes(:service_zips).where(:service_active => true, "service_zips.zip" => @zip)
+  #  respond_to do |format|
+  #    format.html
+  #    format.json {render json: @referral_list}
+  #  end
+  #end
   
 end

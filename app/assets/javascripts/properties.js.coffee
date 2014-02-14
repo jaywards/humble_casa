@@ -5,6 +5,29 @@ $ ->
       validateForm()
     $("#new_property").enableClientSideValidations()
     $("[id^=edit_property]").enableClientSideValidations()
+    
+    #if $('#property_zip').val() == ""
+    #  $('#property_referral_service').prop('disabled', true)
+    #else
+    #  $('#property_referral_service').prop('disabled', false)
+    
+    #$('#property_zip').change ->
+    #  $.ajax
+    #    type: "GET"
+    #    url: "/users/" + $('#user_id').val() + "/update_referral_list?zip="+$('#property_zip').val()
+    #    dataType: "json"
+    #    
+    #    success: (data) ->
+    #      alert(data)
+    #      options = $('#property_referral_service').html()
+    #      alert(options)
+    #      $("#property_referral_service").html(options)
+    #      alert($('#property_referral_service').html())
+    #      $('#property_referral_service').prop('disabled', false)
+
+
+
+      
 
 validateForm = ->
   instructions = $('#property_house_closing').val()
